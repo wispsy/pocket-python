@@ -36,6 +36,12 @@ class Parser {
   fail(message, token = this.peek(), code = "SYNTAX", name, syntax) {
     throw new SourceError(code, message, {filename: this.filename, span: token.span, phase: "parse", name, syntax});
   }
+  diagnostic(message, span, options = {}) {
+    const syntax = syntaxDiagnostic(this.lexed.source, this.filename, message, span, {newline: !this.options.mode || this.options.mode === "exec", ...options});
+    syntax.metadata = this.lexed.source + ((!this.options.mode || this.options.mode === "exec") && !this.lexed.source.endsWith("\n") ? "\n" : "");
+    syntax.metadataQualified = !this.completedCompound;
+    return syntax;
+  }
   unsupported(message, token) { this.fail(message, token, "UNSUPPORTED"); }
   defer(message, node) { this.refusal ??= {message, node}; return node; }
   charge() {
@@ -111,7 +117,14 @@ class Parser {
   }
   statement() {
     const result = this.guard(() => {
-      if (this.kind("indent") || this.kind("dedent")) this.fail("Unexpected indentation.", this.peek(), "SYNTAX", "IndentationError");
+      if (this.kind("indent") || this.kind("dedent")) {
+        const token = this.peek(), syntax = this.kind("indent") ? this.diagnostic("unexpected indent", token.span, {endOffset: -1}) : undefined;
+        if (syntax) {
+          syntax.offset = Array.from(this.lexed.source.slice(token.start, token.end)).length;
+          syntax.repair = this.lexed.source.slice(0, token.start) + this.lexed.source.slice(token.end);
+        }
+        this.fail("Unexpected indentation.", token, "SYNTAX", "IndentationError", syntax);
+      }
       if (this.at("@") && this.classes) return [this.decorated()];
       if (this.at("def")) return [this.definition()];
       if (this.at("class") && this.classes) return [this.classDefinition()];
@@ -125,11 +138,31 @@ class Parser {
     if (result.some(node => ["If", "While", "For", "Try", "Class", "Function"].includes(node.kind))) this.completedCompound = true;
     return result;
   }
-  suite() {
+  suite(header) {
     this.expect(":");
     if (!this.kind("newline")) return this.simpleLine();
     this.take();
-    if (!this.kind("indent")) this.fail("Expected an indented suite.", this.peek(), "SYNTAX", "IndentationError");
+    if (!this.kind("indent")) {
+      const token = this.peek(); let syntax;
+      if (header) {
+        const label = header.value === "def" ? "function definition" : header.value === "class" ? "class definition" : "'" + header.value + "' statement";
+        syntax = this.diagnostic("expected an indented block after " + label + " on line " + header.span[0], token.span);
+        const source = this.lexed.source, indent = (source.split("\n")[header.span[0] - 1].match(/^[ \t\f]*/)?.[0] ?? "") + " ";
+        if (token.kind === "eof") {
+          const normalized = syntax.metadata, lines = normalized.split("\n"), line = lines.length - (normalized.endsWith("\n") ? 1 : 0);
+          syntax.lineno = syntax.end_lineno = line;
+          syntax.text = lines[line - 1] + (normalized.endsWith("\n") ? "\n" : "");
+          syntax.offset = Array.from(syntax.text).length; syntax.end_offset = -1;
+          syntax.repair = source + (source.endsWith("\n") ? "" : "\n") + indent + "pass\n";
+        } else {
+          const lineStart = source.lastIndexOf("\n", token.start - 1) + 1;
+          syntax.repair = ["else", "elif", "except", "finally"].includes(token.value) ?
+            source.slice(0, lineStart) + indent + "pass\n" + source.slice(lineStart) :
+            source.slice(0, lineStart) + indent + source.slice(token.start);
+        }
+      }
+      this.fail("Expected an indented suite.", token, "SYNTAX", "IndentationError", syntax);
+    }
     this.take();
     const body = [];
     while (!this.kind("dedent") && !this.kind("eof")) {
@@ -277,7 +310,7 @@ class Parser {
     if (this.at("->")) this.unsupported("Return annotations are not adopted.");
     const before = [this.functionDepth, this.loopDepth]; this.functionDepth++; this.loopDepth = 0;
     let body;
-    try { body = this.suite(); } finally { [this.functionDepth, this.loopDepth] = before; }
+    try { body = this.suite(start); } finally { [this.functionDepth, this.loopDepth] = before; }
     return this.node("Function", start, {name, params, body, ...(decorators.length ? {decorators} : {})}, body.at(-1));
   }
   parameters(end) {
@@ -357,16 +390,16 @@ class Parser {
     }
     const before = [this.functionDepth, this.loopDepth]; this.functionDepth = 0; this.loopDepth = 0;
     let body;
-    try { body = this.suite(); } finally { [this.functionDepth, this.loopDepth] = before; }
+    try { body = this.suite(start); } finally { [this.functionDepth, this.loopDepth] = before; }
     return this.node("Class", start, {name, bases, body,
       ...((keywords.some(item => item.name !== "metaclass") || bases.some(item => item.kind === "StarredArgument")) ? {keywords} : metaclass ? {metaclass} : {}),
       ...(decorators.length ? {decorators} : {})}, body.at(-1));
   }
   branch(keyword = "if") {
-    const start = this.expect(keyword), test = this.namedExpression(), body = this.suite();
+    const start = this.expect(keyword), test = this.namedExpression(), body = this.suite(start);
     let otherwise = [];
     if (this.at("elif")) otherwise = [this.guard(() => this.branch("elif"))];
-    else if (this.eat("else")) otherwise = this.suite();
+    else if (this.eat("else")) otherwise = this.suite(this.previous);
     return this.node("If", start, {test, body, otherwise}, otherwise.at(-1) || body.at(-1));
   }
   loop() {
@@ -377,12 +410,12 @@ class Parser {
       this.expect("in"); iterable = this.expressionList();
     } else test = this.namedExpression();
     this.loopDepth++; let body;
-    try { body = this.suite(); } finally { this.loopDepth--; }
-    const otherwise = this.eat("else") ? this.suite() : [];
+    try { body = this.suite(start); } finally { this.loopDepth--; }
+    const otherwise = this.eat("else") ? this.suite(this.previous) : [];
     return this.node(kind, start, {test, target, iterable, body, otherwise}, otherwise.at(-1) || body.at(-1));
   }
   attempt() {
-    const start = this.expect("try"), body = this.suite(), handlers = [];
+    const start = this.expect("try"), body = this.suite(start), handlers = [];
     let bare = false;
     while (this.eat("except")) {
       const clause = this.previous;
@@ -394,12 +427,12 @@ class Parser {
       const alias = this.eat("as") ? this.name().value : null;
       if (type === null && alias !== null) this.fail("A bare handler cannot bind an alias.", clause);
       bare = type === null;
-      const handlerBody = this.suite();
+      const handlerBody = this.suite(clause);
       handlers.push(this.node("Handler", clause, {expression: type, alias, body: handlerBody}, handlerBody.at(-1)));
     }
     let otherwise = [], final = [];
-    if (this.eat("else")) { if (!handlers.length) this.fail("Try else requires an exception handler."); otherwise = this.suite(); }
-    if (this.eat("finally")) final = this.suite();
+    if (this.eat("else")) { if (!handlers.length) this.fail("Try else requires an exception handler."); otherwise = this.suite(this.previous); }
+    if (this.eat("finally")) final = this.suite(this.previous);
     if (!handlers.length && !final.length) this.fail("Try requires except or finally.");
     return this.node("Try", start, {body, handlers, otherwise, final}, final.at(-1) || otherwise.at(-1) || handlers.at(-1) || body.at(-1));
   }
