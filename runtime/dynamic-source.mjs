@@ -50,6 +50,15 @@ export function dynamicCompiler({state, memory, values, classes, allocate, charg
     } catch (error) {
       if (!(error instanceof SourceError)) throw error;
       if (error.code === "SYNTAX") {
+        if (error.syntax?.repair !== undefined) {
+          try { compileSource(error.syntax.repair, {filename, mode, optimize,
+            languageProfile: state.frames.at(-1).pool.code.version === 5 ? "classes-source/1" : "core-source/1", onWork: charge}); }
+          catch (repairError) {
+            if (!(repairError instanceof SourceError)) throw repairError;
+            if (!["SYNTAX", "UNSUPPORTED"].includes(repairError.code)) hard(repairError.code, repairError.name, repairError.message);
+            python(error.name, error.message);
+          }
+        }
         if (!error.syntax) python(error.name, error.message);
         const fields = error.syntax;
         const native = value => {
@@ -57,9 +66,9 @@ export function dynamicCompiler({state, memory, values, classes, allocate, charg
             typeof value === "number" ? values.int(BigInt(value)) : value;
           state.temporaries.push(result); return result;
         };
-        const filename = values.text(payload(filenameValue)) === null ? native(fields.filename) : filenameValue;
+        const nativeFilename = values.text(payload(filenameValue)) === null ? native(fields.filename) : filenameValue;
         const message = native(fields.msg), details = values.tuple(
-          [filename, fields.lineno, fields.offset, fields.text, fields.end_lineno, fields.end_offset].map(native));
+          [nativeFilename, fields.lineno, fields.offset, fields.text, fields.end_lineno, fields.end_offset].map(native));
         state.temporaries.push(details);
         const metadata = fields.metadata === undefined ? null : values.tuple([0n, 0n, native(fields.metadata)]);
         state.temporaries.push(metadata);

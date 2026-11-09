@@ -24,9 +24,18 @@ cyclic filename/error graphs between instructions and check cancellation,
 close and shared allocation limits. The former incomplete-`if` field refusal
 in the general exception corpus is adopted by this slice.
 
+LA-65 adds unmatched/mismatched and unclosed delimiters, ordinary/raw/bytes
+unterminated strings and triple-quoted strings. The last unmatched opener,
+cross-line delimiter wording, Unicode offsets, physical versus implicit
+newlines and complete parser source metadata have independent reference cases.
+Lexical payloads require the compiler to accept a minimally repaired input.
+This conservative check leaves earlier syntax errors and unqualified repairs
+behind the existing field-read boundary. It consumes the same compilation
+work budget and does not execute the repaired input.
+
 Other generated diagnostics retain their native field-read boundary until
 their exact messages and locations are qualified. This includes indentation,
-lexical, control-flow and broader parser/binder errors at this checkpoint.
+control-flow and broader parser/binder errors at this checkpoint.
 Native-key sparse probing (#759), groups/except*, traceback objects, note
 export, wider formatting and library/package/candidate gates keep their owners.
 Finite corpus observations do not measure overall Python completion.
