@@ -42,6 +42,7 @@ class Scanner {
   constructor(input, options) {
     if (options === null || typeof options !== "object" || Array.isArray(options)) throw new TypeError("Expected source options.");
     this.filename = options.filename ?? "<input>";
+    this.mode = options.mode ?? "exec";
     if (typeof this.filename !== "string" || !this.filename && !options.mode || this.filename.length > 256 || this.filename.includes("\0")) throw new TypeError("Expected a bounded logical filename.");
     this.limits = {};
     for (const [key, cap] of [["maxBytes", SOURCE_LIMITS.bytes], ["maxTokens", SOURCE_LIMITS.tokens],
@@ -81,8 +82,14 @@ class Scanner {
     this.lineStart = true; this.joined = false; this.hasCode = false;
   }
   point() { return [this.line, this.column]; }
-  fail(code, message, start = this.point(), name) {
-    throw new SourceError(code, message, {filename: this.filename, span: [...start, this.line, this.column], name});
+  fail(code, message, start = this.point(), name, syntax) {
+    throw new SourceError(code, message, {filename: this.filename, span: [...start, this.line, this.column], name, syntax});
+  }
+  diagnostic(message, start, repair, {newline = false, stripNewline = false, endOffset} = {}) {
+    const result = syntaxDiagnostic(this.source, this.filename, message, [...start, ...start], {newline, endOffset});
+    if (stripNewline) result.text = result.text.replace(/\n$/, "");
+    result.metadata = this.source + (this.mode === "exec" && !this.source.endsWith("\n") ? "\n" : "");
+    return {...result, repair};
   }
   charge(amount = 1) {
     this.onWork?.(amount);
@@ -133,6 +140,12 @@ class Scanner {
     const quote = this.take(), triple = this.source.startsWith(quote + quote, this.offset);
     if (triple) { this.take(); this.take(); }
     const closing = quote.repeat(triple ? 3 : 1), raw = /r/i.test(prefix), bytes = /b/i.test(prefix), points = [];
+    const unterminated = () => {
+      const newline = this.source[this.offset - 1] === "\n";
+      this.fail("SYNTAX", "Unterminated string literal.", start, undefined,
+        this.diagnostic("unterminated " + (triple ? "triple-quoted " : "") + "string literal (detected at line " + (this.line - (newline ? 1 : 0)) + ")", start,
+          this.source.slice(0, offset) + "''" + this.source.slice(this.offset - (newline && !triple ? 1 : 0)), {stripNewline: true}));
+    };
     const add = point => {
       if (points.length >= SOURCE_LIMITS.text) this.fail("COMPILE_BUDGET", "String literal budget exceeded.", start);
       points.push(bytes ? point & 255 : point);
@@ -155,7 +168,7 @@ class Scanner {
       }
       const char = this.take();
       if (bytes && char.codePointAt(0) > 127) this.fail("SYNTAX", "Bytes literals can only contain ASCII literal characters.", start);
-      if (char === "\n" && !triple) this.fail("SYNTAX", "Unterminated string literal.", start);
+      if (char === "\n" && !triple) unterminated();
       if (char !== "\\") { add(char.codePointAt(0)); continue; }
       if (!this.peek()) break;
       const next = this.take();
@@ -174,7 +187,7 @@ class Scanner {
         add(Number.parseInt(octal, 8));
       } else { add(92); add(next.codePointAt(0)); }
     }
-    this.fail("SYNTAX", "Unterminated string literal.", start);
+    unterminated();
   }
   number(start, offset) {
     const tail = this.source.slice(this.offset);
@@ -245,12 +258,23 @@ class Scanner {
         this.delimiters.push({op, start});
       } else if ([")", "]", "}"].includes(op)) {
         const opening = this.delimiters.pop();
-        if (!opening || {"(": ")", "[": "]", "{": "}"}[opening.op] !== op) this.fail("SYNTAX", "Mismatched closing delimiter.", start);
+        if (!opening || {"(": ")", "[": "]", "{": "}"}[opening.op] !== op) {
+          const message = !opening ? "unmatched '" + op + "'" : "closing parenthesis '" + op + "' does not match opening parenthesis '" + opening.op + "'" +
+            (opening.start[0] !== start[0] ? " on line " + opening.start[0] : "");
+          const replacement = opening ? {"(": ")", "[": "]", "{": "}"}[opening.op] : "0";
+          this.fail("SYNTAX", "Mismatched closing delimiter.", start, undefined,
+            this.diagnostic(message, start, this.source.slice(0, offset) + replacement + this.source.slice(offset + 1), {stripNewline: true}));
+        }
       }
       for (let i = 0; i < op.length; i++) this.take();
       this.token("op", op, start, offset);
     }
-    if (this.delimiters.length) this.fail("SYNTAX", "Unclosed delimiter.", this.delimiters[0].start);
+    if (this.delimiters.length) {
+      const opening = this.delimiters.at(-1), closing = this.delimiters.toReversed().map(item => ({"(": ")", "[": "]", "{": "}"}[item.op])).join("");
+      this.fail("SYNTAX", "Unclosed delimiter.", this.delimiters[0].start, undefined,
+        this.diagnostic("'" + opening.op + "' was never closed", opening.start, this.source + closing,
+          {newline: this.mode === "exec", stripNewline: opening.start[0] < this.source.split("\n").length, endOffset: 0}));
+    }
     if (this.hasCode) this.token("newline", "", this.point(), this.offset);
     while (this.indents.length > 1) { this.indents.pop(); this.token("dedent", "", this.point(), this.offset); }
     this.token("eof", "", this.point(), this.offset);

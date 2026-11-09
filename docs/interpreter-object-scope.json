@@ -1148,6 +1148,12 @@
       "site": "hard(\"UNSUPPORTED\", \"UnsupportedOperationError\", \"Rejected native attribute key comparisons require the #124 sparse-probe contract.\");",
       "owner": "#124",
       "boundary": "A false native type-key equality result retains the separately qualified hash-seed-dependent sparse dictionary probe sequence."
+    },
+    {
+      "path": "runtime/dynamic-source.mjs",
+      "site": "if (![\"SYNTAX\", \"UNSUPPORTED\"].includes(repairError.code)) hard(repairError.code, repairError.name, repairError.message);",
+      "owner": "#124",
+      "boundary": "Lexical syntax payloads require a compilable diagnostic repair; unqualified source retains native-field boundaries."
     }
   ],
   "native_tables": {

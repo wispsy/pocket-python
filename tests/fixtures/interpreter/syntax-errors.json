@@ -4,7 +4,8 @@
   "reference_version": "3.14.7",
   "profile": "classes-source/1",
   "implemented_stages": [
-    "LA64"
+    "LA64",
+    "LA65"
   ],
   "cases": [
     {
@@ -212,6 +213,372 @@
       "stage": "LA64",
       "source": "try: compile(\"value = '#' +\", \"selected.py\", \"exec\")\nexcept SyntaxError as e: print(e.offset,e.end_offset,repr(e.text))\n",
       "stdout": "14 15 \"value = '#' +\\n\"\n"
+    },
+    {
+      "id": "lexical-0-exec",
+      "stage": "LA65",
+      "source": "try: compile('(',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'(' was never closed\nlexical/雪.py 1 1 1 0\n'(\\n' 2 True\n0 0 '(\\n'\n"
+    },
+    {
+      "id": "lexical-0-eval",
+      "stage": "LA65",
+      "source": "try: compile('(',\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'(' was never closed\nlexical/雪.py 1 1 1 0\n'(' 2 True\n0 0 '('\n"
+    },
+    {
+      "id": "lexical-0-single",
+      "stage": "LA65",
+      "source": "try: compile('(',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'(' was never closed\nlexical/雪.py 1 1 1 0\n'(' 2 True\n0 0 '('\n"
+    },
+    {
+      "id": "lexical-1-exec",
+      "stage": "LA65",
+      "source": "try: compile('[',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'[' was never closed\nlexical/雪.py 1 1 1 0\n'[\\n' 2 True\n0 0 '[\\n'\n"
+    },
+    {
+      "id": "lexical-1-eval",
+      "stage": "LA65",
+      "source": "try: compile('[',\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'[' was never closed\nlexical/雪.py 1 1 1 0\n'[' 2 True\n0 0 '['\n"
+    },
+    {
+      "id": "lexical-1-single",
+      "stage": "LA65",
+      "source": "try: compile('[',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'[' was never closed\nlexical/雪.py 1 1 1 0\n'[' 2 True\n0 0 '['\n"
+    },
+    {
+      "id": "lexical-2-exec",
+      "stage": "LA65",
+      "source": "try: compile('{',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'{' was never closed\nlexical/雪.py 1 1 1 0\n'{\\n' 2 True\n0 0 '{\\n'\n"
+    },
+    {
+      "id": "lexical-2-eval",
+      "stage": "LA65",
+      "source": "try: compile('{',\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'{' was never closed\nlexical/雪.py 1 1 1 0\n'{' 2 True\n0 0 '{'\n"
+    },
+    {
+      "id": "lexical-2-single",
+      "stage": "LA65",
+      "source": "try: compile('{',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'{' was never closed\nlexical/雪.py 1 1 1 0\n'{' 2 True\n0 0 '{'\n"
+    },
+    {
+      "id": "lexical-3-exec",
+      "stage": "LA65",
+      "source": "try: compile('([',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'[' was never closed\nlexical/雪.py 1 2 1 0\n'([\\n' 2 True\n0 0 '([\\n'\n"
+    },
+    {
+      "id": "lexical-3-eval",
+      "stage": "LA65",
+      "source": "try: compile('([',\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'[' was never closed\nlexical/雪.py 1 2 1 0\n'([' 2 True\n0 0 '(['\n"
+    },
+    {
+      "id": "lexical-3-single",
+      "stage": "LA65",
+      "source": "try: compile('([',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'[' was never closed\nlexical/雪.py 1 2 1 0\n'([' 2 True\n0 0 '(['\n"
+    },
+    {
+      "id": "lexical-4-exec",
+      "stage": "LA65",
+      "source": "try: compile('x = (\\n [',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'[' was never closed\nlexical/雪.py 2 2 2 0\n' [\\n' 2 True\n0 0 'x = (\\n [\\n'\n"
+    },
+    {
+      "id": "lexical-4-single",
+      "stage": "LA65",
+      "source": "try: compile('x = (\\n [',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'[' was never closed\nlexical/雪.py 2 2 2 0\n' [' 2 True\n0 0 'x = (\\n ['\n"
+    },
+    {
+      "id": "lexical-5-exec",
+      "stage": "LA65",
+      "source": "try: compile(')',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unmatched ')'\nlexical/雪.py 1 1 1 1\n')' 2 True\n0 0 ')\\n'\n"
+    },
+    {
+      "id": "lexical-5-eval",
+      "stage": "LA65",
+      "source": "try: compile(')',\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unmatched ')'\nlexical/雪.py 1 1 1 1\n')' 2 True\n0 0 ')'\n"
+    },
+    {
+      "id": "lexical-5-single",
+      "stage": "LA65",
+      "source": "try: compile(')',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unmatched ')'\nlexical/雪.py 1 1 1 1\n')' 2 True\n0 0 ')'\n"
+    },
+    {
+      "id": "lexical-6-exec",
+      "stage": "LA65",
+      "source": "try: compile('[)',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "closing parenthesis ')' does not match opening parenthesis '['\nlexical/雪.py 1 2 1 2\n'[)' 2 True\n0 0 '[)\\n'\n"
+    },
+    {
+      "id": "lexical-6-eval",
+      "stage": "LA65",
+      "source": "try: compile('[)',\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "closing parenthesis ')' does not match opening parenthesis '['\nlexical/雪.py 1 2 1 2\n'[)' 2 True\n0 0 '[)'\n"
+    },
+    {
+      "id": "lexical-6-single",
+      "stage": "LA65",
+      "source": "try: compile('[)',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "closing parenthesis ')' does not match opening parenthesis '['\nlexical/雪.py 1 2 1 2\n'[)' 2 True\n0 0 '[)'\n"
+    },
+    {
+      "id": "lexical-7-exec",
+      "stage": "LA65",
+      "source": "try: compile('(\\n]',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "closing parenthesis ']' does not match opening parenthesis '(' on line 1\nlexical/雪.py 2 1 2 1\n']' 2 True\n0 0 '(\\n]\\n'\n"
+    },
+    {
+      "id": "lexical-7-eval",
+      "stage": "LA65",
+      "source": "try: compile('(\\n]',\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "closing parenthesis ']' does not match opening parenthesis '(' on line 1\nlexical/雪.py 2 1 2 1\n']' 2 True\n0 0 '(\\n]'\n"
+    },
+    {
+      "id": "lexical-7-single",
+      "stage": "LA65",
+      "source": "try: compile('(\\n]',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "closing parenthesis ']' does not match opening parenthesis '(' on line 1\nlexical/雪.py 2 1 2 1\n']' 2 True\n0 0 '(\\n]'\n"
+    },
+    {
+      "id": "lexical-8-exec",
+      "stage": "LA65",
+      "source": "try: compile('\\n雪=)',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unmatched ')'\nlexical/雪.py 2 3 2 3\n'雪=)' 2 True\n0 0 '\\n雪=)\\n'\n"
+    },
+    {
+      "id": "lexical-8-single",
+      "stage": "LA65",
+      "source": "try: compile('\\n雪=)',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unmatched ')'\nlexical/雪.py 2 3 2 3\n'雪=)' 2 True\n0 0 '\\n雪=)'\n"
+    },
+    {
+      "id": "lexical-9-exec",
+      "stage": "LA65",
+      "source": "try: compile(\"x='bad\",\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 1)\nlexical/雪.py 1 3 1 3\n\"x='bad\" 2 True\n0 0 \"x='bad\\n\"\n"
+    },
+    {
+      "id": "lexical-9-single",
+      "stage": "LA65",
+      "source": "try: compile(\"x='bad\",\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 1)\nlexical/雪.py 1 3 1 3\n\"x='bad\" 2 True\n0 0 \"x='bad\"\n"
+    },
+    {
+      "id": "lexical-10-exec",
+      "stage": "LA65",
+      "source": "try: compile(\"r'bad\",\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"r'bad\" 2 True\n0 0 \"r'bad\\n\"\n"
+    },
+    {
+      "id": "lexical-10-eval",
+      "stage": "LA65",
+      "source": "try: compile(\"r'bad\",\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"r'bad\" 2 True\n0 0 \"r'bad\"\n"
+    },
+    {
+      "id": "lexical-10-single",
+      "stage": "LA65",
+      "source": "try: compile(\"r'bad\",\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"r'bad\" 2 True\n0 0 \"r'bad\"\n"
+    },
+    {
+      "id": "lexical-11-exec",
+      "stage": "LA65",
+      "source": "try: compile(\"b'bad\",\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"b'bad\" 2 True\n0 0 \"b'bad\\n\"\n"
+    },
+    {
+      "id": "lexical-11-eval",
+      "stage": "LA65",
+      "source": "try: compile(\"b'bad\",\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"b'bad\" 2 True\n0 0 \"b'bad\"\n"
+    },
+    {
+      "id": "lexical-11-single",
+      "stage": "LA65",
+      "source": "try: compile(\"b'bad\",\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"b'bad\" 2 True\n0 0 \"b'bad\"\n"
+    },
+    {
+      "id": "lexical-12-exec",
+      "stage": "LA65",
+      "source": "try: compile(\"'bad\\nnext\",\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"'bad\" 2 True\n0 0 \"'bad\\nnext\\n\"\n"
+    },
+    {
+      "id": "lexical-12-eval",
+      "stage": "Future",
+      "source": "try: compile(\"'bad\\nnext\",\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"'bad\" 2 True\n0 0 \"'bad\\nnext\"\n",
+      "owner": "#124",
+      "boundary": "Lexical native fields require a successfully compiled diagnostic repair; multiple statements in eval/single retain their boundary."
+    },
+    {
+      "id": "lexical-12-single",
+      "stage": "Future",
+      "source": "try: compile(\"'bad\\nnext\",\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"'bad\" 2 True\n0 0 \"'bad\\nnext\"\n",
+      "owner": "#124",
+      "boundary": "Lexical native fields require a successfully compiled diagnostic repair; multiple statements in eval/single retain their boundary."
+    },
+    {
+      "id": "lexical-13-exec",
+      "stage": "LA65",
+      "source": "try: compile(\"'bad\\\\\\nnext\",\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 2)\nlexical/雪.py 1 1 1 1\n\"'bad\\\\\" 2 True\n0 0 \"'bad\\\\\\nnext\\n\"\n"
+    },
+    {
+      "id": "lexical-13-eval",
+      "stage": "LA65",
+      "source": "try: compile(\"'bad\\\\\\nnext\",\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 2)\nlexical/雪.py 1 1 1 1\n\"'bad\\\\\" 2 True\n0 0 \"'bad\\\\\\nnext\"\n"
+    },
+    {
+      "id": "lexical-13-single",
+      "stage": "LA65",
+      "source": "try: compile(\"'bad\\\\\\nnext\",\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated string literal (detected at line 2)\nlexical/雪.py 1 1 1 1\n\"'bad\\\\\" 2 True\n0 0 \"'bad\\\\\\nnext\"\n"
+    },
+    {
+      "id": "lexical-14-exec",
+      "stage": "LA65",
+      "source": "try: compile(\"'''bad\",\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated triple-quoted string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"'''bad\" 2 True\n0 0 \"'''bad\\n\"\n"
+    },
+    {
+      "id": "lexical-14-eval",
+      "stage": "LA65",
+      "source": "try: compile(\"'''bad\",\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated triple-quoted string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"'''bad\" 2 True\n0 0 \"'''bad\"\n"
+    },
+    {
+      "id": "lexical-14-single",
+      "stage": "LA65",
+      "source": "try: compile(\"'''bad\",\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated triple-quoted string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"'''bad\" 2 True\n0 0 \"'''bad\"\n"
+    },
+    {
+      "id": "lexical-15-exec",
+      "stage": "LA65",
+      "source": "try: compile(\"'''bad\\nnext\",\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated triple-quoted string literal (detected at line 2)\nlexical/雪.py 1 1 1 1\n\"'''bad\" 2 True\n0 0 \"'''bad\\nnext\\n\"\n"
+    },
+    {
+      "id": "lexical-15-eval",
+      "stage": "LA65",
+      "source": "try: compile(\"'''bad\\nnext\",\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated triple-quoted string literal (detected at line 2)\nlexical/雪.py 1 1 1 1\n\"'''bad\" 2 True\n0 0 \"'''bad\\nnext\"\n"
+    },
+    {
+      "id": "lexical-15-single",
+      "stage": "LA65",
+      "source": "try: compile(\"'''bad\\nnext\",\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated triple-quoted string literal (detected at line 2)\nlexical/雪.py 1 1 1 1\n\"'''bad\" 2 True\n0 0 \"'''bad\\nnext\"\n"
+    },
+    {
+      "id": "lexical-16-exec",
+      "stage": "LA65",
+      "source": "try: compile(\"'''bad\\n\",\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated triple-quoted string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"'''bad\" 2 True\n0 0 \"'''bad\\n\"\n"
+    },
+    {
+      "id": "lexical-16-eval",
+      "stage": "LA65",
+      "source": "try: compile(\"'''bad\\n\",\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated triple-quoted string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"'''bad\" 2 True\n0 0 \"'''bad\\n\"\n"
+    },
+    {
+      "id": "lexical-16-single",
+      "stage": "LA65",
+      "source": "try: compile(\"'''bad\\n\",\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unterminated triple-quoted string literal (detected at line 1)\nlexical/雪.py 1 1 1 1\n\"'''bad\" 2 True\n0 0 \"'''bad\\n\"\n"
+    },
+    {
+      "id": "lexical-17-exec",
+      "stage": "LA65",
+      "source": "try: compile('value=雪 + )\\n',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unmatched ')'\nlexical/雪.py 1 11 1 11\n'value=雪 + )' 2 True\n0 0 'value=雪 + )\\n'\n"
+    },
+    {
+      "id": "lexical-17-single",
+      "stage": "LA65",
+      "source": "try: compile('value=雪 + )\\n',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "unmatched ')'\nlexical/雪.py 1 11 1 11\n'value=雪 + )' 2 True\n0 0 'value=雪 + )\\n'\n"
+    },
+    {
+      "id": "lexical-18-exec",
+      "stage": "LA65",
+      "source": "try: compile('[\\n\\r\\n',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'[' was never closed\nlexical/雪.py 1 1 1 0\n'[' 2 True\n0 0 '[\\n\\n'\n"
+    },
+    {
+      "id": "lexical-18-eval",
+      "stage": "LA65",
+      "source": "try: compile('[\\n\\r\\n',\"lexical/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'[' was never closed\nlexical/雪.py 1 1 1 0\n'[' 2 True\n0 0 '[\\n\\n'\n"
+    },
+    {
+      "id": "lexical-18-single",
+      "stage": "LA65",
+      "source": "try: compile('[\\n\\r\\n',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "'[' was never closed\nlexical/雪.py 1 1 1 0\n'[' 2 True\n0 0 '[\\n\\n'\n"
+    },
+    {
+      "id": "lexical-19-exec",
+      "stage": "LA65",
+      "source": "try: compile('雪=(\\r\\n]',\"lexical/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "closing parenthesis ']' does not match opening parenthesis '(' on line 1\nlexical/雪.py 2 1 2 1\n']' 2 True\n0 0 '雪=(\\n]\\n'\n"
+    },
+    {
+      "id": "lexical-19-single",
+      "stage": "LA65",
+      "source": "try: compile('雪=(\\r\\n]',\"lexical/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e.args[0] is e.msg)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "closing parenthesis ']' does not match opening parenthesis '(' on line 1\nlexical/雪.py 2 1 2 1\n']' 2 True\n0 0 '雪=(\\n]'\n"
+    },
+    {
+      "id": "lexical-earlier-syntax-0",
+      "stage": "Future",
+      "source": "try: compile('if :\\n x=\"bad',\"unqualified.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "unqualified.py\n",
+      "owner": "#124",
+      "boundary": "Lexical native fields require a successfully compiled diagnostic repair; other parser precedence remains qualified separately."
+    },
+    {
+      "id": "lexical-earlier-syntax-1",
+      "stage": "Future",
+      "source": "try: compile('x = (1 +',\"unqualified.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "unqualified.py\n",
+      "owner": "#124",
+      "boundary": "Lexical native fields require a successfully compiled diagnostic repair; other parser precedence remains qualified separately."
+    },
+    {
+      "id": "lexical-earlier-syntax-2",
+      "stage": "Future",
+      "source": "try: compile('x = (\\n [bad syntax',\"unqualified.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "unqualified.py\n",
+      "owner": "#124",
+      "boundary": "Lexical native fields require a successfully compiled diagnostic repair; other parser precedence remains qualified separately."
+    },
+    {
+      "id": "lexical-earlier-syntax-3",
+      "stage": "Future",
+      "source": "try: compile('x=\\n)',\"unqualified.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "unqualified.py\n",
+      "owner": "#124",
+      "boundary": "Lexical native fields require a successfully compiled diagnostic repair; other parser precedence remains qualified separately."
     }
   ]
 }
