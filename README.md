@@ -275,6 +275,13 @@ separately gated.
 Groups, traceback objects, remaining structured families and formatting retain
 their gates.
 
+The [generated syntax error profile](docs/interpreter-syntax-errors.md) exposes
+qualified parser, indentation, control-flow, scope-declaration, duplicate-argument,
+missing-colon and invalid-target payloads from dynamic compilation. Native fields,
+argument snapshots and original filenames retain their independent identity.
+Run `examples/interpreter_generated_syntax.py` for source validation and cleanup.
+Unqualified diagnostics retain explicit field-read boundaries.
+
 [Sequence repetition](docs/interpreter-repetition.md) adopts shallow list/tuple
 copies and Unicode text multiplication, including owned index callbacks after
 arithmetic fallback. Run `python -m examples.interpreter_repetition` for a console
