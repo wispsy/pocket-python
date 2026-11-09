@@ -1,4 +1,4 @@
-import {tokenize, SourceError, SOURCE_LIMITS} from "./source-tokens.mjs";
+import {tokenize, SourceError, SOURCE_LIMITS, syntaxDiagnostic} from "./source-tokens.mjs";
 
 export const PARSER_LIMITS = Object.freeze({nodes: 8192, depth: 64, decorators: 16});
 const BINARY = new Map([["+", "add"], ["-", "subtract"], ["*", "multiply"], ["/", "divide"], ["//", "floor-divide"], ["%", "modulo"],
@@ -32,8 +32,8 @@ class Parser {
     for (const [value, cap] of [[this.maxNodes, PARSER_LIMITS.nodes], [this.maxDepth, PARSER_LIMITS.depth]])
       if (!Number.isSafeInteger(value) || value < 1 || value > cap) throw new TypeError("Invalid parser limit.");
   }
-  fail(message, token = this.peek(), code = "SYNTAX", name) {
-    throw new SourceError(code, message, {filename: this.filename, span: token.span, phase: "parse", name});
+  fail(message, token = this.peek(), code = "SYNTAX", name, syntax) {
+    throw new SourceError(code, message, {filename: this.filename, span: token.span, phase: "parse", name, syntax});
   }
   unsupported(message, token) { this.fail(message, token, "UNSUPPORTED"); }
   defer(message, node) { this.refusal ??= {message, node}; return node; }
@@ -635,7 +635,20 @@ class Parser {
       this.expect("}"); return this.node(form === "set" ? "Set" : "Dict", start, form === "set" ? {items} : {entries});
     }
     if (this.at("...")) this.unsupported("Ellipsis is not adopted.");
-    this.fail("Expected an expression.");
+    const line = this.lexed.source.split("\n")[start.span[0] - 1] ?? "";
+    const lastCode = this.tokens.filter(token => token.span[0] === start.span[0] && !["newline", "eof", "indent", "dedent"].includes(token.kind)).at(-1);
+    let syntax;
+    if (["newline", "eof"].includes(start.kind) && lastCode) {
+      const implicit = this.options.mode && this.options.mode !== "exec" && this.lexed.source[start.start] !== "\n";
+      syntax = syntaxDiagnostic(this.lexed.source, this.filename, "invalid syntax", [start.span[0], start.span[1], start.span[0], start.span[1]], {newline: !implicit});
+      const lineStart = this.lexed.source.lastIndexOf("\n", start.start - 1) + 1;
+      const comment = this.lexed.source.indexOf("#", lastCode.end);
+      syntax.offset = implicit ? 0 : comment >= lineStart && comment < start.start ?
+        Array.from(this.lexed.source.slice(lineStart, comment)).length + 1 : syntax.offset;
+      syntax.end_offset = implicit ? 0 : Array.from(line).length + 2;
+      syntax.metadata = this.lexed.source + (!this.options.mode || this.options.mode === "exec" ? this.lexed.source.endsWith("\n") ? "" : "\n" : "");
+    }
+    this.fail("Expected an expression.", start, "SYNTAX", undefined, syntax);
   }
 }
 

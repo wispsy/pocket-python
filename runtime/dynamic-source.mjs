@@ -35,7 +35,7 @@ export function dynamicCompiler({state, memory, values, classes, allocate, charg
     if (text.length > 256) hard("COMPILE_BUDGET", "CompileLimitError", "Logical filename budget exceeded");
     return text;
   };
-  const compile = (source, filename, mode, optimize = 0) => {
+  const compile = (source, filename, mode, optimize = 0, filenameValue = null) => {
     const input = sourceInput(source), size = typeof input === "string" ? new TextEncoder().encode(input).length : input.length;
     const release = memory.external(256 + 128 * size);
     try {
@@ -49,7 +49,22 @@ export function dynamicCompiler({state, memory, values, classes, allocate, charg
       return classes.codeObject(pool, 0);
     } catch (error) {
       if (!(error instanceof SourceError)) throw error;
-      if (error.code === "SYNTAX") python(error.name, error.message);
+      if (error.code === "SYNTAX") {
+        if (!error.syntax) python(error.name, error.message);
+        const fields = error.syntax;
+        const native = value => {
+          const result = typeof value === "string" ? values.string(Array.from(value, char => char.codePointAt(0))) :
+            typeof value === "number" ? values.int(BigInt(value)) : value;
+          state.temporaries.push(result); return result;
+        };
+        const filename = values.text(payload(filenameValue)) === null ? native(fields.filename) : filenameValue;
+        const message = native(fields.msg), details = values.tuple(
+          [filename, fields.lineno, fields.offset, fields.text, fields.end_lineno, fields.end_offset].map(native));
+        state.temporaries.push(details);
+        const metadata = fields.metadata === undefined ? null : values.tuple([0n, 0n, native(fields.metadata)]);
+        state.temporaries.push(metadata);
+        python(error.name, error.message, [message, details], null, null, {metadata});
+      }
       hard(error.code, error.name, error.message);
     } finally { release(); }
   };
@@ -68,7 +83,7 @@ export function dynamicCompiler({state, memory, values, classes, allocate, charg
     if (optimize < -1n || optimize > 2n) python("ValueError", "compile(): invalid optimize value");
     const modeText = values.text(payload(mode));
     if (!["exec", "eval", "single"].includes(modeText)) python("ValueError", "compile() mode must be 'exec', 'eval' or 'single'");
-    return valueTask(compile(source, filename, modeText, Number(optimize < 0n ? 0n : optimize)), site, record.after);
+    return valueTask(compile(source, filename, modeText, Number(optimize < 0n ? 0n : optimize), record.filenameValue), site, record.after);
   };
   const start = (args, keywords, keywordValues, site, after) => {
     const labels = ["source", "filename", "mode", "flags", "dont_inherit", "optimize", "_feature_version"];
@@ -81,9 +96,10 @@ export function dynamicCompiler({state, memory, values, classes, allocate, charg
     }
     if (labels.slice(0, 3).some(key => !bound.has(key))) python("TypeError", "compile() requires source, filename and mode");
     const operands = labels.map((key, index) => bound.has(key) ? bound.get(key) : [null, null, null, 0n, false, -1n, -1n][index]);
-    operands[1] = filenameInput(operands[1]);
+    const filenameValue = operands[1];
+    operands[1] = filenameInput(filenameValue);
     if (values.text(payload(operands[2])) === null) python("TypeError", "compile() mode must be a string");
-    return next({args: operands, position: 0, after}, site);
+    return next({args: operands, filenameValue, position: 0, after}, site);
   };
   const converted = (record, value, site) => {
     if (record.position !== 1 && (value < -2147483648n || value > 2147483647n)) python("OverflowError", "Python int too large to convert to C int");
