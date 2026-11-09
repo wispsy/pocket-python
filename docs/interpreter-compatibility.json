@@ -1147,7 +1147,6 @@
         "tests/fixtures/interpreter/syntax-errors.json:parser-unqualified-fields",
         "tests/fixtures/interpreter/syntax-errors.json:parser-completed-compound-metadata-0",
         "tests/fixtures/interpreter/syntax-errors.json:lexical-earlier-syntax-0",
-        "tests/fixtures/interpreter/syntax-errors.json:control-binding-precedence-boundary",
         "tests/fixtures/interpreter/syntax-errors.json:control-6-single"
       ]
     },
