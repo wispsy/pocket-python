@@ -1,5 +1,5 @@
 import {parseSource, freezeSourceTree} from "./source-parser.mjs";
-import {SourceError, SOURCE_LIMITS} from "./source-tokens.mjs";
+import {SourceError, SOURCE_LIMITS, syntaxDiagnostic} from "./source-tokens.mjs";
 import {verifyFunctions, FUNCTION_LIMITS} from "./function-bytecode.mjs";
 import {allowsClassSpecial} from "./class-policy.mjs";
 import {isPythonIdentifier} from "./source-identifiers.mjs";
@@ -710,7 +710,16 @@ class Compiler {
     }
   }
   compile() {
-    this.resolve(); this.scopes.forEach(scope => this.function(scope));
+    this.resolve();
+    if (this.parsed.controlError) {
+      const {kind, token, node} = this.parsed.controlError;
+      const message = kind === "return" ? "'return' outside function" : kind === "break" ? "'break' outside loop" : "'continue' not properly in loop";
+      const syntax = this.parsed.controlError.qualified === false ? undefined :
+        {...syntaxDiagnostic(this.parsed.source, this.parsed.filename, message, node.span, {text: false}), offset: node.span[1], end_offset: node.span[3]};
+      throw new SourceError("SYNTAX", kind === "return" ? "Return outside a function." : kind + " outside a loop.",
+        {filename: this.parsed.filename, span: token.span, phase: "parse", syntax});
+    }
+    this.scopes.forEach(scope => this.function(scope));
     if (this.classes) this.comprehensionNamespaces();
     try { verifyFunctions(this.program); }
     catch (error) {

@@ -35,7 +35,7 @@ LA-65 adds unmatched/mismatched and unclosed delimiters, ordinary/raw/bytes
 unterminated strings and triple-quoted strings. The last unmatched opener,
 cross-line delimiter wording, Unicode offsets, physical versus implicit
 newlines and complete parser source metadata have independent reference cases.
-Lexical payloads require the compiler to accept a minimally repaired input.
+Lexical payloads require the parser to accept a minimally repaired input.
 This conservative check leaves earlier syntax errors and unqualified repairs
 behind the existing field-read boundary. It consumes the same compilation
 work budget and does not execute the repaired input.
@@ -58,3 +58,5 @@ update that retains the core dynamic-compilation boundary.
 Primary references: the pinned [diagnostic payload](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen_errors.c), [parser metadata](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen.c) and [statement registration](https://github.com/python/cpython/blob/v3.14.7/Parser/action_helpers.c).
 
 LA-67 adds qualified unexpected indentation, missing suites for adopted statement headers, inconsistent tabs/spaces and unmatched dedentation. Native IndentationError/TabError ancestry, descriptors, args independence and EOF/text/end-position differences in exec and single modes have source comparisons. Indentation repairs share the lexical validation gate, preserving earlier-error and unsupported-repair boundaries. Prior compound-statement metadata keeps its independent LA-66A boundary.
+
+LA-68 qualifies out-of-scope return, break and continue after full parsing and binding. Later grammar failures and earlier binding failures therefore retain their proper priority. Native ranges cover the complete statement, with absent text/metadata. These compiler diagnostics preserve the pinned UTF-8 byte columns, including Unicode before/inside a return; they differ from parser diagnostics that convert to character offsets. Ambiguous single-mode compound EOF diagnostics and unqualified binder fields retain explicit boundaries. Syntax-only repair validation lets lexical errors precede a later control-flow error.
