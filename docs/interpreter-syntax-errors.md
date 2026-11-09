@@ -92,3 +92,13 @@ separate native ranges and source text. Grammar failures take priority over
 duplicate parameters and scope declarations. Earlier completed compound
 statements keep the independent parser metadata boundary; non-newline header
 failures and unadopted grammar retain their existing field boundaries.
+
+LA-74 adopts qualified assignment, deletion and augmented-target diagnostics for
+literal/call/operator/comparison/conditional/lambda/display/comprehension
+expressions, plus tuple/list augmented targets. Ordinary, chained and loop
+assignment contexts retain their different wording. Parenthesized expression
+ranges and comprehension closing delimiters follow the parser reference; offsets
+use characters rather than the binder's byte columns. A source-only repair must
+parse successfully before fields are published and consumes the caller's compile
+budget. It is never executed. Nested assignment targets, failed repairs and
+prior-compound parser metadata keep their explicit boundaries.
