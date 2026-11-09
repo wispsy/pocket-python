@@ -67,7 +67,7 @@ function activation(program, {maxSteps = 10_000, maxWork = 1_000_000, maxDepth =
       return () => { if (prepend) value.traceback.shift(); else value.traceback.pop(); };
     });
   };
-  const exception = (name, message, args = null, codec = null, attribute = null) => {
+  const exception = (name, message, args = null, codec = null, attribute = null, syntax = false) => {
     if (attribute) {
       state.temporaries.push(attribute.receiver);
       if (typeof attribute.key !== "string") state.temporaries.push(attribute.key);
@@ -99,6 +99,12 @@ function activation(program, {maxSteps = 10_000, maxWork = 1_000_000, maxDepth =
     if (codec && verified.code.version >= 4) {
       for (const [index, key] of ["encoding", "object", "start", "end", "reason"].entries()) error.nativeFields.set(key, args[index]);
       error.unicodeFields = 7;
+    }
+    if (syntax && verified.code.version >= 4) {
+      error.nativeFields.set("msg", args[0]);
+      for (const [index, key] of ["filename", "lineno", "offset", "text", "end_lineno", "end_offset"].entries())
+        error.nativeFields.set(key, args[1].items[index]);
+      error.nativeFields.set("_metadata", syntax.metadata);
     }
     const active = state.frames.at(-1)?.activeException;
     mutate(error, () => {
@@ -144,7 +150,7 @@ function activation(program, {maxSteps = 10_000, maxWork = 1_000_000, maxDepth =
     });
     return value;
   };
-  const python = (name, message, args = null, codec = null, attribute = null) => { throw new Raised(exception(name, message, args, codec, attribute)); };
+  const python = (name, message, args = null, codec = null, attribute = null, syntax = false) => { throw new Raised(exception(name, message, args, codec, attribute, syntax)); };
   const nameError = (message, key) => {
     const error = exception("NameError", message); state.temporaries.push(error);
     const name = values.string(Array.from(key, char => char.codePointAt(0)));

@@ -14,12 +14,28 @@ const DECIMAL = new RegExp("^(?:" + DIGITS + "\\.(?:" + DIGITS + ")?|\\." + DIGI
 const width = point => point <= 0x7f ? 1 : point <= 0x7ff ? 2 : point <= 0xffff ? 3 : 4;
 
 export class SourceError extends Error {
-  constructor(code, message, {filename = "<input>", span = [1, 1, 1, 1], phase = "tokenize", name} = {}) {
+  constructor(code, message, {filename = "<input>", span = [1, 1, 1, 1], phase = "tokenize", name, syntax} = {}) {
     super(message); this.code = code; this.phase = phase;
     this.name = name || ({SYNTAX: "SyntaxError", UNSUPPORTED: "UnsupportedSyntaxError",
       COMPILE_BUDGET: "CompileLimitError", CANCELLED: "CompileCancelled"}[code] || "SourceError");
     this.location = Object.freeze({filename, span: Object.freeze([...span])});
+    if (syntax) this.syntax = Object.freeze({...syntax});
   }
+}
+
+// Parser spans use UTF-8 byte columns. Native syntax fields use character
+// offsets and a diagnostic-specific text/end range, independently of host spans.
+export function syntaxDiagnostic(source, filename, msg, span, {newline = true, text = true, endOffset} = {}) {
+  const lines = source.split("\n"), line = lines[span[0] - 1] ?? "";
+  const column = (line, byte) => {
+    let bytes = 1, count = 1;
+    for (const char of line) { if (bytes >= byte) break; bytes += width(char.codePointAt(0)); count++; }
+    return count;
+  };
+  const offset = column(line, span[1]);
+  return {msg, filename, lineno: span[0], offset,
+    text: text ? line + (newline || span[0] < lines.length ? "\n" : "") : null,
+    end_lineno: span[2], end_offset: endOffset ?? column(lines[span[2] - 1] ?? "", span[3])};
 }
 
 class Scanner {

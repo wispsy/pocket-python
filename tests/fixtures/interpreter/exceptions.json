@@ -64,7 +64,8 @@
     "LA60",
     "LA61",
     "LA62",
-    "LA62C"
+    "LA62C",
+    "LA64"
   ],
   "cases": [
     {
@@ -3094,11 +3095,9 @@
       "stdout": "bad (original.py, line 1)\n"
     },
     {
-      "stage": "Future",
+      "stage": "LA64",
       "id": "syntax-error-parser-fields-deferred",
       "source": "try: compile(\"if\", \"selected.py\", \"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
-      "owner": "#124",
-      "boundary": "Parser-generated native SyntaxError fields and suggestions retain their separate contract",
       "stdout": "selected.py\n"
     },
     {

@@ -42,7 +42,7 @@ export function completion(kind, fields = {}) {
       record = {kind, name: fields.name, globals: fields.globals ?? null, locals: fields.locals ?? null, fromlist: fields.fromlist,
         level: fields.level, package: fields.package ?? null, target: fields.target ?? null, module: fields.module ?? null,
         iterator: fields.iterator ?? null, outer: fields.outer ?? null, recursive: fields.recursive ?? false, visits: fields.visits ?? 0, item: fields.item ?? null, after}; break;
-    case "compile-argument": record = {kind, args: operands(fields.args), position: fields.position, after}; break;
+    case "compile-argument": record = {kind, args: operands(fields.args), filenameValue: fields.filenameValue ?? null, position: fields.position, after}; break;
     case "arithmetic-order":
       record = {kind, task: fields.task, phase: fields.phase, candidate: fields.candidate ?? null, after};
       if (!["right", "left", "compare", "truth"].includes(record.phase)) throw new TypeError("Invalid arithmetic priority phase.");
@@ -404,7 +404,7 @@ function visit(record) {
     case "import-argument": case "import-package": case "import-spec": case "import-spec-parent": case "import-name": case "import-path":
     case "import-fromlist-path": case "import-loaded": case "import-truth": case "import-iterator": case "import-next": case "import-member": case "import-all-probe": case "import-all": case "import-child-loaded":
     case "import-statement-locals": case "import-statement-call": return [record.name, record.globals, record.locals, record.fromlist, record.module, record.iterator, record.outer, record.item, ...completionRoots(record.after)];
-    case "compile-argument": return [...record.args.filter(item => typeof item !== "string"), ...completionRoots(record.after)];
+    case "compile-argument": return [record.filenameValue, ...record.args.filter(item => typeof item !== "string"), ...completionRoots(record.after)];
     case "new-result": return [record.type, ...record.args, ...record.keywordValues, ...completionRoots(record.after)];
     case "class-created": return [record.cell, ...completionRoots(record.after)];
     case "frame-update-get": case "frame-update-map": return [record.receiver, record.source, record.keys, ...completionRoots(record.after)];
