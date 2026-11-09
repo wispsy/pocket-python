@@ -65,7 +65,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     ready()
                     for case in corpus['cases']:
                         if (case.get('modules') or
-                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75'} or
+                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A'} or
                             containers and case['stage'] not in {'LA-7', 'LA-6A'} or
                             exceptions and case['stage'] not in {'LA13', 'LA16', 'LA19', 'LA22', 'LA25', 'LA28', 'LA31', 'LA34', 'LA37', 'LA40', 'LA43', 'LA46', 'LA49', 'LA52', 'LA55', 'LA58', 'LA61', 'LA62C'}):
                             continue

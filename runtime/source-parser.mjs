@@ -87,7 +87,7 @@ class Parser {
       value.literal.type === "bool" ? value.literal.value ? "True" : "False" : "literal";
     if (value.kind === "Comprehension") label = value.form === "generator" ? "generator expression" : value.form + " comprehension";
     let syntax;
-    if (label && (!nested || action === "delete")) {
+    if (label && action !== "nested" && (!nested || action === "delete")) {
       let chain = action === "chain", depth = 0;
       const hint = !["lambda", "yield", "*"].includes(this.peek().value);
       if (action === "assign") for (const token of this.tokens.slice(this.index)) {
@@ -129,7 +129,7 @@ class Parser {
     }
     if (value.kind === "Starred") {
       if (deletion || !nested) this.fail("A starred target requires an assignment sequence.", value);
-      this.target(value.value, false, false); return;
+      this.target(value.value, false, false, "nested"); return;
     }
     if (this.classes && value.kind === "Attribute") return;
     if (value.kind === "Subscript" && (this.classes || value.index.kind !== "Slice")) return;

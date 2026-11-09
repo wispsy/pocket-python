@@ -109,8 +109,13 @@ Argument snapshots, native fields and parser metadata retain their independent
 identity/mutation behavior. The example and installed offline console include
 fresh source, original dynamic frames, Stop/Restart and reduced-profile updates.
 
-The resulting fixed generated-syntax corpus contains 420 cases: 400 supported
-semantic/error comparisons and 20 explicit native-field refusals, with no scored
+LA-75A preserves declaration order when selecting missing nonlocal bindings,
+including later reads of other declared names. Invalid operands inside starred
+targets retain the nested-target field boundary instead of inheriting an
+ordinary assignment hint.
+
+The resulting fixed generated-syntax corpus contains 428 cases: 406 supported
+semantic/error comparisons and 22 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
 These finite observations do not measure overall Python compatibility. #600/A2,
