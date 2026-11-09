@@ -743,7 +743,7 @@
     },
     {
       "path": "runtime/source-compiler.mjs",
-      "site": "fail(message, node, code = \"UNSUPPORTED\", phase = \"compile\") {",
+      "site": "fail(message, node, code = \"UNSUPPORTED\", phase = \"compile\", syntax) {",
       "owner": "boundary:source-profile",
       "boundary": "Finite profile/UTF-8/identifier/registry/verifier admission, with generic parser forwarding to the exact refusal site."
     },

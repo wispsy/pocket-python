@@ -64,3 +64,23 @@ LA-68 qualifies out-of-scope return, break and continue after full parsing and b
 LA-69 composes indentation/control-flow errors with module factories, causes/notes, retained filename/error cycles and generator cleanup. The fixed 213-case generated-syntax corpus records 197 supported semantic/error comparisons and 16 explicit native-field refusals; no divergences or untested cases are credited as supported. It is separate from the 2,443-case ordinary exception corpus (2,388 supported, 55 refused) and its 7 host/crash/cache qualifications. Dynamic source remains in classes-source/1. Library/package certification, A2, #124 and the independent candidate/release gates remain open.
 
 A suspended flags-index conversion can release the caller's filename binding before compilation fails. Parked collection/cancellation/close checks keep the original filename subtype and its child graph rooted throughout that conversion, then independently through the native error fields.
+
+LA-70 adopts global/nonlocal declaration diagnostics, including parameter conflicts,
+use or assignment before a declaration, conflicting declarations, module-level
+nonlocal and missing enclosing bindings. Binding errors retain a single message
+argument; their independent native location fields use UTF-8 byte columns, absent
+source text and absent parser metadata. Conflict locations select the first
+declaration. Full grammar validation precedes binding, which precedes control-flow
+validation. Store targets do not count as name reads during scope analysis.
+
+LA-71 adds duplicate function/lambda arguments across positional-only,
+positional, keyword-only and variadic groups. Full parsing precedes the
+symbol-table check; parameter group order, normalized identifiers and private
+name mangling select the message and offending parameter. These diagnostics
+share the one-argument binding layout and independent native byte-column range.
+
+LA-72 composes binding payloads with module factories, dynamic exec/eval,
+causes/notes, cyclic filename graphs and suspended generator cleanup. Collection,
+cancellation/close and shared allocation checks cover fields after argument
+replacement. Installed offline acceptance checks fresh source, original dynamic
+frames, retained-field and cleanup Stop/Restart paths and reduced-profile updates.

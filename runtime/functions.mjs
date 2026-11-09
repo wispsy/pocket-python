@@ -103,7 +103,7 @@ function activation(program, {maxSteps = 10_000, maxWork = 1_000_000, maxDepth =
     if (syntax && verified.code.version >= 4) {
       error.nativeFields.set("msg", args[0]);
       for (const [index, key] of ["filename", "lineno", "offset", "text", "end_lineno", "end_offset"].entries())
-        error.nativeFields.set(key, args[1].items[index]);
+        error.nativeFields.set(key, syntax.details.items[index]);
       error.nativeFields.set("_metadata", syntax.metadata);
       if (!syntax.metadataQualified) error.nativeFieldBoundaries = new Set(["_metadata"]);
     }

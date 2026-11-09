@@ -73,7 +73,8 @@ export function dynamicCompiler({state, memory, values, classes, allocate, charg
         state.temporaries.push(details);
         const metadata = fields.metadata === undefined || fields.metadataQualified === false ? null : values.tuple([0n, 0n, native(fields.metadata)]);
         state.temporaries.push(metadata);
-        python(error.name, error.message, [message, details], null, null, {metadata, metadataQualified: fields.metadataQualified !== false});
+        python(error.name, error.message, fields.argumentLocation === false ? [message] : [message, details], null, null,
+          {details, metadata, metadataQualified: fields.metadataQualified !== false});
       }
       hard(error.code, error.name, error.message);
     } finally { release(); }
