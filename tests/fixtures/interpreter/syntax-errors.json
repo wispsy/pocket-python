@@ -10,7 +10,8 @@
     "LA66A",
     "LA67",
     "LA68",
-    "LA69"
+    "LA69",
+    "LA70"
   ],
   "cases": [
     {
@@ -1255,11 +1256,9 @@
     },
     {
       "id": "control-binding-precedence-boundary",
-      "stage": "Future",
+      "stage": "LA70",
       "source": "try: compile(\"return 7\\nnonlocal value\", \"binding.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
-      "stdout": "binding.py\n",
-      "owner": "#124",
-      "boundary": "Control-flow native fields follow binding validation; unqualified binder diagnostics retain their field-read boundary."
+      "stdout": "binding.py\n"
     },
     {
       "id": "control-single-eof-0",
@@ -1346,6 +1345,192 @@
       "stage": "LA69",
       "source": "class Name(str): pass\nfilename=Name(\"converted.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile(\"if\",filename,\"exec\",Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.filename,e.offset)\n",
       "stdout": "entered\n7 True converted.py 3\n"
+    },
+    {
+      "id": "binding-declaration-0-exec",
+      "stage": "LA70",
+      "source": "try: compile('nonlocal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError nonlocal declaration not allowed at module level\nselected/雪.py 1 1 1 11 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-0-single",
+      "stage": "LA70",
+      "source": "try: compile('nonlocal x',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError nonlocal declaration not allowed at module level\nselected/雪.py 1 1 1 11 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-1-exec",
+      "stage": "LA70",
+      "source": "try: compile('nonlocal 雪',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError nonlocal declaration not allowed at module level\nselected/雪.py 1 1 1 13 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-1-single",
+      "stage": "LA70",
+      "source": "try: compile('nonlocal 雪',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError nonlocal declaration not allowed at module level\nselected/雪.py 1 1 1 13 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-2-exec",
+      "stage": "LA70",
+      "source": "try: compile('global x\\nnonlocal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is nonlocal and global\nselected/雪.py 1 1 1 9 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-3-exec",
+      "stage": "LA70",
+      "source": "try: compile('nonlocal x\\nglobal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is nonlocal and global\nselected/雪.py 1 1 1 11 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-4-exec",
+      "stage": "LA70",
+      "source": "try: compile('x=1\\nglobal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is assigned to before global declaration\nselected/雪.py 2 1 2 9 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-5-exec",
+      "stage": "LA70",
+      "source": "try: compile('print(x)\\nglobal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is used prior to global declaration\nselected/雪.py 2 1 2 9 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-6-exec",
+      "stage": "LA70",
+      "source": "try: compile('x=1\\nprint(x)\\nglobal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is used prior to global declaration\nselected/雪.py 3 1 3 9 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-7-exec",
+      "stage": "LA70",
+      "source": "try: compile('del x\\nglobal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is assigned to before global declaration\nselected/雪.py 2 1 2 9 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-8-exec",
+      "stage": "LA70",
+      "source": "try: compile('x+=1\\nglobal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is assigned to before global declaration\nselected/雪.py 2 1 2 9 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-9-exec",
+      "stage": "LA70",
+      "source": "try: compile('global x\\nx=1\\nglobal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is assigned to before global declaration\nselected/雪.py 3 1 3 9 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-10-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f(x):\\n global x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is parameter and global\nselected/雪.py 2 2 2 10 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-11-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f(x):\\n nonlocal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is parameter and nonlocal\nselected/雪.py 2 2 2 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-12-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f():\\n nonlocal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'x' found\nselected/雪.py 2 2 2 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-13-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f():\\n global x\\n nonlocal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is nonlocal and global\nselected/雪.py 2 2 2 10 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-14-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f():\\n nonlocal x\\n global x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is nonlocal and global\nselected/雪.py 2 2 2 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-15-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f():\\n x=1\\n nonlocal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is assigned to before nonlocal declaration\nselected/雪.py 3 2 3 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-16-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f():\\n print(x)\\n nonlocal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'x' is used prior to nonlocal declaration\nselected/雪.py 3 2 3 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-17-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f():\\n global x,y\\n nonlocal y',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name 'y' is nonlocal and global\nselected/雪.py 2 2 2 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-18-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f():\\n nonlocal z,a',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'z' found\nselected/雪.py 2 2 2 14 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-19-exec",
+      "stage": "LA70",
+      "source": "try: compile('class C:\\n global __x\\n nonlocal __x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name '_C__x' is nonlocal and global\nselected/雪.py 2 2 2 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-20-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f(雪):\\n global 雪',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name '雪' is parameter and global\nselected/雪.py 2 2 2 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-21-exec",
+      "stage": "LA70",
+      "source": "try: compile('雪=1; global 雪',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name '雪' is assigned to before global declaration\nselected/雪.py 1 8 1 18 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-21-single",
+      "stage": "LA70",
+      "source": "try: compile('雪=1; global 雪',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError name '雪' is assigned to before global declaration\nselected/雪.py 1 8 1 18 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-22-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f():\\n def g():\\n  nonlocal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'x' found\nselected/雪.py 3 3 3 13 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-23-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f():\\n global x\\n def g():\\n  nonlocal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'x' found\nselected/雪.py 4 3 4 13 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-24-exec",
+      "stage": "LA70",
+      "source": "try: compile('def f():\\n class C:\\n  x=1\\n  def g():\\n   nonlocal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'x' found\nselected/雪.py 5 4 5 14 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-field-argument-independence",
+      "stage": "LA70",
+      "source": "class Name(str): pass\nname=Name(\"binding.py\")\ntry: compile(\"nonlocal x\",name,\"exec\")\nexcept SyntaxError as e:\n old=e.args\n print(e.filename is name,len(old),e._metadata is None)\n e.args=(\"changed\",)\n print(e.msg,e.filename is name,e.lineno,e.offset,e.end_lineno,e.end_offset)\n e.filename=None\n print(old[0] is e.msg,e.filename is None)\n",
+      "stdout": "True 1 True\nnonlocal declaration not allowed at module level True 1 1 1 11\nTrue True\n"
+    },
+    {
+      "id": "binding-later-grammar-priority",
+      "stage": "LA70",
+      "source": "try: compile('nonlocal x\\nvalue=',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError invalid syntax\nselected/雪.py 2 7 2 8 'value=\\n'\n2 True True False\n"
+    },
+    {
+      "id": "binding-before-control-priority",
+      "stage": "LA70",
+      "source": "try: compile('return 7\\nnonlocal value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError nonlocal declaration not allowed at module level\nselected/雪.py 2 1 2 15 None\n1 True True True\n"
     }
   ]
 }

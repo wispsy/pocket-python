@@ -23,8 +23,13 @@ class Compiler {
     this.instructions = 0; this.blocks = 0; this.tempSerial = 0;
     this.namespaceEvents = new Map();
   }
-  fail(message, node, code = "UNSUPPORTED", phase = "compile") {
-    throw new SourceError(code, message, {filename: this.parsed.filename, span: node.span, phase});
+  fail(message, node, code = "UNSUPPORTED", phase = "compile", syntax) {
+    throw new SourceError(code, message, {filename: this.parsed.filename, span: node.span, phase, syntax});
+  }
+  bindingError(message, node, nativeMessage, site = node) {
+    const syntax = {...syntaxDiagnostic(this.parsed.source, this.parsed.filename, nativeMessage, site.span, {text: false}),
+      offset: site.span[1], end_offset: site.span[3], argumentLocation: false};
+    this.fail(message, node, "SYNTAX", "bind", syntax);
   }
   charge(node, amount = 1) {
     this.options.onWork?.(amount);
@@ -82,7 +87,7 @@ class Compiler {
   bind(node, parent = null) {
     this.charge(node);
     if (this.scopes.length >= FUNCTION_LIMITS.functions) this.fail("Function budget exceeded.", node, "COMPILE_BUDGET", "bind");
-    const scope = {node, parent, locals: new Set(), uses: new Set(), free: new Set(), globals: new Set(), nonlocals: new Set(), assigned: new Set(), index: this.scopes.length,
+    const scope = {node, parent, locals: new Set(), uses: new Set(), free: new Set(), globals: new Set(), nonlocals: new Set(), assigned: new Set(), declarations: new Map(), index: this.scopes.length,
       qualname: parent === null ? "<module>" : !parent.parent ? node.name :
         parent.qualname + (parent.node.kind === "Class" ? "." : ".<locals>.") + node.name};
     this.scopes.push(scope); this.scopeOf.set(node, scope);
@@ -108,8 +113,9 @@ class Compiler {
       scope.assigned.add(name);
       if (!scope.globals.has(name) && !scope.nonlocals.has(name)) scope.locals.add(name);
     };
+    const storedNames = new WeakSet();
     const target = value => {
-      if (value.kind === "Name") binding(value.name, value);
+      if (value.kind === "Name") { binding(value.name, value); storedNames.add(value); }
       else if (["List", "Tuple"].includes(value.kind)) value.items.forEach(target);
       else if (value.kind === "Starred") target(value.value);
     };
@@ -118,11 +124,11 @@ class Compiler {
       if (value.kind === "Declaration") {
         for (const key of value.names) {
           const global = value.declaration === "global";
-          if (!global && !scope.parent) this.fail("Nonlocal declaration is not allowed at module level.", value, "SYNTAX", "bind");
           if (["Function", "Lambda"].includes(node.kind) && Object.values(node.params).flat().some(param => param.name === key))
-            this.fail("A parameter conflicts with a scope declaration.", value, "SYNTAX", "bind");
-          if ((global ? scope.nonlocals : scope.globals).has(key)) this.fail("A name is both global and nonlocal.", value, "SYNTAX", "bind");
-          if (scope.uses.has(key) || scope.assigned.has(key)) this.fail("A name is used or assigned before its scope declaration.", value, "SYNTAX", "bind");
+            this.bindingError("A parameter conflicts with a scope declaration.", value, "name '" + key + "' is parameter and " + value.declaration);
+          if (scope.uses.has(key) || scope.assigned.has(key)) this.bindingError("A name is used or assigned before its scope declaration.", value,
+            "name '" + key + "' is " + (scope.uses.has(key) ? "used prior to " : "assigned to before ") + value.declaration + " declaration");
+          if (!scope.declarations.has(key)) scope.declarations.set(key, value);
           (global ? scope.globals : scope.nonlocals).add(key); scope.locals.delete(key);
         }
         return;
@@ -134,7 +140,7 @@ class Compiler {
         else for (const group of Object.values(value.params)) for (const param of group) if (param.value) visit(param.value);
         this.bind(value, scope); return;
       }
-      if (value.kind === "Name") {
+      if (value.kind === "Name" && !storedNames.has(value)) {
         scope.uses.add(value.name);
         if (this.classes && value.name === "super" && ["Function", "Lambda"].includes(node.kind)) scope.uses.add("__class__");
       }
@@ -210,6 +216,12 @@ class Compiler {
     const root = this.comprehensions(this.parsed.module);
     this.bind(this.classes ? this.privateNames(root) : root);
     for (const scope of this.scopes) {
+      for (const [key, site] of scope.declarations) {
+        if (scope.globals.has(key) && scope.nonlocals.has(key))
+          this.bindingError("A name is both global and nonlocal.", site, "name '" + key + "' is nonlocal and global");
+        if (scope.nonlocals.has(key) && !scope.parent)
+          this.bindingError("Nonlocal declaration is not allowed at module level.", site, "nonlocal declaration not allowed at module level");
+      }
       if (scope.locals.has("__debug__") || scope.assigned.has("__debug__")) this.fail("Cannot assign to or delete __debug__.", scope.node, "SYNTAX", "bind");
       if ([...scope.locals, ...scope.uses].some(name => ["None", "True", "False"].includes(name)))
         this.fail("A normalized identifier cannot name a reserved constant.", scope.node, "UNSUPPORTED", "bind");
@@ -232,7 +244,8 @@ class Compiler {
         owner = owner.parent;
       }
       if (!owner?.parent) {
-        if (scope.nonlocals.has(name)) this.fail("No binding for nonlocal name in an enclosing function.", scope.node, "SYNTAX", "bind");
+        if (scope.nonlocals.has(name)) this.bindingError("No binding for nonlocal name in an enclosing function.", scope.node,
+          "no binding for nonlocal '" + name + "' found", scope.declarations.get(name) ?? scope.node);
         continue;
       }
       for (let current = scope; current !== owner; current = current.parent) { this.charge(scope.node); current.free.add(name); }
