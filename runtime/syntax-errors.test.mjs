@@ -20,8 +20,7 @@ for (const item of corpus.cases) for (const languageProfile of item.profiles ?? 
     closed(result.closed);
   });
 
-test('dynamic syntax fields retain cyclic filename owners through collection and interruption', async () => {
-  const source = 'class Name(str): pass\nfilename=Name("original.py")\ntry: compile("雪=",filename,"exec")\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint("entered")\nprint(e.filename.error is e,e.msg,e.offset,repr(e._metadata[2]))\n';
+async function lifetime(source, expected) {
   const {registry} = await compileSourceModules([unit(source)], {languageProfile: corpus.profile});
   try { for (const mode of ['finish', 'cancel', 'close']) {
     const session = new ModuleSession(registry); let stdout = '', cancel = false, reached = false;
@@ -38,14 +37,22 @@ test('dynamic syntax fields retain cyclic filename owners through collection and
         }
       }
       assert.ok(reached);
-      if (mode === 'finish') assert.equal(stdout, "entered\nTrue invalid syntax 3 '雪=\\n'\n");
+      if (mode === 'finish') assert.equal(stdout, expected);
     } finally { execution.close(); session.context.finish(); session.close(); }
     closed(session.stats());
   } } finally { registry.close(); }
+}
+
+test('dynamic syntax fields retain cyclic filename owners through collection and interruption', async () => {
+  const source = 'class Name(str): pass\nfilename=Name("original.py")\ntry: compile("雪=",filename,"exec")\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint("entered")\nprint(e.filename.error is e,e.msg,e.offset,repr(e._metadata[2]))\n';
+  await lifetime(source, "entered\nTrue invalid syntax 3 '雪=\\n'\n");
 });
 
-test('retained generated syntax payloads share allocation limits', async () => {
-  const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile("if","selected.py","exec")\n except SyntaxError as e: held.append(e)\n')],
+for (const item of corpus.cases.filter(item => item.id.endsWith('owner-cycle')))
+  test(item.id + ' survives collection, cancellation and close', async () => lifetime(item.source, item.stdout));
+
+for (const source of ['if', 'if True:\nvalue=7', 'return 7']) test('retained ' + JSON.stringify(source) + ' payloads share allocation limits', async () => {
+  const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile(' + JSON.stringify(source) + ',"selected.py","exec")\n except SyntaxError as e: held.append(e)\n')],
     compileOptions: {languageProfile: corpus.profile}, memoryLimits: {maxBytes: 100000}, options: {maxSteps: 50000, maxWork: 20000000}});
   assert.equal(result.stdout, 'ready\n'); assert.equal(result.error?.code, 'OOM', JSON.stringify(result.error)); closed(result.closed);
 });

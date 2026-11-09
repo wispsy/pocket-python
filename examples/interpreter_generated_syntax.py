@@ -10,7 +10,7 @@ def validate(source, filename):
     return None
 
 
-for source in ["雪=", "record=[", "value='unfinished"]:
+for source in ["雪=", "record=[", "value='unfinished", "if True:\nvalue=7", "return 雪"]:
     error = validate(source, "records/input.py")
     original = error.args
     error.args = ()
