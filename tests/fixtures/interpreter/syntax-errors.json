@@ -6,7 +6,8 @@
   "implemented_stages": [
     "LA64",
     "LA65",
-    "LA66"
+    "LA66",
+    "LA66A"
   ],
   "cases": [
     {
@@ -628,6 +629,68 @@
       "error_type": "SyntaxError",
       "stage": "LA66",
       "stdout": "input.py 3\n"
+    },
+    {
+      "id": "parser-completed-compound-fields-0",
+      "stage": "LA66A",
+      "source": "try: compile('if True:\\n pass\\nx=',\"compound.py\",\"exec\")\nexcept SyntaxError as e: print(e.msg,e.filename,e.lineno,e.offset,repr(e.text))\n",
+      "stdout": "invalid syntax compound.py 3 3 'x=\\n'\n"
+    },
+    {
+      "id": "parser-completed-compound-metadata-0",
+      "stage": "Future",
+      "source": "try: compile('if True:\\n pass\\nx=',\"compound.py\",\"exec\")\nexcept SyntaxError as e: print(SyntaxError._metadata.__get__(e))\n",
+      "stdout": "(1, 0, 'if True:\\n pass\\nx=\\n')\n",
+      "owner": "#124",
+      "boundary": "Second-pass statement registration in parser _metadata is not inferred after a completed compound statement."
+    },
+    {
+      "id": "parser-completed-compound-fields-1",
+      "stage": "LA66A",
+      "source": "try: compile('class A:\\n pass\\nx=',\"compound.py\",\"exec\")\nexcept SyntaxError as e: print(e.msg,e.filename,e.lineno,e.offset,repr(e.text))\n",
+      "stdout": "invalid syntax compound.py 3 3 'x=\\n'\n"
+    },
+    {
+      "id": "parser-completed-compound-metadata-1",
+      "stage": "Future",
+      "source": "try: compile('class A:\\n pass\\nx=',\"compound.py\",\"exec\")\nexcept SyntaxError as e: print(SyntaxError._metadata.__get__(e))\n",
+      "stdout": "(1, 0, 'class A:\\n pass\\nx=\\n')\n",
+      "owner": "#124",
+      "boundary": "Second-pass statement registration in parser _metadata is not inferred after a completed compound statement."
+    },
+    {
+      "id": "parser-completed-compound-fields-2",
+      "stage": "LA66A",
+      "source": "try: compile('def f():\\n pass\\nx=',\"compound.py\",\"exec\")\nexcept SyntaxError as e: print(e.msg,e.filename,e.lineno,e.offset,repr(e.text))\n",
+      "stdout": "invalid syntax compound.py 3 3 'x=\\n'\n"
+    },
+    {
+      "id": "parser-completed-compound-metadata-2",
+      "stage": "Future",
+      "source": "try: compile('def f():\\n pass\\nx=',\"compound.py\",\"exec\")\nexcept SyntaxError as e: print(SyntaxError._metadata.__get__(e))\n",
+      "stdout": "(0, 0, 'def f():\\n pass\\nx=\\n')\n",
+      "owner": "#124",
+      "boundary": "Second-pass statement registration in parser _metadata is not inferred after a completed compound statement."
+    },
+    {
+      "id": "parser-completed-compound-fields-3",
+      "stage": "LA66A",
+      "source": "try: compile('if True:\\n if True: pass\\n x=',\"compound.py\",\"exec\")\nexcept SyntaxError as e: print(e.msg,e.filename,e.lineno,e.offset,repr(e.text))\n",
+      "stdout": "invalid syntax compound.py 3 4 ' x=\\n'\n"
+    },
+    {
+      "id": "parser-completed-compound-metadata-3",
+      "stage": "Future",
+      "source": "try: compile('if True:\\n if True: pass\\n x=',\"compound.py\",\"exec\")\nexcept SyntaxError as e: print(SyntaxError._metadata.__get__(e))\n",
+      "stdout": "(2, 1, 'if True:\\n if True: pass\\n x=\\n')\n",
+      "owner": "#124",
+      "boundary": "Second-pass statement registration in parser _metadata is not inferred after a completed compound statement."
+    },
+    {
+      "id": "parser-compound-metadata-replacement",
+      "stage": "LA66A",
+      "source": "try: compile(\"if True:\\n pass\\nx=\",\"compound.py\",\"exec\")\nexcept SyntaxError as e:\n value=[]\n SyntaxError._metadata.__set__(e,value)\n print(e._metadata is value,e.msg,e.filename)\n",
+      "stdout": "True invalid syntax compound.py\n"
     }
   ]
 }

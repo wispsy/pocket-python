@@ -70,9 +70,9 @@ export function dynamicCompiler({state, memory, values, classes, allocate, charg
         const message = native(fields.msg), details = values.tuple(
           [nativeFilename, fields.lineno, fields.offset, fields.text, fields.end_lineno, fields.end_offset].map(native));
         state.temporaries.push(details);
-        const metadata = fields.metadata === undefined ? null : values.tuple([0n, 0n, native(fields.metadata)]);
+        const metadata = fields.metadata === undefined || fields.metadataQualified === false ? null : values.tuple([0n, 0n, native(fields.metadata)]);
         state.temporaries.push(metadata);
-        python(error.name, error.message, [message, details], null, null, {metadata});
+        python(error.name, error.message, [message, details], null, null, {metadata, metadataQualified: fields.metadataQualified !== false});
       }
       hard(error.code, error.name, error.message);
     } finally { release(); }
