@@ -18,6 +18,13 @@ tuple. Exact and subtype string filenames retain their original identity;
 byte filenames decode to strings. Source and line endings are normalized by
 the existing compiler. `single` and `eval` retain their EOF offset/text behavior.
 
+LA-66A retains an independent `_metadata` field-read boundary after a completed
+compound statement. CPython's second diagnostic pass records statement state
+that this parser has not adopted. Native message/location fields and argument
+snapshots remain readable; replacing the native metadata field clears that
+field's boundary normally. Lexical errors retain their separately qualified
+zero-statement metadata.
+
 The [source corpus](../tests/fixtures/interpreter/syntax-errors.json) runs through
 Node and Chromium draining, stepping and parked execution. Tests also collect
 cyclic filename/error graphs between instructions and check cancellation,
@@ -47,3 +54,5 @@ source fields after replacing arguments. Installed offline acceptance checks
 fresh source and original dynamic frames, stops a retained-payload loop and
 generator cleanup, restarts with fresh state and applies a reduced-profile
 update that retains the core dynamic-compilation boundary.
+
+Primary references: the pinned [diagnostic payload](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen_errors.c), [parser metadata](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen.c) and [statement registration](https://github.com/python/cpython/blob/v3.14.7/Parser/action_helpers.c).

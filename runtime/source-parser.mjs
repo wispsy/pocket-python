@@ -27,6 +27,7 @@ class Parser {
     this.previous = this.tokens[0]; this.work = this.lexed.stats.work; this.nodes = 0; this.depth = 0;
     this.functionDepth = 0; this.loopDepth = 0; this.heights = new WeakMap();
     this.refusal = null; this.typeExpression = false; this.grouped = new WeakSet();
+    this.completedCompound = false;
     this.maxNodes = options.maxNodes ?? PARSER_LIMITS.nodes;
     this.maxDepth = options.maxParseDepth ?? PARSER_LIMITS.depth;
     for (const [value, cap] of [[this.maxNodes, PARSER_LIMITS.nodes], [this.maxDepth, PARSER_LIMITS.depth]])
@@ -109,7 +110,7 @@ class Parser {
       stats: {...this.lexed.stats, work: this.work, nodes: this.nodes}});
   }
   statement() {
-    return this.guard(() => {
+    const result = this.guard(() => {
       if (this.kind("indent") || this.kind("dedent")) this.fail("Unexpected indentation.", this.peek(), "SYNTAX", "IndentationError");
       if (this.at("@") && this.classes) return [this.decorated()];
       if (this.at("def")) return [this.definition()];
@@ -121,6 +122,8 @@ class Parser {
         "Async and context managers require later stages." : "Classes, async, context managers and decorators are not adopted.");
       return this.simpleLine();
     });
+    if (result.some(node => ["If", "While", "For", "Try", "Class", "Function"].includes(node.kind))) this.completedCompound = true;
+    return result;
   }
   suite() {
     this.expect(":");
@@ -647,6 +650,7 @@ class Parser {
         Array.from(this.lexed.source.slice(lineStart, comment)).length + 1 : syntax.offset;
       syntax.end_offset = implicit ? 0 : Array.from(line).length + 2;
       syntax.metadata = this.lexed.source + (!this.options.mode || this.options.mode === "exec" ? this.lexed.source.endsWith("\n") ? "" : "\n" : "");
+      syntax.metadataQualified = !this.completedCompound;
     }
     this.fail("Expected an expression.", start, "SYNTAX", undefined, syntax);
   }
