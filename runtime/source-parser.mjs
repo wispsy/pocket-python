@@ -28,6 +28,7 @@ class Parser {
     this.functionDepth = 0; this.loopDepth = 0; this.heights = new WeakMap();
     this.refusal = null; this.typeExpression = false; this.grouped = new WeakSet();
     this.completedCompound = false;
+    this.controlError = null;
     this.maxNodes = options.maxNodes ?? PARSER_LIMITS.nodes;
     this.maxDepth = options.maxParseDepth ?? PARSER_LIMITS.depth;
     for (const [value, cap] of [[this.maxNodes, PARSER_LIMITS.nodes], [this.maxDepth, PARSER_LIMITS.depth]])
@@ -110,9 +111,15 @@ class Parser {
       body.push(...this.statement());
     }
     if (mode === "single" && !body.length) this.fail("invalid syntax");
+    if (mode === "single" && this.controlError && !this.lexed.source.endsWith("\n") && ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind)) {
+      const last = this.tokens.filter(token => !["newline", "eof", "indent", "dedent"].includes(token.kind)).at(-1);
+      const lines = this.lexed.source.split("\n");
+      this.controlError.qualified = last.span[2] === lines.length && /^[ \t\f]+\S/.test(lines.at(-1)) && /^[ \t]*$/.test(this.lexed.source.slice(last.end));
+    }
     if (this.refusal) this.unsupported(this.refusal.message, this.refusal.node);
     const module = this.node("Module", start, {body});
     return freezeSourceTree({module, source: this.lexed.source, filename: this.filename, languageProfile: this.languageProfile,
+      ...(this.controlError ? {controlError: this.controlError} : {}),
       stats: {...this.lexed.stats, work: this.work, nodes: this.nodes}});
   }
   statement() {
@@ -192,12 +199,14 @@ class Parser {
     if (this.eat("pass")) return this.node("Pass", start);
     if (this.at("break") || this.at("continue")) {
       const op = this.take().value;
-      if (!this.loopDepth) this.fail(op + " outside a loop.", start);
-      return this.node(op === "break" ? "Break" : "Continue", start);
+      const node = this.node(op === "break" ? "Break" : "Continue", start);
+      if (!this.loopDepth) this.controlError ??= {kind: op, token: start, node};
+      return node;
     }
     if (this.eat("return")) {
-      if (!this.functionDepth) this.fail("Return outside a function.", start);
-      return this.node("Return", start, {value: this.ending() ? null : this.expressionList()});
+      const node = this.node("Return", start, {value: this.ending() ? null : this.expressionList()});
+      if (!this.functionDepth) this.controlError ??= {kind: "return", token: start, node};
+      return node;
     }
     if (this.eat("raise")) {
       const value = this.ending() ? null : this.expression();

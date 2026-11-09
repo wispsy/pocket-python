@@ -1,4 +1,5 @@
 import {compileSource} from "./source-compiler.mjs";
+import {parseSource} from "./source-parser.mjs";
 import {SourceError} from "./source-tokens.mjs";
 import {verifyFunctions} from "./function-bytecode.mjs";
 import {CodePool, InstanceValue} from "./function-objects.mjs";
@@ -51,7 +52,7 @@ export function dynamicCompiler({state, memory, values, classes, allocate, charg
       if (!(error instanceof SourceError)) throw error;
       if (error.code === "SYNTAX") {
         if (error.syntax?.repair !== undefined) {
-          try { compileSource(error.syntax.repair, {filename, mode, optimize,
+          try { parseSource(error.syntax.repair, {filename, mode,
             languageProfile: state.frames.at(-1).pool.code.version === 5 ? "classes-source/1" : "core-source/1", onWork: charge}); }
           catch (repairError) {
             if (!(repairError instanceof SourceError)) throw repairError;
