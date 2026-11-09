@@ -5,7 +5,8 @@
   "profile": "classes-source/1",
   "implemented_stages": [
     "LA64",
-    "LA65"
+    "LA65",
+    "LA66"
   ],
   "cases": [
     {
@@ -579,6 +580,54 @@
       "stdout": "unqualified.py\n",
       "owner": "#124",
       "boundary": "Lexical native fields require a successfully compiled diagnostic repair; other parser precedence remains qualified separately."
+    },
+    {
+      "id": "generated-syntax-example",
+      "source": "\"\"\"Inspect generated syntax failures without losing their original source.\"\"\"\n\n\ndef validate(source, filename):\n    try:\n        compile(source, filename, \"exec\")\n    except SyntaxError as error:\n        error.add_note(\"supplied record\")\n        return error\n    return None\n\n\nfor source in [\"雪=\", \"record=[\", \"value='unfinished\"]:\n    error = validate(source, \"records/input.py\")\n    original = error.args\n    error.args = ()\n    print(error.msg, error.filename, error.lineno, error.offset)\n    print(repr(error.text), original[1][0], error.__notes__[0])\n\n\ndef pending(source):\n    error = validate(source, \"pending.py\")\n    try:\n        yield error\n    finally:\n        print(\"cleanup\", error.filename, error.msg)\n\n\nwork = pending(\"item=(\")\nsaved = next(work)\nsaved.args = ()\nwork.close()\nprint(saved.filename, saved.end_offset)\n",
+      "stage": "LA66",
+      "stdout": "invalid syntax records/input.py 1 3\n'雪=\\n' records/input.py supplied record\n'[' was never closed records/input.py 1 8\n'record=[\\n' records/input.py supplied record\nunterminated string literal (detected at line 1) records/input.py 1 7\n\"value='unfinished\" records/input.py supplied record\ncleanup pending.py '(' was never closed\npending.py 0\n"
+    },
+    {
+      "id": "generated-syntax-module",
+      "imports": [
+        "helper"
+      ],
+      "source": "import helper\ne=helper.validate(\"雪=\", \"module-input.py\")\nprint(e.filename,e.msg,e.offset,repr(e._metadata[2]))\ne.args=()\nprint(e.__notes__[0],e.filename)\n",
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source,filename):\n try: compile(source,filename,\"exec\")\n except SyntaxError as e:\n  e.add_note(\"module record\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stage": "LA66",
+      "stdout": "module-input.py invalid syntax 3 '雪=\\n'\nmodule record module-input.py\n"
+    },
+    {
+      "id": "generated-syntax-dynamic-snapshot",
+      "source": "ns={}\nexec(compile(\"def validate(source):\\n try: compile(source,'dynamic-input.py','exec')\\n except SyntaxError as e: return e\\n\", \"validator.py\", \"exec\"),ns)\ne=ns[\"validate\"](\"value=[\")\nargs=e.args\ne.args=()\nprint(e.msg,e.filename,e.end_offset,repr(args[1][3]))\n",
+      "stage": "LA66",
+      "stdout": "'[' was never closed dynamic-input.py 0 'value=[\\n'\n"
+    },
+    {
+      "id": "generated-syntax-chaining",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile(\"if\",\"chained.py\",\"exec\")\nexcept SyntaxError as e:\n e.add_note(\"record\")\n print(e.__context__ is outer,e.__cause__ is None,e.__suppress_context__,e.filename,e.__notes__[0])\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__suppress_context__,report.__cause__.offset)\n",
+      "stage": "LA66",
+      "stdout": "True True False chained.py record\nTrue True 3\n"
+    },
+    {
+      "id": "generated-syntax-suspended-cleanup",
+      "source": "def work():\n try: compile(\"value='bad\",\"suspended.py\",\"exec\")\n except SyntaxError as e:\n  e.add_note(\"retained\")\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e.__notes__[0])\n",
+      "stage": "LA66",
+      "stdout": "cleanup suspended.py unterminated string literal (detected at line 1) 0\nsuspended.py retained\n"
+    },
+    {
+      "id": "generated-syntax-original-dynamic-failure",
+      "source": "exec(compile(\"def fail():\\n try: compile('if','input.py','exec')\\n except SyntaxError as e:\\n  print(e.filename,e.offset)\\n  raise\\nfail()\\n\", \"syntax-payload-original.py\", \"exec\"))\n",
+      "error_type": "SyntaxError",
+      "stage": "LA66",
+      "stdout": "input.py 3\n"
     }
   ]
 }
