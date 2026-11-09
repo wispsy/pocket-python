@@ -13,7 +13,11 @@
     "LA69",
     "LA70",
     "LA71",
-    "LA72"
+    "LA72",
+    "LA73",
+    "LA74",
+    "LA75",
+    "LA75A"
   ],
   "cases": [
     {
@@ -1745,6 +1749,936 @@
           "package": false
         }
       ]
+    },
+    {
+      "id": "parser-colon-0-exec",
+      "stage": "LA73",
+      "source": "try: compile('if True',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 8 1 9 'if True\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-0-single",
+      "stage": "LA73",
+      "source": "try: compile('if True',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 7 1 -1 'if True'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-1-exec",
+      "stage": "LA73",
+      "source": "try: compile('if 雪',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 5 1 6 'if 雪\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-1-single",
+      "stage": "LA73",
+      "source": "try: compile('if 雪',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 4 1 -1 'if 雪'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-2-exec",
+      "stage": "LA73",
+      "source": "try: compile('if True   ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 11 1 12 'if True   \\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-2-single",
+      "stage": "LA73",
+      "source": "try: compile('if True   ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 10 1 -1 'if True   '\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-3-exec",
+      "stage": "LA73",
+      "source": "try: compile('if True # comment',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 9 1 19 'if True # comment\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-3-single",
+      "stage": "LA73",
+      "source": "try: compile('if True # comment',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 17 1 -1 'if True # comment'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-4-exec",
+      "stage": "LA73",
+      "source": "try: compile('if True\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 8 1 9 'if True\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-4-single",
+      "stage": "LA73",
+      "source": "try: compile('if True\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 8 1 9 'if True\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-5-exec",
+      "stage": "LA73",
+      "source": "try: compile('while True\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 11 1 12 'while True\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-5-single",
+      "stage": "LA73",
+      "source": "try: compile('while True\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 11 1 12 'while True\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-6-exec",
+      "stage": "LA73",
+      "source": "try: compile('for x in []\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 12 1 13 'for x in []\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-6-single",
+      "stage": "LA73",
+      "source": "try: compile('for x in []\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 12 1 13 'for x in []\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-7-exec",
+      "stage": "LA73",
+      "source": "try: compile('def f()\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 8 1 9 'def f()\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-7-single",
+      "stage": "LA73",
+      "source": "try: compile('def f()\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 8 1 9 'def f()\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-8-exec",
+      "stage": "LA73",
+      "source": "try: compile('class C\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 8 1 9 'class C\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-8-single",
+      "stage": "LA73",
+      "source": "try: compile('class C\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 8 1 9 'class C\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-9-exec",
+      "stage": "LA73",
+      "source": "try: compile('if True: pass\\nelse\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 5 2 6 'else\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-9-single",
+      "stage": "LA73",
+      "source": "try: compile('if True: pass\\nelse\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 5 2 6 'else\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-10-exec",
+      "stage": "LA73",
+      "source": "try: compile('if True: pass\\nelif False\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 11 2 12 'elif False\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-10-single",
+      "stage": "LA73",
+      "source": "try: compile('if True: pass\\nelif False\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 11 2 12 'elif False\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-11-exec",
+      "stage": "LA73",
+      "source": "try: compile('while False: pass\\nelse\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 5 2 6 'else\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-11-single",
+      "stage": "LA73",
+      "source": "try: compile('while False: pass\\nelse\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 5 2 6 'else\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-12-exec",
+      "stage": "LA73",
+      "source": "try: compile('for x in []: pass\\nelse\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 5 2 6 'else\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-12-single",
+      "stage": "LA73",
+      "source": "try: compile('for x in []: pass\\nelse\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 5 2 6 'else\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-13-exec",
+      "stage": "LA73",
+      "source": "try: compile('try\\n pass\\nexcept: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 4 1 5 'try\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-13-single",
+      "stage": "LA73",
+      "source": "try: compile('try\\n pass\\nexcept: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 4 1 5 'try\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-14-exec",
+      "stage": "LA73",
+      "source": "try: compile('try: pass\\nexcept ValueError\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 18 2 19 'except ValueError\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-14-single",
+      "stage": "LA73",
+      "source": "try: compile('try: pass\\nexcept ValueError\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 18 2 19 'except ValueError\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-15-exec",
+      "stage": "LA73",
+      "source": "try: compile('try: pass\\nexcept ValueError as e\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 23 2 24 'except ValueError as e\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-15-single",
+      "stage": "LA73",
+      "source": "try: compile('try: pass\\nexcept ValueError as e\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 23 2 24 'except ValueError as e\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-16-exec",
+      "stage": "LA73",
+      "source": "try: compile('try: pass\\nexcept\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 7 2 8 'except\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-16-single",
+      "stage": "LA73",
+      "source": "try: compile('try: pass\\nexcept\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 7 2 8 'except\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-17-exec",
+      "stage": "LA73",
+      "source": "try: compile('try: pass\\nfinally\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 8 2 9 'finally\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-17-single",
+      "stage": "LA73",
+      "source": "try: compile('try: pass\\nfinally\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 8 2 9 'finally\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-18-exec",
+      "stage": "LA73",
+      "source": "try: compile('if True\\n x=',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 8 1 9 'if True\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-18-single",
+      "stage": "LA73",
+      "source": "try: compile('if True\\n x=',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 8 1 9 'if True\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-19-exec",
+      "stage": "LA73",
+      "source": "try: compile('def f(x,x)\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 11 1 12 'def f(x,x)\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-19-single",
+      "stage": "LA73",
+      "source": "try: compile('def f(x,x)\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 11 1 12 'def f(x,x)\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-20-exec",
+      "stage": "LA73",
+      "source": "try: compile('nonlocal x\\nif True\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 2 8 2 9 'if True\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-21-exec",
+      "stage": "LA73",
+      "source": "try: compile('if \"#\" # note\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 8 1 15 'if \"#\" # note\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-21-single",
+      "stage": "LA73",
+      "source": "try: compile('if \"#\" # note\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError expected ':'\nselected/雪.py 1 8 1 15 'if \"#\" # note\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-colon-prior-compound",
+      "stage": "LA73",
+      "source": "try: compile(\"if True: pass\\nif False\\n pass\",\"colon.py\",\"exec\")\nexcept SyntaxError as e: print(e.msg,e.lineno,e.offset,repr(e.text))\n",
+      "stdout": "expected ':' 2 9 'if False\\n'\n"
+    },
+    {
+      "id": "parser-target-0-assign",
+      "stage": "LA74",
+      "source": "try: compile('1=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to literal here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 2 '1=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-0-delete",
+      "stage": "LA74",
+      "source": "try: compile('del 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete literal\nselected/雪.py 1 5 1 6 'del 1\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-0-augment",
+      "stage": "LA74",
+      "source": "try: compile('1+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'literal' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 2 '1+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-1-assign",
+      "stage": "LA74",
+      "source": "try: compile('\"text\"=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to literal here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 7 '\"text\"=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-1-delete",
+      "stage": "LA74",
+      "source": "try: compile('del \"text\"',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete literal\nselected/雪.py 1 5 1 11 'del \"text\"\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-1-augment",
+      "stage": "LA74",
+      "source": "try: compile('\"text\"+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'literal' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 7 '\"text\"+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-2-assign",
+      "stage": "LA74",
+      "source": "try: compile('b\"bytes\"=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to literal here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 9 'b\"bytes\"=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-2-delete",
+      "stage": "LA74",
+      "source": "try: compile('del b\"bytes\"',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete literal\nselected/雪.py 1 5 1 13 'del b\"bytes\"\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-2-augment",
+      "stage": "LA74",
+      "source": "try: compile('b\"bytes\"+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'literal' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 9 'b\"bytes\"+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-3-assign",
+      "stage": "LA74",
+      "source": "try: compile('None=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to None\nselected/雪.py 1 1 1 5 'None=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-3-delete",
+      "stage": "LA74",
+      "source": "try: compile('del None',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete None\nselected/雪.py 1 5 1 9 'del None\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-3-augment",
+      "stage": "LA74",
+      "source": "try: compile('None+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'None' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 5 'None+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-4-assign",
+      "stage": "LA74",
+      "source": "try: compile('True=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to True\nselected/雪.py 1 1 1 5 'True=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-4-delete",
+      "stage": "LA74",
+      "source": "try: compile('del True',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete True\nselected/雪.py 1 5 1 9 'del True\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-4-augment",
+      "stage": "LA74",
+      "source": "try: compile('True+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'True' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 5 'True+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-5-assign",
+      "stage": "LA74",
+      "source": "try: compile('False=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to False\nselected/雪.py 1 1 1 6 'False=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-5-delete",
+      "stage": "LA74",
+      "source": "try: compile('del False',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete False\nselected/雪.py 1 5 1 10 'del False\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-5-augment",
+      "stage": "LA74",
+      "source": "try: compile('False+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'False' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 6 'False+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-6-assign",
+      "stage": "LA74",
+      "source": "try: compile('f()=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 'f()=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-6-delete",
+      "stage": "LA74",
+      "source": "try: compile('del f()',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete function call\nselected/雪.py 1 5 1 8 'del f()\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-6-augment",
+      "stage": "LA74",
+      "source": "try: compile('f()+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'function call' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 4 'f()+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-7-assign",
+      "stage": "LA74",
+      "source": "try: compile('a+b=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to expression here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 'a+b=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-7-delete",
+      "stage": "LA74",
+      "source": "try: compile('del a+b',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete expression\nselected/雪.py 1 5 1 8 'del a+b\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-7-augment",
+      "stage": "LA74",
+      "source": "try: compile('a+b+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'expression' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 4 'a+b+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-8-assign",
+      "stage": "LA74",
+      "source": "try: compile('-1=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to expression here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 3 '-1=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-8-delete",
+      "stage": "LA74",
+      "source": "try: compile('del -1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete expression\nselected/雪.py 1 5 1 7 'del -1\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-8-augment",
+      "stage": "LA74",
+      "source": "try: compile('-1+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'expression' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 3 '-1+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-9-assign",
+      "stage": "LA74",
+      "source": "try: compile('{}=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to dict literal here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 3 '{}=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-9-delete",
+      "stage": "LA74",
+      "source": "try: compile('del {}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete dict literal\nselected/雪.py 1 5 1 7 'del {}\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-9-augment",
+      "stage": "LA74",
+      "source": "try: compile('{}+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'dict literal' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 3 '{}+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-10-assign",
+      "stage": "LA74",
+      "source": "try: compile('{1}=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to set display here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 '{1}=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-10-delete",
+      "stage": "LA74",
+      "source": "try: compile('del {1}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete set display\nselected/雪.py 1 5 1 8 'del {1}\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-10-augment",
+      "stage": "LA74",
+      "source": "try: compile('{1}+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'set display' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 4 '{1}+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-11-assign",
+      "stage": "LA74",
+      "source": "try: compile('(lambda:1)=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to lambda here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 2 1 10 '(lambda:1)=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-11-delete",
+      "stage": "LA74",
+      "source": "try: compile('del (lambda:1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete lambda\nselected/雪.py 1 6 1 14 'del (lambda:1)\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-11-augment",
+      "stage": "LA74",
+      "source": "try: compile('(lambda:1)+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'lambda' is an illegal expression for augmented assignment\nselected/雪.py 1 2 1 10 '(lambda:1)+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-12-assign",
+      "stage": "LA74",
+      "source": "try: compile('(a<b)=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to comparison here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 2 1 5 '(a<b)=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-12-delete",
+      "stage": "LA74",
+      "source": "try: compile('del (a<b)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete comparison\nselected/雪.py 1 6 1 9 'del (a<b)\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-12-augment",
+      "stage": "LA74",
+      "source": "try: compile('(a<b)+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'comparison' is an illegal expression for augmented assignment\nselected/雪.py 1 2 1 5 '(a<b)+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-13-assign",
+      "stage": "LA74",
+      "source": "try: compile('(a and b)=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to expression here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 2 1 9 '(a and b)=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-13-delete",
+      "stage": "LA74",
+      "source": "try: compile('del (a and b)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete expression\nselected/雪.py 1 6 1 13 'del (a and b)\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-13-augment",
+      "stage": "LA74",
+      "source": "try: compile('(a and b)+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'expression' is an illegal expression for augmented assignment\nselected/雪.py 1 2 1 9 '(a and b)+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-14-assign",
+      "stage": "LA74",
+      "source": "try: compile('(a if b else c)=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to conditional expression here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 2 1 15 '(a if b else c)=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-14-delete",
+      "stage": "LA74",
+      "source": "try: compile('del (a if b else c)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete conditional expression\nselected/雪.py 1 6 1 19 'del (a if b else c)\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-14-augment",
+      "stage": "LA74",
+      "source": "try: compile('(a if b else c)+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'conditional expression' is an illegal expression for augmented assignment\nselected/雪.py 1 2 1 15 '(a if b else c)+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-15-assign",
+      "stage": "LA74",
+      "source": "try: compile('[1 for x in []]=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to list comprehension here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 16 '[1 for x in []]=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-15-delete",
+      "stage": "LA74",
+      "source": "try: compile('del [1 for x in []]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete list comprehension\nselected/雪.py 1 5 1 20 'del [1 for x in []]\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-15-augment",
+      "stage": "LA74",
+      "source": "try: compile('[1 for x in []]+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'list comprehension' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 16 '[1 for x in []]+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-16-assign",
+      "stage": "LA74",
+      "source": "try: compile('{x for x in []}=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to set comprehension here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 16 '{x for x in []}=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-16-delete",
+      "stage": "LA74",
+      "source": "try: compile('del {x for x in []}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete set comprehension\nselected/雪.py 1 5 1 20 'del {x for x in []}\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-16-augment",
+      "stage": "LA74",
+      "source": "try: compile('{x for x in []}+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'set comprehension' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 16 '{x for x in []}+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-17-assign",
+      "stage": "LA74",
+      "source": "try: compile('{x:x for x in []}=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to dict comprehension here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 18 '{x:x for x in []}=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-17-delete",
+      "stage": "LA74",
+      "source": "try: compile('del {x:x for x in []}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete dict comprehension\nselected/雪.py 1 5 1 22 'del {x:x for x in []}\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-17-augment",
+      "stage": "LA74",
+      "source": "try: compile('{x:x for x in []}+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'dict comprehension' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 18 '{x:x for x in []}+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-18-assign",
+      "stage": "LA74",
+      "source": "try: compile('(x for x in [])=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to generator expression\nselected/雪.py 1 1 1 16 '(x for x in [])=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-18-delete",
+      "stage": "LA74",
+      "source": "try: compile('del (x for x in [])',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete generator expression\nselected/雪.py 1 5 1 20 'del (x for x in [])\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-18-augment",
+      "stage": "LA74",
+      "source": "try: compile('(x for x in [])+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'generator expression' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 16 '(x for x in [])+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-0",
+      "stage": "LA74",
+      "source": "try: compile('(1)=2',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to literal here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 2 1 3 '(1)=2\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-1",
+      "stage": "LA74",
+      "source": "try: compile('(a+b)=3',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to expression here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 2 1 5 '(a+b)=3\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-2",
+      "stage": "LA74",
+      "source": "try: compile('del (a+b)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete expression\nselected/雪.py 1 6 1 9 'del (a+b)\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-3",
+      "stage": "LA74",
+      "source": "try: compile('x=1=2',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to literal\nselected/雪.py 1 3 1 4 'x=1=2\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-4",
+      "stage": "LA74",
+      "source": "try: compile('1=x=2',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to literal\nselected/雪.py 1 1 1 2 '1=x=2\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-5",
+      "stage": "LA74",
+      "source": "try: compile('for 1 in []: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to literal\nselected/雪.py 1 5 1 6 'for 1 in []: pass\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-6",
+      "stage": "LA74",
+      "source": "try: compile('for a+b in []: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to expression\nselected/雪.py 1 5 1 8 'for a+b in []: pass\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-7",
+      "stage": "LA74",
+      "source": "try: compile('[x for 1 in []]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to literal\nselected/雪.py 1 8 1 9 '[x for 1 in []]\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-8",
+      "stage": "LA74",
+      "source": "try: compile('(x,y)+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'tuple' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 6 '(x,y)+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-9",
+      "stage": "LA74",
+      "source": "try: compile('[x,y]+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'list' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 6 '[x,y]+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-10",
+      "stage": "LA74",
+      "source": "try: compile('雪=1; f()=7',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 6 1 9 '雪=1; f()=7\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-11",
+      "stage": "LA74",
+      "source": "try: compile('del (雪+1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete expression\nselected/雪.py 1 6 1 9 'del (雪+1)\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-context-12",
+      "stage": "LA74",
+      "source": "try: compile('(1,2)+=value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'tuple' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 6 '(1,2)+=value\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-single-0",
+      "stage": "LA74",
+      "source": "try: compile('1=2',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to literal here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 2 '1=2'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-single-1",
+      "stage": "LA74",
+      "source": "try: compile('f()+=3',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError 'function call' is an illegal expression for augmented assignment\nselected/雪.py 1 1 1 4 'f()+=3'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-single-2",
+      "stage": "LA74",
+      "source": "try: compile('del \"雪\"',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot delete literal\nselected/雪.py 1 5 1 8 'del \"雪\"'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-single-3",
+      "stage": "LA74",
+      "source": "try: compile('if True: f()=7',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 10 1 13 'if True: f()=7'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-binding-priority",
+      "stage": "LA74",
+      "source": "try: compile('f()=lambda x,x:x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call\nselected/雪.py 1 1 1 4 'f()=lambda x,x:x\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-boundary-0",
+      "stage": "FutureTarget",
+      "source": "try: compile('1=',\"target-boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "target-boundary.py\n",
+      "owner": "#124",
+      "boundary": "Nested assignment targets and unsuccessful target repairs retain the native-field boundary."
+    },
+    {
+      "id": "parser-target-boundary-1",
+      "stage": "FutureTarget",
+      "source": "try: compile('1+=',\"target-boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "target-boundary.py\n",
+      "owner": "#124",
+      "boundary": "Nested assignment targets and unsuccessful target repairs retain the native-field boundary."
+    },
+    {
+      "id": "parser-target-boundary-2",
+      "stage": "FutureTarget",
+      "source": "try: compile('[a,1]=value',\"target-boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "target-boundary.py\n",
+      "owner": "#124",
+      "boundary": "Nested assignment targets and unsuccessful target repairs retain the native-field boundary."
+    },
+    {
+      "id": "parser-target-boundary-3",
+      "stage": "FutureTarget",
+      "source": "try: compile('1=2\\nvalue=',\"target-boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "target-boundary.py\n",
+      "owner": "#124",
+      "boundary": "Nested assignment targets and unsuccessful target repairs retain the native-field boundary."
+    },
+    {
+      "id": "parser-target-rhs-0",
+      "stage": "LA74",
+      "source": "try: compile('f()=lambda x:x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call\nselected/雪.py 1 1 1 4 'f()=lambda x:x\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-rhs-1",
+      "stage": "LA74",
+      "source": "try: compile('f()=(lambda x:x)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 'f()=(lambda x:x)\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-rhs-2",
+      "stage": "LA74",
+      "source": "try: compile('f()=a if b else c',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 'f()=a if b else c\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-rhs-3",
+      "stage": "LA74",
+      "source": "try: compile('f()=1,2',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 'f()=1,2\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-rhs-4",
+      "stage": "LA74",
+      "source": "try: compile('f()=*x,',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call\nselected/雪.py 1 1 1 4 'f()=*x,\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-rhs-5",
+      "stage": "LA74",
+      "source": "try: compile('f()=1,*x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 'f()=1,*x\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-rhs-6",
+      "stage": "LA74",
+      "source": "try: compile('f()=f(x=1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 'f()=f(x=1)\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-rhs-7",
+      "stage": "LA74",
+      "source": "try: compile('f()=1;pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 'f()=1;pass\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-rhs-8",
+      "stage": "LA74",
+      "source": "try: compile('f()=1\\nnonlocal x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 'f()=1\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-rhs-9",
+      "stage": "LA74",
+      "source": "try: compile('f()=1 #note',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 'f()=1 #note\\n'\n2 True True False\n"
+    },
+    {
+      "id": "parser-target-rhs-10",
+      "stage": "LA74",
+      "source": "try: compile('f()=a*b',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError cannot assign to function call here. Maybe you meant '==' instead of '='?\nselected/雪.py 1 1 1 4 'f()=a*b\\n'\n2 True True False\n"
+    },
+    {
+      "id": "generated-target-owner-cycle",
+      "stage": "LA75",
+      "source": "class Name(str): pass\nfilename=Name(\"target.py\")\ntry: compile(\"雪=1; f()=7\",filename,\"exec\")\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue cannot assign to function call here. Maybe you meant '==' instead of '='? 6 False False\n"
+    },
+    {
+      "id": "generated-colon-owner-cycle",
+      "stage": "LA75",
+      "source": "class Name(str): pass\nfilename=Name(\"colon.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile(\"if True\",filename,\"exec\",Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True expected ':' 8\n"
+    },
+    {
+      "id": "generated-target-chaining",
+      "stage": "LA75",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile(\"f()=7\",\"target.py\",\"exec\")\nexcept SyntaxError as e:\n e.add_note(\"target input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True target.py False False 2\nTrue target input 1\n"
+    },
+    {
+      "id": "generated-target-cleanup",
+      "stage": "LA75",
+      "source": "def work():\n try: compile(\"del f()\",\"cleanup.py\",\"exec\")\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup.py cannot delete function call False 0\ncleanup.py False\n"
+    },
+    {
+      "id": "generated-target-original-dynamic-failure",
+      "stage": "LA75",
+      "source": "exec(compile(\"def fail():\\n try: compile('f()=7','target-input.py','exec')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n\", \"target-payload-original.py\", \"exec\"))\n",
+      "stdout": "target-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-colon-exec",
+      "stage": "LA75",
+      "source": "try: exec(\"if True\\n pass\")\nexcept SyntaxError as e: print(e.msg,e.filename,len(e.args),e.offset)\n",
+      "stdout": "expected ':' <string> 2 8\n"
+    },
+    {
+      "id": "generated-target-eval",
+      "stage": "LA75",
+      "source": "try: eval(\"[x for 1 in []]\")\nexcept SyntaxError as e: print(e.msg,e.filename,len(e.args),e.offset)\n",
+      "stdout": "cannot assign to literal <string> 2 8\n"
+    },
+    {
+      "id": "generated-target-field-independence",
+      "stage": "LA75",
+      "source": "class Name(str): pass\nname=Name(\"target-fields.py\")\ntry: compile(\"del f()\",name,\"exec\")\nexcept SyntaxError as e:\n args=e.args\n metadata=e._metadata\n e.args=()\n print(e.filename is name,args[0] is e.msg,args[1][0] is name,e._metadata is metadata)\n e.text=None\n e.filename=None\n print(repr(args[1][3]),args[1][0] is name,e.text is None,e.filename is None)\n",
+      "stdout": "True True True True\n'del f()\\n' True True True\n"
+    },
+    {
+      "id": "generated-target-module",
+      "stage": "LA75",
+      "source": "import helper\ne=helper.validate(\"if True\")\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "stdout": "target-module.py expected ':' 8 module input\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"target-module.py\",\"exec\")\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ]
+    },
+    {
+      "id": "binding-declaration-selection-0",
+      "stage": "LA75A",
+      "source": "try: compile('def f():\\n nonlocal x,y\\n print(y)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'x' found\nselected/雪.py 2 2 2 14 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-selection-1",
+      "stage": "LA75A",
+      "source": "try: compile('def f():\\n nonlocal z,a\\n print(a)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'z' found\nselected/雪.py 2 2 2 14 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-selection-2",
+      "stage": "LA75A",
+      "source": "try: compile('def f():\\n nonlocal x\\n nonlocal y\\n print(y)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'x' found\nselected/雪.py 2 2 2 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-selection-3",
+      "stage": "LA75A",
+      "source": "try: compile('def f():\\n nonlocal 雪,x\\n print(x)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal '雪' found\nselected/雪.py 2 2 2 16 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-selection-4",
+      "stage": "LA75A",
+      "source": "try: compile('def f():\\n x=1\\n def g():\\n  nonlocal x,y,z\\n  print(z)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'y' found\nselected/雪.py 4 3 4 17 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-selection-5",
+      "stage": "LA75A",
+      "source": "try: compile('class C:\\n def f():\\n  nonlocal __x,__y\\n  print(__y)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal '_C__x' found\nselected/雪.py 3 3 3 19 None\n1 True True True\n"
+    },
+    {
+      "id": "parser-starred-target-boundary-0",
+      "stage": "FutureTarget",
+      "source": "try: compile('[*(a+b)] = value',\"starred.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "starred.py\n",
+      "owner": "#124",
+      "boundary": "Invalid starred operands retain the nested-target native-field boundary."
+    },
+    {
+      "id": "parser-starred-target-boundary-1",
+      "stage": "FutureTarget",
+      "source": "try: compile('for [*(a+b)] in []: pass',\"starred.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "starred.py\n",
+      "owner": "#124",
+      "boundary": "Invalid starred operands retain the nested-target native-field boundary."
     }
   ]
 }

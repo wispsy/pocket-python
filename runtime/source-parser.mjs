@@ -79,20 +79,62 @@ class Parser {
   expectKind(kind, message = "Expected " + kind + ".") { if (!this.kind(kind)) this.fail(message); return this.take(); }
   name() { return this.expectKind("name", "Expected an identifier."); }
   ending() { return ["newline", "dedent", "eof"].includes(this.peek().kind) || this.at(";"); }
-  target(value, deletion = false, nested = false) {
+  invalidTarget(value, action, nested = false) {
+    let label = {Call: "function call", Binary: "expression", Unary: "expression", Boolean: "expression",
+      Compare: "comparison", Conditional: "conditional expression", Lambda: "lambda",
+      Dict: "dict literal", Set: "set display", Tuple: "tuple", List: "list"}[value.kind];
+    if (value.kind === "Literal") label = value.literal.type === "none" ? "None" :
+      value.literal.type === "bool" ? value.literal.value ? "True" : "False" : "literal";
+    if (value.kind === "Comprehension") label = value.form === "generator" ? "generator expression" : value.form + " comprehension";
+    let syntax;
+    if (label && action !== "nested" && (!nested || action === "delete")) {
+      let chain = action === "chain", depth = 0;
+      const hint = !["lambda", "yield", "*"].includes(this.peek().value);
+      if (action === "assign") for (const token of this.tokens.slice(this.index)) {
+        this.charge();
+        if (!depth && (token.kind === "newline" || token.value === ";")) break;
+        if (!depth && token.value === "=") chain = true;
+        if (["(", "[", "{"].includes(token.value)) depth++;
+        if ([")", "]", "}"].includes(token.value)) depth--;
+      }
+      const message = action === "augment" ? "'" + label + "' is an illegal expression for augmented assignment" :
+        "cannot " + (action === "delete" ? "delete " : "assign to ") + label +
+        (action === "assign" && !chain && hint && !["None", "True", "False", "generator expression"].includes(label) ? " here. Maybe you meant '==' instead of '='?" : "");
+      let first, last;
+      for (const token of this.tokens) {
+        this.charge();
+        if (token.span[0] === value.span[0] && token.span[1] === value.span[1]) first ??= token;
+        if (token.span[2] === value.span[2] && token.span[3] === value.span[3]) last = token;
+      }
+      if (value.kind === "Comprehension" && first) {
+        let depth = 0;
+        for (const token of this.tokens.slice(this.tokens.indexOf(first))) {
+          this.charge();
+          if (["(", "[", "{"].includes(token.value)) depth++;
+          if ([")", "]", "}"].includes(token.value) && --depth === 0) { last = token; break; }
+        }
+      }
+      if (first && last) {
+        syntax = this.diagnostic(message, [value.span[0], value.span[1], last.span[2], last.span[3]]);
+        syntax.repair = this.lexed.source.slice(0, first.start) + "__target" + this.lexed.source.slice(last.end);
+      }
+    }
+    this.fail(action === "augment" ? "Invalid augmented assignment target." : "Invalid assignment/deletion target.", value, "SYNTAX", undefined, syntax);
+  }
+  target(value, deletion = false, nested = false, action = "assign") {
     if (value.kind === "Name") return;
     if (["Tuple", "List"].includes(value.kind)) {
       if (value.items.filter(item => item.kind === "Starred").length > 1) this.fail("Multiple starred targets in one assignment level.", value);
-      value.items.forEach(item => this.target(item, deletion, true)); return;
+      value.items.forEach(item => this.target(item, deletion, true, action)); return;
     }
     if (value.kind === "Starred") {
       if (deletion || !nested) this.fail("A starred target requires an assignment sequence.", value);
-      this.target(value.value, false, false); return;
+      this.target(value.value, false, false, "nested"); return;
     }
     if (this.classes && value.kind === "Attribute") return;
     if (value.kind === "Subscript" && (this.classes || value.index.kind !== "Slice")) return;
     if (["Attribute", "Subscript"].includes(value.kind)) this.unsupported("This attribute or slice target is not adopted.", value);
-    this.fail("Invalid assignment/deletion target.", value);
+    this.invalidTarget(value, deletion ? "delete" : action, nested);
   }
   file() {
     const start = this.peek(), body = [], mode = this.options.mode ?? "exec";
@@ -146,6 +188,18 @@ class Parser {
     return result;
   }
   suite(header) {
+    if (header && !this.at(":") && this.kind("newline")) {
+      const token = this.peek(), line = this.lexed.source.split("\n")[token.span[0] - 1] ?? "";
+      const implicit = this.options.mode === "single" && this.lexed.source[token.start] !== "\n";
+      const syntax = this.diagnostic("expected ':'", token.span, {newline: !implicit});
+      const lineStart = this.lexed.source.lastIndexOf("\n", token.start - 1) + 1;
+      const comment = this.lexed.source.indexOf("#", this.previous.end);
+      syntax.offset = implicit ? Array.from(line).length : comment >= lineStart && comment < token.start ?
+        Array.from(this.lexed.source.slice(lineStart, comment)).length + 1 : syntax.offset;
+      syntax.end_offset = implicit ? -1 : Array.from(line).length + 2;
+      syntax.end_lineno = syntax.lineno;
+      this.fail("Expected ':'.", token, "SYNTAX", undefined, syntax);
+    }
     this.expect(":");
     if (!this.kind("newline")) return this.simpleLine();
     this.take();
@@ -227,13 +281,13 @@ class Parser {
       for (;;) {
         value = this.expressionList();
         if (!this.eat("=")) break;
-        this.target(value); targets.push(value);
+        this.target(value, false, false, "chain"); targets.push(value);
       }
       return this.node("Assign", start, {targets, value});
     }
     if (AUGMENT.has(this.peek().value) && this.kind("op")) {
+      if (!["Name", "Attribute", "Subscript"].includes(value.kind)) this.invalidTarget(value, "augment");
       this.target(value);
-      if (!["Name", "Attribute", "Subscript"].includes(value.kind)) this.fail("Invalid augmented assignment target.", value);
       const token = this.take(), operator = BINARY.get(token.value.slice(0, -1));
       if (!operator) this.unsupported("Augmented operator is not adopted.", token);
       return this.node("Augment", start, {target: value, operator, value: this.expressionList()});
@@ -410,7 +464,7 @@ class Parser {
     const start = this.take(), kind = start.value === "for" ? "For" : "While";
     let test = null, target = null, iterable = null;
     if (kind === "For") {
-      target = this.expressionList(false, true); this.target(target);
+      target = this.expressionList(false, true); this.target(target, false, false, "loop");
       this.expect("in"); iterable = this.expressionList();
     } else test = this.namedExpression();
     this.loopDepth++; let body;
@@ -426,7 +480,7 @@ class Parser {
       if (this.at("*")) this.unsupported("Exception groups are not adopted.");
       if (bare) this.fail("A bare handler must be last.", clause);
       const parenthesized = this.at("(");
-      const type = this.at(":") ? null : this.expressionList();
+      const type = this.at(":") || this.kind("newline") ? null : this.expressionList();
       if (type?.kind === "Tuple" && !parenthesized && this.at("as")) this.fail("Multiple handler types require parentheses with an alias.");
       const alias = this.eat("as") ? this.name().value : null;
       if (type === null && alias !== null) this.fail("A bare handler cannot bind an alias.", clause);
@@ -598,7 +652,7 @@ class Parser {
     if (element.kind === "Starred") this.fail("Comprehensions cannot unpack their element.", element);
     const clauses = [];
     while (this.eat("for")) {
-      const target = this.expressionList(false, true); this.target(target); this.expect("in");
+      const target = this.expressionList(false, true); this.target(target, false, false, "loop"); this.expect("in");
       const iterable = this.disjunction(), filters = [];
       while (this.eat("if")) filters.push(this.disjunction());
       clauses.push({target, iterable, filters});
