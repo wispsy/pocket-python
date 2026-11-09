@@ -84,3 +84,11 @@ causes/notes, cyclic filename graphs and suspended generator cleanup. Collection
 cancellation/close and shared allocation checks cover fields after argument
 replacement. Installed offline acceptance checks fresh source, original dynamic
 frames, retained-field and cleanup Stop/Restart paths and reduced-profile updates.
+
+LA-73 adds missing-colon diagnostics at complete adopted compound headers:
+conditions, loops, function/class definitions and try/except/else/finally clauses.
+Physical newlines, comments, Unicode and implicit single-mode EOF retain their
+separate native ranges and source text. Grammar failures take priority over
+duplicate parameters and scope declarations. Earlier completed compound
+statements keep the independent parser metadata boundary; non-newline header
+failures and unadopted grammar retain their existing field boundaries.

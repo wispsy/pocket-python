@@ -146,6 +146,18 @@ class Parser {
     return result;
   }
   suite(header) {
+    if (header && !this.at(":") && this.kind("newline")) {
+      const token = this.peek(), line = this.lexed.source.split("\n")[token.span[0] - 1] ?? "";
+      const implicit = this.options.mode === "single" && this.lexed.source[token.start] !== "\n";
+      const syntax = this.diagnostic("expected ':'", token.span, {newline: !implicit});
+      const lineStart = this.lexed.source.lastIndexOf("\n", token.start - 1) + 1;
+      const comment = this.lexed.source.indexOf("#", this.previous.end);
+      syntax.offset = implicit ? Array.from(line).length : comment >= lineStart && comment < token.start ?
+        Array.from(this.lexed.source.slice(lineStart, comment)).length + 1 : syntax.offset;
+      syntax.end_offset = implicit ? -1 : Array.from(line).length + 2;
+      syntax.end_lineno = syntax.lineno;
+      this.fail("Expected ':'.", token, "SYNTAX", undefined, syntax);
+    }
     this.expect(":");
     if (!this.kind("newline")) return this.simpleLine();
     this.take();
@@ -426,7 +438,7 @@ class Parser {
       if (this.at("*")) this.unsupported("Exception groups are not adopted.");
       if (bare) this.fail("A bare handler must be last.", clause);
       const parenthesized = this.at("(");
-      const type = this.at(":") ? null : this.expressionList();
+      const type = this.at(":") || this.kind("newline") ? null : this.expressionList();
       if (type?.kind === "Tuple" && !parenthesized && this.at("as")) this.fail("Multiple handler types require parentheses with an alias.");
       const alias = this.eat("as") ? this.name().value : null;
       if (type === null && alias !== null) this.fail("A bare handler cannot bind an alias.", clause);
