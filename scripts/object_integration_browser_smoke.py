@@ -19,19 +19,19 @@ from interpreter_browser_smoke import EXAMPLE, Handler, Server
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def smoke(require_installed=False, containers=False, exceptions=False):
+def smoke(require_installed=False, containers=False, exceptions=False, syntax_errors=False):
     package = Path(pocket_python.__file__).resolve()
     if require_installed:
         assert not package.is_relative_to(ROOT), 'This check requires an isolated installed distribution.'
-    feature = 'exceptions' if exceptions else 'practical-containers' if containers else 'object-integration'
+    feature = 'syntax-errors' if syntax_errors else 'exceptions' if exceptions else 'practical-containers' if containers else 'object-integration'
     corpus_path = ROOT / f'tests/fixtures/interpreter/{feature}.json'
     corpus = json.loads(corpus_path.read_bytes())
-    example = (ROOT / ('examples/interpreter_native_exceptions.py' if exceptions else 'examples/interpreter_containers.py' if containers else 'examples/interpreter_object_integration.py')).read_text(encoding='utf-8')
+    example = (ROOT / ('examples/interpreter_generated_syntax.py' if syntax_errors else 'examples/interpreter_native_exceptions.py' if exceptions else 'examples/interpreter_containers.py' if containers else 'examples/interpreter_object_integration.py')).read_text(encoding='utf-8')
     records = []
     with tempfile.TemporaryDirectory() as temporary:
         root = Path(temporary)
         selected = build_interpreter(EXAMPLE.write_source(root / 'source', source=example),
-                                     read_interpreter(ROOT / 'runtime', **({} if containers or exceptions else {'library_profile': 'operator/1'})),
+                                     read_interpreter(ROOT / 'runtime', **({} if containers or exceptions or syntax_errors else {'library_profile': 'operator/1'})),
                                      root / 'site/console', language_profile='classes-source/1')
         reduced = build_interpreter(EXAMPLE.write_source(root / 'reduced-source', source='print(42)\n'),
                                     read_interpreter(ROOT / 'runtime'), root / 'reduced')
@@ -65,6 +65,7 @@ def smoke(require_installed=False, containers=False, exceptions=False):
                     ready()
                     for case in corpus['cases']:
                         if (case.get('modules') or
+                            syntax_errors and case['stage'] not in {'LA66', 'LA69'} or
                             containers and case['stage'] not in {'LA-7', 'LA-6A'} or
                             exceptions and case['stage'] not in {'LA13', 'LA16', 'LA19', 'LA22', 'LA25', 'LA28', 'LA31', 'LA34', 'LA37', 'LA40', 'LA43', 'LA46', 'LA49', 'LA52', 'LA55', 'LA58', 'LA61', 'LA62C'}):
                             continue
@@ -113,6 +114,8 @@ def smoke(require_installed=False, containers=False, exceptions=False):
                             assert f'fail at {filename}:' in page.locator('#diagnostic').inner_text()
                         if case['id'] == 'native-key-composed-dynamic-failure':
                             assert 'fail at native-key-original.py:4' in page.locator('#diagnostic').inner_text()
+                        if case['id'] == 'generated-syntax-original-dynamic-failure':
+                            assert 'fail at syntax-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         records.append({'id': case['id'], 'status': 'pass'})
                     if exceptions:
                         for case in corpus.get('reference_boundaries', []):
@@ -185,7 +188,11 @@ def smoke(require_installed=False, containers=False, exceptions=False):
                         busy = 'class Key:\n def __hash__(self):\n  print("entered")\n  while True: pass\n{}.setdefault(Key(),[])\n'
                     if exceptions:
                         busy = 'class BusyError(Exception):\n def __init__(self):\n  print("entered")\n  while True: pass\nraise BusyError from None\n'
+                    if syntax_errors:
+                        busy = 'try: compile("if","retained.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n'
                     busy_sources = [busy]
+                    if syntax_errors:
+                        busy_sources += ['def work():\n try: compile("value=[","cleanup.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.filename\ng=work()\ne=next(g)\ne.args=()\ng.close()\n']
                     if exceptions:
                         busy_sources += [
                             'def handlers():\n print("entered")\n while True: pass\ntry: raise ValueError()\nexcept handlers(): pass\n',
@@ -258,6 +265,8 @@ def smoke(require_installed=False, containers=False, exceptions=False):
                     page.goto(url)
                     ready()
                     run('print(42)\n', '42\n')
+                    if syntax_errors:
+                        run('compile("if","core.py","exec")\n', '', 'NameError')
                     if containers:
                         run('d={}\nd.setdefault(1,[]).extend([7])\nprint(list(d.values())[0].pop())\n', '7\n')
                     if exceptions:
@@ -318,7 +327,11 @@ def smoke(require_installed=False, containers=False, exceptions=False):
                   'native-key-original-diagnostics', 'native-key-fresh-restart',
                   'restart-fresh-owner', 'reduced-profile-update',
                   'old-cache-removed', 'core-error-arguments', 'core-source-boundary']
-    return {'schema_version': 1, 'suite': 'interpreter-exceptions-offline/1' if exceptions else 'interpreter-containers-offline/1' if containers else 'interpreter-object-offline/1',
+    if syntax_errors:
+        checks = ['fresh-offline-generated-syntax-source', 'original-dynamic-diagnostics', 'runnable-example',
+                  'stop-during-retained-payload', 'stop-during-generator-cleanup', 'restart-fresh-source',
+                  'reduced-profile-update', 'old-cache-removed', 'core-dynamic-source-boundary']
+    return {'schema_version': 1, 'suite': 'interpreter-syntax-errors-offline/1' if syntax_errors else 'interpreter-exceptions-offline/1' if exceptions else 'interpreter-containers-offline/1' if containers else 'interpreter-object-offline/1',
             'installed_distribution_required': require_installed, 'package_origin': str(package),
             'corpus_sha256': hashlib.sha256(corpus_path.read_bytes()).hexdigest(),
             'engine_fingerprint': selected['engine']['fingerprint'], 'cases': records,
@@ -331,9 +344,10 @@ if __name__ == '__main__':
     selection = parser.add_mutually_exclusive_group()
     selection.add_argument('--containers', action='store_true', help='Accept the LA-7 practical-container composition slice.')
     selection.add_argument('--exceptions', action='store_true', help='Accept the ordinary and native-field exception composition slices.')
+    selection.add_argument('--syntax-errors', action='store_true', help='Accept generated syntax failure composition slices.')
     parser.add_argument('--report', type=Path)
     args = parser.parse_args()
-    report = smoke(args.require_installed, args.containers, args.exceptions)
+    report = smoke(args.require_installed, args.containers, args.exceptions, args.syntax_errors)
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')

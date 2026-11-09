@@ -220,6 +220,8 @@ def checks(costs_path=None):
         '--containers', '--report', 'build/containers-browser-report.json', seconds=20)
     add('exceptions-browser', 'browser-integration', 'python', 'scripts/object_integration_browser_smoke.py',
         '--exceptions', '--report', 'build/exceptions-browser-report.json', seconds=20)
+    add('syntax-errors-browser', 'browser-integration', 'python', 'scripts/object_integration_browser_smoke.py',
+        '--syntax-errors', '--report', 'build/syntax-errors-browser-report.json', seconds=20)
     add('interpreter-node-measurements', 'measurements', 'python', 'scripts/interpreter_measurements.py',
         '--no-browser', '--repeats', '3', '--output', 'build/interpreter-node-measurements', seconds=10)
     add('interpreter-browser-measurements', 'measurements', 'python', 'scripts/interpreter_measurements.py',

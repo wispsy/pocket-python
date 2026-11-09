@@ -39,3 +39,11 @@ control-flow and broader parser/binder errors at this checkpoint.
 Native-key sparse probing (#759), groups/except*, traceback objects, note
 export, wider formatting and library/package/candidate gates keep their owners.
 Finite corpus observations do not measure overall Python completion.
+
+LA-66 composes these payloads with registry modules, nested compilation, causes,
+notes and suspended generator cleanup. The runnable
+[generated-syntax example](../examples/interpreter_generated_syntax.py) preserves
+source fields after replacing arguments. Installed offline acceptance checks
+fresh source and original dynamic frames, stops a retained-payload loop and
+generator cleanup, restarts with fresh state and applies a reduced-profile
+update that retains the core dynamic-compilation boundary.

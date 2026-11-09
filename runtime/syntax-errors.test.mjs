@@ -11,7 +11,8 @@ const unit = source => ({name: 'app', source, imports: [], package: false, notic
 const closed = stats => { for (const key of ['bytes', 'objects', 'roots', 'frames', 'external']) assert.equal(stats[key], 0, key); };
 for (const item of corpus.cases) for (const languageProfile of item.profiles ?? [corpus.profile])
   test(languageProfile + ': ' + item.id, async () => {
-    const result = await runSourceRequest({modules: [unit(item.source)], compileOptions: {languageProfile}});
+    const result = await runSourceRequest({modules: [{...unit(item.source), imports: item.imports ?? []},
+      ...(item.modules ?? []).map(module => ({...unit(module.source), ...module}))], compileOptions: {languageProfile}});
     if (corpus.implemented_stages.includes(item.stage)) {
       assert.equal(result.stdout, item.stdout, JSON.stringify(result.error));
       assert.equal(result.error?.type, item.error_type, JSON.stringify(result.error));
@@ -47,4 +48,13 @@ test('retained generated syntax payloads share allocation limits', async () => {
   const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile("if","selected.py","exec")\n except SyntaxError as e: held.append(e)\n')],
     compileOptions: {languageProfile: corpus.profile}, memoryLimits: {maxBytes: 100000}, options: {maxSteps: 50000, maxWork: 20000000}});
   assert.equal(result.stdout, 'ready\n'); assert.equal(result.error?.code, 'OOM', JSON.stringify(result.error)); closed(result.closed);
+});
+
+test('reraised generated syntax failures keep the original dynamic call frames', async () => {
+  const item = corpus.cases.find(item => item.id === 'generated-syntax-original-dynamic-failure');
+  const result = await runSourceRequest({modules: [unit(item.source)], compileOptions: {languageProfile: corpus.profile}});
+  assert.equal(result.error?.type, 'SyntaxError');
+  assert.deepEqual(result.error.traceback.map(frame => [frame.function, frame.location.filename, frame.location.span[0]]),
+    [['<module>', 'sources/app.py', 1], ['<module>', 'syntax-payload-original.py', 6], ['fail', 'syntax-payload-original.py', 2]]);
+  closed(result.closed);
 });
