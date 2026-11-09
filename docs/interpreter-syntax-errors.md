@@ -102,3 +102,17 @@ use characters rather than the binder's byte columns. A source-only repair must
 parse successfully before fields are published and consumes the caller's compile
 budget. It is never executed. Nested assignment targets, failed repairs and
 prior-compound parser metadata keep their explicit boundaries.
+
+LA-75 composes missing-colon and invalid-target failures with modules, nested
+dynamic source, causes/notes, retained filename graphs and suspended cleanup.
+Argument snapshots, native fields and parser metadata retain their independent
+identity/mutation behavior. The example and installed offline console include
+fresh source, original dynamic frames, Stop/Restart and reduced-profile updates.
+
+The resulting fixed generated-syntax corpus contains 420 cases: 400 supported
+semantic/error comparisons and 20 explicit native-field refusals, with no scored
+divergences or untested cases. The separate ordinary exception corpus retains
+2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
+These finite observations do not measure overall Python compatibility. #600/A2,
+#124, #759, groups/except*, traceback objects/mutation, note export, library/package
+qualification and candidate/release gates remain open.
