@@ -12,7 +12,8 @@
     "LA68",
     "LA69",
     "LA70",
-    "LA71"
+    "LA71",
+    "LA72"
   ],
   "cases": [
     {
@@ -1684,6 +1685,66 @@
       "stdout": "selected/雪.py\n",
       "owner": "#124",
       "boundary": "Default-expression parser diagnostics retain their native-field boundary."
+    },
+    {
+      "id": "generated-binding-owner-cycle",
+      "stage": "LA72",
+      "source": "class Name(str): pass\nfilename=Name(\"binding.py\")\ntry: compile(\"雪=1; global 雪\",filename,\"exec\")\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue name '雪' is assigned to before global declaration 8 True True\n"
+    },
+    {
+      "id": "generated-parameters-owner-cycle",
+      "stage": "LA72",
+      "source": "class Name(str): pass\nfilename=Name(\"parameters.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile(\"def f(x,x): pass\",filename,\"exec\",Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True duplicate argument 'x' in function definition 9\n"
+    },
+    {
+      "id": "generated-binding-chaining",
+      "stage": "LA72",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile(\"nonlocal missing\",\"binding.py\",\"exec\")\nexcept SyntaxError as e:\n e.add_note(\"binding input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True binding.py True True 1\nTrue binding input 1\n"
+    },
+    {
+      "id": "generated-binding-cleanup",
+      "stage": "LA72",
+      "source": "def work():\n try: compile(\"def f(x,x): pass\",\"cleanup.py\",\"exec\")\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup.py duplicate argument 'x' in function definition True 0\ncleanup.py True\n"
+    },
+    {
+      "id": "generated-binding-original-dynamic-failure",
+      "stage": "LA72",
+      "source": "exec(compile(\"def fail():\\n try: compile('nonlocal x','binding-input.py','exec')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n\", \"binding-payload-original.py\", \"exec\"))\n",
+      "stdout": "binding-input.py True 1\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-binding-exec",
+      "stage": "LA72",
+      "source": "try: exec(\"def f():\\n nonlocal missing\")\nexcept SyntaxError as e: print(e.msg,e.filename,len(e.args),e.offset)\n",
+      "stdout": "no binding for nonlocal 'missing' found <string> 1 2\n"
+    },
+    {
+      "id": "generated-binding-eval",
+      "stage": "LA72",
+      "source": "try: eval(\"lambda x,x: x\")\nexcept SyntaxError as e: print(e.msg,e.filename,len(e.args),e.offset)\n",
+      "stdout": "duplicate argument 'x' in function definition <string> 1 10\n"
+    },
+    {
+      "id": "generated-binding-module",
+      "stage": "LA72",
+      "source": "import helper\ne=helper.validate(\"def f(x,x): pass\")\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "stdout": "binding-module.py duplicate argument 'x' in function definition 9 module input\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"binding-module.py\",\"exec\")\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ]
     }
   ]
 }
