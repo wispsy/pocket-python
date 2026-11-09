@@ -56,3 +56,5 @@ generator cleanup, restarts with fresh state and applies a reduced-profile
 update that retains the core dynamic-compilation boundary.
 
 Primary references: the pinned [diagnostic payload](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen_errors.c), [parser metadata](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen.c) and [statement registration](https://github.com/python/cpython/blob/v3.14.7/Parser/action_helpers.c).
+
+LA-67 adds qualified unexpected indentation, missing suites for adopted statement headers, inconsistent tabs/spaces and unmatched dedentation. Native IndentationError/TabError ancestry, descriptors, args independence and EOF/text/end-position differences in exec and single modes have source comparisons. Indentation repairs share the lexical validation gate, preserving earlier-error and unsupported-repair boundaries. Prior compound-statement metadata keeps its independent LA-66A boundary.

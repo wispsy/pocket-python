@@ -78,7 +78,7 @@ class Scanner {
     if (this.bytes > this.limits.maxBytes) this.fail("COMPILE_BUDGET", "Source byte budget exceeded.");
     this.source = this.source.replace(/\r\n?/g, "\n");
     if (this.source.includes("\0")) this.fail("SYNTAX", "Source cannot contain null bytes.");
-    this.tokens = []; this.delimiters = []; this.indents = [[0, 0]];
+    this.tokens = []; this.delimiters = []; this.indents = [[0, 0, ""]];
     this.lineStart = true; this.joined = false; this.hasCode = false;
   }
   point() { return [this.line, this.column]; }
@@ -121,18 +121,27 @@ class Scanner {
     if (this.delimiters.length || this.joined) { this.joined = false; return; }
     if (!this.peek() || this.peek() === "#" || this.peek() === "\n") return;
     const top = this.indents.at(-1);
+    const failure = (message, name, nativeMessage, replacement) => {
+      const syntax = this.diagnostic(nativeMessage, start,
+        this.source.slice(0, offset) + replacement + this.source.slice(this.offset), {newline: this.mode === "exec", endOffset: name === "TabError" ? 0 : -1});
+      if (name !== "TabError") syntax.offset = Array.from(syntax.text).length;
+      this.fail("SYNTAX", message, start, name, syntax);
+    };
+    const tabs = replacement => failure("Inconsistent use of tabs and spaces in indentation.", "TabError",
+      "inconsistent use of tabs and spaces in indentation", replacement);
     if (visual === top[0]) {
-      if (alternate !== top[1]) this.fail("SYNTAX", "Inconsistent use of tabs and spaces in indentation.", start, "TabError");
+      if (alternate !== top[1]) tabs(top[2]);
     } else if (visual > top[0]) {
-      if (alternate <= top[1]) this.fail("SYNTAX", "Inconsistent use of tabs and spaces in indentation.", start, "TabError");
+      if (alternate <= top[1]) tabs(top[2]);
       if (this.indents.length >= this.limits.maxIndent + 1) this.fail("COMPILE_BUDGET", "Indentation depth budget exceeded.", start);
-      this.indents.push([visual, alternate]); this.token("indent", "", start, offset);
+      this.indents.push([visual, alternate, this.source.slice(offset, this.offset)]); this.token("indent", "", start, offset);
     } else {
       while (this.indents.length > 1 && this.indents.at(-1)[0] > visual) {
         this.indents.pop(); this.token("dedent", "", this.point(), this.offset);
       }
-      if (this.indents.at(-1)[0] !== visual) this.fail("SYNTAX", "Unindent does not match an outer indentation level.", start, "IndentationError");
-      if (this.indents.at(-1)[1] !== alternate) this.fail("SYNTAX", "Inconsistent use of tabs and spaces in indentation.", start, "TabError");
+      if (this.indents.at(-1)[0] !== visual) failure("Unindent does not match an outer indentation level.", "IndentationError",
+        "unindent does not match any outer indentation level", top[2]);
+      if (this.indents.at(-1)[1] !== alternate) tabs(this.indents.at(-1)[2]);
     }
   }
   string(prefix, start, offset) {
