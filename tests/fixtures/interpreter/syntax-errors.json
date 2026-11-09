@@ -16,7 +16,8 @@
     "LA72",
     "LA73",
     "LA74",
-    "LA75"
+    "LA75",
+    "LA75A"
   ],
   "cases": [
     {
@@ -2626,6 +2627,58 @@
           "package": false
         }
       ]
+    },
+    {
+      "id": "binding-declaration-selection-0",
+      "stage": "LA75A",
+      "source": "try: compile('def f():\\n nonlocal x,y\\n print(y)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'x' found\nselected/雪.py 2 2 2 14 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-selection-1",
+      "stage": "LA75A",
+      "source": "try: compile('def f():\\n nonlocal z,a\\n print(a)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'z' found\nselected/雪.py 2 2 2 14 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-selection-2",
+      "stage": "LA75A",
+      "source": "try: compile('def f():\\n nonlocal x\\n nonlocal y\\n print(y)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'x' found\nselected/雪.py 2 2 2 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-selection-3",
+      "stage": "LA75A",
+      "source": "try: compile('def f():\\n nonlocal 雪,x\\n print(x)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal '雪' found\nselected/雪.py 2 2 2 16 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-selection-4",
+      "stage": "LA75A",
+      "source": "try: compile('def f():\\n x=1\\n def g():\\n  nonlocal x,y,z\\n  print(z)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal 'y' found\nselected/雪.py 4 3 4 17 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-declaration-selection-5",
+      "stage": "LA75A",
+      "source": "try: compile('class C:\\n def f():\\n  nonlocal __x,__y\\n  print(__y)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError no binding for nonlocal '_C__x' found\nselected/雪.py 3 3 3 19 None\n1 True True True\n"
+    },
+    {
+      "id": "parser-starred-target-boundary-0",
+      "stage": "FutureTarget",
+      "source": "try: compile('[*(a+b)] = value',\"starred.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "starred.py\n",
+      "owner": "#124",
+      "boundary": "Invalid starred operands retain the nested-target native-field boundary."
+    },
+    {
+      "id": "parser-starred-target-boundary-1",
+      "stage": "FutureTarget",
+      "source": "try: compile('for [*(a+b)] in []: pass',\"starred.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "starred.py\n",
+      "owner": "#124",
+      "boundary": "Invalid starred operands retain the nested-target native-field boundary."
     }
   ]
 }

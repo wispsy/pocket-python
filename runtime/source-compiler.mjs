@@ -230,7 +230,7 @@ class Compiler {
       if (scope.node.kind === "Class" && [...scope.locals].some(name => !allowsClassSpecial(name, "define")))
         this.fail("Custom special methods require a later class stage.", scope.node, "UNSUPPORTED", "bind");
     }
-    for (const scope of this.scopes.slice(1)) for (const name of new Set([...scope.uses, ...scope.nonlocals])) {
+    for (const scope of this.scopes.slice(1)) for (const name of new Set([...scope.nonlocals, ...scope.uses])) {
       this.charge(scope.node);
       if (scope.locals.has(name) || scope.globals.has(name)) continue;
       let owner = scope.parent;
