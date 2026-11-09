@@ -72,3 +72,15 @@ argument; their independent native location fields use UTF-8 byte columns, absen
 source text and absent parser metadata. Conflict locations select the first
 declaration. Full grammar validation precedes binding, which precedes control-flow
 validation. Store targets do not count as name reads during scope analysis.
+
+LA-71 adds duplicate function/lambda arguments across positional-only,
+positional, keyword-only and variadic groups. Full parsing precedes the
+symbol-table check; parameter group order, normalized identifiers and private
+name mangling select the message and offending parameter. These diagnostics
+share the one-argument binding layout and independent native byte-column range.
+
+LA-72 composes binding payloads with module factories, dynamic exec/eval,
+causes/notes, cyclic filename graphs and suspended generator cleanup. Collection,
+cancellation/close and shared allocation checks cover fields after argument
+replacement. Installed offline acceptance checks fresh source, original dynamic
+frames, retained-field and cleanup Stop/Restart paths and reduced-profile updates.

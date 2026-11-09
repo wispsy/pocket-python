@@ -64,11 +64,9 @@ class Compiler {
         ...(value.decorators ? {decorators: rewrite(value.decorators, owner)} : {})};
       if (["Function", "Lambda"].includes(value.kind)) {
         const params = Object.fromEntries(Object.entries(value.params).map(([key, group]) => [key,
-          group.map(param => ({...param, name: name(param.name, owner, param), value: rewrite(param.value, owner)}))]));
+          group.map(param => ({...param, originalName: param.name, name: name(param.name, owner, param), value: rewrite(param.value, owner)}))]));
         if (value.walrusTargets) value = {...value, walrusTargets: value.walrusTargets.map(key => name(key, owner, value)),
           comprehensionTargets: value.comprehensionTargets.map(key => name(key, owner, value))};
-        const names = Object.values(params).flat().map(param => param.name);
-        if (new Set(names).size !== names.length) this.fail("Duplicate function parameter after name mangling.", value, "SYNTAX", "bind");
         return {...value, bindingName: name(value.name, owner, value), params, body: rewrite(value.body, owner),
           ...(value.decorators ? {decorators: rewrite(value.decorators, owner)} : {})};
       }
@@ -106,7 +104,11 @@ class Compiler {
     }
     scope.classContext = node.kind === "Class" || !!parent?.classContext;
     if (scope.qualname.length > 256) this.fail("Qualified function name budget exceeded.", node, "COMPILE_BUDGET", "bind");
-    if (["Function", "Lambda"].includes(node.kind)) for (const group of Object.values(node.params)) for (const param of group) scope.locals.add(param.name);
+    if (["Function", "Lambda"].includes(node.kind)) for (const group of Object.values(node.params)) for (const param of group) {
+      if (scope.locals.has(param.name)) this.bindingError("Duplicate function parameter.", param,
+        "duplicate argument '" + (param.originalName ?? param.name) + "' in function definition");
+      scope.locals.add(param.name);
+    }
     if (node.kind === "Class") { scope.locals.add("__module__"); scope.locals.add("__qualname__"); }
     if (this.classes && node.kind === "Class" && docstring(node)) scope.locals.add("__doc__");
     const binding = (name, site) => {
