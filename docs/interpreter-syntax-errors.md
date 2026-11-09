@@ -92,3 +92,32 @@ separate native ranges and source text. Grammar failures take priority over
 duplicate parameters and scope declarations. Earlier completed compound
 statements keep the independent parser metadata boundary; non-newline header
 failures and unadopted grammar retain their existing field boundaries.
+
+LA-74 adopts qualified assignment, deletion and augmented-target diagnostics for
+literal/call/operator/comparison/conditional/lambda/display/comprehension
+expressions, plus tuple/list augmented targets. Ordinary, chained and loop
+assignment contexts retain their different wording. Parenthesized expression
+ranges and comprehension closing delimiters follow the parser reference; offsets
+use characters rather than the binder's byte columns. A source-only repair must
+parse successfully before fields are published and consumes the caller's compile
+budget. It is never executed. Nested assignment targets, failed repairs and
+prior-compound parser metadata keep their explicit boundaries.
+
+LA-75 composes missing-colon and invalid-target failures with modules, nested
+dynamic source, causes/notes, retained filename graphs and suspended cleanup.
+Argument snapshots, native fields and parser metadata retain their independent
+identity/mutation behavior. The example and installed offline console include
+fresh source, original dynamic frames, Stop/Restart and reduced-profile updates.
+
+LA-75A preserves declaration order when selecting missing nonlocal bindings,
+including later reads of other declared names. Invalid operands inside starred
+targets retain the nested-target field boundary instead of inheriting an
+ordinary assignment hint.
+
+The resulting fixed generated-syntax corpus contains 428 cases: 406 supported
+semantic/error comparisons and 22 explicit native-field refusals, with no scored
+divergences or untested cases. The separate ordinary exception corpus retains
+2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
+These finite observations do not measure overall Python compatibility. #600/A2,
+#124, #759, groups/except*, traceback objects/mutation, note export, library/package
+qualification and candidate/release gates remain open.
