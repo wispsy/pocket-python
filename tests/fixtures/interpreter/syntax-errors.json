@@ -1340,6 +1340,12 @@
       "error_type": "SyntaxError",
       "stage": "LA69",
       "stdout": "control-input.py True\n"
+    },
+    {
+      "id": "generated-flags-filename-owner-cycle",
+      "stage": "LA69",
+      "source": "class Name(str): pass\nfilename=Name(\"converted.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile(\"if\",filename,\"exec\",Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.filename,e.offset)\n",
+      "stdout": "entered\n7 True converted.py 3\n"
     }
   ]
 }
