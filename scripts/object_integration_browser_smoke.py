@@ -116,6 +116,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                             assert 'fail at native-key-original.py:4' in page.locator('#diagnostic').inner_text()
                         if case['id'] == 'generated-syntax-original-dynamic-failure':
                             assert 'fail at syntax-payload-original.py:2' in page.locator('#diagnostic').inner_text()
+                        if case['id'] == 'generated-flow-original-dynamic-failure':
+                            assert 'fail at control-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         records.append({'id': case['id'], 'status': 'pass'})
                     if exceptions:
                         for case in corpus.get('reference_boundaries', []):
@@ -193,6 +195,10 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     busy_sources = [busy]
                     if syntax_errors:
                         busy_sources += ['def work():\n try: compile("value=[","cleanup.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.filename\ng=work()\ne=next(g)\ne.args=()\ng.close()\n']
+                        busy_sources += [
+                            'class Name(str): pass\nfilename=Name("indent.py")\ntry: compile("if True:\\nvalue=7",filename,"exec")\nexcept IndentationError as e:\n filename.error=e\n e.args=()\n print("entered")\n while True: e.filename.error\n',
+                            'def work():\n try: compile("return 7","control.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
+                        ]
                     if exceptions:
                         busy_sources += [
                             'def handlers():\n print("entered")\n while True: pass\ntry: raise ValueError()\nexcept handlers(): pass\n',
@@ -330,6 +336,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
     if syntax_errors:
         checks = ['fresh-offline-generated-syntax-source', 'original-dynamic-diagnostics', 'runnable-example',
                   'stop-during-retained-payload', 'stop-during-generator-cleanup', 'restart-fresh-source',
+                  'stop-during-indentation-owner', 'stop-during-control-cleanup',
                   'reduced-profile-update', 'old-cache-removed', 'core-dynamic-source-boundary']
     return {'schema_version': 1, 'suite': 'interpreter-syntax-errors-offline/1' if syntax_errors else 'interpreter-exceptions-offline/1' if exceptions else 'interpreter-containers-offline/1' if containers else 'interpreter-object-offline/1',
             'installed_distribution_required': require_installed, 'package_origin': str(package),
