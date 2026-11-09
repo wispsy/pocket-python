@@ -65,7 +65,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     ready()
                     for case in corpus['cases']:
                         if (case.get('modules') or
-                            syntax_errors and case['stage'] not in {'LA66', 'LA69'} or
+                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72'} or
                             containers and case['stage'] not in {'LA-7', 'LA-6A'} or
                             exceptions and case['stage'] not in {'LA13', 'LA16', 'LA19', 'LA22', 'LA25', 'LA28', 'LA31', 'LA34', 'LA37', 'LA40', 'LA43', 'LA46', 'LA49', 'LA52', 'LA55', 'LA58', 'LA61', 'LA62C'}):
                             continue
@@ -118,6 +118,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                             assert 'fail at syntax-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         if case['id'] == 'generated-flow-original-dynamic-failure':
                             assert 'fail at control-payload-original.py:2' in page.locator('#diagnostic').inner_text()
+                        if case['id'] == 'generated-binding-original-dynamic-failure':
+                            assert 'fail at binding-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         records.append({'id': case['id'], 'status': 'pass'})
                     if exceptions:
                         for case in corpus.get('reference_boundaries', []):
@@ -193,6 +195,11 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     if syntax_errors:
                         busy = 'try: compile("if","retained.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n'
                     busy_sources = [busy]
+                    if syntax_errors:
+                        busy_sources += [
+                            'try: compile("nonlocal x","binding.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e.filename\n',
+                            'def work():\n try: compile("def f(x,x): pass","parameters.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
+                        ]
                     if syntax_errors:
                         busy_sources += ['def work():\n try: compile("value=[","cleanup.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.filename\ng=work()\ne=next(g)\ne.args=()\ng.close()\n']
                         busy_sources += [
