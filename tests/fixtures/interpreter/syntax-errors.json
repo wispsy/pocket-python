@@ -11,7 +11,8 @@
     "LA67",
     "LA68",
     "LA69",
-    "LA70"
+    "LA70",
+    "LA71"
   ],
   "cases": [
     {
@@ -1531,6 +1532,158 @@
       "stage": "LA70",
       "source": "try: compile('return 7\\nnonlocal value',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
       "stdout": "SyntaxError nonlocal declaration not allowed at module level\nselected/雪.py 2 1 2 15 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-0",
+      "stage": "LA71",
+      "source": "try: compile('def f(x,x): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 9 1 10 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-1",
+      "stage": "LA71",
+      "source": "try: compile('def f(x,/,x): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 11 1 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-2",
+      "stage": "LA71",
+      "source": "try: compile('def f(x,*,x): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 11 1 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-3",
+      "stage": "LA71",
+      "source": "try: compile('def f(*x,x): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 8 1 9 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-4",
+      "stage": "LA71",
+      "source": "try: compile('def f(x,**x): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 11 1 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-5",
+      "stage": "LA71",
+      "source": "try: compile('def f(*x,**x): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 12 1 13 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-6",
+      "stage": "LA71",
+      "source": "try: compile('def f(x=1,x=2): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 11 1 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-7",
+      "stage": "LA71",
+      "source": "try: compile('def f(x,x=1): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 9 1 10 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-8",
+      "stage": "LA71",
+      "source": "try: compile('def f(雪,雪): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument '雪' in function definition\nselected/雪.py 1 11 1 14 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-9",
+      "stage": "LA71",
+      "source": "try: compile('def f(K,K): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'K' in function definition\nselected/雪.py 1 11 1 12 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-10",
+      "stage": "LA71",
+      "source": "try: compile('class C:\\n def f(__x,_C__x): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument '_C__x' in function definition\nselected/雪.py 2 12 2 17 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-11",
+      "stage": "LA71",
+      "source": "try: compile('class C:\\n def f(_C__x,__x): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument '__x' in function definition\nselected/雪.py 2 14 2 17 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-12",
+      "stage": "LA71",
+      "source": "try: compile('lambda x,x: x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 10 1 11 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-13",
+      "stage": "LA71",
+      "source": "try: compile('lambda x,/,x: x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 12 1 13 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-14",
+      "stage": "LA71",
+      "source": "try: compile('lambda x,*,x: x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 12 1 13 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-15",
+      "stage": "LA71",
+      "source": "try: compile('lambda *x,x: x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 9 1 10 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-16",
+      "stage": "LA71",
+      "source": "try: compile('lambda x,**x: x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 12 1 13 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-17",
+      "stage": "LA71",
+      "source": "try: compile('lambda *x,**x: x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 13 1 14 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-18",
+      "stage": "LA71",
+      "source": "try: compile('lambda 雪,雪: 雪',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument '雪' in function definition\nselected/雪.py 1 12 1 15 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-19",
+      "stage": "LA71",
+      "source": "try: compile('class C:\\n value=lambda __x,_C__x: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument '_C__x' in function definition\nselected/雪.py 2 19 2 24 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-20",
+      "stage": "LA71",
+      "source": "try: compile('def outer():\\n def inner(x,x): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 2 14 2 15 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-21",
+      "stage": "LA71",
+      "source": "try: compile('def f(x,x):\\n global x',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 1 9 1 10 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-22",
+      "stage": "LA71",
+      "source": "try: compile('nonlocal x\\ndef f(x,x): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "SyntaxError duplicate argument 'x' in function definition\nselected/雪.py 2 9 2 10 None\n1 True True True\n"
+    },
+    {
+      "id": "binding-parameters-23",
+      "stage": "LA71",
+      "source": "try: compile('def f(x,x): pass\\nvalue=',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(type(e).__name__,e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset,repr(e.text))\n print(len(e.args),e.args[0] is e.msg,e.print_file_and_line is None)\n",
+      "stdout": "SyntaxError invalid syntax\nselected/雪.py 2 7 2 8 'value=\\n'\n2 True True\n"
+    },
+    {
+      "id": "binding-parameters-24",
+      "stage": "FutureBinding",
+      "source": "try: compile(\"def f(x,x=): pass\",\"selected/雪.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected/雪.py\n",
+      "owner": "#124",
+      "boundary": "Default-expression parser diagnostics retain their native-field boundary."
     }
   ]
 }

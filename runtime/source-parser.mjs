@@ -324,13 +324,11 @@ class Parser {
   }
   parameters(end) {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
-    const seen = new Set();
     while (!this.at(end)) {
       if (kwarg.length) this.fail("No parameter may follow a variadic keyword parameter.");
       if (this.eat("**")) {
         const token = this.name();
-        if (seen.has(token.value)) this.fail("Duplicate function parameter.", token);
-        seen.add(token.value); kwarg.push({name: token.value, value: null, span: token.span});
+        kwarg.push({name: token.value, value: null, span: token.span});
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         if (this.at("=")) this.fail("A variadic keyword parameter cannot have a default.");
       } else
@@ -341,16 +339,13 @@ class Parser {
         if (star) this.fail("Duplicate keyword-only separator.");
         if (this.kind("name")) {
           const token = this.take();
-          if (seen.has(token.value)) this.fail("Duplicate function parameter.", token);
-          seen.add(token.value); vararg.push({name: token.value, value: null, span: token.span});
+          vararg.push({name: token.value, value: null, span: token.span});
           if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
           if (this.at("=")) this.fail("A variadic positional parameter cannot have a default.");
         }
         star = true;
       } else {
         const token = this.name();
-        if (seen.has(token.value)) this.fail("Duplicate function parameter.", token);
-        seen.add(token.value);
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         const value = this.eat("=") ? this.expression() : null;
         if (!star && defaultSeen && value === null) this.fail("A required positional parameter follows a default.", token);
