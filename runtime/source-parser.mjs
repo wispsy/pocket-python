@@ -965,7 +965,11 @@ class Parser {
   primary() {
     let value = this.atom();
     for (;;) {
-      if (this.eat(".")) { const attr = this.name(); value = this.node("Attribute", value, {value, name: attr.value}, attr); }
+      if (this.eat(".")) {
+        if (!this.kind("name")) this.fail("Expected an attribute identifier.", this.peek(), "SYNTAX", undefined,
+          this.operandFields && this.comprehensionClauseFields && !this.conditionalTest ? this.tokenDiagnostic("invalid syntax") : undefined);
+        const attr = this.name(); value = this.node("Attribute", value, {value, name: attr.value}, attr);
+      }
       else if (this.eat("(")) {
         const {args, keywords, repeated} = this.arguments();
         this.expect(")"); value = this.node("Call", value, {callable: value, args, keywords});
