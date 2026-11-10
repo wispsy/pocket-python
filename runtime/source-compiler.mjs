@@ -725,21 +725,24 @@ class Compiler {
     }
   }
   firstCompileError() {
-    const keywords = new Map(this.parsed.keywordErrors.map(({call, site}) => [call, site]));
+    const keywords = new Map(this.parsed.keywordErrors.map(({node, site}) => [node, site]));
+    const keywordError = site => ({kind: "keyword", token: site, node: site, message: "keyword argument repeated: " + site.name});
     let found = null;
     const visit = node => {
       if (found) return;
       this.charge(node);
       if (node === this.parsed.controlError?.node) { found = this.parsed.controlError; return; }
       const site = keywords.get(node);
-      if (site) { found = {kind: "keyword", token: site, node: site, message: "keyword argument repeated: " + site.name}; return; }
+      if (site && node.kind !== "Class") { found = keywordError(site); return; }
       const children = value => this.children(value, visit);
       if (["Function", "Lambda"].includes(node.kind)) {
         children(node.decorators);
         for (const group of Object.values(node.params)) for (const param of group) children(param.value);
         children(node.body);
       } else if (node.kind === "Class") {
-        children(node.decorators); children(node.body); children(node.bases);
+        children(node.decorators); children(node.body);
+        if (!found && site) found = keywordError(site);
+        children(node.bases);
         children(node.keywords ?? node.metaclass);
       } else if (node.kind === "Comprehension") {
         // Generator bodies compile before the outer iterator; inlined displays compile it first.

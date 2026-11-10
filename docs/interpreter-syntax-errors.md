@@ -259,3 +259,11 @@ causes/notes, independent argument snapshots and cyclic filename owners.
 Suspended flags conversion and generator cleanup retain those fields through
 parked collection, cancellation and close. Shared allocation limits, original
 dynamic frames and installed offline Stop/Restart cover the same payloads.
+
+LA-92 qualifies repeated normalized class keywords after full parsing and
+binding. Decorators and the class body compile before the class keyword list;
+that list validates before base and keyword-value expressions. Native fields
+use UTF-8 byte columns, two arguments and absent source text/parser metadata.
+Earlier binding/control failures retain their priority. Incomplete inline
+compound input in `single` mode keeps its native field-read boundary; newline-
+terminated input has independent compiler comparisons.

@@ -183,6 +183,9 @@ class Parser {
       syntax.offset = syntax.end_offset = 0;
       this.fail("invalid syntax", this.peek(), "SYNTAX", undefined, syntax);
     }
+    if (mode === "single" && this.keywordErrors.length && !this.lexed.source.endsWith("\n") &&
+        ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind) && !this.tokens.some(token => token.kind === "indent"))
+      this.fail("Interactive compound input requires a terminating newline.");
     if (mode === "single" && this.controlError && !this.lexed.source.endsWith("\n") && ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind)) {
       const last = this.tokens.filter(token => !["newline", "eof", "indent", "dedent"].includes(token.kind)).at(-1);
       const lines = this.lexed.source.split("\n");
@@ -493,22 +496,24 @@ class Parser {
   }
   classDefinition(decorators = []) {
     const start = this.expect("class"), name = this.name().value, bases = [];
-    let metaclass = null;
+    let metaclass = null, repeated = null;
     const keywords = [];
     if (this.at("[")) this.unsupported("Generic classes are not adopted.");
     if (this.eat("(")) {
       const parsed = this.arguments(true);
       bases.push(...parsed.args); keywords.push(...parsed.keywords);
       metaclass = keywords.find(item => item.name === "metaclass")?.value ?? null;
-      if (parsed.repeated) this.fail("Duplicate class keyword.", parsed.repeated);
+      repeated = parsed.repeated;
       this.expect(")");
     }
     const before = [this.functionDepth, this.loopDepth]; this.functionDepth = 0; this.loopDepth = 0;
     let body;
     try { body = this.suite(start); } finally { [this.functionDepth, this.loopDepth] = before; }
-    return this.node("Class", start, {name, bases, body,
+    const value = this.node("Class", start, {name, bases, body,
       ...((keywords.some(item => item.name !== "metaclass") || bases.some(item => item.kind === "StarredArgument")) ? {keywords} : metaclass ? {metaclass} : {}),
       ...(decorators.length ? {decorators} : {})}, body.at(-1));
+    if (repeated) this.keywordErrors.push({node: value, site: repeated});
+    return value;
   }
   branch(keyword = "if") {
     const start = this.expect(keyword), test = this.namedExpression(), body = this.suite(start);
@@ -753,7 +758,7 @@ class Parser {
       else if (this.eat("(")) {
         const {args, keywords, repeated} = this.arguments();
         this.expect(")"); value = this.node("Call", value, {callable: value, args, keywords});
-        if (repeated) this.keywordErrors.push({call: value, site: repeated});
+        if (repeated) this.keywordErrors.push({node: value, site: repeated});
       } else if (this.eat("[")) {
         const start = this.peek(), items = [this.subscript()]; let tuple = false;
         while (this.eat(",")) { tuple = true; if (this.at("]")) break; items.push(this.subscript()); }
