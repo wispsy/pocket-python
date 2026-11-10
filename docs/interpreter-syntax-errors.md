@@ -327,8 +327,14 @@ suspended flags/cleanup retain their fields through parked collection,
 cancellation/close and shared limits. Offline acceptance includes original
 dynamic frames and retained-field/cleanup Stop/Restart paths.
 
-The current fixed generated-syntax corpus contains 1,635 cases: 1,532 supported
-semantic/error comparisons and 103 explicit native-field refusals. The ordinary
+LA-103 qualifies missing colons after subsequent dictionary keys and missing
+expressions after colons. Missing-key locations select the final character of
+the key with a zero native end offset; missing values select the colon token.
+Grouping, multiline/Unicode text and parser modes retain independent cases.
+Malformed/unadopted keys and prior-compound metadata keep their boundaries.
+
+The current fixed generated-syntax corpus contains 1,735 cases: 1,627 supported
+semantic/error comparisons and 108 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

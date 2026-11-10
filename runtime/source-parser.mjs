@@ -961,9 +961,19 @@ class Parser {
           if (this.eat(":")) {
             if (key.kind === "NamedExpression" && !this.grouped.has(key)) this.fail("A dictionary-key assignment expression requires parentheses.", key);
             if (form === "set") this.fail("Mixed set and dictionary display.");
+            const colon = this.previous;
+            if (this.at("}") || this.at(",")) this.fail("A dictionary value requires an expression.", colon, "SYNTAX", undefined,
+              this.delimitedDiagnostic("expression expected after dictionary key and ':'", colon, "}", true));
             form = "dict"; const value = this.expression(); entries.push([key, value]);
           } else {
-            if (form === "dict") this.fail("A dictionary element requires a value.");
+            if (form === "dict") {
+              const last = key.kind === "Comprehension" ? this.previous : key;
+              const span = [last.span[2], last.span[3], last.span[2], last.span[3]];
+              const syntax = key.kind === "NamedExpression" && !this.grouped.has(key) ? undefined :
+                this.delimitedDiagnostic("':' expected after dictionary key", {span}, "}", true);
+              if (syntax) { syntax.offset--; syntax.end_offset = 0; }
+              this.fail("A dictionary element requires a value.", key, "SYNTAX", undefined, syntax);
+            }
             form = "set"; items.push(key);
           }
         }
