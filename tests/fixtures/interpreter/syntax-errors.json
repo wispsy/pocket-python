@@ -43,7 +43,8 @@
     "LA98",
     "LA99",
     "LA99A",
-    "LA100"
+    "LA100",
+    "LA101"
   ],
   "cases": [
     {
@@ -9457,6 +9458,588 @@
       "stage": "Future",
       "source": "try: compile('if True: pass\\n[x,y for x in z]',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e._metadata)\n",
       "stdout": "(1, 0, 'if True: pass\\n[x,y for x in z]\\n')\n"
+    },
+    {
+      "id": "comprehension-unpacking-0-exec",
+      "source": "try: compile('[*x for x in z]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*x for x in z]\\n' 2 6\nTrue True True\n0 0 '[*x for x in z]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-0-eval",
+      "source": "try: compile('[*x for x in z]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*x for x in z]' 2 6\nTrue True True\n0 0 '[*x for x in z]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-0-single",
+      "source": "try: compile('[*x for x in z]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*x for x in z]' 2 6\nTrue True True\n0 0 '[*x for x in z]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-0-newline",
+      "source": "try: compile('[*x for x in z]\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*x for x in z]\\n' 2 6\nTrue True True\n0 0 '[*x for x in z]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-1-exec",
+      "source": "try: compile('{*x for x in z}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'{*x for x in z}\\n' 2 6\nTrue True True\n0 0 '{*x for x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-1-eval",
+      "source": "try: compile('{*x for x in z}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'{*x for x in z}' 2 6\nTrue True True\n0 0 '{*x for x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-1-single",
+      "source": "try: compile('{*x for x in z}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'{*x for x in z}' 2 6\nTrue True True\n0 0 '{*x for x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-1-newline",
+      "source": "try: compile('{*x for x in z}\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'{*x for x in z}\\n' 2 6\nTrue True True\n0 0 '{*x for x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-2-exec",
+      "source": "try: compile('(*x for x in z)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*x for x in z)\\n' 2 6\nTrue True True\n0 0 '(*x for x in z)\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-2-eval",
+      "source": "try: compile('(*x for x in z)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*x for x in z)' 2 6\nTrue True True\n0 0 '(*x for x in z)'\n"
+    },
+    {
+      "id": "comprehension-unpacking-2-single",
+      "source": "try: compile('(*x for x in z)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*x for x in z)' 2 6\nTrue True True\n0 0 '(*x for x in z)'\n"
+    },
+    {
+      "id": "comprehension-unpacking-2-newline",
+      "source": "try: compile('(*x for x in z)\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*x for x in z)\\n' 2 6\nTrue True True\n0 0 '(*x for x in z)\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-3-exec",
+      "source": "try: compile('{**x for x in z}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**x for x in z}\\n' 2 6\nTrue True True\n0 0 '{**x for x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-3-eval",
+      "source": "try: compile('{**x for x in z}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**x for x in z}' 2 6\nTrue True True\n0 0 '{**x for x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-3-single",
+      "source": "try: compile('{**x for x in z}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**x for x in z}' 2 6\nTrue True True\n0 0 '{**x for x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-3-newline",
+      "source": "try: compile('{**x for x in z}\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**x for x in z}\\n' 2 6\nTrue True True\n0 0 '{**x for x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-4-exec",
+      "source": "try: compile('[*(x,y) for x in z]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'[*(x,y) for x in z]\\n' 2 6\nTrue True True\n0 0 '[*(x,y) for x in z]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-4-eval",
+      "source": "try: compile('[*(x,y) for x in z]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'[*(x,y) for x in z]' 2 6\nTrue True True\n0 0 '[*(x,y) for x in z]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-4-single",
+      "source": "try: compile('[*(x,y) for x in z]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'[*(x,y) for x in z]' 2 6\nTrue True True\n0 0 '[*(x,y) for x in z]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-4-newline",
+      "source": "try: compile('[*(x,y) for x in z]\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'[*(x,y) for x in z]\\n' 2 6\nTrue True True\n0 0 '[*(x,y) for x in z]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-5-exec",
+      "source": "try: compile('{*(x,y) for x in z}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'{*(x,y) for x in z}\\n' 2 6\nTrue True True\n0 0 '{*(x,y) for x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-5-eval",
+      "source": "try: compile('{*(x,y) for x in z}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'{*(x,y) for x in z}' 2 6\nTrue True True\n0 0 '{*(x,y) for x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-5-single",
+      "source": "try: compile('{*(x,y) for x in z}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'{*(x,y) for x in z}' 2 6\nTrue True True\n0 0 '{*(x,y) for x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-5-newline",
+      "source": "try: compile('{*(x,y) for x in z}\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'{*(x,y) for x in z}\\n' 2 6\nTrue True True\n0 0 '{*(x,y) for x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-6-exec",
+      "source": "try: compile('(*(x,y) for x in z)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'(*(x,y) for x in z)\\n' 2 6\nTrue True True\n0 0 '(*(x,y) for x in z)\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-6-eval",
+      "source": "try: compile('(*(x,y) for x in z)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'(*(x,y) for x in z)' 2 6\nTrue True True\n0 0 '(*(x,y) for x in z)'\n"
+    },
+    {
+      "id": "comprehension-unpacking-6-single",
+      "source": "try: compile('(*(x,y) for x in z)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'(*(x,y) for x in z)' 2 6\nTrue True True\n0 0 '(*(x,y) for x in z)'\n"
+    },
+    {
+      "id": "comprehension-unpacking-6-newline",
+      "source": "try: compile('(*(x,y) for x in z)\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 8\n'(*(x,y) for x in z)\\n' 2 6\nTrue True True\n0 0 '(*(x,y) for x in z)\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-7-exec",
+      "source": "try: compile('{**(x|y) for x in z}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**(x|y) for x in z}\\n' 2 6\nTrue True True\n0 0 '{**(x|y) for x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-7-eval",
+      "source": "try: compile('{**(x|y) for x in z}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**(x|y) for x in z}' 2 6\nTrue True True\n0 0 '{**(x|y) for x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-7-single",
+      "source": "try: compile('{**(x|y) for x in z}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**(x|y) for x in z}' 2 6\nTrue True True\n0 0 '{**(x|y) for x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-7-newline",
+      "source": "try: compile('{**(x|y) for x in z}\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**(x|y) for x in z}\\n' 2 6\nTrue True True\n0 0 '{**(x|y) for x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-8-exec",
+      "source": "try: compile('[*雪 for 鳥 in 空 if 鳥]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*雪 for 鳥 in 空 if 鳥]\\n' 2 6\nTrue True True\n0 0 '[*雪 for 鳥 in 空 if 鳥]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-8-eval",
+      "source": "try: compile('[*雪 for 鳥 in 空 if 鳥]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*雪 for 鳥 in 空 if 鳥]' 2 6\nTrue True True\n0 0 '[*雪 for 鳥 in 空 if 鳥]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-8-single",
+      "source": "try: compile('[*雪 for 鳥 in 空 if 鳥]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*雪 for 鳥 in 空 if 鳥]' 2 6\nTrue True True\n0 0 '[*雪 for 鳥 in 空 if 鳥]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-8-newline",
+      "source": "try: compile('[*雪 for 鳥 in 空 if 鳥]\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*雪 for 鳥 in 空 if 鳥]\\n' 2 6\nTrue True True\n0 0 '[*雪 for 鳥 in 空 if 鳥]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-9-exec",
+      "source": "try: compile('{*雪 for 鳥 in 空 if 鳥}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'{*雪 for 鳥 in 空 if 鳥}\\n' 2 6\nTrue True True\n0 0 '{*雪 for 鳥 in 空 if 鳥}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-9-eval",
+      "source": "try: compile('{*雪 for 鳥 in 空 if 鳥}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'{*雪 for 鳥 in 空 if 鳥}' 2 6\nTrue True True\n0 0 '{*雪 for 鳥 in 空 if 鳥}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-9-single",
+      "source": "try: compile('{*雪 for 鳥 in 空 if 鳥}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'{*雪 for 鳥 in 空 if 鳥}' 2 6\nTrue True True\n0 0 '{*雪 for 鳥 in 空 if 鳥}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-9-newline",
+      "source": "try: compile('{*雪 for 鳥 in 空 if 鳥}\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'{*雪 for 鳥 in 空 if 鳥}\\n' 2 6\nTrue True True\n0 0 '{*雪 for 鳥 in 空 if 鳥}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-10-exec",
+      "source": "try: compile('(*雪 for 鳥 in 空 if 鳥)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*雪 for 鳥 in 空 if 鳥)\\n' 2 6\nTrue True True\n0 0 '(*雪 for 鳥 in 空 if 鳥)\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-10-eval",
+      "source": "try: compile('(*雪 for 鳥 in 空 if 鳥)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*雪 for 鳥 in 空 if 鳥)' 2 6\nTrue True True\n0 0 '(*雪 for 鳥 in 空 if 鳥)'\n"
+    },
+    {
+      "id": "comprehension-unpacking-10-single",
+      "source": "try: compile('(*雪 for 鳥 in 空 if 鳥)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*雪 for 鳥 in 空 if 鳥)' 2 6\nTrue True True\n0 0 '(*雪 for 鳥 in 空 if 鳥)'\n"
+    },
+    {
+      "id": "comprehension-unpacking-10-newline",
+      "source": "try: compile('(*雪 for 鳥 in 空 if 鳥)\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*雪 for 鳥 in 空 if 鳥)\\n' 2 6\nTrue True True\n0 0 '(*雪 for 鳥 in 空 if 鳥)\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-11-exec",
+      "source": "try: compile('{**雪 for 鳥 in 空 if 鳥}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**雪 for 鳥 in 空 if 鳥}\\n' 2 6\nTrue True True\n0 0 '{**雪 for 鳥 in 空 if 鳥}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-11-eval",
+      "source": "try: compile('{**雪 for 鳥 in 空 if 鳥}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**雪 for 鳥 in 空 if 鳥}' 2 6\nTrue True True\n0 0 '{**雪 for 鳥 in 空 if 鳥}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-11-single",
+      "source": "try: compile('{**雪 for 鳥 in 空 if 鳥}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**雪 for 鳥 in 空 if 鳥}' 2 6\nTrue True True\n0 0 '{**雪 for 鳥 in 空 if 鳥}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-11-newline",
+      "source": "try: compile('{**雪 for 鳥 in 空 if 鳥}\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**雪 for 鳥 in 空 if 鳥}\\n' 2 6\nTrue True True\n0 0 '{**雪 for 鳥 in 空 if 鳥}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-12-exec",
+      "source": "try: compile('[\\n*雪\\nfor 鳥 in 空\\n]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '[\\n*雪\\nfor 鳥 in 空\\n]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-12-eval",
+      "source": "try: compile('[\\n*雪\\nfor 鳥 in 空\\n]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '[\\n*雪\\nfor 鳥 in 空\\n]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-12-single",
+      "source": "try: compile('[\\n*雪\\nfor 鳥 in 空\\n]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '[\\n*雪\\nfor 鳥 in 空\\n]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-12-newline",
+      "source": "try: compile('[\\n*雪\\nfor 鳥 in 空\\n]\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '[\\n*雪\\nfor 鳥 in 空\\n]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-13-exec",
+      "source": "try: compile('{\\n*雪\\nfor 鳥 in 空\\n}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '{\\n*雪\\nfor 鳥 in 空\\n}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-13-eval",
+      "source": "try: compile('{\\n*雪\\nfor 鳥 in 空\\n}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '{\\n*雪\\nfor 鳥 in 空\\n}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-13-single",
+      "source": "try: compile('{\\n*雪\\nfor 鳥 in 空\\n}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '{\\n*雪\\nfor 鳥 in 空\\n}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-13-newline",
+      "source": "try: compile('{\\n*雪\\nfor 鳥 in 空\\n}\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '{\\n*雪\\nfor 鳥 in 空\\n}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-14-exec",
+      "source": "try: compile('(\\n*雪\\nfor 鳥 in 空\\n)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '(\\n*雪\\nfor 鳥 in 空\\n)\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-14-eval",
+      "source": "try: compile('(\\n*雪\\nfor 鳥 in 空\\n)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '(\\n*雪\\nfor 鳥 in 空\\n)'\n"
+    },
+    {
+      "id": "comprehension-unpacking-14-single",
+      "source": "try: compile('(\\n*雪\\nfor 鳥 in 空\\n)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '(\\n*雪\\nfor 鳥 in 空\\n)'\n"
+    },
+    {
+      "id": "comprehension-unpacking-14-newline",
+      "source": "try: compile('(\\n*雪\\nfor 鳥 in 空\\n)\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 2 1 2 3\n'*雪' 2 6\nTrue True True\n0 0 '(\\n*雪\\nfor 鳥 in 空\\n)\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-15-exec",
+      "source": "try: compile('{\\n**雪\\nfor 鳥 in 空\\n}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 2 1 2 3\n'**雪' 2 6\nTrue True True\n0 0 '{\\n**雪\\nfor 鳥 in 空\\n}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-15-eval",
+      "source": "try: compile('{\\n**雪\\nfor 鳥 in 空\\n}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 2 1 2 3\n'**雪' 2 6\nTrue True True\n0 0 '{\\n**雪\\nfor 鳥 in 空\\n}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-15-single",
+      "source": "try: compile('{\\n**雪\\nfor 鳥 in 空\\n}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 2 1 2 3\n'**雪' 2 6\nTrue True True\n0 0 '{\\n**雪\\nfor 鳥 in 空\\n}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-15-newline",
+      "source": "try: compile('{\\n**雪\\nfor 鳥 in 空\\n}\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 2 1 2 3\n'**雪' 2 6\nTrue True True\n0 0 '{\\n**雪\\nfor 鳥 in 空\\n}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-16-exec",
+      "source": "try: compile('[*f() for x in z for y in w if y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 6\n'[*f() for x in z for y in w if y]\\n' 2 6\nTrue True True\n0 0 '[*f() for x in z for y in w if y]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-16-eval",
+      "source": "try: compile('[*f() for x in z for y in w if y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 6\n'[*f() for x in z for y in w if y]' 2 6\nTrue True True\n0 0 '[*f() for x in z for y in w if y]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-16-single",
+      "source": "try: compile('[*f() for x in z for y in w if y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 6\n'[*f() for x in z for y in w if y]' 2 6\nTrue True True\n0 0 '[*f() for x in z for y in w if y]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-16-newline",
+      "source": "try: compile('[*f() for x in z for y in w if y]\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 6\n'[*f() for x in z for y in w if y]\\n' 2 6\nTrue True True\n0 0 '[*f() for x in z for y in w if y]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-17-exec",
+      "source": "try: compile('{**f() for x in z for y in w if y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**f() for x in z for y in w if y}\\n' 2 6\nTrue True True\n0 0 '{**f() for x in z for y in w if y}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-17-eval",
+      "source": "try: compile('{**f() for x in z for y in w if y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**f() for x in z for y in w if y}' 2 6\nTrue True True\n0 0 '{**f() for x in z for y in w if y}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-17-single",
+      "source": "try: compile('{**f() for x in z for y in w if y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**f() for x in z for y in w if y}' 2 6\nTrue True True\n0 0 '{**f() for x in z for y in w if y}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-17-newline",
+      "source": "try: compile('{**f() for x in z for y in w if y}\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**f() for x in z for y in w if y}\\n' 2 6\nTrue True True\n0 0 '{**f() for x in z for y in w if y}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-18-exec",
+      "source": "try: compile('[*x # element\\nfor x in z]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*x # element' 2 6\nTrue True True\n0 0 '[*x # element\\nfor x in z]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-18-eval",
+      "source": "try: compile('[*x # element\\nfor x in z]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*x # element' 2 6\nTrue True True\n0 0 '[*x # element\\nfor x in z]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-18-single",
+      "source": "try: compile('[*x # element\\nfor x in z]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*x # element' 2 6\nTrue True True\n0 0 '[*x # element\\nfor x in z]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-18-newline",
+      "source": "try: compile('[*x # element\\nfor x in z]\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*x # element' 2 6\nTrue True True\n0 0 '[*x # element\\nfor x in z]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-19-exec",
+      "source": "try: compile('{**x # element\\nfor x in z}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**x # element' 2 6\nTrue True True\n0 0 '{**x # element\\nfor x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-19-eval",
+      "source": "try: compile('{**x # element\\nfor x in z}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**x # element' 2 6\nTrue True True\n0 0 '{**x # element\\nfor x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-19-single",
+      "source": "try: compile('{**x # element\\nfor x in z}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**x # element' 2 6\nTrue True True\n0 0 '{**x # element\\nfor x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-19-newline",
+      "source": "try: compile('{**x # element\\nfor x in z}\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**x # element' 2 6\nTrue True True\n0 0 '{**x # element\\nfor x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-20-exec",
+      "source": "try: compile('[*雪\\\\\\n for x in z]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*雪\\\\' 2 6\nTrue True True\n0 0 '[*雪\\\\\\n for x in z]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-20-eval",
+      "source": "try: compile('[*雪\\\\\\n for x in z]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*雪\\\\' 2 6\nTrue True True\n0 0 '[*雪\\\\\\n for x in z]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-20-single",
+      "source": "try: compile('[*雪\\\\\\n for x in z]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*雪\\\\' 2 6\nTrue True True\n0 0 '[*雪\\\\\\n for x in z]'\n"
+    },
+    {
+      "id": "comprehension-unpacking-20-newline",
+      "source": "try: compile('[*雪\\\\\\n for x in z]\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'[*雪\\\\' 2 6\nTrue True True\n0 0 '[*雪\\\\\\n for x in z]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-21-exec",
+      "source": "try: compile('{**雪\\\\\\n for x in z}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**雪\\\\' 2 6\nTrue True True\n0 0 '{**雪\\\\\\n for x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-21-eval",
+      "source": "try: compile('{**雪\\\\\\n for x in z}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**雪\\\\' 2 6\nTrue True True\n0 0 '{**雪\\\\\\n for x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-21-single",
+      "source": "try: compile('{**雪\\\\\\n for x in z}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**雪\\\\' 2 6\nTrue True True\n0 0 '{**雪\\\\\\n for x in z}'\n"
+    },
+    {
+      "id": "comprehension-unpacking-21-newline",
+      "source": "try: compile('{**雪\\\\\\n for x in z}\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 1 2 1 4\n'{**雪\\\\' 2 6\nTrue True True\n0 0 '{**雪\\\\\\n for x in z}\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-grammar-before-binding",
+      "source": "try: compile('def f(x,x): return [*a for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA101",
+      "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 21 1 23\n'def f(x,x): return [*a for x in y]\\n' 2 6\nTrue True True\n0 0 'def f(x,x): return [*a for x in y]\\n'\n"
+    },
+    {
+      "id": "comprehension-unpacking-prior-compound-fields",
+      "source": "try: compile('if True: pass\\n{**x for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stage": "LA101",
+      "stdout": "dict unpacking cannot be used in dict comprehension\nselected/雪.py 2 2 2 4\n'{**x for x in y}\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "comprehension-unpacking-valid-displays",
+      "source": "print(len([*[1,2]]),len({*[1,2]}),len({**{1:2}}))\ng=(x for x in [1,2])\nprint(next(g),next(g))\n",
+      "stage": "LA101",
+      "stdout": "2 2 1\n1 2\n"
+    },
+    {
+      "id": "comprehension-unpacking-boundary-0",
+      "stage": "Future",
+      "source": "try: compile('[*x for x in ]',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e.msg)\n",
+      "stdout": "invalid syntax\n"
+    },
+    {
+      "id": "comprehension-unpacking-boundary-1",
+      "stage": "Future",
+      "source": "try: compile('{**x for x in }',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e.msg)\n",
+      "stdout": "invalid syntax\n"
+    },
+    {
+      "id": "comprehension-unpacking-boundary-2",
+      "stage": "Future",
+      "source": "try: compile('(*x for x in z if )',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e.msg)\n",
+      "stdout": "iterable unpacking cannot be used in comprehension\n"
+    },
+    {
+      "id": "comprehension-unpacking-boundary-3",
+      "stage": "Future",
+      "source": "try: compile('[*x for x in z junk]',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e.msg)\n",
+      "stdout": "iterable unpacking cannot be used in comprehension\n"
+    },
+    {
+      "id": "comprehension-unpacking-boundary-4",
+      "stage": "Future",
+      "source": "try: compile('{**x for x in z,}',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e.msg)\n",
+      "stdout": "invalid syntax\n"
+    },
+    {
+      "id": "comprehension-unpacking-boundary-5",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\n[*x for x in z]',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(1, 0, 'if True: pass\\n[*x for x in z]\\n')\n"
     }
   ]
 }

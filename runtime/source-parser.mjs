@@ -667,7 +667,7 @@ class Parser {
       if (this.ending() || [")", "]", "}", ":", "="].some(value => this.at(value)) || target && this.at("in")) break;
       items.push(expression());
     }
-    if (!tuple && items[0].kind === "Starred" && !this.at("=") && !(target && this.at("in")))
+    if (!tuple && items[0].kind === "Starred" && !this.at("=") && !(target && this.at("in")) && !(named && this.at("for")))
       this.fail("A starred expression requires a sequence display.", items[0]);
     return tuple ? this.node("Tuple", start, {items}) : items[0];
   }
@@ -873,7 +873,6 @@ class Parser {
     return this.node("Slice", start, {start: index, stop, step});
   }
   comprehension(start, form, element, key = null) {
-    if (element.kind === "Starred") this.fail("Comprehensions cannot unpack their element.", element);
     const clauses = [];
     while (this.eat("for")) {
       const target = this.expressionList(false, true); this.target(target, false, false, "loop"); this.expect("in");
@@ -882,6 +881,11 @@ class Parser {
       clauses.push({target, iterable, filters});
     }
     if (this.at("async")) this.unsupported("Async comprehensions require a separate stage.");
+    if (element.kind === "Starred") {
+      const end = form === "list" ? "]" : form === "generator" ? ")" : "}";
+      this.fail("Comprehensions cannot unpack their element.", element, "SYNTAX", undefined,
+        this.at(end) ? this.delimitedDiagnostic("iterable unpacking cannot be used in comprehension", element, end, true) : undefined);
+    }
     return this.node("Comprehension", start, {form, element, key, clauses});
   }
   comprehensionElements(start, form, items, comma, end) {
@@ -941,7 +945,7 @@ class Parser {
       this.expect("]"); return this.node("List", start, {items});
     }
     if (this.eat("{")) {
-      const entries = [], items = []; let form = null, comma = null;
+      const entries = [], items = []; let form = null, comma = null, unpacking = null;
       while (!this.at("}")) {
         if (form === "set" && comma && this.at("for")) this.comprehensionElements(start, "set", items, comma, "}");
         if (this.at("*")) {
@@ -949,6 +953,7 @@ class Parser {
           form = "set"; items.push(this.starredExpression(true));
         } else if (this.eat("**")) {
           if (form === "set") this.fail("A set display cannot contain a dictionary unpacking.");
+          if (!entries.length) unpacking = this.previous;
           form = "dict"; entries.push([null, this.bitwiseOr()]);
         }
         else {
@@ -964,6 +969,11 @@ class Parser {
         }
         if (this.at("for")) {
           if (form === "set" && items.length !== 1) this.comprehensionElements(start, "set", items, comma, "}");
+          if (entries.length === 1 && entries[0][0] === null) {
+            this.comprehension(start, "dict", entries[0][1]);
+            this.fail("A dictionary comprehension cannot unpack its element.", unpacking, "SYNTAX", undefined,
+              this.at("}") ? this.delimitedDiagnostic("dict unpacking cannot be used in dict comprehension", unpacking, "}", true) : undefined);
+          }
           if (items.length + entries.length !== 1 || entries[0]?.[0] === null) this.fail("A comprehension requires one element or pair.");
           const result = this.comprehension(start, form, form === "set" ? items[0] : entries[0][1], form === "dict" ? entries[0][0] : null);
           this.expect("}"); return result;

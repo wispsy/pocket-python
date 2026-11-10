@@ -316,8 +316,13 @@ Adopted clauses are parsed before the specialized message is selected. Grouping,
 starred operands, character ranges and multiline first-line conversion follow the
 pinned grammar; malformed clauses and prior-compound metadata retain boundaries.
 
-The current fixed generated-syntax corpus contains 1,522 cases: 1,425 supported
-semantic/error comparisons and 97 explicit native-field refusals. The ordinary
+LA-101 qualifies starred list/set/generator comprehension elements and mapping
+unpacking in dict comprehensions. Iterable errors retain the complete starred
+operand range; dictionary errors select the double-star token. Adopted clauses
+must parse before fields are published. Invalid operands/tails remain bounded.
+
+The current fixed generated-syntax corpus contains 1,619 cases: 1,516 supported
+semantic/error comparisons and 103 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
