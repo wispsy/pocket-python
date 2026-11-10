@@ -984,12 +984,29 @@ class Parser {
     return value;
   }
   subscript() {
-    const start = this.peek(); let index = this.at(":") ? null : this.namedExpression();
+    const start = this.peek(); let index = this.at(":") ? null : this.subscriptionOperand(() => this.namedExpression());
     if (!this.eat(":")) return index;
     if (index?.kind === "NamedExpression" && !this.grouped.has(index)) this.fail("A slice-bound assignment expression requires parentheses.", index);
-    const stop = [":", ",", "]"].some(value => this.at(value)) ? null : this.expression();
-    const step = this.eat(":") ? [",", "]"].some(value => this.at(value)) ? null : this.expression() : null;
+    const stop = [":", ",", "]"].some(value => this.at(value)) ? null : this.subscriptionOperand(() => this.expression());
+    const step = this.eat(":") ? [",", "]"].some(value => this.at(value)) ? null : this.subscriptionOperand(() => this.expression()) : null;
     return this.node("Slice", start, {start: index, stop, step});
+  }
+  subscriptionOperand(body) {
+    // A surrounding display can reinterpret an empty subscript as an adjacent
+    // empty list, or select an earlier comprehension/statement diagnostic.
+    let qualified = !(this.at("for") && this.previous.value === ",") &&
+      !(["pass", "break", "continue"].some(value => this.at(value)) && this.peek(1).value === "if");
+    if (this.at("]") && this.previous.value === "[") {
+      let depth = 0;
+      for (const token of this.tokens.slice(0, this.index - 1)) {
+        this.charge();
+        if (["(", "[", "{"].includes(token.value)) depth++;
+        if ([")", "]", "}"].includes(token.value)) depth--;
+      }
+      qualified &&= depth === 0;
+    }
+    const operand = () => this.rightOperand(body);
+    return qualified ? operand() : this.withoutOperandFields(operand);
   }
   comprehension(start, form, element, key = null, clauseFields = true) {
     const before = this.comprehensionClauseFields;
