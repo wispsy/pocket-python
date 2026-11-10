@@ -144,6 +144,19 @@ character ranges and source fields. These grammar errors precede duplicate-name
 binding errors and invalid function bodies. Malformed parameter tails,
 annotations and earlier compound metadata retain their independent boundaries.
 
+LA-80 adds repeated/misordered positional-only and keyword-only separators,
+missing names after a bare star, and parameters after a variadic keyword
+parameter. Function and lambda diagnostics retain their distinct bare-star
+locations. Qualified multiline parameter diagnostics also preserve whether
+the tokenizer's source line includes its physical newline. UTF-8 identifiers,
+exec/eval/single modes and grammar-before-binding priority have independent
+reference cases. Malformed separator tails and annotations remain bounded.
+
+The diagnostic observations use the pinned
+[parameter grammar](https://github.com/python/cpython/blob/v3.14.7/Grammar/python.gram)
+and [target compiler](https://github.com/python/cpython/blob/v3.14.7/Python/codegen.c)
+as primary references, with separately executed source programs as the oracle.
+
 The resulting fixed generated-syntax corpus contains 428 cases: 406 supported
 semantic/error comparisons and 22 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains

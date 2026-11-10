@@ -379,10 +379,34 @@ class Parser {
     try { body = this.suite(start); } finally { [this.functionDepth, this.loopDepth] = before; }
     return this.node("Function", start, {name, params, body, ...(decorators.length ? {decorators} : {})}, body.at(-1));
   }
+  parameterDiagnostic(message, token, end, joined = false) {
+    const syntax = this.diagnostic(message, token.span);
+    if (joined) {
+      let depth = 0;
+      for (const next of this.tokens.slice(this.index)) {
+        this.charge();
+        if (!depth && next.value === end) {
+          if (next.span[0] !== token.span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+          break;
+        }
+        if (["(", "[", "{"].includes(next.value)) depth++;
+        if ([")", "]", "}"].includes(next.value)) depth--;
+      }
+    }
+    return syntax;
+  }
   parameters(end) {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
+    let bareStar = null;
     while (!this.at(end)) {
-      if (kwarg.length) this.fail("No parameter may follow a variadic keyword parameter.");
+      if (kwarg.length) this.fail("No parameter may follow a variadic keyword parameter.", this.peek(), "SYNTAX", undefined,
+        this.kind("name") && !(end !== ":" && this.peek(1).value === ":") || ["*", "**", "/"].includes(this.peek().value) ?
+          this.parameterDiagnostic("arguments cannot follow var-keyword argument", this.peek(), end, this.kind("name")) : undefined);
+      if (bareStar && !kwonly.length && this.at("**")) {
+        const token = end === ":" ? this.peek() : bareStar;
+        this.fail("A named keyword-only parameter must follow '*'.", token, "SYNTAX", undefined,
+          this.parameterDiagnostic("named arguments must follow bare *", token, end, true));
+      }
       if (this.eat("**")) {
         const token = this.name();
         kwarg.push({name: token.value, value: null, span: token.span});
@@ -391,37 +415,32 @@ class Parser {
           this.diagnostic("var-keyword argument cannot have default value", this.peek().span));
       } else
       if (this.eat("/")) {
-        if (slash || star || !positional.length) this.fail("Invalid positional-only separator.");
+        if (slash || star || !positional.length) {
+          const message = star ? "/ must be ahead of *" : slash ? "/ may appear only once" :
+            this.at(",") ? "at least one argument must precede /" : this.at(end) ? "invalid syntax" : null;
+          this.fail("Invalid positional-only separator.", this.previous, "SYNTAX", undefined,
+            message ? this.parameterDiagnostic(message, this.previous, end) : undefined);
+        }
         slash = true; posonly = positional; positional = [];
       } else if (this.eat("*")) {
-        if (star) this.fail("Duplicate keyword-only separator.");
+        const separator = this.previous;
+        if (star) this.fail("Duplicate keyword-only separator.", separator, "SYNTAX", undefined,
+          this.kind("name") || this.at(",") ? this.parameterDiagnostic("* argument may appear only once", separator, end) : undefined);
         if (this.kind("name")) {
           const token = this.take();
           vararg.push({name: token.value, value: null, span: token.span});
           if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
           if (this.at("=")) this.fail("A variadic positional parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
             this.diagnostic("var-positional argument cannot have default value", this.peek().span));
-        }
+        } else bareStar = separator;
         star = true;
       } else {
         const token = this.name();
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         const value = this.eat("=") ? this.expression() : null;
         if (!star && defaultSeen && value === null) {
-          let syntax;
-          if (this.at(end) || this.at(",")) {
-            syntax = this.diagnostic("parameter without a default follows parameter with a default", token.span);
-            let depth = 0;
-            for (const next of this.tokens.slice(this.index)) {
-              this.charge();
-              if (!depth && next.value === end) {
-                if (next.span[0] !== token.span[0]) syntax.text = syntax.text.replace(/\n$/, "");
-                break;
-              }
-              if (["(", "[", "{"].includes(next.value)) depth++;
-              if ([")", "]", "}"].includes(next.value)) depth--;
-            }
-          }
+          const syntax = this.at(end) || this.at(",") ?
+            this.parameterDiagnostic("parameter without a default follows parameter with a default", token, end, true) : undefined;
           this.fail("A required positional parameter follows a default.", token, "SYNTAX", undefined, syntax);
         }
         if (!star && value !== null) defaultSeen = true;
@@ -430,7 +449,11 @@ class Parser {
       if (this.at(end)) break;
       this.expect(",");
     }
-    if (star && !kwonly.length && !vararg.length) this.fail("A named keyword-only parameter must follow '*'.");
+    if (bareStar && !kwonly.length) {
+      const token = end === ":" ? this.peek() : bareStar;
+      this.fail("A named keyword-only parameter must follow '*'.", token, "SYNTAX", undefined,
+        this.parameterDiagnostic("named arguments must follow bare *", token, end, true));
+    }
     return {posonly, positional, kwonly, ...(vararg.length ? {vararg} : {}), ...(kwarg.length ? {kwarg} : {})};
   }
   lambda() {

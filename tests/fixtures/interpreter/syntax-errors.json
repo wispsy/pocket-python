@@ -21,7 +21,8 @@
     "LA76",
     "LA77",
     "LA78",
-    "LA79"
+    "LA79",
+    "LA80"
   ],
   "cases": [
     {
@@ -3421,6 +3422,430 @@
       "stage": "LA79",
       "source": "try: compile('lambda a=1,\\\\\\n b: b',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
       "stdout": "parameter without a default follows parameter with a default 2 2 2 3\n' b: b\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-0-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,/,/): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 1 11 1 12\n'def f(a,/,/): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-0-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,/,/): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 1 11 1 12\n'def f(a,/,/): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-1-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,/,b,/): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 1 13 1 14\n'def f(a,/,b,/): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-1-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,/,b,/): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 1 13 1 14\n'def f(a,/,b,/): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-2-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,*,/): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ must be ahead of * 1 11 1 12\n'def f(a,*,/): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-2-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,*,/): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ must be ahead of * 1 11 1 12\n'def f(a,*,/): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-3-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(*a,/): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ must be ahead of * 1 10 1 11\n'def f(*a,/): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-3-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(*a,/): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ must be ahead of * 1 10 1 11\n'def f(*a,/): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-4-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,/,*,/): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ must be ahead of * 1 13 1 14\n'def f(a,/,*,/): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-4-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,/,*,/): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ must be ahead of * 1 13 1 14\n'def f(a,/,*,/): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-5-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(/,a): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "at least one argument must precede / 1 7 1 8\n'def f(/,a): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-5-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(/,a): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "at least one argument must precede / 1 7 1 8\n'def f(/,a): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-6-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(/): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "invalid syntax 1 7 1 8\n'def f(/): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-6-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(/): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "invalid syntax 1 7 1 8\n'def f(/): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-7-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(*a,*b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "* argument may appear only once 1 10 1 11\n'def f(*a,*b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-7-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(*a,*b): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "* argument may appear only once 1 10 1 11\n'def f(*a,*b): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-8-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,*,*b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "* argument may appear only once 1 11 1 12\n'def f(a,*,*b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-8-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,*,*b): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "* argument may appear only once 1 11 1 12\n'def f(a,*,*b): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-9-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,*,): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 9 1 10\n'def f(a,*,): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-9-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,*,): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 9 1 10\n'def f(a,*,): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-10-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,*,**b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 9 1 10\n'def f(a,*,**b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-10-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,*,**b): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 9 1 10\n'def f(a,*,**b): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-11-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(**a,b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 12\n'def f(**a,b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-11-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(**a,b): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 12\n'def f(**a,b): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-12-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(**a,*b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 12\n'def f(**a,*b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-12-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(**a,*b): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 12\n'def f(**a,*b): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-13-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(**a,**b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 13\n'def f(**a,**b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-13-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(**a,**b): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 13\n'def f(**a,**b): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-14-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(**a,/): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 12\n'def f(**a,/): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-14-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(**a,/): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 12\n'def f(**a,/): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-15-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(**a,b=1): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 12\n'def f(**a,b=1): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-15-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(**a,b=1): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 12\n'def f(**a,b=1): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-16-exec",
+      "stage": "LA80",
+      "source": "try: compile('lambda a,/,/: a',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 1 12 1 13\n'lambda a,/,/: a\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-16-eval",
+      "stage": "LA80",
+      "source": "try: compile('lambda a,/,/: a',\"parameters/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 1 12 1 13\n'lambda a,/,/: a' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-17-exec",
+      "stage": "LA80",
+      "source": "try: compile('lambda *a,/: a',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ must be ahead of * 1 11 1 12\n'lambda *a,/: a\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-17-eval",
+      "stage": "LA80",
+      "source": "try: compile('lambda *a,/: a',\"parameters/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ must be ahead of * 1 11 1 12\n'lambda *a,/: a' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-18-exec",
+      "stage": "LA80",
+      "source": "try: compile('lambda a,*: a',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 11 1 12\n'lambda a,*: a\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-18-eval",
+      "stage": "LA80",
+      "source": "try: compile('lambda a,*: a',\"parameters/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 11 1 12\n'lambda a,*: a' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-19-exec",
+      "stage": "LA80",
+      "source": "try: compile('lambda /: 1',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "invalid syntax 1 8 1 9\n'lambda /: 1\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-19-eval",
+      "stage": "LA80",
+      "source": "try: compile('lambda /: 1',\"parameters/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "invalid syntax 1 8 1 9\n'lambda /: 1' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-20-exec",
+      "stage": "LA80",
+      "source": "try: compile('lambda /,a: 1',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "at least one argument must precede / 1 8 1 9\n'lambda /,a: 1\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-20-eval",
+      "stage": "LA80",
+      "source": "try: compile('lambda /,a: 1',\"parameters/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "at least one argument must precede / 1 8 1 9\n'lambda /,a: 1' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-21-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(雪,/,π,/): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 1 13 1 14\n'def f(雪,/,π,/): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-21-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(雪,/,π,/): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 1 13 1 14\n'def f(雪,/,π,/): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-22-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(*雪,*π): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "* argument may appear only once 1 10 1 11\n'def f(*雪,*π): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-22-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(*雪,*π): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "* argument may appear only once 1 10 1 11\n'def f(*雪,*π): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-23-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(**雪,π): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 12\n'def f(**雪,π): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-23-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(**雪,π): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 1 11 1 12\n'def f(**雪,π): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-24-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(\\n a,\\n /,\\n /\\n): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 4 2 4 3\n' /\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-24-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(\\n a,\\n /,\\n /\\n): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 4 2 4 3\n' /\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-25-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(\\n *\\n): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 2 2 2 3\n' *' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-25-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(\\n *\\n): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 2 2 2 3\n' *' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-26-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(\\n **a,\\n b\\n): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 3 2 3 3\n' b' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-26-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(\\n **a,\\n b\\n): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "arguments cannot follow var-keyword argument 3 2 3 3\n' b' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-27-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(*,\\n **a): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 7 1 8\n'def f(*,' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-27-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(*,\\n **a): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 7 1 8\n'def f(*,' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-28-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(*a,\\n *b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "* argument may appear only once 2 2 2 3\n' *b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-28-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(*a,\\n *b): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "* argument may appear only once 2 2 2 3\n' *b): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-29-exec",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,a,/,/): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 1 13 1 14\n'def f(a,a,/,/): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-29-single",
+      "stage": "LA80",
+      "source": "try: compile('def f(a,a,/,/): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "/ may appear only once 1 13 1 14\n'def f(a,a,/,/): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-unqualified-0",
+      "stage": "FutureBinding",
+      "owner": "#124",
+      "boundary": "Malformed separator tails retain their independent parser native-field boundary.",
+      "source": "try: compile('def f(*,*): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "invalid syntax 1 9 1 10\n'def f(*,*): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-separator-unqualified-1",
+      "stage": "FutureBinding",
+      "owner": "#124",
+      "boundary": "Malformed separator tails retain their independent parser native-field boundary.",
+      "source": "try: compile('def f(a, / b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "invalid syntax 1 12 1 13\n'def f(a, / b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-bare-star-0",
+      "stage": "LA80",
+      "source": "try: compile('lambda *:1',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 9 1 10\n'lambda *:1\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-bare-star-1",
+      "stage": "LA80",
+      "source": "try: compile('lambda *, :1',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 11 1 12\n'lambda *, :1\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-bare-star-2",
+      "stage": "LA80",
+      "source": "try: compile('lambda *, **a:1',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 11 1 13\n'lambda *, **a:1\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-bare-star-3",
+      "stage": "LA80",
+      "source": "try: compile('lambda a,*,**b:1',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 12 1 14\n'lambda a,*,**b:1\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-bare-star-4",
+      "stage": "LA80",
+      "source": "try: compile('lambda *,\\\\\\n **a:1',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 2 2 2 4\n' **a:1\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-bare-star-5",
+      "stage": "LA80",
+      "source": "try: compile('lambda *,:1',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 10 1 11\n'lambda *,:1\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-bare-star-6",
+      "stage": "LA80",
+      "source": "try: compile('def f(*,): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 7 1 8\n'def f(*,): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-bare-star-7",
+      "stage": "LA80",
+      "source": "try: compile('def f(*,\\n **a): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "named arguments must follow bare * 1 7 1 8\n'def f(*,' False 2\nTrue True\nparameters/雪.py True\n"
     }
   ]
 }
