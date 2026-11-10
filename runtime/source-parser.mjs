@@ -753,6 +753,11 @@ class Parser {
     // Malformed operands can select a different star or surrounding-call range.
     return this.withoutOperandFields(body);
   }
+  mappingOperand(body) {
+    const operand = () => this.rightOperand(body);
+    return ["pass", "break", "continue"].some(value => this.at(value)) && this.peek(1).value === "if" ?
+      this.withoutOperandFields(operand) : operand();
+  }
   expressionList(named = false, target = false) {
     const expression = () => this.starredExpression(named, target);
     const start = this.peek(), items = [expression()]; let tuple = false;
@@ -905,7 +910,7 @@ class Parser {
       const separator = this.previous, argumentCount = args.length;
       let keywordSite = null;
       if (this.eat("**")) {
-        keywords.push({name: null, value: parseArgument(() => this.expression())});
+        keywords.push({name: null, value: parseArgument(() => this.mappingOperand(() => this.expression()))});
         if (positionalError) followingMapping = true;
       }
       else if (this.eat("*")) {
@@ -1143,7 +1148,7 @@ class Parser {
           if (form === "set") this.fail("A set display cannot contain a dictionary unpacking.", this.peek(), "SYNTAX", undefined,
             this.operandFields && this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.previous.span) : undefined);
           if (!entries.length) unpacking = this.previous;
-          form = "dict"; entries.push([null, this.bitwiseOr()]);
+          form = "dict"; entries.push([null, this.mappingOperand(() => this.bitwiseOr())]);
         }
         else {
           const key = form === "dict" ? this.withoutOperandFields(() => this.namedExpression()) : this.namedExpression();
