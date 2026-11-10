@@ -382,8 +382,14 @@ token before parsing the malformed clause. Grouped values, Unicode, multiline
 text and all compile modes retain independent reference observations.
 Unadopted entries and unqualified outer comprehensions keep field boundaries.
 
-The current fixed generated-syntax corpus contains 2,346 cases: 2,180 supported
-semantic/error comparisons and 166 explicit native-field refusals. The ordinary
+LA-111 composes both display layouts through modules, nested exec, chaining/notes
+and independent fields/arguments. Cyclic filename owners, suspended conversion
+and cleanup survive parked collection, cancellation/close and shared limits.
+The runnable example and installed offline console retain original dynamic
+frames, retained-field/cleanup Stop/Restart paths and reduced-profile updates.
+
+The current fixed generated-syntax corpus contains 2,362 cases: 2,197 supported
+semantic/error comparisons and 165 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
