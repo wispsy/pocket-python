@@ -25,7 +25,8 @@
     "LA80",
     "LA81",
     "LA82",
-    "LA83"
+    "LA83",
+    "LA84"
   ],
   "cases": [
     {
@@ -4715,6 +4716,66 @@
       "stage": "LA83",
       "source": "try: compile('f(x for x in y\\n for x in xyz,1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
       "stdout": "Generator expression must be parenthesized 1 3 2 14\n'f(x for x in y' False 2\n0 0 'f(x for x in y\\n for x in xyz,1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generated-callgrammar-owner-cycle",
+      "stage": "LA84",
+      "source": "class Name(str): pass\nfilename=Name(\"target.py\")\ntry: compile(\"f(雪=1,2)\",filename,\"exec\")\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue positional argument follows keyword argument 8 False False\n"
+    },
+    {
+      "id": "generated-callgrammar-chaining",
+      "stage": "LA84",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile(\"f(value=1,2)\",\"target.py\",\"exec\")\nexcept SyntaxError as e:\n e.add_note(\"target input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True target.py False False 2\nTrue target input 12\n"
+    },
+    {
+      "id": "generated-callgrammar-cleanup",
+      "stage": "LA84",
+      "source": "def work():\n try: compile(\"f(x for x in y,1)\",\"cleanup.py\",\"exec\")\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup.py Generator expression must be parenthesized False 0\ncleanup.py False\n"
+    },
+    {
+      "id": "generated-callgrammar-original-dynamic-failure",
+      "stage": "LA84",
+      "source": "exec(compile(\"def fail():\\n try: compile('f(value=1,2)','target-input.py','exec')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n\", \"callgrammar-payload-original.py\", \"exec\"))\n",
+      "stdout": "target-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-callgrammar-eval",
+      "stage": "LA84",
+      "source": "try: eval(\"f(**record,2)\")\nexcept SyntaxError as e: print(e.msg,e.filename,len(e.args),e.offset)\n",
+      "stdout": "positional argument follows keyword argument unpacking <string> 2 13\n"
+    },
+    {
+      "id": "generated-callgrammar-field-independence",
+      "stage": "LA84",
+      "source": "class Name(str): pass\nname=Name(\"target-fields.py\")\ntry: compile(\"f(x for x in y,1)\",name,\"exec\")\nexcept SyntaxError as e:\n args=e.args\n metadata=e._metadata\n e.args=()\n print(e.filename is name,args[0] is e.msg,args[1][0] is name,e._metadata is metadata)\n e.text=None\n e.filename=None\n print(repr(args[1][3]),args[1][0] is name,e.text is None,e.filename is None)\n",
+      "stdout": "True True True True\n'f(x for x in y,1)\\n' True True True\n"
+    },
+    {
+      "id": "generated-callgrammar-module",
+      "stage": "LA84",
+      "source": "import helper\ne=helper.validate(\"f(value=1,2)\")\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "stdout": "target-module.py positional argument follows keyword argument 12 module input\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"target-module.py\",\"exec\")\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ]
+    },
+    {
+      "id": "generated-call-order-owner-cycle",
+      "stage": "LA84",
+      "source": "class Name(str): pass\nfilename=Name(\"colon.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile(\"f(**雪,*π)\",filename,\"exec\",Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True iterable argument unpacking follows keyword argument unpacking 6\n"
     }
   ]
 }

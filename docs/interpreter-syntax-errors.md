@@ -190,3 +190,10 @@ pinned parser's conversion of both offsets against the starting error line. Full
 comprehension parsing precedes these diagnostics; malformed clauses and
 keyword-valued generator calls retain their separate field boundaries. Valid
 sole generator arguments keep their existing execution behavior.
+
+LA-84 composes call grammar payloads with registry modules, nested exec/eval,
+causes/notes, independent argument snapshots, cyclic filename owners and
+suspended flags conversion/cleanup. Parked collection, cancellation/close and
+shared allocation limits cover the retained fields. The example and installed
+offline console exercise fresh source, original dynamic frames, Stop/Restart
+and the reduced-profile update.
