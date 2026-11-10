@@ -87,7 +87,7 @@ class Parser {
       value.literal.type === "bool" ? value.literal.value ? "True" : "False" : "literal";
     if (value.kind === "Comprehension") label = value.form === "generator" ? "generator expression" : value.form + " comprehension";
     let syntax;
-    if (label && action !== "nested" && (!nested || action === "delete")) {
+    if (label) {
       let chain = action === "chain", depth = 0;
       const hint = !["lambda", "yield", "*"].includes(this.peek().value);
       if (action === "assign") for (const token of this.tokens.slice(this.index)) {
@@ -99,7 +99,7 @@ class Parser {
       }
       const message = action === "augment" ? "'" + label + "' is an illegal expression for augmented assignment" :
         "cannot " + (action === "delete" ? "delete " : "assign to ") + label +
-        (action === "assign" && !chain && hint && !["None", "True", "False", "generator expression"].includes(label) ? " here. Maybe you meant '==' instead of '='?" : "");
+        (action === "assign" && !nested && !chain && hint && !["None", "True", "False", "generator expression"].includes(label) ? " here. Maybe you meant '==' instead of '='?" : "");
       let first, last;
       for (const token of this.tokens) {
         this.charge();

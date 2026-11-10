@@ -114,6 +114,15 @@ including later reads of other declared names. Invalid operands inside starred
 targets retain the nested-target field boundary instead of inheriting an
 ordinary assignment hint.
 
+LA-76 qualifies invalid operands nested inside list/tuple assignment targets,
+including starred operands and loop targets. Nested operands use the plain
+assignment message without the outer assignment's equality hint. Character
+ranges select the invalid expression independently of surrounding grouping;
+native fields and argument snapshots retain their existing independence.
+The source-only repair must still parse successfully, so multiple invalid
+operands and later grammar failures retain their field boundary. Earlier
+compound statements keep the independent parser metadata boundary.
+
 The resulting fixed generated-syntax corpus contains 428 cases: 406 supported
 semantic/error comparisons and 22 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains

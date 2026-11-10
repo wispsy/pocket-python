@@ -17,7 +17,8 @@
     "LA73",
     "LA74",
     "LA75",
-    "LA75A"
+    "LA75A",
+    "LA76"
   ],
   "cases": [
     {
@@ -2482,11 +2483,9 @@
     },
     {
       "id": "parser-target-boundary-2",
-      "stage": "FutureTarget",
-      "source": "try: compile('[a,1]=value',\"target-boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
-      "stdout": "target-boundary.py\n",
-      "owner": "#124",
-      "boundary": "Nested assignment targets and unsuccessful target repairs retain the native-field boundary."
+      "stage": "LA76",
+      "source": "try: compile('[a,1]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to literal 1 4 1 5\n'[a,1]=value\\n' 0 0 '[a,1]=value\\n'\nTrue True\nTrue True\n"
     },
     {
       "id": "parser-target-boundary-3",
@@ -2666,19 +2665,267 @@
     },
     {
       "id": "parser-starred-target-boundary-0",
-      "stage": "FutureTarget",
-      "source": "try: compile('[*(a+b)] = value',\"starred.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
-      "stdout": "starred.py\n",
-      "owner": "#124",
-      "boundary": "Invalid starred operands retain the nested-target native-field boundary."
+      "stage": "LA76",
+      "source": "try: compile('[*(a+b)] = value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to expression 1 4 1 7\n'[*(a+b)] = value\\n' 0 0 '[*(a+b)] = value\\n'\nTrue True\nTrue True\n"
     },
     {
       "id": "parser-starred-target-boundary-1",
-      "stage": "FutureTarget",
-      "source": "try: compile('for [*(a+b)] in []: pass',\"starred.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
-      "stdout": "starred.py\n",
-      "owner": "#124",
-      "boundary": "Invalid starred operands retain the nested-target native-field boundary."
+      "stage": "LA76",
+      "source": "try: compile('for [*(a+b)] in []: pass',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to expression 1 8 1 11\n'for [*(a+b)] in []: pass\\n' 0 0 'for [*(a+b)] in []: pass\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-0-exec",
+      "stage": "LA76",
+      "source": "try: compile('[a,1]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to literal 1 4 1 5\n'[a,1]=value\\n' 0 0 '[a,1]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-0-single",
+      "stage": "LA76",
+      "source": "try: compile('[a,1]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to literal 1 4 1 5\n'[a,1]=value' 0 0 '[a,1]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-1-exec",
+      "stage": "LA76",
+      "source": "try: compile('(a,(b,f()))=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to function call 1 7 1 10\n'(a,(b,f()))=value\\n' 0 0 '(a,(b,f()))=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-1-single",
+      "stage": "LA76",
+      "source": "try: compile('(a,(b,f()))=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to function call 1 7 1 10\n'(a,(b,f()))=value' 0 0 '(a,(b,f()))=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-2-exec",
+      "stage": "LA76",
+      "source": "try: compile('for [a,1] in []: pass',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to literal 1 8 1 9\n'for [a,1] in []: pass\\n' 0 0 'for [a,1] in []: pass\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-2-single",
+      "stage": "LA76",
+      "source": "try: compile('for [a,1] in []: pass',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to literal 1 8 1 9\n'for [a,1] in []: pass' 0 0 'for [a,1] in []: pass'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-3-exec",
+      "stage": "LA76",
+      "source": "try: compile('[*(a+b)]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to expression 1 4 1 7\n'[*(a+b)]=value\\n' 0 0 '[*(a+b)]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-3-single",
+      "stage": "LA76",
+      "source": "try: compile('[*(a+b)]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to expression 1 4 1 7\n'[*(a+b)]=value' 0 0 '[*(a+b)]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-4-exec",
+      "stage": "LA76",
+      "source": "try: compile('for [*(a+b)] in []: pass',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to expression 1 8 1 11\n'for [*(a+b)] in []: pass\\n' 0 0 'for [*(a+b)] in []: pass\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-4-single",
+      "stage": "LA76",
+      "source": "try: compile('for [*(a+b)] in []: pass',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to expression 1 8 1 11\n'for [*(a+b)] in []: pass' 0 0 'for [*(a+b)] in []: pass'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-5-exec",
+      "stage": "LA76",
+      "source": "try: compile('[a,[b,False]]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to False 1 7 1 12\n'[a,[b,False]]=value\\n' 0 0 '[a,[b,False]]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-5-single",
+      "stage": "LA76",
+      "source": "try: compile('[a,[b,False]]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to False 1 7 1 12\n'[a,[b,False]]=value' 0 0 '[a,[b,False]]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-6-exec",
+      "stage": "LA76",
+      "source": "try: compile('a,[b,None]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to None 1 6 1 10\n'a,[b,None]=value\\n' 0 0 'a,[b,None]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-6-single",
+      "stage": "LA76",
+      "source": "try: compile('a,[b,None]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to None 1 6 1 10\n'a,[b,None]=value' 0 0 'a,[b,None]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-7-exec",
+      "stage": "LA76",
+      "source": "try: compile('[a,b+1]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to expression 1 4 1 7\n'[a,b+1]=value\\n' 0 0 '[a,b+1]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-7-single",
+      "stage": "LA76",
+      "source": "try: compile('[a,b+1]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to expression 1 4 1 7\n'[a,b+1]=value' 0 0 '[a,b+1]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-8-exec",
+      "stage": "LA76",
+      "source": "try: compile('[a,b<c]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to comparison 1 4 1 7\n'[a,b<c]=value\\n' 0 0 '[a,b<c]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-8-single",
+      "stage": "LA76",
+      "source": "try: compile('[a,b<c]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to comparison 1 4 1 7\n'[a,b<c]=value' 0 0 '[a,b<c]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-9-exec",
+      "stage": "LA76",
+      "source": "try: compile('[a,(x if True else y)]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to conditional expression 1 5 1 21\n'[a,(x if True else y)]=value\\n' 0 0 '[a,(x if True else y)]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-9-single",
+      "stage": "LA76",
+      "source": "try: compile('[a,(x if True else y)]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to conditional expression 1 5 1 21\n'[a,(x if True else y)]=value' 0 0 '[a,(x if True else y)]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-10-exec",
+      "stage": "LA76",
+      "source": "try: compile('[a,(lambda:0)]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to lambda 1 5 1 13\n'[a,(lambda:0)]=value\\n' 0 0 '[a,(lambda:0)]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-10-single",
+      "stage": "LA76",
+      "source": "try: compile('[a,(lambda:0)]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to lambda 1 5 1 13\n'[a,(lambda:0)]=value' 0 0 '[a,(lambda:0)]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-11-exec",
+      "stage": "LA76",
+      "source": "try: compile('[a,{1:2}]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to dict literal 1 4 1 9\n'[a,{1:2}]=value\\n' 0 0 '[a,{1:2}]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-11-single",
+      "stage": "LA76",
+      "source": "try: compile('[a,{1:2}]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to dict literal 1 4 1 9\n'[a,{1:2}]=value' 0 0 '[a,{1:2}]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-12-exec",
+      "stage": "LA76",
+      "source": "try: compile('[a,{1,2}]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to set display 1 4 1 9\n'[a,{1,2}]=value\\n' 0 0 '[a,{1,2}]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-12-single",
+      "stage": "LA76",
+      "source": "try: compile('[a,{1,2}]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to set display 1 4 1 9\n'[a,{1,2}]=value' 0 0 '[a,{1,2}]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-13-exec",
+      "stage": "LA76",
+      "source": "try: compile('[a,[x for x in []]]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to list comprehension 1 4 1 19\n'[a,[x for x in []]]=value\\n' 0 0 '[a,[x for x in []]]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-13-single",
+      "stage": "LA76",
+      "source": "try: compile('[a,[x for x in []]]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to list comprehension 1 4 1 19\n'[a,[x for x in []]]=value' 0 0 '[a,[x for x in []]]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-14-exec",
+      "stage": "LA76",
+      "source": "try: compile('[a,(x for x in [])]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to generator expression 1 4 1 19\n'[a,(x for x in [])]=value\\n' 0 0 '[a,(x for x in [])]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-14-single",
+      "stage": "LA76",
+      "source": "try: compile('[a,(x for x in [])]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to generator expression 1 4 1 19\n'[a,(x for x in [])]=value' 0 0 '[a,(x for x in [])]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-15-exec",
+      "stage": "LA76",
+      "source": "try: compile('[雪,π()]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to function call 1 4 1 7\n'[雪,π()]=value\\n' 0 0 '[雪,π()]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-15-single",
+      "stage": "LA76",
+      "source": "try: compile('[雪,π()]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to function call 1 4 1 7\n'[雪,π()]=value' 0 0 '[雪,π()]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-16-exec",
+      "stage": "LA76",
+      "source": "try: compile('[a,(b,1)]=other=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to literal 1 7 1 8\n'[a,(b,1)]=other=value\\n' 0 0 '[a,(b,1)]=other=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-16-single",
+      "stage": "LA76",
+      "source": "try: compile('[a,(b,1)]=other=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to literal 1 7 1 8\n'[a,(b,1)]=other=value' 0 0 '[a,(b,1)]=other=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-17-exec",
+      "stage": "LA76",
+      "source": "try: compile('[*(a+1),b]=value',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to expression 1 4 1 7\n'[*(a+1),b]=value\\n' 0 0 '[*(a+1),b]=value\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-17-single",
+      "stage": "LA76",
+      "source": "try: compile('[*(a+1),b]=value',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot assign to expression 1 4 1 7\n'[*(a+1),b]=value' 0 0 '[*(a+1),b]=value'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-18-exec",
+      "stage": "LA76",
+      "source": "try: compile('del [a,1]',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot delete literal 1 8 1 9\n'del [a,1]\\n' 0 0 'del [a,1]\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-18-single",
+      "stage": "LA76",
+      "source": "try: compile('del [a,1]',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot delete literal 1 8 1 9\n'del [a,1]' 0 0 'del [a,1]'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-19-exec",
+      "stage": "LA76",
+      "source": "try: compile('del (a,(b,f()))',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot delete function call 1 11 1 14\n'del (a,(b,f()))\\n' 0 0 'del (a,(b,f()))\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-19-single",
+      "stage": "LA76",
+      "source": "try: compile('del (a,(b,f()))',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot delete function call 1 11 1 14\n'del (a,(b,f()))' 0 0 'del (a,(b,f()))'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-20-exec",
+      "stage": "LA76",
+      "source": "try: compile('del [雪,π()]',\"nested/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot delete function call 1 8 1 11\n'del [雪,π()]\\n' 0 0 'del [雪,π()]\\n'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "nested-target-20-single",
+      "stage": "LA76",
+      "source": "try: compile('del [雪,π()]',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
+      "stdout": "cannot delete function call 1 8 1 11\n'del [雪,π()]' 0 0 'del [雪,π()]'\nTrue True\nTrue True\n"
     }
   ]
 }
