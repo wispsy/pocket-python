@@ -686,6 +686,7 @@ class Parser {
         let positionalError = null, followingMapping = false;
         while (!this.at(")")) {
           const separator = this.previous, argumentCount = args.length;
+          let keywordSite = null;
           if (this.eat("**")) {
             keywords.push({name: null, value: this.expression()});
             if (positionalError) followingMapping = true;
@@ -711,8 +712,9 @@ class Parser {
             const start = this.previous; args.push(this.node("StarredArgument", start, {value: this.expression()}));
           } else
           if (this.kind("name") && this.peek(1).value === "=") {
-            const token = this.take(); this.expect("=");
+            const token = this.take(), equal = this.expect("=");
             const argument = this.expression();
+            keywordSite = {span: [token.span[0], token.span[1], equal.span[2], equal.span[3]]};
             if (seen.has(token.value)) {
               const first = seen.get(token.value);
               if (!repeated || first < repeated.first) repeated = {first, name: token.value,
@@ -725,7 +727,13 @@ class Parser {
             args.push(this.namedExpression());
           }
           if (this.at("for")) {
-            if (args.length === argumentCount) this.fail("A generator expression must be the sole unparenthesized argument.");
+            if (args.length === argumentCount) {
+              const token = this.peek(), element = keywords.at(-1).value;
+              this.comprehension(element, "generator", element);
+              const syntax = this.at(")") || this.at(",") ? this.delimitedDiagnostic(keywordSite ?
+                "invalid syntax. Maybe you meant '==' or ':=' instead of '='?" : "invalid syntax", keywordSite ?? token, ")", true) : undefined;
+              this.fail("A generator clause follows a keyword argument.", token, "SYNTAX", undefined, syntax);
+            }
             const element = args.at(-1), generator = this.comprehension(element, "generator", element);
             if (args.length !== 1 || keywords.length || element.kind === "StarredArgument" || !this.at(")")) {
               const starred = args.length === 1 && !keywords.length && element.kind === "StarredArgument";

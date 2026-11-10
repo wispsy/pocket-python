@@ -237,3 +237,10 @@ star before parsing its operand. Otherwise the closing call token selects the
 range. Unicode/multiline source and all three compile modes retain parser
 character offsets. Earlier completed compound metadata keeps its independent
 field-read boundary.
+
+LA-89 qualifies generator clauses after explicit keyword or mapping arguments.
+The keyword form selects the name and equals sign with the native comparison/
+assignment-expression hint; mapping arguments select the `for` token with the
+generic syntax message. Complete adopted clauses, Unicode and multiline text
+have independent observations. Malformed clauses retain their field boundary,
+and valid parenthesized generator keyword values keep their execution behavior.
