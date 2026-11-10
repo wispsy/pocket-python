@@ -30,6 +30,7 @@ class Parser {
     this.completedCompound = false;
     this.controlError = null;
     this.keywordErrors = [];
+    this.handlerErrors = [];
     this.maxNodes = options.maxNodes ?? PARSER_LIMITS.nodes;
     this.maxDepth = options.maxParseDepth ?? PARSER_LIMITS.depth;
     for (const [value, cap] of [[this.maxNodes, PARSER_LIMITS.nodes], [this.maxDepth, PARSER_LIMITS.depth]])
@@ -183,8 +184,9 @@ class Parser {
       syntax.offset = syntax.end_offset = 0;
       this.fail("invalid syntax", this.peek(), "SYNTAX", undefined, syntax);
     }
-    if (mode === "single" && this.keywordErrors.length && !this.lexed.source.endsWith("\n") &&
-        ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind) && !this.tokens.some(token => token.kind === "indent"))
+    if (mode === "single" && !this.lexed.source.endsWith("\n") &&
+        (this.handlerErrors.length || this.keywordErrors.length &&
+          ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind) && !this.tokens.some(token => token.kind === "indent")))
       this.fail("Interactive compound input requires a terminating newline.");
     if (mode === "single" && this.controlError && !this.lexed.source.endsWith("\n") && ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind)) {
       const last = this.tokens.filter(token => !["newline", "eof", "indent", "dedent"].includes(token.kind)).at(-1);
@@ -196,6 +198,7 @@ class Parser {
     return freezeSourceTree({module, source: this.lexed.source, filename: this.filename, languageProfile: this.languageProfile,
       ...(this.controlError ? {controlError: this.controlError} : {}),
       ...(this.keywordErrors.length ? {keywordErrors: this.keywordErrors} : {}),
+      ...(this.handlerErrors.length ? {handlerErrors: this.handlerErrors} : {}),
       stats: {...this.lexed.stats, work: this.work, nodes: this.nodes}});
   }
   statement() {
@@ -536,11 +539,9 @@ class Parser {
   }
   attempt() {
     const start = this.expect("try"), body = this.suite(start), handlers = [];
-    let bare = false;
     while (this.eat("except")) {
       const clause = this.previous;
       if (this.at("*")) this.unsupported("Exception groups are not adopted.");
-      if (bare) this.fail("A bare handler must be last.", clause);
       const type = this.at(":") || this.kind("newline") ? null : this.expressionList();
       const alias = this.eat("as") ? this.name().value : null;
       if (type?.kind === "Tuple" && !this.grouped.has(type) && alias !== null) {
@@ -558,10 +559,11 @@ class Parser {
         this.fail("Multiple handler types require parentheses with an alias.", type, "SYNTAX", undefined, syntax);
       }
       if (type === null && alias !== null) this.fail("A bare handler cannot bind an alias.", clause);
-      bare = type === null;
       const handlerBody = this.suite(clause);
       handlers.push(this.node("Handler", clause, {expression: type, alias, body: handlerBody}, handlerBody.at(-1)));
     }
+    const bare = handlers.slice(0, -1).find(handler => handler.expression === null);
+    if (bare) this.handlerErrors.push(bare);
     let otherwise = [], final = [];
     if (!handlers.length && !this.at("finally")) {
       const token = this.peek(), syntax = this.diagnostic("expected 'except' or 'finally' block", token.span);

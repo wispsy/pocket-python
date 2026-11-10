@@ -275,6 +275,12 @@ comment and Unicode distinctions, including multiline starting-line end-column
 conversion. Parenthesized handler tuples remain valid. Earlier completed
 compound statements keep the independent parser metadata boundary.
 
+LA-95 defers non-final bare handlers until complete parsing and binding. Try
+bodies and else suites compile before handlers; a bare-handler diagnostic
+precedes its own body and later handlers. Native fields use the entire handler's
+UTF-8 byte range, two arguments and absent source text/parser metadata.
+Unterminated interactive compound input keeps its independent field boundary.
+
 The LA-93 fixed generated-syntax corpus contains 1,133 cases: 1,077 supported
 semantic/error comparisons and 56 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache

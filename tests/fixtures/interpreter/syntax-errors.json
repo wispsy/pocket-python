@@ -36,7 +36,8 @@
     "LA91",
     "LA92",
     "LA93",
-    "LA94"
+    "LA94",
+    "LA95"
   ],
   "cases": [
     {
@@ -7368,6 +7369,234 @@
       "stage": "LA94",
       "source": "compile('try: pass\\nexcept (A): pass',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
       "stdout": "compiled\n"
+    },
+    {
+      "id": "handlerorder-0-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-0-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 4 0 4 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-1-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\n',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-1-single",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\n',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-2-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n 雪=1\\nexcept:\\n 鳥=2\\nexcept E:\\n pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 4 7\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-2-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n 雪=1\\nexcept:\\n 鳥=2\\nexcept E:\\n pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 4 7\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-3-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept E: pass\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 4 1 4 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-3-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept E: pass\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'except F: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-4-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept:\\n pass\\nexcept:\\n pass\\nexcept E:\\n pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 4 6\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-4-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept:\\n pass\\nexcept:\\n pass\\nexcept E:\\n pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 4 6\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-5-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n return 1\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "'return' outside function\nhandler/雪.py 2 2 2 10\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-5-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n return 1\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 4 0 4 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-6-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n f(a=1,a=2)\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "keyword argument repeated: a\nhandler/雪.py 2 8 2 11\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-6-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n f(a=1,a=2)\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 4 0 4 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-7-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: return 1\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 17\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-7-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: return 1\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 4 0 4 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-8-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept:\\n f(a=1,a=2)\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 4 12\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-8-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept:\\n f(a=1,a=2)\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-9-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept f(a=1,a=2): pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-9-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept f(a=1,a=2): pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 4 0 4 0\n'except f(a=1,a=2): pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-10-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nelse: f(a=1,a=2)',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "keyword argument repeated: a\nhandler/雪.py 5 13 5 16\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-10-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nelse: f(a=1,a=2)',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'else: f(a=1,a=2)' 2 False\n"
+    },
+    {
+      "id": "handlerorder-11-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nfinally: f(a=1,a=2)',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-11-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nfinally: f(a=1,a=2)',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'finally: f(a=1,a=2)' 2 False\n"
+    },
+    {
+      "id": "handlerorder-12-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept E: f(a=1,a=2)\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "keyword argument repeated: a\nhandler/雪.py 3 17 3 20\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-12-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept E: f(a=1,a=2)\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'except F: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-13-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept E: return 1\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "'return' outside function\nhandler/雪.py 3 11 3 19\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-13-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept E: return 1\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'except F: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-14-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nnonlocal x',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "nonlocal declaration not allowed at module level\nhandler/雪.py 5 1 5 11\nNone 1 True\n"
+    },
+    {
+      "id": "handlerorder-14-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nnonlocal x',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 1 5 9\n'nonlocal x' 2 False\n"
+    },
+    {
+      "id": "handlerorder-15-exec",
+      "stage": "LA95",
+      "source": "try: compile('def f(a,a):\\n try:\\n  pass\\n except: pass\\n except E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "duplicate argument 'a' in function definition\nhandler/雪.py 1 9 1 10\nNone 1 True\n"
+    },
+    {
+      "id": "handlerorder-15-single",
+      "stage": "Future",
+      "source": "try: compile('def f(a,a):\\n try:\\n  pass\\n except: pass\\n except E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "duplicate argument 'a' in function definition\nhandler/雪.py 1 9 1 10\nNone 1 True\n"
+    },
+    {
+      "id": "handlerorder-16-exec",
+      "stage": "LA95",
+      "source": "try: compile('class 雪:\\n try:\\n  pass\\n except: pass\\n except E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 4 2 4 14\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-16-single",
+      "stage": "Future",
+      "source": "try: compile('class 雪:\\n try:\\n  pass\\n except: pass\\n except E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 4 2 4 14\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-17-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n try:\\n  pass\\n except: pass\\n except E: pass\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 4 2 4 14\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-17-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n try:\\n  pass\\n except: pass\\n except E: pass\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 7 0 7 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-grammar-priority-0",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nx=','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "invalid syntax\nselected/雪.py 5 3 5 4\n'x=\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "handlerorder-grammar-priority-1",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nexcept E pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "invalid syntax\nselected/雪.py 5 10 5 14\n'except E pass\\n' 2 6\nTrue True True\n"
     }
   ]
 }
