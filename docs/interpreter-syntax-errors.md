@@ -165,8 +165,8 @@ shared limits and original dynamic frames cover those graphs. The example
 and installed offline console exercise new source, retained-field and cleanup
 Stop/Restart paths, plus the existing reduced-profile boundary.
 
-At LA-81, the fixed generated-syntax corpus contains 5,031 cases: 4,674 supported
-semantic/error comparisons and 357 explicit native-field refusals, with no scored
+At LA-81, the fixed generated-syntax corpus contains 5,080 cases: 4,683 supported
+semantic/error comparisons and 397 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
 These finite observations do not measure overall Python compatibility. #600/A2,
@@ -528,8 +528,12 @@ the native Invalid star expression message; later display elements use the gener
 message. Top-level exec/single and eval keep distinct token locations. Malformed
 operands, statement starts, targets and invalid surrounding grammar stay bounded.
 
-The current fixed generated-syntax corpus contains 5,031 cases: 4,674 supported
-semantic/error comparisons and 357 explicit native-field refusals. The ordinary
+LA-133A retains mixed-display native-field boundaries inside invalid call
+argument groups and malformed iterable operands. Direct set/dictionary displays
+keep their qualified fields; preceding call-order diagnostics remain independent.
+
+The current fixed generated-syntax corpus contains 5,080 cases: 4,683 supported
+semantic/error comparisons and 397 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

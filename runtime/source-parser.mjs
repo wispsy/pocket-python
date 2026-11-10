@@ -1137,11 +1137,11 @@ class Parser {
             this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
         if (this.at("*")) {
           if (form === "dict") this.fail("A dictionary display cannot contain a starred set element.", this.peek(), "SYNTAX", undefined,
-            this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
+            this.operandFields && this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
           form = "set"; items.push(this.starredExpression(true));
         } else if (this.eat("**")) {
           if (form === "set") this.fail("A set display cannot contain a dictionary unpacking.", this.peek(), "SYNTAX", undefined,
-            this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.previous.span) : undefined);
+            this.operandFields && this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.previous.span) : undefined);
           if (!entries.length) unpacking = this.previous;
           form = "dict"; entries.push([null, this.bitwiseOr()]);
         }
@@ -1150,7 +1150,7 @@ class Parser {
           if (this.eat(":")) {
             if (key.kind === "NamedExpression" && !this.grouped.has(key)) this.fail("A dictionary-key assignment expression requires parentheses.", key);
             if (form === "set") this.fail("Mixed set and dictionary display.", this.peek(), "SYNTAX", undefined,
-              this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.previous.span) : undefined);
+              this.operandFields && this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.previous.span) : undefined);
             const colon = this.previous;
             if (this.at("}") || this.at(",")) this.fail("A dictionary value requires an expression.", colon, "SYNTAX", undefined,
               this.delimitedDiagnostic("expression expected after dictionary key and ':'", colon, "}", true));
