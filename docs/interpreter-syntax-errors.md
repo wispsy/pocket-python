@@ -376,8 +376,14 @@ display error; Unicode, multiline text and all three modes have independent
 observations. Surrounding unqualified comprehension contexts keep their field
 boundary instead of exposing a later nested display location.
 
-The current fixed generated-syntax corpus contains 2,271 cases: 2,112 supported
-semantic/error comparisons and 159 explicit native-field refusals. The ordinary
+LA-110 qualifies dictionary entry lists followed by comprehension clauses.
+Multiple pairs, unpacking entries and a trailing entry comma select the `for`
+token before parsing the malformed clause. Grouped values, Unicode, multiline
+text and all compile modes retain independent reference observations.
+Unadopted entries and unqualified outer comprehensions keep field boundaries.
+
+The current fixed generated-syntax corpus contains 2,346 cases: 2,180 supported
+semantic/error comparisons and 166 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

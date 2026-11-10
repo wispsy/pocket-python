@@ -53,7 +53,8 @@
     "LA106",
     "LA107",
     "LA108",
-    "LA109"
+    "LA109",
+    "LA110"
   ],
   "cases": [
     {
@@ -14032,6 +14033,456 @@
       "id": "mixed-display-valid",
       "source": "print(len({*(1,2),3}))\nprint({**{'x':1},'y':2}['y'])\n",
       "stage": "LA109",
+      "stdout": "3\n2\n"
+    },
+    {
+      "id": "dictionary-entries-0-exec",
+      "source": "try: compile('{a:b,c:d for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in y}\\n' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-0-eval",
+      "source": "try: compile('{a:b,c:d for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in y}' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-0-single",
+      "source": "try: compile('{a:b,c:d for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in y}' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-1-exec",
+      "source": "try: compile('{a:b, for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 10\n'{a:b, for x in y}\\n' 2 6\nTrue True True\n0 0 '{a:b, for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-1-eval",
+      "source": "try: compile('{a:b, for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 10\n'{a:b, for x in y}' 2 6\nTrue True True\n0 0 '{a:b, for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-1-single",
+      "source": "try: compile('{a:b, for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 10\n'{a:b, for x in y}' 2 6\nTrue True True\n0 0 '{a:b, for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-2-exec",
+      "source": "try: compile('{a:b,c:d, for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 14\n'{a:b,c:d, for x in y}\\n' 2 6\nTrue True True\n0 0 '{a:b,c:d, for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-2-eval",
+      "source": "try: compile('{a:b,c:d, for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 14\n'{a:b,c:d, for x in y}' 2 6\nTrue True True\n0 0 '{a:b,c:d, for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-2-single",
+      "source": "try: compile('{a:b,c:d, for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 14\n'{a:b,c:d, for x in y}' 2 6\nTrue True True\n0 0 '{a:b,c:d, for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-3-exec",
+      "source": "try: compile('{a:b,c:d,e:f for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 14 1 17\n'{a:b,c:d,e:f for x in y}\\n' 2 6\nTrue True True\n0 0 '{a:b,c:d,e:f for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-3-eval",
+      "source": "try: compile('{a:b,c:d,e:f for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 14 1 17\n'{a:b,c:d,e:f for x in y}' 2 6\nTrue True True\n0 0 '{a:b,c:d,e:f for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-3-single",
+      "source": "try: compile('{a:b,c:d,e:f for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 14 1 17\n'{a:b,c:d,e:f for x in y}' 2 6\nTrue True True\n0 0 '{a:b,c:d,e:f for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-4-exec",
+      "source": "try: compile('{**a,b:c for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{**a,b:c for x in y}\\n' 2 6\nTrue True True\n0 0 '{**a,b:c for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-4-eval",
+      "source": "try: compile('{**a,b:c for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{**a,b:c for x in y}' 2 6\nTrue True True\n0 0 '{**a,b:c for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-4-single",
+      "source": "try: compile('{**a,b:c for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{**a,b:c for x in y}' 2 6\nTrue True True\n0 0 '{**a,b:c for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-5-exec",
+      "source": "try: compile('{a:b,**c for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,**c for x in y}\\n' 2 6\nTrue True True\n0 0 '{a:b,**c for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-5-eval",
+      "source": "try: compile('{a:b,**c for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,**c for x in y}' 2 6\nTrue True True\n0 0 '{a:b,**c for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-5-single",
+      "source": "try: compile('{a:b,**c for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,**c for x in y}' 2 6\nTrue True True\n0 0 '{a:b,**c for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-6-exec",
+      "source": "try: compile('{**a,**b for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{**a,**b for x in y}\\n' 2 6\nTrue True True\n0 0 '{**a,**b for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-6-eval",
+      "source": "try: compile('{**a,**b for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{**a,**b for x in y}' 2 6\nTrue True True\n0 0 '{**a,**b for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-6-single",
+      "source": "try: compile('{**a,**b for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{**a,**b for x in y}' 2 6\nTrue True True\n0 0 '{**a,**b for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-7-exec",
+      "source": "try: compile('{**a, for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 10\n'{**a, for x in y}\\n' 2 6\nTrue True True\n0 0 '{**a, for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-7-eval",
+      "source": "try: compile('{**a, for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 10\n'{**a, for x in y}' 2 6\nTrue True True\n0 0 '{**a, for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-7-single",
+      "source": "try: compile('{**a, for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 10\n'{**a, for x in y}' 2 6\nTrue True True\n0 0 '{**a, for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-8-exec",
+      "source": "try: compile('{a:b,c:d for x in}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in}\\n' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-8-eval",
+      "source": "try: compile('{a:b,c:d for x in}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in}' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in}'\n"
+    },
+    {
+      "id": "dictionary-entries-8-single",
+      "source": "try: compile('{a:b,c:d for x in}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in}' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in}'\n"
+    },
+    {
+      "id": "dictionary-entries-9-exec",
+      "source": "try: compile('{a:b,c:d for x xs}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x xs}\\n' 2 6\nTrue True True\n0 0 '{a:b,c:d for x xs}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-9-eval",
+      "source": "try: compile('{a:b,c:d for x xs}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x xs}' 2 6\nTrue True True\n0 0 '{a:b,c:d for x xs}'\n"
+    },
+    {
+      "id": "dictionary-entries-9-single",
+      "source": "try: compile('{a:b,c:d for x xs}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x xs}' 2 6\nTrue True True\n0 0 '{a:b,c:d for x xs}'\n"
+    },
+    {
+      "id": "dictionary-entries-10-exec",
+      "source": "try: compile('{a:b, for x in}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 10\n'{a:b, for x in}\\n' 2 6\nTrue True True\n0 0 '{a:b, for x in}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-10-eval",
+      "source": "try: compile('{a:b, for x in}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 10\n'{a:b, for x in}' 2 6\nTrue True True\n0 0 '{a:b, for x in}'\n"
+    },
+    {
+      "id": "dictionary-entries-10-single",
+      "source": "try: compile('{a:b, for x in}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 10\n'{a:b, for x in}' 2 6\nTrue True True\n0 0 '{a:b, for x in}'\n"
+    },
+    {
+      "id": "dictionary-entries-11-exec",
+      "source": "try: compile('{a:b,c:d for x in y if}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in y if}\\n' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in y if}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-11-eval",
+      "source": "try: compile('{a:b,c:d for x in y if}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in y if}' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in y if}'\n"
+    },
+    {
+      "id": "dictionary-entries-11-single",
+      "source": "try: compile('{a:b,c:d for x in y if}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in y if}' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in y if}'\n"
+    },
+    {
+      "id": "dictionary-entries-12-exec",
+      "source": "try: compile('{a:b,c:d for x in y,z}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in y,z}\\n' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in y,z}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-12-eval",
+      "source": "try: compile('{a:b,c:d for x in y,z}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in y,z}' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in y,z}'\n"
+    },
+    {
+      "id": "dictionary-entries-12-single",
+      "source": "try: compile('{a:b,c:d for x in y,z}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{a:b,c:d for x in y,z}' 2 6\nTrue True True\n0 0 '{a:b,c:d for x in y,z}'\n"
+    },
+    {
+      "id": "dictionary-entries-13-exec",
+      "source": "try: compile('{(a):(b),(c):(d) for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 21\n'{(a):(b),(c):(d) for x in y}\\n' 2 6\nTrue True True\n0 0 '{(a):(b),(c):(d) for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-13-eval",
+      "source": "try: compile('{(a):(b),(c):(d) for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 21\n'{(a):(b),(c):(d) for x in y}' 2 6\nTrue True True\n0 0 '{(a):(b),(c):(d) for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-13-single",
+      "source": "try: compile('{(a):(b),(c):(d) for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 21\n'{(a):(b),(c):(d) for x in y}' 2 6\nTrue True True\n0 0 '{(a):(b),(c):(d) for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-14-exec",
+      "source": "try: compile('{a:b,(c+d):(e*f) for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 21\n'{a:b,(c+d):(e*f) for x in y}\\n' 2 6\nTrue True True\n0 0 '{a:b,(c+d):(e*f) for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-14-eval",
+      "source": "try: compile('{a:b,(c+d):(e*f) for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 21\n'{a:b,(c+d):(e*f) for x in y}' 2 6\nTrue True True\n0 0 '{a:b,(c+d):(e*f) for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-14-single",
+      "source": "try: compile('{a:b,(c+d):(e*f) for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 21\n'{a:b,(c+d):(e*f) for x in y}' 2 6\nTrue True True\n0 0 '{a:b,(c+d):(e*f) for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-15-exec",
+      "source": "try: compile('{a:b,c:(lambda: d) for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 20 1 23\n'{a:b,c:(lambda: d) for x in y}\\n' 2 6\nTrue True True\n0 0 '{a:b,c:(lambda: d) for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-15-eval",
+      "source": "try: compile('{a:b,c:(lambda: d) for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 20 1 23\n'{a:b,c:(lambda: d) for x in y}' 2 6\nTrue True True\n0 0 '{a:b,c:(lambda: d) for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-15-single",
+      "source": "try: compile('{a:b,c:(lambda: d) for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 20 1 23\n'{a:b,c:(lambda: d) for x in y}' 2 6\nTrue True True\n0 0 '{a:b,c:(lambda: d) for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-16-exec",
+      "source": "try: compile('{a:b,c:[d for d in e] for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 23 1 26\n'{a:b,c:[d for d in e] for x in y}\\n' 2 6\nTrue True True\n0 0 '{a:b,c:[d for d in e] for x in y}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-16-eval",
+      "source": "try: compile('{a:b,c:[d for d in e] for x in y}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 23 1 26\n'{a:b,c:[d for d in e] for x in y}' 2 6\nTrue True True\n0 0 '{a:b,c:[d for d in e] for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-16-single",
+      "source": "try: compile('{a:b,c:[d for d in e] for x in y}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 23 1 26\n'{a:b,c:[d for d in e] for x in y}' 2 6\nTrue True True\n0 0 '{a:b,c:[d for d in e] for x in y}'\n"
+    },
+    {
+      "id": "dictionary-entries-17-exec",
+      "source": "try: compile('{雪:鳥,羽:空 for 海 in 山}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{雪:鳥,羽:空 for 海 in 山}\\n' 2 6\nTrue True True\n0 0 '{雪:鳥,羽:空 for 海 in 山}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-17-eval",
+      "source": "try: compile('{雪:鳥,羽:空 for 海 in 山}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{雪:鳥,羽:空 for 海 in 山}' 2 6\nTrue True True\n0 0 '{雪:鳥,羽:空 for 海 in 山}'\n"
+    },
+    {
+      "id": "dictionary-entries-17-single",
+      "source": "try: compile('{雪:鳥,羽:空 for 海 in 山}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{雪:鳥,羽:空 for 海 in 山}' 2 6\nTrue True True\n0 0 '{雪:鳥,羽:空 for 海 in 山}'\n"
+    },
+    {
+      "id": "dictionary-entries-18-exec",
+      "source": "try: compile('{雪:鳥,**羽 for 海 in 山}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{雪:鳥,**羽 for 海 in 山}\\n' 2 6\nTrue True True\n0 0 '{雪:鳥,**羽 for 海 in 山}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-18-eval",
+      "source": "try: compile('{雪:鳥,**羽 for 海 in 山}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{雪:鳥,**羽 for 海 in 山}' 2 6\nTrue True True\n0 0 '{雪:鳥,**羽 for 海 in 山}'\n"
+    },
+    {
+      "id": "dictionary-entries-18-single",
+      "source": "try: compile('{雪:鳥,**羽 for 海 in 山}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'{雪:鳥,**羽 for 海 in 山}' 2 6\nTrue True True\n0 0 '{雪:鳥,**羽 for 海 in 山}'\n"
+    },
+    {
+      "id": "dictionary-entries-19-exec",
+      "source": "try: compile('{\\n 雪:鳥,\\n 羽:空 for 海 in 山\\n}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 3 6 3 9\n' 羽:空 for 海 in 山\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥,\\n 羽:空 for 海 in 山\\n}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-19-eval",
+      "source": "try: compile('{\\n 雪:鳥,\\n 羽:空 for 海 in 山\\n}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 3 6 3 9\n' 羽:空 for 海 in 山\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥,\\n 羽:空 for 海 in 山\\n}'\n"
+    },
+    {
+      "id": "dictionary-entries-19-single",
+      "source": "try: compile('{\\n 雪:鳥,\\n 羽:空 for 海 in 山\\n}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 3 6 3 9\n' 羽:空 for 海 in 山\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥,\\n 羽:空 for 海 in 山\\n}'\n"
+    },
+    {
+      "id": "dictionary-entries-20-exec",
+      "source": "try: compile('{\\n 雪:鳥, # comment\\n for 海 in 山\\n}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 3 2 3 5\n' for 海 in 山\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥, # comment\\n for 海 in 山\\n}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-20-eval",
+      "source": "try: compile('{\\n 雪:鳥, # comment\\n for 海 in 山\\n}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 3 2 3 5\n' for 海 in 山\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥, # comment\\n for 海 in 山\\n}'\n"
+    },
+    {
+      "id": "dictionary-entries-20-single",
+      "source": "try: compile('{\\n 雪:鳥, # comment\\n for 海 in 山\\n}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 3 2 3 5\n' for 海 in 山\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥, # comment\\n for 海 in 山\\n}'\n"
+    },
+    {
+      "id": "dictionary-entries-21-exec",
+      "source": "try: compile('{雪:鳥,羽:空 \\\\\\n for 海 in 山}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 5\n' for 海 in 山}\\n' 2 6\nTrue True True\n0 0 '{雪:鳥,羽:空 \\\\\\n for 海 in 山}\\n'\n"
+    },
+    {
+      "id": "dictionary-entries-21-eval",
+      "source": "try: compile('{雪:鳥,羽:空 \\\\\\n for 海 in 山}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 5\n' for 海 in 山}' 2 6\nTrue True True\n0 0 '{雪:鳥,羽:空 \\\\\\n for 海 in 山}'\n"
+    },
+    {
+      "id": "dictionary-entries-21-single",
+      "source": "try: compile('{雪:鳥,羽:空 \\\\\\n for 海 in 山}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 5\n' for 海 in 山}' 2 6\nTrue True True\n0 0 '{雪:鳥,羽:空 \\\\\\n for 海 in 山}'\n"
+    },
+    {
+      "id": "dictionary-entries-prior-compound-fields",
+      "source": "try: compile('if True: pass\\n{a:b,c:d for x in y}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stage": "LA110",
+      "stdout": "invalid syntax\nselected/雪.py 2 10 2 13\n'{a:b,c:d for x in y}\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "dictionary-entries-boundary-0",
+      "source": "try: compile('{a:b,c:+ for x in y}','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '{a:b,c:+ for x in y}\\n')\n"
+    },
+    {
+      "id": "dictionary-entries-boundary-1",
+      "source": "try: compile('{a:b,**... for x in y}','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '{a:b,**... for x in y}\\n')\n"
+    },
+    {
+      "id": "dictionary-entries-boundary-2",
+      "source": "try: compile('{a:b,c:... for x in y}','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '{a:b,c:... for x in y}\\n')\n"
+    },
+    {
+      "id": "dictionary-entries-boundary-3",
+      "source": "try: compile('if True: pass\\n{a:b,c:d for x in y}','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(1, 0, 'if True: pass\\n{a:b,c:d for x in y}\\n')\n"
+    },
+    {
+      "id": "dictionary-entries-boundary-4",
+      "source": "try: compile('f(a=x for x in {a:b,c:d for x in y})','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, 'f(a=x for x in {a:b,c:d for x in y})\\n')\n"
+    },
+    {
+      "id": "dictionary-entries-boundary-5",
+      "source": "try: compile('class C(x for x in {a:b, for x in y}): pass','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, 'class C(x for x in {a:b, for x in y}): pass\\n')\n"
+    },
+    {
+      "id": "dictionary-entries-boundary-6",
+      "source": "try: compile('[x,y for x in {a:b,c:d for x in y}]','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '[x,y for x in {a:b,c:d for x in y}]\\n')\n"
+    },
+    {
+      "id": "dictionary-entries-valid",
+      "source": "print({x:x+1 for x in (1,2)}[2])\nprint(len({**{'a':1},'b':2}))\n",
+      "stage": "LA110",
       "stdout": "3\n2\n"
     }
   ]

@@ -986,6 +986,9 @@ class Parser {
       const entries = [], items = []; let form = null, comma = null, unpacking = null;
       while (!this.at("}")) {
         if (form === "set" && comma && this.at("for")) this.comprehensionElements(start, "set", items, comma, "}");
+        if (form === "dict" && comma && this.at("for"))
+          this.fail("A dictionary comprehension cannot follow an entry comma.", this.peek(), "SYNTAX", undefined,
+            this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
         if (this.at("*")) {
           if (form === "dict") this.fail("A dictionary display cannot contain a starred set element.", this.peek(), "SYNTAX", undefined,
             this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
@@ -1033,7 +1036,9 @@ class Parser {
             this.fail("A dictionary comprehension cannot unpack its element.", unpacking, "SYNTAX", undefined,
               this.at("}") ? this.delimitedDiagnostic("dict unpacking cannot be used in dict comprehension", unpacking, "}", true) : undefined);
           }
-          if (items.length + entries.length !== 1 || entries[0]?.[0] === null) this.fail("A comprehension requires one element or pair.");
+          if (items.length + entries.length !== 1 || entries[0]?.[0] === null)
+            this.fail("A comprehension requires one element or pair.", this.peek(), "SYNTAX", undefined,
+              this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
           const result = this.comprehension(start, form, form === "set" ? items[0] : entries[0][1], form === "dict" ? entries[0][0] : null);
           this.comprehensionEnd("}"); return this.closeComprehension(result);
         }
