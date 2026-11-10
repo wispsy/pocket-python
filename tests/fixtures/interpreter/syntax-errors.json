@@ -59,7 +59,8 @@
     "LA112",
     "LA113",
     "LA114",
-    "LA115"
+    "LA115",
+    "LA116"
   ],
   "cases": [
     {
@@ -16113,6 +16114,606 @@
       "stage": "LA115",
       "source": "print(1 if True else 2)\nprint(1 if False else 2 if True else 3)\nprint((lambda: 4 if True else 5)())\n",
       "stdout": "1\n2\n4\n"
+    },
+    {
+      "id": "conditional-alternative-0-exec",
+      "stage": "LA116",
+      "source": "try: compile('x if y else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 13\n'x if y else\\n' 2 6\nTrue True True\n0 0 'x if y else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-0-eval",
+      "stage": "LA116",
+      "source": "try: compile('x if y else',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 11 1 -1\n'x if y else' 2 6\nTrue True True\n0 0 'x if y else'\n"
+    },
+    {
+      "id": "conditional-alternative-0-single",
+      "stage": "LA116",
+      "source": "try: compile('x if y else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 11 1 -1\n'x if y else' 2 6\nTrue True True\n0 0 'x if y else'\n"
+    },
+    {
+      "id": "conditional-alternative-1-exec",
+      "stage": "LA116",
+      "source": "try: compile('x if y else\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 13\n'x if y else\\n' 2 6\nTrue True True\n0 0 'x if y else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-1-eval",
+      "stage": "LA116",
+      "source": "try: compile('x if y else\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 13\n'x if y else\\n' 2 6\nTrue True True\n0 0 'x if y else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-1-single",
+      "stage": "LA116",
+      "source": "try: compile('x if y else\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 13\n'x if y else\\n' 2 6\nTrue True True\n0 0 'x if y else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-2-exec",
+      "stage": "LA116",
+      "source": "try: compile('x if y else ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'x if y else \\n' 2 6\nTrue True True\n0 0 'x if y else \\n'\n"
+    },
+    {
+      "id": "conditional-alternative-2-eval",
+      "stage": "LA116",
+      "source": "try: compile('x if y else ',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 -1\n'x if y else ' 2 6\nTrue True True\n0 0 'x if y else '\n"
+    },
+    {
+      "id": "conditional-alternative-2-single",
+      "stage": "LA116",
+      "source": "try: compile('x if y else ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 -1\n'x if y else ' 2 6\nTrue True True\n0 0 'x if y else '\n"
+    },
+    {
+      "id": "conditional-alternative-3-exec",
+      "stage": "LA116",
+      "source": "try: compile('x if y else # comment',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 23\n'x if y else # comment\\n' 2 6\nTrue True True\n0 0 'x if y else # comment\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-3-eval",
+      "stage": "LA116",
+      "source": "try: compile('x if y else # comment',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 21 1 -1\n'x if y else # comment' 2 6\nTrue True True\n0 0 'x if y else # comment'\n"
+    },
+    {
+      "id": "conditional-alternative-3-single",
+      "stage": "LA116",
+      "source": "try: compile('x if y else # comment',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 21 1 -1\n'x if y else # comment' 2 6\nTrue True True\n0 0 'x if y else # comment'\n"
+    },
+    {
+      "id": "conditional-alternative-4-exec",
+      "stage": "LA116",
+      "source": "try: compile('x if y else # comment\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 23\n'x if y else # comment\\n' 2 6\nTrue True True\n0 0 'x if y else # comment\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-4-eval",
+      "stage": "LA116",
+      "source": "try: compile('x if y else # comment\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 23\n'x if y else # comment\\n' 2 6\nTrue True True\n0 0 'x if y else # comment\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-4-single",
+      "stage": "LA116",
+      "source": "try: compile('x if y else # comment\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 23\n'x if y else # comment\\n' 2 6\nTrue True True\n0 0 'x if y else # comment\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-5-exec",
+      "stage": "LA116",
+      "source": "try: compile('(x if y else)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'(x if y else)\\n' 2 6\nTrue True True\n0 0 '(x if y else)\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-5-eval",
+      "stage": "LA116",
+      "source": "try: compile('(x if y else)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'(x if y else)' 2 6\nTrue True True\n0 0 '(x if y else)'\n"
+    },
+    {
+      "id": "conditional-alternative-5-single",
+      "stage": "LA116",
+      "source": "try: compile('(x if y else)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'(x if y else)' 2 6\nTrue True True\n0 0 '(x if y else)'\n"
+    },
+    {
+      "id": "conditional-alternative-6-exec",
+      "stage": "LA116",
+      "source": "try: compile('[x if y else]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'[x if y else]\\n' 2 6\nTrue True True\n0 0 '[x if y else]\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-6-eval",
+      "stage": "LA116",
+      "source": "try: compile('[x if y else]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'[x if y else]' 2 6\nTrue True True\n0 0 '[x if y else]'\n"
+    },
+    {
+      "id": "conditional-alternative-6-single",
+      "stage": "LA116",
+      "source": "try: compile('[x if y else]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'[x if y else]' 2 6\nTrue True True\n0 0 '[x if y else]'\n"
+    },
+    {
+      "id": "conditional-alternative-7-exec",
+      "stage": "LA116",
+      "source": "try: compile('{x if y else}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'{x if y else}\\n' 2 6\nTrue True True\n0 0 '{x if y else}\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-7-eval",
+      "stage": "LA116",
+      "source": "try: compile('{x if y else}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'{x if y else}' 2 6\nTrue True True\n0 0 '{x if y else}'\n"
+    },
+    {
+      "id": "conditional-alternative-7-single",
+      "stage": "LA116",
+      "source": "try: compile('{x if y else}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'{x if y else}' 2 6\nTrue True True\n0 0 '{x if y else}'\n"
+    },
+    {
+      "id": "conditional-alternative-8-exec",
+      "stage": "LA116",
+      "source": "try: compile('{x:y if z else}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 15 1 16\n'{x:y if z else}\\n' 2 6\nTrue True True\n0 0 '{x:y if z else}\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-8-eval",
+      "stage": "LA116",
+      "source": "try: compile('{x:y if z else}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 15 1 16\n'{x:y if z else}' 2 6\nTrue True True\n0 0 '{x:y if z else}'\n"
+    },
+    {
+      "id": "conditional-alternative-8-single",
+      "stage": "LA116",
+      "source": "try: compile('{x:y if z else}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 15 1 16\n'{x:y if z else}' 2 6\nTrue True True\n0 0 '{x:y if z else}'\n"
+    },
+    {
+      "id": "conditional-alternative-9-exec",
+      "stage": "LA116",
+      "source": "try: compile('f(x if y else)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 14 1 15\n'f(x if y else)\\n' 2 6\nTrue True True\n0 0 'f(x if y else)\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-9-eval",
+      "stage": "LA116",
+      "source": "try: compile('f(x if y else)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 14 1 15\n'f(x if y else)' 2 6\nTrue True True\n0 0 'f(x if y else)'\n"
+    },
+    {
+      "id": "conditional-alternative-9-single",
+      "stage": "LA116",
+      "source": "try: compile('f(x if y else)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 14 1 15\n'f(x if y else)' 2 6\nTrue True True\n0 0 'f(x if y else)'\n"
+    },
+    {
+      "id": "conditional-alternative-10-exec",
+      "stage": "LA116",
+      "source": "try: compile('x if y else, z',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 13\n'x if y else, z\\n' 2 6\nTrue True True\n0 0 'x if y else, z\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-10-eval",
+      "stage": "LA116",
+      "source": "try: compile('x if y else, z',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 13\n'x if y else, z' 2 6\nTrue True True\n0 0 'x if y else, z'\n"
+    },
+    {
+      "id": "conditional-alternative-10-single",
+      "stage": "LA116",
+      "source": "try: compile('x if y else, z',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 13\n'x if y else, z' 2 6\nTrue True True\n0 0 'x if y else, z'\n"
+    },
+    {
+      "id": "conditional-alternative-11-exec",
+      "stage": "LA116",
+      "source": "try: compile('(x if y else, z)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'(x if y else, z)\\n' 2 6\nTrue True True\n0 0 '(x if y else, z)\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-11-eval",
+      "stage": "LA116",
+      "source": "try: compile('(x if y else, z)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'(x if y else, z)' 2 6\nTrue True True\n0 0 '(x if y else, z)'\n"
+    },
+    {
+      "id": "conditional-alternative-11-single",
+      "stage": "LA116",
+      "source": "try: compile('(x if y else, z)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'(x if y else, z)' 2 6\nTrue True True\n0 0 '(x if y else, z)'\n"
+    },
+    {
+      "id": "conditional-alternative-12-exec",
+      "stage": "LA116",
+      "source": "try: compile('[x if y else, z]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'[x if y else, z]\\n' 2 6\nTrue True True\n0 0 '[x if y else, z]\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-12-eval",
+      "stage": "LA116",
+      "source": "try: compile('[x if y else, z]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'[x if y else, z]' 2 6\nTrue True True\n0 0 '[x if y else, z]'\n"
+    },
+    {
+      "id": "conditional-alternative-12-single",
+      "stage": "LA116",
+      "source": "try: compile('[x if y else, z]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'[x if y else, z]' 2 6\nTrue True True\n0 0 '[x if y else, z]'\n"
+    },
+    {
+      "id": "conditional-alternative-13-exec",
+      "stage": "LA116",
+      "source": "try: compile('{x if y else, z}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'{x if y else, z}\\n' 2 6\nTrue True True\n0 0 '{x if y else, z}\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-13-eval",
+      "stage": "LA116",
+      "source": "try: compile('{x if y else, z}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'{x if y else, z}' 2 6\nTrue True True\n0 0 '{x if y else, z}'\n"
+    },
+    {
+      "id": "conditional-alternative-13-single",
+      "stage": "LA116",
+      "source": "try: compile('{x if y else, z}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'{x if y else, z}' 2 6\nTrue True True\n0 0 '{x if y else, z}'\n"
+    },
+    {
+      "id": "conditional-alternative-14-exec",
+      "stage": "LA116",
+      "source": "try: compile('雪 if 鳥 else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 13\n'雪 if 鳥 else\\n' 2 6\nTrue True True\n0 0 '雪 if 鳥 else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-14-eval",
+      "stage": "LA116",
+      "source": "try: compile('雪 if 鳥 else',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 11 1 -1\n'雪 if 鳥 else' 2 6\nTrue True True\n0 0 '雪 if 鳥 else'\n"
+    },
+    {
+      "id": "conditional-alternative-14-single",
+      "stage": "LA116",
+      "source": "try: compile('雪 if 鳥 else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 11 1 -1\n'雪 if 鳥 else' 2 6\nTrue True True\n0 0 '雪 if 鳥 else'\n"
+    },
+    {
+      "id": "conditional-alternative-15-exec",
+      "stage": "LA116",
+      "source": "try: compile('雪 if 鳥 else\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 13\n'雪 if 鳥 else\\n' 2 6\nTrue True True\n0 0 '雪 if 鳥 else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-15-eval",
+      "stage": "LA116",
+      "source": "try: compile('雪 if 鳥 else\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 13\n'雪 if 鳥 else\\n' 2 6\nTrue True True\n0 0 '雪 if 鳥 else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-15-single",
+      "stage": "LA116",
+      "source": "try: compile('雪 if 鳥 else\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 12 1 13\n'雪 if 鳥 else\\n' 2 6\nTrue True True\n0 0 '雪 if 鳥 else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-16-exec",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if 鳥 else)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'(雪 if 鳥 else)\\n' 2 6\nTrue True True\n0 0 '(雪 if 鳥 else)\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-16-eval",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if 鳥 else)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'(雪 if 鳥 else)' 2 6\nTrue True True\n0 0 '(雪 if 鳥 else)'\n"
+    },
+    {
+      "id": "conditional-alternative-16-single",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if 鳥 else)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 13 1 14\n'(雪 if 鳥 else)' 2 6\nTrue True True\n0 0 '(雪 if 鳥 else)'\n"
+    },
+    {
+      "id": "conditional-alternative-17-exec",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if\\n 鳥 else)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 8 2 9\n' 鳥 else)\\n' 2 6\nTrue True True\n0 0 '(雪 if\\n 鳥 else)\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-17-eval",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if\\n 鳥 else)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 8 2 9\n' 鳥 else)' 2 6\nTrue True True\n0 0 '(雪 if\\n 鳥 else)'\n"
+    },
+    {
+      "id": "conditional-alternative-17-single",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if\\n 鳥 else)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 8 2 9\n' 鳥 else)' 2 6\nTrue True True\n0 0 '(雪 if\\n 鳥 else)'\n"
+    },
+    {
+      "id": "conditional-alternative-18-exec",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if 鳥 else\\n )',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 2 2 3\n' )\\n' 2 6\nTrue True True\n0 0 '(雪 if 鳥 else\\n )\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-18-eval",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if 鳥 else\\n )',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 2 2 3\n' )' 2 6\nTrue True True\n0 0 '(雪 if 鳥 else\\n )'\n"
+    },
+    {
+      "id": "conditional-alternative-18-single",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if 鳥 else\\n )',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 2 2 3\n' )' 2 6\nTrue True True\n0 0 '(雪 if 鳥 else\\n )'\n"
+    },
+    {
+      "id": "conditional-alternative-19-exec",
+      "stage": "LA116",
+      "source": "try: compile('[雪 if 鳥 else\\n]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 1 2 2\n']\\n' 2 6\nTrue True True\n0 0 '[雪 if 鳥 else\\n]\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-19-eval",
+      "stage": "LA116",
+      "source": "try: compile('[雪 if 鳥 else\\n]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 1 2 2\n']' 2 6\nTrue True True\n0 0 '[雪 if 鳥 else\\n]'\n"
+    },
+    {
+      "id": "conditional-alternative-19-single",
+      "stage": "LA116",
+      "source": "try: compile('[雪 if 鳥 else\\n]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 1 2 2\n']' 2 6\nTrue True True\n0 0 '[雪 if 鳥 else\\n]'\n"
+    },
+    {
+      "id": "conditional-alternative-20-exec",
+      "stage": "LA116",
+      "source": "try: compile('{雪:鳥 if 羽 else\\n}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 1 2 2\n'}\\n' 2 6\nTrue True True\n0 0 '{雪:鳥 if 羽 else\\n}\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-20-eval",
+      "stage": "LA116",
+      "source": "try: compile('{雪:鳥 if 羽 else\\n}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 1 2 2\n'}' 2 6\nTrue True True\n0 0 '{雪:鳥 if 羽 else\\n}'\n"
+    },
+    {
+      "id": "conditional-alternative-20-single",
+      "stage": "LA116",
+      "source": "try: compile('{雪:鳥 if 羽 else\\n}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 1 2 2\n'}' 2 6\nTrue True True\n0 0 '{雪:鳥 if 羽 else\\n}'\n"
+    },
+    {
+      "id": "conditional-alternative-21-exec",
+      "stage": "LA116",
+      "source": "try: compile('雪 if 鳥 else \\\\\\n # comment',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 2 2 12\n' # comment\\n' 2 6\nTrue True True\n0 0 '雪 if 鳥 else \\\\\\n # comment\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-21-eval",
+      "stage": "LA116",
+      "source": "try: compile('雪 if 鳥 else \\\\\\n # comment',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 10 2 -1\n' # comment' 2 6\nTrue True True\n0 0 '雪 if 鳥 else \\\\\\n # comment'\n"
+    },
+    {
+      "id": "conditional-alternative-21-single",
+      "stage": "LA116",
+      "source": "try: compile('雪 if 鳥 else \\\\\\n # comment',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 10 2 -1\n' # comment' 2 6\nTrue True True\n0 0 '雪 if 鳥 else \\\\\\n # comment'\n"
+    },
+    {
+      "id": "conditional-alternative-22-exec",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if 鳥 else # comment\\n )',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 2 2 3\n' )\\n' 2 6\nTrue True True\n0 0 '(雪 if 鳥 else # comment\\n )\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-22-eval",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if 鳥 else # comment\\n )',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 2 2 3\n' )' 2 6\nTrue True True\n0 0 '(雪 if 鳥 else # comment\\n )'\n"
+    },
+    {
+      "id": "conditional-alternative-22-single",
+      "stage": "LA116",
+      "source": "try: compile('(雪 if 鳥 else # comment\\n )',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 2 2 3\n' )' 2 6\nTrue True True\n0 0 '(雪 if 鳥 else # comment\\n )'\n"
+    },
+    {
+      "id": "conditional-alternative-23-exec",
+      "stage": "LA116",
+      "source": "try: compile('a if b else c if d else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 24 1 25\n'a if b else c if d else\\n' 2 6\nTrue True True\n0 0 'a if b else c if d else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-23-eval",
+      "stage": "LA116",
+      "source": "try: compile('a if b else c if d else',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 23 1 -1\n'a if b else c if d else' 2 6\nTrue True True\n0 0 'a if b else c if d else'\n"
+    },
+    {
+      "id": "conditional-alternative-23-single",
+      "stage": "LA116",
+      "source": "try: compile('a if b else c if d else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 23 1 -1\n'a if b else c if d else' 2 6\nTrue True True\n0 0 'a if b else c if d else'\n"
+    },
+    {
+      "id": "conditional-alternative-24-exec",
+      "stage": "LA116",
+      "source": "try: compile('lambda: 雪 if 鳥 else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 20 1 21\n'lambda: 雪 if 鳥 else\\n' 2 6\nTrue True True\n0 0 'lambda: 雪 if 鳥 else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-24-eval",
+      "stage": "LA116",
+      "source": "try: compile('lambda: 雪 if 鳥 else',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 19 1 -1\n'lambda: 雪 if 鳥 else' 2 6\nTrue True True\n0 0 'lambda: 雪 if 鳥 else'\n"
+    },
+    {
+      "id": "conditional-alternative-24-single",
+      "stage": "LA116",
+      "source": "try: compile('lambda: 雪 if 鳥 else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 19 1 -1\n'lambda: 雪 if 鳥 else' 2 6\nTrue True True\n0 0 'lambda: 雪 if 鳥 else'\n"
+    },
+    {
+      "id": "conditional-alternative-25-exec",
+      "stage": "LA116",
+      "source": "try: compile('(x if y else lambda: a if b else)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 33 1 34\n'(x if y else lambda: a if b else)\\n' 2 6\nTrue True True\n0 0 '(x if y else lambda: a if b else)\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-25-eval",
+      "stage": "LA116",
+      "source": "try: compile('(x if y else lambda: a if b else)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 33 1 34\n'(x if y else lambda: a if b else)' 2 6\nTrue True True\n0 0 '(x if y else lambda: a if b else)'\n"
+    },
+    {
+      "id": "conditional-alternative-25-single",
+      "stage": "LA116",
+      "source": "try: compile('(x if y else lambda: a if b else)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 33 1 34\n'(x if y else lambda: a if b else)' 2 6\nTrue True True\n0 0 '(x if y else lambda: a if b else)'\n"
+    },
+    {
+      "id": "conditional-alternative-statement-0-exec",
+      "stage": "LA116",
+      "source": "try: compile('out=雪 if 鳥 else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 16 1 17\n'out=雪 if 鳥 else\\n' 2 6\nTrue True True\n0 0 'out=雪 if 鳥 else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-statement-1-exec",
+      "stage": "LA116",
+      "source": "try: compile('return 雪 if 鳥 else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 19 1 20\n'return 雪 if 鳥 else\\n' 2 6\nTrue True True\n0 0 'return 雪 if 鳥 else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-statement-2-exec",
+      "stage": "LA116",
+      "source": "try: compile('assert 雪 if 鳥 else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 19 1 20\n'assert 雪 if 鳥 else\\n' 2 6\nTrue True True\n0 0 'assert 雪 if 鳥 else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-statement-3-exec",
+      "stage": "LA116",
+      "source": "try: compile('raise 雪 if 鳥 else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 1 18 1 19\n'raise 雪 if 鳥 else\\n' 2 6\nTrue True True\n0 0 'raise 雪 if 鳥 else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-statement-4-exec",
+      "stage": "LA116",
+      "source": "try: compile('def f():\\n return 雪 if 鳥 else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 20 2 21\n' return 雪 if 鳥 else\\n' 2 6\nTrue True True\n0 0 'def f():\\n return 雪 if 鳥 else\\n'\n"
+    },
+    {
+      "id": "conditional-alternative-prior-fields-0-exec",
+      "stage": "LA116",
+      "source": "try: compile('if True: pass\\n雪 if 鳥 else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "expected expression after 'else', but statement is given\nselected/雪.py 2 12 2 13\n'雪 if 鳥 else\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "conditional-alternative-prior-metadata",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\n雪 if 鳥 else',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "boundary": "Native metadata after a completed compound statement remains unqualified.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "(1, 0, 'if True: pass\\n雪 if 鳥 else\\n')\n"
+    },
+    {
+      "id": "conditional-alternative-header-colon",
+      "stage": "Future",
+      "source": "try: compile('if x if y else: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "conditional-alternative-keyword",
+      "stage": "Future",
+      "source": "try: compile('(x if y else pass)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "conditional-alternative-semicolon",
+      "stage": "Future",
+      "source": "try: compile('x if y else; pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "conditional-alternative-malformed-operand",
+      "stage": "Future",
+      "source": "try: compile('(x if y else z+)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "conditional-alternative-unqualified-outer",
+      "stage": "Future",
+      "source": "try: compile('[a,b for x in (c if d else)]',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "conditional-alternative-keyword-generator",
+      "stage": "Future",
+      "source": "try: compile('f(a=x for x in (y if z else))',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "conditional-alternative-lexical-eof-exec",
+      "stage": "Future",
+      "source": "try: compile('雪 if 鳥 else \\\\\\n',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "conditional-alternative-lexical-eof-eval",
+      "stage": "Future",
+      "source": "try: compile('雪 if 鳥 else \\\\\\n',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "conditional-alternative-lexical-eof-single",
+      "stage": "Future",
+      "source": "try: compile('雪 if 鳥 else \\\\\\n',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "conditional-alternative-valid",
+      "stage": "LA116",
+      "source": "print((1 if False else (2,3))[0])\nprint((lambda: 4 if False else 5)())\n",
+      "stdout": "2\n5\n"
     }
   ]
 }

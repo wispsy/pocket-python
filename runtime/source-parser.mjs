@@ -739,7 +739,18 @@ class Parser {
         }
         this.fail("Expected 'else' after 'if' expression.", this.peek(), "SYNTAX", undefined, syntax);
       }
-      this.expect("else"); const otherwise = this.expression();
+      this.expect("else");
+      if ([",", ")", "]", "}"].some(value => this.at(value)) || ["newline", "eof"].includes(this.peek().kind)) {
+        const syntax = this.comprehensionClauseFields ?
+          this.tokenDiagnostic("expected expression after 'else', but statement is given") : undefined;
+        if (syntax && this.options.mode && this.options.mode !== "exec" &&
+            ["newline", "eof"].includes(this.peek().kind) && this.lexed.source[this.peek().start] !== "\n") {
+          syntax.offset = Array.from(this.lexed.source.split("\n")[syntax.lineno - 1]).length;
+          syntax.end_offset = -1;
+        }
+        this.fail("Expected an expression after 'else'.", this.peek(), "SYNTAX", undefined, syntax);
+      }
+      const otherwise = this.expression();
       return this.node("Conditional", body, {body, test, otherwise}, otherwise);
     });
   }
