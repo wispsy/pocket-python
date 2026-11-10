@@ -964,6 +964,14 @@ class Parser {
             const colon = this.previous;
             if (this.at("}") || this.at(",")) this.fail("A dictionary value requires an expression.", colon, "SYNTAX", undefined,
               this.delimitedDiagnostic("expression expected after dictionary key and ':'", colon, "}", true));
+            if (this.eat("*")) {
+              const starred = this.previous;
+              this.bitwiseOr();
+              const end = this.peek(), span = [starred.span[0], starred.span[1], end.span[0], end.span[1]];
+              this.fail("A dictionary value cannot be starred.", starred, "SYNTAX", undefined,
+                this.at("}") || this.at(",") ? this.delimitedDiagnostic(
+                  "cannot use a starred expression in a dictionary value", {span}, "}", true) : undefined);
+            }
             form = "dict"; const value = this.expression(); entries.push([key, value]);
           } else {
             if (form === "dict") {

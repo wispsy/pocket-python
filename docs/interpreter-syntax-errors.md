@@ -333,8 +333,13 @@ the key with a zero native end offset; missing values select the colon token.
 Grouping, multiline/Unicode text and parser modes retain independent cases.
 Malformed/unadopted keys and prior-compound metadata keep their boundaries.
 
-The current fixed generated-syntax corpus contains 1,735 cases: 1,627 supported
-semantic/error comparisons and 108 explicit native-field refusals. The ordinary
+LA-104 qualifies starred dictionary values whose adopted operand reaches a
+comma or closing brace. The range starts at the star and reaches the separator,
+including intervening spaces and physical lines. Failed operands and boolean,
+conditional or comprehension tails retain explicit native-field refusals.
+
+The current fixed generated-syntax corpus contains 1,835 cases: 1,721 supported
+semantic/error comparisons and 114 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
