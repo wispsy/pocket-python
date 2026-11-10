@@ -28,7 +28,8 @@
     "LA83",
     "LA84",
     "LA85",
-    "LA86"
+    "LA86",
+    "LA87"
   ],
   "cases": [
     {
@@ -5338,6 +5339,164 @@
       "stage": "LA86",
       "source": "exec(compile(\"x=1;y=2\",\"interactive.py\",\"single\"))\nprint(x+y)\nexec(compile(\"x=4\\n# comment\",\"interactive.py\",\"single\"))\nprint(x)\nexec(compile(\"x=5\\ny=6\",\"module.py\",\"exec\"))\nprint(x+y,eval(compile(\"1+2\",\"expression.py\",\"eval\")))\n",
       "stdout": "3\n4\n11 3\n"
+    },
+    {
+      "id": "generated-keyword-owner-cycle",
+      "stage": "LA87",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('f(雪=1,雪=2)',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue keyword argument repeated: 雪 9 True True\n"
+    },
+    {
+      "id": "generated-keyword-chaining",
+      "stage": "LA87",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('f(雪=1,雪=2)',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py True True 2\nTrue supplied input 9\n"
+    },
+    {
+      "id": "generated-keyword-cleanup",
+      "stage": "LA87",
+      "source": "def work():\n try: compile('f(雪=1,雪=2)',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py keyword argument repeated: 雪 True 0\ncleanup-input.py True\n"
+    },
+    {
+      "id": "generated-keyword-original-dynamic-failure",
+      "stage": "LA87",
+      "source": "exec(compile('def fail():\\n try: compile(\\'f(雪=1,雪=2)\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','keyword-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py True 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-keyword-nested-exec",
+      "stage": "LA87",
+      "source": "scope={}\nexec('try: compile(\\'f(雪=1,雪=2)\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py keyword argument repeated: 雪 9 True\n"
+    },
+    {
+      "id": "generated-keyword-field-independence",
+      "stage": "LA87",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('f(雪=1,雪=2)',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\nNone True True 77 9\n"
+    },
+    {
+      "id": "generated-keyword-module",
+      "stage": "LA87",
+      "source": "import helper\ne=helper.validate('f(雪=1,雪=2)')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "stdout": "module-input.py keyword argument repeated: 雪 9 module input\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ]
+    },
+    {
+      "id": "generated-keyword-flags-owner-cycle",
+      "stage": "LA87",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('f(雪=1,雪=2)',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True keyword argument repeated: 雪 9\n"
+    },
+    {
+      "id": "generated-interactive-owner-cycle",
+      "stage": "LA87",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('雪=1\\nvalue=2',filename,'single')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue multiple statements found while compiling a single statement 4 False True\n"
+    },
+    {
+      "id": "generated-interactive-chaining",
+      "stage": "LA87",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('雪=1\\nvalue=2',\"chained-input.py\",'single')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False True 2\nTrue supplied input 4\n"
+    },
+    {
+      "id": "generated-interactive-cleanup",
+      "stage": "LA87",
+      "source": "def work():\n try: compile('雪=1\\nvalue=2',\"cleanup-input.py\",'single')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py multiple statements found while compiling a single statement False 0\ncleanup-input.py True\n"
+    },
+    {
+      "id": "generated-interactive-original-dynamic-failure",
+      "stage": "LA87",
+      "source": "exec(compile('def fail():\\n try: compile(\\'雪=1\\\\nvalue=2\\',\"dynamic-input.py\",\\'single\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','interactive-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-interactive-nested-exec",
+      "stage": "LA87",
+      "source": "scope={}\nexec('try: compile(\\'雪=1\\\\nvalue=2\\',\"nested-input.py\",\\'single\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py multiple statements found while compiling a single statement 4 True\n"
+    },
+    {
+      "id": "generated-interactive-field-independence",
+      "stage": "LA87",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('雪=1\\nvalue=2',filename,'single')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'雪=1\\n' True True 77 4\n"
+    },
+    {
+      "id": "generated-interactive-module",
+      "stage": "LA87",
+      "source": "import helper\ne=helper.validate('雪=1\\nvalue=2')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "stdout": "module-input.py multiple statements found while compiling a single statement 4 module input\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'single')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ]
+    },
+    {
+      "id": "generated-interactive-flags-owner-cycle",
+      "stage": "LA87",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('雪=1\\nvalue=2',filename,'single',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True multiple statements found while compiling a single statement 4\n"
+    },
+    {
+      "id": "generated-keyword-expression-order-0",
+      "stage": "LA87",
+      "source": "try: compile('f(a=1,a=2) if g(b=1,b=2) else h(c=1,c=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 1 21 1 24\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "generated-keyword-expression-order-1",
+      "stage": "LA87",
+      "source": "try: compile('f(a=1,a=2).x=g(b=1,b=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 1 20 1 23\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "generated-keyword-expression-order-2",
+      "stage": "LA87",
+      "source": "try: compile('for f(a=1,a=2).x in g(b=1,b=2): pass','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 1 27 1 30\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "generated-keyword-expression-order-3",
+      "stage": "LA87",
+      "source": "try: compile('[*a,*b]=f(c=1,c=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: c 1 15 1 18\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: c True\n"
+    },
+    {
+      "id": "generated-keyword-expression-order-4",
+      "stage": "LA87",
+      "source": "try: compile('for a,*b,*c in f(k=1,k=2): pass','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: k 1 22 1 25\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: k True\n"
+    },
+    {
+      "id": "call-order-missing-comma-boundary",
+      "stage": "FutureCall",
+      "source": "try: compile('f(**雪,\\n *x\\n 雪=1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma? 2 3 3 4\n' *x' False 2\n0 0 'f(**雪,\\n *x\\n 雪=1)\\n'\nTrue True True\ncalls/雪.py True\ninvalid syntax. Perhaps you forgot a comma? True\n",
+      "owner": "#124",
+      "boundary": "A missing comma after iterable unpacking retains the independent parser native-field boundary."
     }
   ]
 }

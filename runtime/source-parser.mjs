@@ -691,9 +691,10 @@ class Parser {
             if (keywords.some(keyword => keyword.name === null) && !positionalError) {
               const start = this.previous;
               this.expression();
-              while (this.eat(",") && this.eat("*")) this.expression();
+              let comma = this.eat(",");
+              while (comma && this.eat("*")) { this.expression(); comma = this.eat(","); }
               const end = this.peek();
-              const syntax = this.at(")") || this.kind("name") ? this.diagnostic(
+              const syntax = this.at(")") || comma && this.kind("name") ? this.diagnostic(
                 "iterable argument unpacking follows keyword argument unpacking",
                 [separator.span[0], separator.span[1], end.span[0], end.span[1]]) : undefined;
               if (syntax && syntax.lineno !== syntax.end_lineno) syntax.text = syntax.text.replace(/\n$/, "");

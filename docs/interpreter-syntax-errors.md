@@ -165,7 +165,7 @@ shared limits and original dynamic frames cover those graphs. The example
 and installed offline console exercise new source, retained-field and cleanup
 Stop/Restart paths, plus the existing reduced-profile boundary.
 
-The resulting fixed generated-syntax corpus contains 627 cases: 603 supported
+At LA-81, the fixed generated-syntax corpus contains 627 cases: 603 supported
 semantic/error comparisons and 24 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
@@ -215,3 +215,17 @@ comment-only inputs expose their zero-offset parser layout. Semicolon-separated
 statements, trailing blank/comment lines and exec/eval retain their ordinary
 behavior. Compound interactive input, later tokenizer failures and unterminated
 whitespace-only indentation retain independent field boundaries.
+
+LA-87 composes repeated-keyword and interactive-input diagnostics through
+modules, nested exec, causes/notes, retained filename cycles and suspended
+flags conversion/cleanup. Native fields survive argument replacement and
+retain their original dynamic frames. Expression-order cases cover conditional
+tests, assignment values and loop iterables before their targets. Parked
+collection, cancellation/close, shared limits and installed offline
+Stop/Restart/reduced-profile acceptance exercise both layouts.
+
+The current fixed generated-syntax corpus contains 881 cases: 845 supported
+semantic/error comparisons and 36 explicit native-field refusals. The ordinary
+exception corpus retains its separate 2,443 cases and seven host/crash/cache
+qualifications. Finite observations do not measure overall Python completion;
+#124, #600/A2, #759 and library/package/candidate/release gates remain open.

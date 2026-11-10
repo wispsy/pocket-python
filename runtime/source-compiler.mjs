@@ -749,6 +749,12 @@ class Compiler {
         });
         children(node.key); children(node.element);
         if (node.form === "generator") children(node.clauses[0].iterable);
+      } else if (node.kind === "Conditional") {
+        children(node.test); children(node.body); children(node.otherwise);
+      } else if (node.kind === "Assign") {
+        children(node.value); children(node.targets);
+      } else if (node.kind === "For") {
+        children(node.iterable); children(node.target); children(node.body); children(node.otherwise);
       } else Object.values(node).forEach(children);
     };
     visit(this.parsed.module);
