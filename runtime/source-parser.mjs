@@ -728,10 +728,30 @@ class Parser {
   }
   starredExpression(named = false, target = false) {
     if (this.eat("*")) {
-      const start = this.previous, value = this.bitwiseOr();
+      const start = this.previous, value = this.starredOperand(() => this.bitwiseOr());
       return this.node("Starred", start, {value});
     }
     return target ? this.bitwiseOr() : named ? this.namedExpression() : this.expression();
+  }
+  starredOperand(body, argument = false) {
+    if (this.expressionBoundary()) {
+      let syntax;
+      const statement = ["pass", "break", "continue"].some(value => this.at(value));
+      if (this.operandFields && this.comprehensionClauseFields && !this.conditionalTest && !statement) {
+        let depth = 0;
+        for (const token of this.tokens.slice(0, this.index - 1)) {
+          this.charge();
+          if (["(", "[", "{"].includes(token.value)) depth++;
+          if ([")", "]", "}"].includes(token.value)) depth--;
+        }
+        const first = ["(", "[", "{"].includes(this.tokens[this.index - 2]?.value);
+        syntax = this.tokenDiagnostic(argument || first ? "Invalid star expression" : "invalid syntax",
+          !depth && this.options.mode === "eval" ? this.previous : this.peek());
+      }
+      this.fail("Expected an iterable unpacking expression.", this.peek(), "SYNTAX", undefined, syntax);
+    }
+    // Malformed operands can select a different star or surrounding-call range.
+    return this.withoutOperandFields(body);
   }
   expressionList(named = false, target = false) {
     const expression = () => this.starredExpression(named, target);
@@ -896,9 +916,9 @@ class Parser {
             this.diagnostic(positionalError, this.previous.span));
         if (keywords.some(keyword => keyword.name === null) && !positionalError) {
           const start = this.previous;
-          parseArgument(() => this.expression());
+          parseArgument(() => this.starredOperand(() => this.expression(), true));
           let comma = this.eat(",");
-          while (comma && this.eat("*")) { parseArgument(() => this.expression()); comma = this.eat(","); }
+          while (comma && this.eat("*")) { parseArgument(() => this.starredOperand(() => this.expression(), true)); comma = this.eat(","); }
           const end = this.peek();
           const syntax = this.at(")") || comma && this.kind("name") ? this.diagnostic(
             "iterable argument unpacking follows keyword argument unpacking",
@@ -910,7 +930,7 @@ class Parser {
           }
           this.fail("Iterable unpacking follows keyword unpacking.", start, "SYNTAX", undefined, syntax);
         }
-        const start = this.previous; args.push(this.node("StarredArgument", start, {value: parseArgument(() => this.expression())}));
+        const start = this.previous; args.push(this.node("StarredArgument", start, {value: parseArgument(() => this.starredOperand(() => this.expression(), true))}));
       } else
       if (this.kind("name") && this.peek(1).value === "=") {
         const token = this.take(), equal = this.expect("=");
