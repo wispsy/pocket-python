@@ -65,7 +65,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     ready()
                     for case in corpus['cases']:
                         if (case.get('modules') or
-                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78'} or
+                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81'} or
                             containers and case['stage'] not in {'LA-7', 'LA-6A'} or
                             exceptions and case['stage'] not in {'LA13', 'LA16', 'LA19', 'LA22', 'LA25', 'LA28', 'LA31', 'LA34', 'LA37', 'LA40', 'LA43', 'LA46', 'LA49', 'LA52', 'LA55', 'LA58', 'LA61', 'LA62C'}):
                             continue
@@ -124,6 +124,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                             assert 'fail at target-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         if case['id'] == 'generated-unpacking-original-dynamic-failure':
                             assert 'fail at unpacking-payload-original.py:2' in page.locator('#diagnostic').inner_text()
+                        if case['id'] == 'generated-signature-original-dynamic-failure':
+                            assert 'fail at signature-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         records.append({'id': case['id'], 'status': 'pass'})
                     if exceptions:
                         for case in corpus.get('reference_boundaries', []):
@@ -201,6 +203,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     busy_sources = [busy]
                     if syntax_errors:
                         busy_sources += [
+                            'try: compile("def f(a=1,b): pass","default.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',
+                            'def work():\n try: compile("lambda *,**a: 1","separator.py","eval")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
                             'try: compile("[a,1]=value","nested-target.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',
                             'def work():\n try: compile("[雪,*b,*c]=value","starred-target.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
                             'try: compile("if True","colon.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',
@@ -355,6 +359,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
         checks = ['fresh-offline-generated-syntax-source', 'original-dynamic-diagnostics', 'runnable-example',
                   'stop-during-retained-payload', 'stop-during-generator-cleanup', 'restart-fresh-source',
                   'stop-during-indentation-owner', 'stop-during-control-cleanup',
+                  'stop-during-nested-target-retention', 'stop-during-starred-target-cleanup',
+                  'stop-during-parameter-default-retention', 'stop-during-parameter-separator-cleanup',
                   'reduced-profile-update', 'old-cache-removed', 'core-dynamic-source-boundary']
     return {'schema_version': 1, 'suite': 'interpreter-syntax-errors-offline/1' if syntax_errors else 'interpreter-exceptions-offline/1' if exceptions else 'interpreter-containers-offline/1' if containers else 'interpreter-object-offline/1',
             'installed_distribution_required': require_installed, 'package_origin': str(package),

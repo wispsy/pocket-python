@@ -12,7 +12,8 @@ def validate(source, filename):
 
 for source in ["雪=", "record=[", "value='unfinished", "if True:\nvalue=7",
                "return 雪", "if record", "del record()", "[record,1]=value",
-               "del [*record]", "[雪,*first,*last]=value"]:
+               "del [*record]", "[雪,*first,*last]=value",
+               "def record(value=1,required): pass", "lambda *,**options: 1"]:
     error = validate(source, "records/input.py")
     original = error.args
     error.args = ()

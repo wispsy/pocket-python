@@ -157,8 +157,16 @@ The diagnostic observations use the pinned
 and [target compiler](https://github.com/python/cpython/blob/v3.14.7/Python/codegen.c)
 as primary references, with separately executed source programs as the oracle.
 
-The resulting fixed generated-syntax corpus contains 428 cases: 406 supported
-semantic/error comparisons and 22 explicit native-field refusals, with no scored
+LA-81 composes signature diagnostics with module factories, nested exec/eval,
+chaining and notes, retained filename cycles and suspended cleanup. Native
+fields remain owned after replacing arguments and releasing the caller's
+filename binding during flags conversion. Collection, cancellation/close,
+shared limits and original dynamic frames cover those graphs. The example
+and installed offline console exercise new source, retained-field and cleanup
+Stop/Restart paths, plus the existing reduced-profile boundary.
+
+The resulting fixed generated-syntax corpus contains 627 cases: 603 supported
+semantic/error comparisons and 24 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
 These finite observations do not measure overall Python compatibility. #600/A2,
