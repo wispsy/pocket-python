@@ -269,8 +269,50 @@ parked collection, cancellation/close and shared allocation limits. The runnable
 example and installed offline console retain original dynamic frames, fresh
 Stop/Restart behavior and the reduced-profile dynamic-compilation boundary.
 
-The current fixed generated-syntax corpus contains 1,133 cases: 1,077 supported
-semantic/error comparisons and 56 explicit native-field refusals. The ordinary
+LA-94 qualifies missing except/finally blocks and unparenthesized multiple
+handler types with an alias. Parser ranges retain physical/implicit EOF,
+comment and Unicode distinctions, including multiline starting-line end-column
+conversion. Parenthesized handler tuples remain valid. Earlier completed
+compound statements keep the independent parser metadata boundary.
+
+LA-95 defers non-final bare handlers until complete parsing and binding. Try
+bodies and else suites compile before handlers; a bare-handler diagnostic
+precedes its own body and later handlers. Native fields use the entire handler's
+UTF-8 byte range, two arguments and absent source text/parser metadata.
+Unterminated interactive compound input keeps its independent field boundary.
+
+LA-96 composes try parser/compiler payloads through modules, nested exec,
+chaining/notes and independent fields/argument snapshots. Cyclic filenames and
+suspended conversion/cleanup retain their owned graphs through parked
+collection, cancellation/close and shared limits. The runnable example and
+installed offline console cover original dynamic frames and Stop/Restart.
+
+LA-97 qualifies unparenthesized from-import trailing commas and reversed
+import/from statements. Relative/dotted modules, aliases, comments, Unicode
+and explicit line continuation retain their parser source ranges. Interactive
+implicit EOF has its own offsets. Valid parenthesized imports keep ordinary
+compilation; malformed tails and earlier compound metadata remain bounded.
+
+LA-98 qualifies invalid import aliases across adopted expression families.
+Target labels and character ranges retain grouping, comprehension closing
+delimiters and multiline/Unicode distinctions. Native fields require a
+successfully parsed source-only alias replacement, charged to the caller's
+compilation budget. Multiple invalid aliases, failed repairs and unadopted
+expressions keep their field boundaries.
+
+LA-99 composes import grammar and alias payloads through modules, nested dynamic
+source, chaining/notes and independent fields/arguments. Parked collection,
+cancellation/close and shared limits cover cyclic filenames and suspended
+conversion/cleanup. The example and installed offline console exercise original
+dynamic frames, retained-field/cleanup Stop/Restart and reduced-profile updates.
+
+LA-99A preserves empty tuple grouping. Empty tuple handlers with aliases compile
+and skip nonmatching exceptions normally; redundant grouping around an empty
+tuple import alias keeps the innermost tuple's native range. This prevents a
+host failure while constructing a handler diagnostic.
+
+The current fixed generated-syntax corpus contains 1,434 cases: 1,342 supported
+semantic/error comparisons and 92 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

@@ -725,13 +725,19 @@ class Compiler {
     }
   }
   firstCompileError() {
-    const keywords = new Map(this.parsed.keywordErrors.map(({node, site}) => [node, site]));
+    const keywords = new Map((this.parsed.keywordErrors ?? []).map(({node, site}) => [node, site]));
+    const handlers = new Set(this.parsed.handlerErrors ?? []);
     const keywordError = site => ({kind: "keyword", token: site, node: site, message: "keyword argument repeated: " + site.name});
     let found = null;
     const visit = node => {
       if (found) return;
       this.charge(node);
       if (node === this.parsed.controlError?.node) { found = this.parsed.controlError; return; }
+      if (handlers.has(node)) {
+        found = {kind: "handler", token: node, node, message: "default 'except:' must be last",
+          qualified: this.options.mode !== "single" || this.parsed.source.endsWith("\n")};
+        return;
+      }
       const site = keywords.get(node);
       if (site && node.kind !== "Class") { found = keywordError(site); return; }
       const children = value => this.children(value, visit);
@@ -758,6 +764,8 @@ class Compiler {
         children(node.value); children(node.targets);
       } else if (node.kind === "For") {
         children(node.iterable); children(node.target); children(node.body); children(node.otherwise);
+      } else if (node.kind === "Try") {
+        children(node.body); children(node.otherwise); children(node.handlers); children(node.final);
       } else Object.values(node).forEach(children);
     };
     visit(this.parsed.module);
@@ -765,14 +773,14 @@ class Compiler {
   }
   compile() {
     this.resolve();
-    const error = this.parsed.keywordErrors ? this.firstCompileError() : this.parsed.controlError;
+    const error = this.parsed.keywordErrors || this.parsed.handlerErrors ? this.firstCompileError() : this.parsed.controlError;
     if (error) {
       const {kind, token, node} = error;
       const message = error.message ?? (kind === "return" ? "'return' outside function" : kind === "break" ? "'break' outside loop" : "'continue' not properly in loop");
       const syntax = error.qualified === false ? undefined :
         {...syntaxDiagnostic(this.parsed.source, this.parsed.filename, message, node.span, {text: false}), offset: node.span[1], end_offset: node.span[3]};
-      throw new SourceError("SYNTAX", kind === "keyword" ? "Duplicate keyword argument." : kind === "target" ? message : kind === "return" ? "Return outside a function." : kind + " outside a loop.",
-        {filename: this.parsed.filename, span: token.span, phase: kind === "keyword" ? "compile" : "parse", syntax});
+      throw new SourceError("SYNTAX", kind === "keyword" ? "Duplicate keyword argument." : ["target", "handler"].includes(kind) ? message : kind === "return" ? "Return outside a function." : kind + " outside a loop.",
+        {filename: this.parsed.filename, span: token.span, phase: ["keyword", "handler"].includes(kind) ? "compile" : "parse", syntax});
     }
     this.scopes.forEach(scope => this.function(scope));
     if (this.classes) this.comprehensionNamespaces();

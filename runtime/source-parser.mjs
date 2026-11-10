@@ -30,6 +30,7 @@ class Parser {
     this.completedCompound = false;
     this.controlError = null;
     this.keywordErrors = [];
+    this.handlerErrors = [];
     this.maxNodes = options.maxNodes ?? PARSER_LIMITS.nodes;
     this.maxDepth = options.maxParseDepth ?? PARSER_LIMITS.depth;
     for (const [value, cap] of [[this.maxNodes, PARSER_LIMITS.nodes], [this.maxDepth, PARSER_LIMITS.depth]])
@@ -183,8 +184,9 @@ class Parser {
       syntax.offset = syntax.end_offset = 0;
       this.fail("invalid syntax", this.peek(), "SYNTAX", undefined, syntax);
     }
-    if (mode === "single" && this.keywordErrors.length && !this.lexed.source.endsWith("\n") &&
-        ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind) && !this.tokens.some(token => token.kind === "indent"))
+    if (mode === "single" && !this.lexed.source.endsWith("\n") &&
+        (this.handlerErrors.length || this.keywordErrors.length &&
+          ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind) && !this.tokens.some(token => token.kind === "indent")))
       this.fail("Interactive compound input requires a terminating newline.");
     if (mode === "single" && this.controlError && !this.lexed.source.endsWith("\n") && ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind)) {
       const last = this.tokens.filter(token => !["newline", "eof", "indent", "dedent"].includes(token.kind)).at(-1);
@@ -196,6 +198,7 @@ class Parser {
     return freezeSourceTree({module, source: this.lexed.source, filename: this.filename, languageProfile: this.languageProfile,
       ...(this.controlError ? {controlError: this.controlError} : {}),
       ...(this.keywordErrors.length ? {keywordErrors: this.keywordErrors} : {}),
+      ...(this.handlerErrors.length ? {handlerErrors: this.handlerErrors} : {}),
       stats: {...this.lexed.stats, work: this.work, nodes: this.nodes}});
   }
   statement() {
@@ -379,13 +382,83 @@ class Parser {
         this.unsupported("Wildcard imports are not adopted.");
       }
       const name = specifier === null ? this.qualified() : this.name().value;
-      const asname = this.eat("as") ? this.name().value : null;
+      const asname = this.eat("as") ? this.importAlias() : null;
       aliases.push({name, asname});
       if (!this.eat(",")) break;
       if (parenthesized && this.at(")")) break;
+      if (specifier !== null && !parenthesized && this.kind("newline")) {
+        const token = this.peek(), source = this.lexed.source, line = source.split("\n")[token.span[0] - 1];
+        const implicit = this.options.mode === "single" && source[token.start] !== "\n";
+        const syntax = this.diagnostic("trailing comma not allowed without surrounding parentheses", token.span, {newline: !implicit});
+        const lineStart = source.lastIndexOf("\n", token.start - 1) + 1;
+        const comment = source.indexOf("#", this.previous.end);
+        syntax.offset = implicit ? Array.from(line).length : comment >= lineStart && comment < token.start ?
+          Array.from(source.slice(lineStart, comment)).length + 1 : syntax.offset;
+        syntax.end_lineno = syntax.lineno;
+        syntax.end_offset = implicit ? -1 : Array.from(line).length + 2;
+        this.fail("A from-import trailing comma requires parentheses.", token, "SYNTAX", undefined, syntax);
+      }
+    }
+    if (specifier === null && aliases.every(alias => alias.asname === null) && this.eat("from")) {
+      this.qualified();
+      let syntax;
+      if (this.kind("newline")) {
+        const token = this.peek(), implicit = this.options.mode === "single" && this.lexed.source[token.start] !== "\n";
+        syntax = this.diagnostic("Did you mean to use 'from ... import ...' instead?",
+          [start.span[0], start.span[1], token.span[0], token.span[1]], {newline: !implicit});
+        syntax.end_offset = Array.from(this.lexed.source.split("\n")[token.span[0] - 1]).length + (implicit ? 0 : 1);
+        if (syntax.lineno !== syntax.end_lineno) {
+          syntax.text = syntax.text.replace(/\n$/, "");
+          const bytes = new TextEncoder().encode(syntax.text + "\0");
+          syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, token.span[1] - (implicit ? 1 : 0)))).length;
+        }
+      }
+      this.fail("Reversed import statement.", start, "SYNTAX", undefined, syntax);
     }
     if (parenthesized) this.expect(")");
     return this.node("Import", start, {specifier, level, aliases});
+  }
+  importAlias() {
+    if (this.kind("name") && (this.peek(1).kind === "newline" || [",", ")", ";"].includes(this.peek(1).value)))
+      return this.name().value;
+    const first = this.peek(); let value;
+    try { value = this.expression(); }
+    catch (error) {
+      if (error instanceof SourceError && error.code === "SYNTAX") this.fail("Invalid import alias.", first);
+      throw error;
+    }
+    const last = this.previous;
+    let label = {Name: "name", Attribute: "attribute", Subscript: "subscript", Call: "function call",
+      Binary: "expression", Unary: "expression", Boolean: "expression", Compare: "comparison",
+      Conditional: "conditional expression", Lambda: "lambda", Dict: "dict literal", Set: "set display",
+      Tuple: "tuple", List: "list"}[value.kind];
+    if (value.kind === "Literal") label = value.literal.type === "none" ? "None" :
+      value.literal.type === "bool" ? value.literal.value ? "True" : "False" : "literal";
+    if (value.kind === "Comprehension") label = value.form === "generator" ? "generator expression" : value.form + " comprehension";
+    let syntax;
+    if (label) {
+      const span = [...value.span];
+      if (value.kind === "Comprehension") {
+        let depth = 0;
+        for (const token of this.tokens) {
+          this.charge();
+          if (token.start < first.start || token.span[0] < value.span[0] || token.span[0] === value.span[0] && token.span[1] < value.span[1]) continue;
+          if (["(", "[", "{"].includes(token.value)) depth++;
+          if ([")", "]", "}"].includes(token.value) && --depth === 0) {
+            span[2] = token.span[2]; span[3] = token.span[3];
+            break;
+          }
+        }
+      }
+      syntax = this.diagnostic("cannot use " + label + " as import target", span);
+      if (syntax.lineno !== syntax.end_lineno) {
+        syntax.text = syntax.text.replace(/\n$/, "");
+        const bytes = new TextEncoder().encode(syntax.text + "\0");
+        syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, span[3]))).length;
+      }
+      syntax.repair = this.lexed.source.slice(0, first.start) + "__import_target" + this.lexed.source.slice(last.end);
+    }
+    this.fail("Invalid import alias.", value, "SYNTAX", undefined, syntax);
   }
   decorated() {
     const decorators = [];
@@ -536,24 +609,47 @@ class Parser {
   }
   attempt() {
     const start = this.expect("try"), body = this.suite(start), handlers = [];
-    let bare = false;
     while (this.eat("except")) {
       const clause = this.previous;
       if (this.at("*")) this.unsupported("Exception groups are not adopted.");
-      if (bare) this.fail("A bare handler must be last.", clause);
-      const parenthesized = this.at("(");
       const type = this.at(":") || this.kind("newline") ? null : this.expressionList();
-      if (type?.kind === "Tuple" && !parenthesized && this.at("as")) this.fail("Multiple handler types require parentheses with an alias.");
       const alias = this.eat("as") ? this.name().value : null;
+      if (type?.kind === "Tuple" && !this.grouped.has(type) && alias !== null) {
+        let syntax;
+        if (this.at(":")) {
+          const first = type.items[0], last = this.previous;
+          syntax = this.diagnostic("multiple exception types must be parenthesized when using 'as'",
+            [first.span[0], first.span[1], last.span[2], last.span[3]]);
+          if (syntax.lineno !== syntax.end_lineno) {
+            syntax.text = syntax.text.replace(/\n$/, "");
+            const bytes = new TextEncoder().encode(syntax.text + "\0");
+            syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, last.span[3]))).length;
+          }
+        }
+        this.fail("Multiple handler types require parentheses with an alias.", type, "SYNTAX", undefined, syntax);
+      }
       if (type === null && alias !== null) this.fail("A bare handler cannot bind an alias.", clause);
-      bare = type === null;
       const handlerBody = this.suite(clause);
       handlers.push(this.node("Handler", clause, {expression: type, alias, body: handlerBody}, handlerBody.at(-1)));
     }
+    const bare = handlers.slice(0, -1).find(handler => handler.expression === null);
+    if (bare) this.handlerErrors.push(bare);
     let otherwise = [], final = [];
-    if (this.eat("else")) { if (!handlers.length) this.fail("Try else requires an exception handler."); otherwise = this.suite(this.previous); }
+    if (!handlers.length && !this.at("finally")) {
+      const token = this.peek(), syntax = this.diagnostic("expected 'except' or 'finally' block", token.span);
+      if (token.kind === "eof") {
+        const lines = syntax.metadata.split("\n"), line = lines.length - (syntax.metadata.endsWith("\n") ? 1 : 0);
+        syntax.lineno = syntax.end_lineno = line;
+        syntax.text = lines[line - 1] + (syntax.metadata.endsWith("\n") ? "\n" : "");
+        syntax.offset = Array.from(syntax.text).length; syntax.end_offset = -1;
+        if (this.options.mode === "single" && !syntax.metadata.endsWith("\n") && /^[ \t\f]*#/.test(syntax.text)) {
+          syntax.msg = "invalid syntax"; syntax.offset = syntax.end_offset = 0;
+        }
+      } else if (token.kind === "dedent") { syntax.offset = 0; syntax.end_offset = -1; }
+      this.fail("Try requires except or finally.", token, "SYNTAX", undefined, syntax);
+    }
+    if (this.eat("else")) otherwise = this.suite(this.previous);
     if (this.eat("finally")) final = this.suite(this.previous);
-    if (!handlers.length && !final.length) this.fail("Try requires except or finally.");
     return this.node("Try", start, {body, handlers, otherwise, final}, final.at(-1) || otherwise.at(-1) || handlers.at(-1) || body.at(-1));
   }
   starredExpression(named = false, target = false) {
@@ -806,13 +902,18 @@ class Parser {
       return this.node("Literal", start, {literal: {type, [field]: points}});
     }
     if (this.eat("(")) {
-      if (this.eat(")")) return this.node("Tuple", start, {items: []});
+      if (this.eat(")")) {
+        const value = this.node("Tuple", start, {items: []});
+        this.grouped.add(value); return value;
+      }
       let value = this.expressionList(true);
       if (this.at("for")) {
         if (value.kind === "Tuple" && !this.grouped.has(value)) this.fail("A comprehension element cannot be an unparenthesized tuple.", value);
         value = this.comprehension(start, "generator", value);
       }
-      this.expect(")"); this.grouped.add(value); return value.kind === "Tuple" ? this.node("Tuple", start, {items: value.items}) : value;
+      this.expect(")");
+      if (value.kind === "Tuple" && !this.grouped.has(value)) value = this.node("Tuple", start, {items: value.items});
+      this.grouped.add(value); return value;
     }
     if (this.eat("[")) {
       const items = [];

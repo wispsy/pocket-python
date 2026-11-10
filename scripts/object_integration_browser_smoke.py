@@ -65,7 +65,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     ready()
                     for case in corpus['cases']:
                         if (case.get('modules') or
-                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93'} or
+                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93', 'LA96', 'LA99', 'LA99A'} or
                             containers and case['stage'] not in {'LA-7', 'LA-6A'} or
                             exceptions and case['stage'] not in {'LA13', 'LA16', 'LA19', 'LA22', 'LA25', 'LA28', 'LA31', 'LA34', 'LA37', 'LA40', 'LA43', 'LA46', 'LA49', 'LA52', 'LA55', 'LA58', 'LA61', 'LA62C'}):
                             continue
@@ -210,6 +210,10 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     busy_sources = [busy]
                     if syntax_errors:
                         busy_sources += [
+                            'try: compile("from 雪 import 鳥,","import-grammar.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',
+                            'def work():\n try: compile("import 雪 as 鳥.羽","import-alias.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
+                            'try: compile("try: pass","try-grammar.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',
+                            'def work():\n try: compile("try: pass\\nexcept: pass\\nexcept E: pass","handler-order.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
                             'try: compile("class C(a=1,B): pass","class-grammar.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',
                             'def work():\n try: compile("class C(a=1,a=2): pass","class-keyword.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
                             'try: compile("f(a=1,2,**d,*x)","mixed.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',

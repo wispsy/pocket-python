@@ -35,7 +35,14 @@
     "LA90",
     "LA91",
     "LA92",
-    "LA93"
+    "LA93",
+    "LA94",
+    "LA95",
+    "LA96",
+    "LA97",
+    "LA98",
+    "LA99",
+    "LA99A"
   ],
   "cases": [
     {
@@ -7067,6 +7074,1860 @@
       "stage": "LA93",
       "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('class 雪(字=1,字=2): pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
       "stdout": "entered\n7 True keyword argument repeated: 字 17\n"
+    },
+    {
+      "id": "trygrammar-0-exec",
+      "stage": "LA94",
+      "source": "try: compile('try: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 1 10 1 -1\n'try: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-0-single",
+      "stage": "LA94",
+      "source": "try: compile('try: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 1 9 1 -1\n'try: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-1-exec",
+      "stage": "LA94",
+      "source": "try: compile('try: pass\\n','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 1 10 1 -1\n'try: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-1-single",
+      "stage": "LA94",
+      "source": "try: compile('try: pass\\n','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 1 10 1 -1\n'try: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-2-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 6 2 -1\n' pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-2-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 5 2 -1\n' pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-3-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\n','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 6 2 -1\n' pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-3-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\n','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 6 2 -1\n' pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-4-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\n# hello','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 8 3 -1\n'# hello\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-4-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\n# hello','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 0 3 0\n'# hello' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-5-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n 雪=1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 5 2 -1\n' 雪=1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-5-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n 雪=1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 4 2 -1\n' 雪=1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-6-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n 雪=1\\n#雪','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 3 3 -1\n'#雪\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-6-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n 雪=1\\n#雪','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 0 3 0\n'#雪' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-7-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nx=1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 2\n'x=1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-7-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nx=1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 2\n'x=1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-8-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nelse: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 5\n'else: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-8-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nelse: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 5\n'else: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-9-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nelif True: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 5\n'elif True: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-9-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nelif True: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 5\n'elif True: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-10-exec",
+      "stage": "LA94",
+      "source": "try: compile('def f():\\n try:\\n  pass\\nx=1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 4 0 4 -1\n'x=1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-10-single",
+      "stage": "LA94",
+      "source": "try: compile('def f():\\n try:\\n  pass\\nx=1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 4 0 4 -1\n'x=1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-11-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A,B as e: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 16\n'except A,B as e: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-11-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A,B as e: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 16\n'except A,B as e: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-12-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (A), B as e: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 9 3 19\n'except (A), B as e: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-12-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (A), B as e: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 9 3 19\n'except (A), B as e: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-13-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B, C as caught: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 25\n'except A, B, C as caught: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-13-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B, C as caught: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 25\n'except A, B, C as caught: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-14-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept 雪, 鳥 as caught: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 22\n'except 雪, 鳥 as caught: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-14-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept 雪, 鳥 as caught: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 22\n'except 雪, 鳥 as caught: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-15-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B as e:\\n x=','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 17\n'except A, B as e:\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-15-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B as e:\\n x=','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 17\n'except A, B as e:\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-16-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (\\n A\\n), B as e: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 4 2 5 3\n' A' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-16-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (\\n A\\n), B as e: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 4 2 5 3\n' A' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-17-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (\\n 雪\\n), B as e: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 4 2 5 3\n' 雪' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-17-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (\\n 雪\\n), B as e: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 4 2 5 3\n' 雪' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-18-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B as e:\\n pass\\n','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 17\n'except A, B as e:\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-18-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B as e:\\n pass\\n','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 17\n'except A, B as e:\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-19-exec",
+      "stage": "LA94",
+      "source": "try: compile('def f(a,a): pass\\ntry:\\n pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 6 3 -1\n' pass\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "trygrammar-19-single",
+      "stage": "Future",
+      "source": "try: compile('def f(a,a): pass\\ntry:\\n pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 1 2 4\n'try:\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "trygrammar-prior-compound-0",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n if True: pass\\nx=1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 2\n'x=1\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "trygrammar-metadata-boundary-0",
+      "stage": "Future",
+      "source": "try: compile('try:\\n if True: pass\\nx=1',\"boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(2, 1, 'try:\\n if True: pass\\nx=1\\n')\n"
+    },
+    {
+      "id": "trygrammar-prior-compound-1",
+      "stage": "LA94",
+      "source": "try: compile('if True: pass\\ntry: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 10 2 -1\n'try: pass\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "trygrammar-metadata-boundary-1",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\ntry: pass',\"boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(1, 0, 'if True: pass\\ntry: pass\\n')\n"
+    },
+    {
+      "id": "trygrammar-prior-compound-2",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n if True: pass\\nexcept A,B as e: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 16\n'except A,B as e: pass\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "trygrammar-metadata-boundary-2",
+      "stage": "Future",
+      "source": "try: compile('try:\\n if True: pass\\nexcept A,B as e: pass',\"boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(2, 1, 'try:\\n if True: pass\\nexcept A,B as e: pass\\n')\n"
+    },
+    {
+      "id": "trygrammar-valid-0",
+      "stage": "LA94",
+      "source": "compile('try: pass\\nfinally: pass',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "trygrammar-valid-1",
+      "stage": "LA94",
+      "source": "compile('try: pass\\nexcept A,B: pass',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "trygrammar-valid-2",
+      "stage": "LA94",
+      "source": "compile('try: pass\\nexcept (A,B) as e: pass',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "trygrammar-valid-3",
+      "stage": "LA94",
+      "source": "compile('try: pass\\nexcept (A): pass',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "handlerorder-0-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-0-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 4 0 4 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-1-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\n',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-1-single",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\n',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-2-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n 雪=1\\nexcept:\\n 鳥=2\\nexcept E:\\n pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 4 7\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-2-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n 雪=1\\nexcept:\\n 鳥=2\\nexcept E:\\n pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 4 7\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-3-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept E: pass\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 4 1 4 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-3-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept E: pass\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'except F: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-4-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept:\\n pass\\nexcept:\\n pass\\nexcept E:\\n pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 4 6\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-4-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept:\\n pass\\nexcept:\\n pass\\nexcept E:\\n pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 4 6\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-5-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n return 1\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "'return' outside function\nhandler/雪.py 2 2 2 10\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-5-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n return 1\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 4 0 4 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-6-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n f(a=1,a=2)\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "keyword argument repeated: a\nhandler/雪.py 2 8 2 11\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-6-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n f(a=1,a=2)\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 4 0 4 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-7-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: return 1\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 17\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-7-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: return 1\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 4 0 4 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-8-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept:\\n f(a=1,a=2)\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 4 12\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-8-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept:\\n f(a=1,a=2)\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-9-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept f(a=1,a=2): pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-9-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept f(a=1,a=2): pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 4 0 4 0\n'except f(a=1,a=2): pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-10-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nelse: f(a=1,a=2)',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "keyword argument repeated: a\nhandler/雪.py 5 13 5 16\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-10-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nelse: f(a=1,a=2)',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'else: f(a=1,a=2)' 2 False\n"
+    },
+    {
+      "id": "handlerorder-11-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nfinally: f(a=1,a=2)',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 3 1 3 13\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-11-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nfinally: f(a=1,a=2)',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'finally: f(a=1,a=2)' 2 False\n"
+    },
+    {
+      "id": "handlerorder-12-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept E: f(a=1,a=2)\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "keyword argument repeated: a\nhandler/雪.py 3 17 3 20\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-12-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept E: f(a=1,a=2)\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'except F: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-13-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept E: return 1\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "'return' outside function\nhandler/雪.py 3 11 3 19\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-13-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept E: return 1\\nexcept: pass\\nexcept F: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 0 5 0\n'except F: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-14-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nnonlocal x',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "nonlocal declaration not allowed at module level\nhandler/雪.py 5 1 5 11\nNone 1 True\n"
+    },
+    {
+      "id": "handlerorder-14-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nnonlocal x',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 5 1 5 9\n'nonlocal x' 2 False\n"
+    },
+    {
+      "id": "handlerorder-15-exec",
+      "stage": "LA95",
+      "source": "try: compile('def f(a,a):\\n try:\\n  pass\\n except: pass\\n except E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "duplicate argument 'a' in function definition\nhandler/雪.py 1 9 1 10\nNone 1 True\n"
+    },
+    {
+      "id": "handlerorder-15-single",
+      "stage": "Future",
+      "source": "try: compile('def f(a,a):\\n try:\\n  pass\\n except: pass\\n except E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "duplicate argument 'a' in function definition\nhandler/雪.py 1 9 1 10\nNone 1 True\n"
+    },
+    {
+      "id": "handlerorder-16-exec",
+      "stage": "LA95",
+      "source": "try: compile('class 雪:\\n try:\\n  pass\\n except: pass\\n except E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 4 2 4 14\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-16-single",
+      "stage": "Future",
+      "source": "try: compile('class 雪:\\n try:\\n  pass\\n except: pass\\n except E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 4 2 4 14\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-17-exec",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n try:\\n  pass\\n except: pass\\n except E: pass\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "default 'except:' must be last\nhandler/雪.py 4 2 4 14\nNone 2 True\n"
+    },
+    {
+      "id": "handlerorder-17-single",
+      "stage": "Future",
+      "source": "try: compile('try:\\n try:\\n  pass\\n except: pass\\n except E: pass\\nexcept: pass\\nexcept E: pass',\"handler/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),e._metadata is None)\n",
+      "stdout": "invalid syntax\nhandler/雪.py 7 0 7 0\n'except E: pass' 2 False\n"
+    },
+    {
+      "id": "handlerorder-grammar-priority-0",
+      "stage": "LA95",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nx=','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "invalid syntax\nselected/雪.py 5 3 5 4\n'x=\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "handlerorder-grammar-priority-1",
+      "stage": "Future",
+      "source": "try: compile('try:\\n pass\\nexcept: pass\\nexcept E: pass\\nexcept E pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "invalid syntax\nselected/雪.py 5 10 5 14\n'except E pass\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "generated-trygrammar-owner-cycle",
+      "stage": "LA96",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('try:\\n 雪=1\\nexcept 雪, 鳥 as caught: pass',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue multiple exception types must be parenthesized when using 'as' 8 False False\n"
+    },
+    {
+      "id": "generated-trygrammar-chaining",
+      "stage": "LA96",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('try:\\n 雪=1\\nexcept 雪, 鳥 as caught: pass',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 8\n"
+    },
+    {
+      "id": "generated-trygrammar-cleanup",
+      "stage": "LA96",
+      "source": "def work():\n try: compile('try:\\n 雪=1\\nexcept 雪, 鳥 as caught: pass',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py multiple exception types must be parenthesized when using 'as' False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-trygrammar-original-dynamic-failure",
+      "stage": "LA96",
+      "source": "exec(compile('def fail():\\n try: compile(\\'try:\\\\n 雪=1\\\\nexcept 雪, 鳥 as caught: pass\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','trygrammar-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-trygrammar-nested-exec",
+      "stage": "LA96",
+      "source": "scope={}\nexec('try: compile(\\'try:\\\\n 雪=1\\\\nexcept 雪, 鳥 as caught: pass\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py multiple exception types must be parenthesized when using 'as' 8 False\n"
+    },
+    {
+      "id": "generated-trygrammar-field-independence",
+      "stage": "LA96",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('try:\\n 雪=1\\nexcept 雪, 鳥 as caught: pass',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'except 雪, 鳥 as caught: pass\\n' True True 77 8\n"
+    },
+    {
+      "id": "generated-trygrammar-module",
+      "stage": "LA96",
+      "source": "import helper\ne=helper.validate('try:\\n 雪=1\\nexcept 雪, 鳥 as caught: pass')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py multiple exception types must be parenthesized when using 'as' 8 module input\n"
+    },
+    {
+      "id": "generated-trygrammar-flags-owner-cycle",
+      "stage": "LA96",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('try:\\n 雪=1\\nexcept 雪, 鳥 as caught: pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True multiple exception types must be parenthesized when using 'as' 8\n"
+    },
+    {
+      "id": "generated-handlerorder-owner-cycle",
+      "stage": "LA96",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('try:\\n 雪=1\\nexcept: pass\\nexcept E: pass',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue default 'except:' must be last 1 True True\n"
+    },
+    {
+      "id": "generated-handlerorder-chaining",
+      "stage": "LA96",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('try:\\n 雪=1\\nexcept: pass\\nexcept E: pass',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py True True 2\nTrue supplied input 1\n"
+    },
+    {
+      "id": "generated-handlerorder-cleanup",
+      "stage": "LA96",
+      "source": "def work():\n try: compile('try:\\n 雪=1\\nexcept: pass\\nexcept E: pass',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py default 'except:' must be last True 0\ncleanup-input.py True\n"
+    },
+    {
+      "id": "generated-handlerorder-original-dynamic-failure",
+      "stage": "LA96",
+      "source": "exec(compile('def fail():\\n try: compile(\\'try:\\\\n 雪=1\\\\nexcept: pass\\\\nexcept E: pass\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','handlerorder-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py True 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-handlerorder-nested-exec",
+      "stage": "LA96",
+      "source": "scope={}\nexec('try: compile(\\'try:\\\\n 雪=1\\\\nexcept: pass\\\\nexcept E: pass\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py default 'except:' must be last 1 True\n"
+    },
+    {
+      "id": "generated-handlerorder-field-independence",
+      "stage": "LA96",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('try:\\n 雪=1\\nexcept: pass\\nexcept E: pass',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\nNone True True 77 1\n"
+    },
+    {
+      "id": "generated-handlerorder-module",
+      "stage": "LA96",
+      "source": "import helper\ne=helper.validate('try:\\n 雪=1\\nexcept: pass\\nexcept E: pass')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py default 'except:' must be last 1 module input\n"
+    },
+    {
+      "id": "generated-handlerorder-flags-owner-cycle",
+      "stage": "LA96",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('try:\\n 雪=1\\nexcept: pass\\nexcept E: pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True default 'except:' must be last 1\n"
+    },
+    {
+      "id": "importgrammar-0-exec",
+      "stage": "LA97",
+      "source": "try: compile('from x import a,','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 17 1 18\n'from x import a,\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-0-single",
+      "stage": "LA97",
+      "source": "try: compile('from x import a,','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 16 1 -1\n'from x import a,' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-1-exec",
+      "stage": "LA97",
+      "source": "try: compile('from x import a,\\n','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 17 1 18\n'from x import a,\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-1-single",
+      "stage": "LA97",
+      "source": "try: compile('from x import a,\\n','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 17 1 18\n'from x import a,\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-2-exec",
+      "stage": "LA97",
+      "source": "try: compile('from 雪 import 鳥, # hi','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 18 1 23\n'from 雪 import 鳥, # hi\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-2-single",
+      "stage": "LA97",
+      "source": "try: compile('from 雪 import 鳥, # hi','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 21 1 -1\n'from 雪 import 鳥, # hi' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-3-exec",
+      "stage": "LA97",
+      "source": "try: compile('from .x import a,','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 18 1 19\n'from .x import a,\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-3-single",
+      "stage": "LA97",
+      "source": "try: compile('from .x import a,','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 17 1 -1\n'from .x import a,' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-4-exec",
+      "stage": "LA97",
+      "source": "try: compile('from ... import a,','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 19 1 20\n'from ... import a,\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-4-single",
+      "stage": "LA97",
+      "source": "try: compile('from ... import a,','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 18 1 -1\n'from ... import a,' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-5-exec",
+      "stage": "LA97",
+      "source": "try: compile('from x.y import a,b,','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 21 1 22\n'from x.y import a,b,\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-5-single",
+      "stage": "LA97",
+      "source": "try: compile('from x.y import a,b,','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 20 1 -1\n'from x.y import a,b,' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-6-exec",
+      "stage": "LA97",
+      "source": "try: compile('from x import a,\\nvalue=','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 17 1 18\n'from x import a,\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-6-single",
+      "stage": "LA97",
+      "source": "try: compile('from x import a,\\nvalue=','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 17 1 18\n'from x import a,\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-7-exec",
+      "stage": "LA97",
+      "source": "try: compile('from x import a as b,','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 22 1 23\n'from x import a as b,\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-7-single",
+      "stage": "LA97",
+      "source": "try: compile('from x import a as b,','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 1 21 1 -1\n'from x import a as b,' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-8-exec",
+      "stage": "LA97",
+      "source": "try: compile('from x import a, \\\\\\n# hi','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 2 1 2 6\n'# hi\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-8-single",
+      "stage": "LA97",
+      "source": "try: compile('from x import a, \\\\\\n# hi','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 2 4 2 -1\n'# hi' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-9-exec",
+      "stage": "LA97",
+      "source": "try: compile('import a from b','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 16\n'import a from b\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-9-single",
+      "stage": "LA97",
+      "source": "try: compile('import a from b','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 15\n'import a from b' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-10-exec",
+      "stage": "LA97",
+      "source": "try: compile('import a,b from c.d','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 20\n'import a,b from c.d\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-10-single",
+      "stage": "LA97",
+      "source": "try: compile('import a,b from c.d','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 19\n'import a,b from c.d' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-11-exec",
+      "stage": "LA97",
+      "source": "try: compile('import 雪 from 鳥','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 16\n'import 雪 from 鳥\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-11-single",
+      "stage": "LA97",
+      "source": "try: compile('import 雪 from 鳥','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 15\n'import 雪 from 鳥' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-12-exec",
+      "stage": "LA97",
+      "source": "try: compile('import a from b #hello','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 23\n'import a from b #hello\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-12-single",
+      "stage": "LA97",
+      "source": "try: compile('import a from b #hello','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 22\n'import a from b #hello' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-13-exec",
+      "stage": "LA97",
+      "source": "try: compile('import a from b\\nvalue=','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 16\n'import a from b\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-13-single",
+      "stage": "LA97",
+      "source": "try: compile('import a from b\\nvalue=','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 16\n'import a from b\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-14-exec",
+      "stage": "LA97",
+      "source": "try: compile('import a \\\\\\nfrom b','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 2 7\n'import a \\\\' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-14-single",
+      "stage": "LA97",
+      "source": "try: compile('import a \\\\\\nfrom b','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 2 6\n'import a \\\\' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-15-exec",
+      "stage": "LA97",
+      "source": "try: compile('import 雪 \\\\\\nfrom 鳥','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 2 8\n'import 雪 \\\\' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-15-single",
+      "stage": "LA97",
+      "source": "try: compile('import 雪 \\\\\\nfrom 鳥','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 2 8\n'import 雪 \\\\' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-tail-boundary-0",
+      "stage": "Future",
+      "source": "try: compile('from x import a,;','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 17 1 18\n'from x import a,;\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-tail-boundary-1",
+      "stage": "Future",
+      "source": "try: compile('import a from b junk','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 20\n'import a from b junk\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-tail-boundary-2",
+      "stage": "Future",
+      "source": "try: compile('import a from b+bad','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 1 1 1 16\n'import a from b+bad\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-tail-boundary-3",
+      "stage": "Future",
+      "source": "try: compile('from x import a,,','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 17 1 18\n'from x import a,,\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-tail-boundary-4",
+      "stage": "Future",
+      "source": "try: compile('import a from','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'import a from\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importgrammar-priority-0",
+      "stage": "LA97",
+      "source": "try: compile('if True: pass\\nfrom x import a,','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "trailing comma not allowed without surrounding parentheses\nselected/雪.py 2 17 2 18\n'from x import a,\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "importgrammar-metadata-boundary-0",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\nfrom x import a,',\"boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(1, 0, 'if True: pass\\nfrom x import a,\\n')\n"
+    },
+    {
+      "id": "importgrammar-priority-1",
+      "stage": "LA97",
+      "source": "try: compile('def f(a,a): pass\\nimport x from y','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "Did you mean to use 'from ... import ...' instead?\nselected/雪.py 2 1 2 16\n'import x from y\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "importgrammar-metadata-boundary-1",
+      "stage": "Future",
+      "source": "try: compile('def f(a,a): pass\\nimport x from y',\"boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(0, 0, 'def f(a,a): pass\\nimport x from y\\n')\n"
+    },
+    {
+      "id": "importgrammar-valid-0",
+      "stage": "LA97",
+      "source": "compile('from x import (a,)',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "importgrammar-valid-1",
+      "stage": "LA97",
+      "source": "compile('from x import (\\n a, b,\\n)',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "importgrammar-valid-2",
+      "stage": "LA97",
+      "source": "compile('from ...x import (a as b,)',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "importgrammar-valid-3",
+      "stage": "LA97",
+      "source": "compile('import a.b as c, x.y',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "importalias-plain-0-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as 1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use literal as import target\nselected/雪.py 1 13 1 14\n'import a as 1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-0-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as 1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use literal as import target\nselected/雪.py 1 13 1 14\n'import a as 1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-1-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as None','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use None as import target\nselected/雪.py 1 13 1 17\n'import a as None\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-1-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as None','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use None as import target\nselected/雪.py 1 13 1 17\n'import a as None' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-2-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as True','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use True as import target\nselected/雪.py 1 13 1 17\n'import a as True\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-2-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as True','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use True as import target\nselected/雪.py 1 13 1 17\n'import a as True' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-3-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as False','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use False as import target\nselected/雪.py 1 13 1 18\n'import a as False\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-3-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as False','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use False as import target\nselected/雪.py 1 13 1 18\n'import a as False' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-4-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as b.c','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 13 1 16\n'import a as b.c\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-4-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as b.c','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 13 1 16\n'import a as b.c' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-5-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as b[0]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use subscript as import target\nselected/雪.py 1 13 1 17\n'import a as b[0]\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-5-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as b[0]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use subscript as import target\nselected/雪.py 1 13 1 17\n'import a as b[0]' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-6-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as b()','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use function call as import target\nselected/雪.py 1 13 1 16\n'import a as b()\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-6-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as b()','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use function call as import target\nselected/雪.py 1 13 1 16\n'import a as b()' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-7-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as b+1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use expression as import target\nselected/雪.py 1 13 1 16\n'import a as b+1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-7-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as b+1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use expression as import target\nselected/雪.py 1 13 1 16\n'import a as b+1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-8-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as b and c','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use expression as import target\nselected/雪.py 1 13 1 20\n'import a as b and c\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-8-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as b and c','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use expression as import target\nselected/雪.py 1 13 1 20\n'import a as b and c' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-9-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as b<c','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use comparison as import target\nselected/雪.py 1 13 1 16\n'import a as b<c\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-9-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as b<c','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use comparison as import target\nselected/雪.py 1 13 1 16\n'import a as b<c' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-10-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as b if c else d','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use conditional expression as import target\nselected/雪.py 1 13 1 26\n'import a as b if c else d\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-10-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as b if c else d','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use conditional expression as import target\nselected/雪.py 1 13 1 26\n'import a as b if c else d' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-11-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as lambda:1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use lambda as import target\nselected/雪.py 1 13 1 21\n'import a as lambda:1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-11-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as lambda:1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use lambda as import target\nselected/雪.py 1 13 1 21\n'import a as lambda:1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-12-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as [b]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use list as import target\nselected/雪.py 1 13 1 16\n'import a as [b]\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-12-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as [b]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use list as import target\nselected/雪.py 1 13 1 16\n'import a as [b]' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-13-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as (a,b)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 13 1 18\n'import a as (a,b)\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-13-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as (a,b)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 13 1 18\n'import a as (a,b)' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-14-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as {b}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use set display as import target\nselected/雪.py 1 13 1 16\n'import a as {b}\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-14-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as {b}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use set display as import target\nselected/雪.py 1 13 1 16\n'import a as {b}' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-15-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as {a:b}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use dict literal as import target\nselected/雪.py 1 13 1 18\n'import a as {a:b}\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-15-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as {a:b}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use dict literal as import target\nselected/雪.py 1 13 1 18\n'import a as {a:b}' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-16-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as [b for b in c]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use list comprehension as import target\nselected/雪.py 1 13 1 27\n'import a as [b for b in c]\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-16-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as [b for b in c]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use list comprehension as import target\nselected/雪.py 1 13 1 27\n'import a as [b for b in c]' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-17-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as {b for b in c}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use set comprehension as import target\nselected/雪.py 1 13 1 27\n'import a as {b for b in c}\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-17-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as {b for b in c}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use set comprehension as import target\nselected/雪.py 1 13 1 27\n'import a as {b for b in c}' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-18-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as {b:b for b in c}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use dict comprehension as import target\nselected/雪.py 1 13 1 29\n'import a as {b:b for b in c}\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-18-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as {b:b for b in c}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use dict comprehension as import target\nselected/雪.py 1 13 1 29\n'import a as {b:b for b in c}' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-19-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as (b for b in c)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use generator expression as import target\nselected/雪.py 1 13 1 27\n'import a as (b for b in c)\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-19-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as (b for b in c)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use generator expression as import target\nselected/雪.py 1 13 1 27\n'import a as (b for b in c)' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-20-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as (b)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use name as import target\nselected/雪.py 1 14 1 15\n'import a as (b)\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-20-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as (b)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use name as import target\nselected/雪.py 1 14 1 15\n'import a as (b)' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-21-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as (b.c)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 14 1 17\n'import a as (b.c)\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-21-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as (b.c)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 14 1 17\n'import a as (b.c)' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-22-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as ((a,b))','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 14 1 19\n'import a as ((a,b))\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-22-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as ((a,b))','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 14 1 19\n'import a as ((a,b))' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-23-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as (b\\n.c)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 14 2 3\n'import a as (b' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-23-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as (b\\n.c)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 14 2 3\n'import a as (b' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-24-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as (\\n 雪\\n .鳥\\n)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 2 2 3 3\n' 雪' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-24-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as (\\n 雪\\n .鳥\\n)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 2 2 3 3\n' 雪' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-25-exec",
+      "stage": "LA98",
+      "source": "try: compile('import a as 雪.鳥','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 13 1 16\n'import a as 雪.鳥\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-plain-25-single",
+      "stage": "LA98",
+      "source": "try: compile('import a as 雪.鳥','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 13 1 16\n'import a as 雪.鳥' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-0-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as 1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use literal as import target\nselected/雪.py 1 20 1 21\n'from m import a as 1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-0-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as 1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use literal as import target\nselected/雪.py 1 20 1 21\n'from m import a as 1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-1-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as None','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use None as import target\nselected/雪.py 1 20 1 24\n'from m import a as None\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-1-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as None','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use None as import target\nselected/雪.py 1 20 1 24\n'from m import a as None' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-2-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as True','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use True as import target\nselected/雪.py 1 20 1 24\n'from m import a as True\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-2-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as True','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use True as import target\nselected/雪.py 1 20 1 24\n'from m import a as True' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-3-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as False','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use False as import target\nselected/雪.py 1 20 1 25\n'from m import a as False\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-3-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as False','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use False as import target\nselected/雪.py 1 20 1 25\n'from m import a as False' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-4-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b.c','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 20 1 23\n'from m import a as b.c\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-4-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b.c','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 20 1 23\n'from m import a as b.c' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-5-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b[0]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use subscript as import target\nselected/雪.py 1 20 1 24\n'from m import a as b[0]\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-5-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b[0]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use subscript as import target\nselected/雪.py 1 20 1 24\n'from m import a as b[0]' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-6-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b()','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use function call as import target\nselected/雪.py 1 20 1 23\n'from m import a as b()\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-6-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b()','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use function call as import target\nselected/雪.py 1 20 1 23\n'from m import a as b()' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-7-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b+1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use expression as import target\nselected/雪.py 1 20 1 23\n'from m import a as b+1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-7-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b+1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use expression as import target\nselected/雪.py 1 20 1 23\n'from m import a as b+1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-8-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b and c','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use expression as import target\nselected/雪.py 1 20 1 27\n'from m import a as b and c\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-8-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b and c','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use expression as import target\nselected/雪.py 1 20 1 27\n'from m import a as b and c' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-9-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b<c','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use comparison as import target\nselected/雪.py 1 20 1 23\n'from m import a as b<c\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-9-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b<c','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use comparison as import target\nselected/雪.py 1 20 1 23\n'from m import a as b<c' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-10-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b if c else d','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use conditional expression as import target\nselected/雪.py 1 20 1 33\n'from m import a as b if c else d\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-10-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as b if c else d','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use conditional expression as import target\nselected/雪.py 1 20 1 33\n'from m import a as b if c else d' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-11-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as lambda:1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use lambda as import target\nselected/雪.py 1 20 1 28\n'from m import a as lambda:1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-11-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as lambda:1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use lambda as import target\nselected/雪.py 1 20 1 28\n'from m import a as lambda:1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-12-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as [b]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use list as import target\nselected/雪.py 1 20 1 23\n'from m import a as [b]\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-12-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as [b]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use list as import target\nselected/雪.py 1 20 1 23\n'from m import a as [b]' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-13-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (a,b)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 20 1 25\n'from m import a as (a,b)\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-13-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (a,b)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 20 1 25\n'from m import a as (a,b)' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-14-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as {b}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use set display as import target\nselected/雪.py 1 20 1 23\n'from m import a as {b}\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-14-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as {b}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use set display as import target\nselected/雪.py 1 20 1 23\n'from m import a as {b}' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-15-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as {a:b}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use dict literal as import target\nselected/雪.py 1 20 1 25\n'from m import a as {a:b}\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-15-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as {a:b}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use dict literal as import target\nselected/雪.py 1 20 1 25\n'from m import a as {a:b}' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-16-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as [b for b in c]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use list comprehension as import target\nselected/雪.py 1 20 1 34\n'from m import a as [b for b in c]\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-16-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as [b for b in c]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use list comprehension as import target\nselected/雪.py 1 20 1 34\n'from m import a as [b for b in c]' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-17-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as {b for b in c}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use set comprehension as import target\nselected/雪.py 1 20 1 34\n'from m import a as {b for b in c}\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-17-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as {b for b in c}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use set comprehension as import target\nselected/雪.py 1 20 1 34\n'from m import a as {b for b in c}' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-18-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as {b:b for b in c}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use dict comprehension as import target\nselected/雪.py 1 20 1 36\n'from m import a as {b:b for b in c}\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-18-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as {b:b for b in c}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use dict comprehension as import target\nselected/雪.py 1 20 1 36\n'from m import a as {b:b for b in c}' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-19-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (b for b in c)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use generator expression as import target\nselected/雪.py 1 20 1 34\n'from m import a as (b for b in c)\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-19-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (b for b in c)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use generator expression as import target\nselected/雪.py 1 20 1 34\n'from m import a as (b for b in c)' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-20-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (b)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use name as import target\nselected/雪.py 1 21 1 22\n'from m import a as (b)\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-20-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (b)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use name as import target\nselected/雪.py 1 21 1 22\n'from m import a as (b)' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-21-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (b.c)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 21 1 24\n'from m import a as (b.c)\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-21-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (b.c)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 21 1 24\n'from m import a as (b.c)' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-22-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as ((a,b))','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 21 1 26\n'from m import a as ((a,b))\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-22-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as ((a,b))','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 21 1 26\n'from m import a as ((a,b))' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-23-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (b\\n.c)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 21 2 3\n'from m import a as (b' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-23-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (b\\n.c)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 21 2 3\n'from m import a as (b' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-24-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (\\n 雪\\n .鳥\\n)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 2 2 3 3\n' 雪' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-24-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as (\\n 雪\\n .鳥\\n)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 2 2 3 3\n' 雪' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-25-exec",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as 雪.鳥','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 20 1 23\n'from m import a as 雪.鳥\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-from-25-single",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as 雪.鳥','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 20 1 23\n'from m import a as 雪.鳥' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-repair-boundary-0",
+      "stage": "Future",
+      "source": "try: compile('import a as b.c\\nx=','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 13 1 16\n'import a as b.c\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-repair-boundary-1",
+      "stage": "Future",
+      "source": "try: compile('import a as b.c, c as d.e','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 13 1 16\n'import a as b.c, c as d.e\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-repair-boundary-2",
+      "stage": "Future",
+      "source": "try: compile('import a as b+','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use name as import target\nselected/雪.py 1 13 1 14\n'import a as b+\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-repair-boundary-3",
+      "stage": "Future",
+      "source": "try: compile('from m import a as b.c,','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 20 1 23\n'from m import a as b.c,\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-repair-boundary-4",
+      "stage": "Future",
+      "source": "try: compile('import a as x from y','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use name as import target\nselected/雪.py 1 13 1 14\n'import a as x from y\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-repair-boundary-5",
+      "stage": "Future",
+      "source": "try: compile('from m import a as b.c; @','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 20 1 23\n'from m import a as b.c; @\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-repair-boundary-6",
+      "stage": "Future",
+      "source": "try: compile('import a as ...','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use ellipsis as import target\nselected/雪.py 1 13 1 16\n'import a as ...\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-priority-0",
+      "stage": "LA98",
+      "source": "try: compile('if True: pass\\nimport a as b.c','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 2 13 2 16\n'import a as b.c\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "importalias-priority-1",
+      "stage": "LA98",
+      "source": "try: compile('def f(a,a): pass\\nfrom m import a as b.c','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 2 20 2 23\n'from m import a as b.c\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "importalias-context-0",
+      "stage": "LA98",
+      "source": "try: compile('import a as b.c, c as d','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 13 1 16\n'import a as b.c, c as d\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-context-1",
+      "stage": "LA98",
+      "source": "try: compile('from m import a as [b], c as d','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use list as import target\nselected/雪.py 1 20 1 23\n'from m import a as [b], c as d\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-context-2",
+      "stage": "LA98",
+      "source": "try: compile('from m import (a as b.c,)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 1 21 1 24\n'from m import (a as b.c,)\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "importalias-context-3",
+      "stage": "LA98",
+      "source": "try: compile('from m import (\\n a as (b\\n .c),\\n)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use attribute as import target\nselected/雪.py 2 8 3 4\n' a as (b' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "generated-importgrammar-owner-cycle",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('from 雪 import 鳥,',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue trailing comma not allowed without surrounding parentheses 17 False False\n"
+    },
+    {
+      "id": "generated-importgrammar-chaining",
+      "stage": "LA99",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('from 雪 import 鳥,',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 17\n"
+    },
+    {
+      "id": "generated-importgrammar-cleanup",
+      "stage": "LA99",
+      "source": "def work():\n try: compile('from 雪 import 鳥,',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py trailing comma not allowed without surrounding parentheses False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-importgrammar-original-dynamic-failure",
+      "stage": "LA99",
+      "source": "exec(compile('def fail():\\n try: compile(\\'from 雪 import 鳥,\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','importgrammar-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-importgrammar-nested-exec",
+      "stage": "LA99",
+      "source": "scope={}\nexec('try: compile(\\'from 雪 import 鳥,\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py trailing comma not allowed without surrounding parentheses 17 False\n"
+    },
+    {
+      "id": "generated-importgrammar-field-independence",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('from 雪 import 鳥,',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'from 雪 import 鳥,\\n' True True 77 17\n"
+    },
+    {
+      "id": "generated-importgrammar-module",
+      "stage": "LA99",
+      "source": "import helper\ne=helper.validate('from 雪 import 鳥,')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py trailing comma not allowed without surrounding parentheses 17 module input\n"
+    },
+    {
+      "id": "generated-importgrammar-flags-owner-cycle",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('from 雪 import 鳥,',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True trailing comma not allowed without surrounding parentheses 17\n"
+    },
+    {
+      "id": "generated-importalias-owner-cycle",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('import 雪 as 鳥.羽',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue cannot use attribute as import target 13 False False\n"
+    },
+    {
+      "id": "generated-importalias-chaining",
+      "stage": "LA99",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('import 雪 as 鳥.羽',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 13\n"
+    },
+    {
+      "id": "generated-importalias-cleanup",
+      "stage": "LA99",
+      "source": "def work():\n try: compile('import 雪 as 鳥.羽',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py cannot use attribute as import target False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-importalias-original-dynamic-failure",
+      "stage": "LA99",
+      "source": "exec(compile('def fail():\\n try: compile(\\'import 雪 as 鳥.羽\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','importalias-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-importalias-nested-exec",
+      "stage": "LA99",
+      "source": "scope={}\nexec('try: compile(\\'import 雪 as 鳥.羽\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py cannot use attribute as import target 13 False\n"
+    },
+    {
+      "id": "generated-importalias-field-independence",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('import 雪 as 鳥.羽',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'import 雪 as 鳥.羽\\n' True True 77 13\n"
+    },
+    {
+      "id": "generated-importalias-module",
+      "stage": "LA99",
+      "source": "import helper\ne=helper.validate('import 雪 as 鳥.羽')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py cannot use attribute as import target 13 module input\n"
+    },
+    {
+      "id": "generated-importalias-flags-owner-cycle",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('import 雪 as 鳥.羽',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True cannot use attribute as import target 13\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-0-exec",
+      "stage": "LA99A",
+      "source": "try: compile('import a as ()','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 13 1 15\n'import a as ()\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-0-single",
+      "stage": "LA99A",
+      "source": "try: compile('import a as ()','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 13 1 15\n'import a as ()' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-0-exec",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as ()','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 20 1 22\n'from m import a as ()\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-0-single",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as ()','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 20 1 22\n'from m import a as ()' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-handler-0-exec",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept () as e: pass\\n',\"valid.py\",'exec')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-handler-0-single",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept () as e: pass\\n',\"valid.py\",'single')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-1-exec",
+      "stage": "LA99A",
+      "source": "try: compile('import a as (())','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 14 1 16\n'import a as (())\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-1-single",
+      "stage": "LA99A",
+      "source": "try: compile('import a as (())','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 14 1 16\n'import a as (())' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-1-exec",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as (())','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 21 1 23\n'from m import a as (())\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-1-single",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as (())','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 21 1 23\n'from m import a as (())' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-handler-1-exec",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept (()) as e: pass\\n',\"valid.py\",'exec')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-handler-1-single",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept (()) as e: pass\\n',\"valid.py\",'single')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-2-exec",
+      "stage": "LA99A",
+      "source": "try: compile('import a as ((()))','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 15 1 17\n'import a as ((()))\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-2-single",
+      "stage": "LA99A",
+      "source": "try: compile('import a as ((()))','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 15 1 17\n'import a as ((()))' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-2-exec",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as ((()))','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 22 1 24\n'from m import a as ((()))\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-2-single",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as ((()))','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 22 1 24\n'from m import a as ((()))' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-handler-2-exec",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept ((())) as e: pass\\n',\"valid.py\",'exec')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-handler-2-single",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept ((())) as e: pass\\n',\"valid.py\",'single')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-handler-execution",
+      "stage": "LA99A",
+      "source": "try: raise ValueError(\"input\")\nexcept () as e: print(\"wrong\")\nexcept ValueError as e: print(e.args[0])\n",
+      "stdout": "input\n"
     }
   ]
 }
