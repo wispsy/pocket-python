@@ -422,8 +422,47 @@ conversion/cleanup survive collection, cancellation/close and shared limits.
 The example and installed offline console cover original frames, retained-field
 and cleanup Stop/Restart paths and reduced-profile updates.
 
-The current fixed generated-syntax corpus contains 2,743 cases: 2,525 supported
-semantic/error comparisons and 218 explicit native-field refusals. The ordinary
+LA-118 qualifies absent compound-header operands at reserved keywords,
+commas, semicolons and newlines. Adopted if/elif/while headers and for iterables
+preserve native token ranges, Unicode and compile-mode newline behavior.
+Malformed operands, target priority and prior-compound metadata retain their
+independent field boundaries.
+
+LA-119 qualifies missing conditional tests at adopted keywords, delimiters and
+newlines. Native fields retain Unicode columns, multiline text and all compile
+modes. Malformed tests, unparenthesized lambdas and unqualified comprehension
+filters keep explicit boundaries.
+
+LA-120 composes header-start and conditional-test payloads through modules,
+nested exec, chaining/notes and independent fields/arguments. Cyclic filenames,
+suspended conversion and cleanup survive parked collection and interruption.
+The example and installed offline console cover retained fields, cleanup and
+Stop/Restart paths.
+
+LA-121 qualifies absent lambda bodies after adopted parameter lists. Delimiters,
+reserved keywords, Unicode and multiline inputs retain native token fields and
+compile-mode newline distinctions. Parameter errors retain priority; malformed
+body/default operands and unqualified comprehension filters keep boundaries.
+
+LA-122 qualifies incomplete lambda parameter lists and absent comma/colon
+separators after adopted parameters. Empty lists, variadic parameters, Unicode
+and physical/implicit EOF retain native fields. Existing default and separator
+errors retain priority. Adjacent default-value expressions, parenthesized
+parameters and malformed defaults keep explicit native-field boundaries.
+
+LA-121A preserves source lines for invalid pass/break/continue lambda bodies
+when the next token moves to another physical line. Statement/conditional
+combinations retain a separate field boundary because they can select another
+native diagnostic.
+
+LA-123 composes lambda body and separator payloads through modules, nested exec,
+chaining/notes and independent fields/arguments. Retained filenames, suspended
+conversion and cleanup survive collection, cancellation/close and shared
+allocation limits. The example and installed offline console cover original
+frames, multiline source text and Stop/Restart paths.
+
+The current fixed generated-syntax corpus contains 3,612 cases: 3,365 supported
+semantic/error comparisons and 247 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

@@ -5,6 +5,8 @@ const BINARY = new Map([["+", "add"], ["-", "subtract"], ["*", "multiply"], ["/"
   ["**", "power"], ["@", "matmul"], ["&", "bit-and"], ["|", "bit-or"], ["^", "bit-xor"], ["<<", "left-shift"], [">>", "right-shift"]]);
 const COMPARISONS = new Map([["==", "equal"], ["!=", "not-equal"], ["<", "less"], ["<=", "less-equal"], [">", "greater"], [">=", "greater-equal"], ["is", "is"], ["in", "contains"]]);
 const AUGMENT = new Set(["+=", "-=", "*=", "/=", "//=", "%=", "**=", "@=", "&=", "|=", "^=", "<<=", ">>="]);
+const EXPRESSION_BOUNDARIES = new Set((": , ; ) ] } and as assert break class continue def del elif else " +
+  "except finally for from global if import in is nonlocal or pass raise return try while with").split(" "));
 
 export function freezeSourceTree(root) {
   const pending = [root], seen = new Set();
@@ -526,17 +528,24 @@ class Parser {
   parameters(end) {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
     let bareStar = null;
+    const incomplete = () => end === ":" && this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined;
+    const parameterName = () => {
+      if (end === ":" && (this.expressionBoundary() || this.kind("number") || this.kind("string")))
+        this.fail("Expected a lambda parameter.", this.peek(), "SYNTAX", undefined, incomplete());
+      return this.name();
+    };
     while (!this.at(end)) {
       if (kwarg.length) this.fail("No parameter may follow a variadic keyword parameter.", this.peek(), "SYNTAX", undefined,
         this.kind("name") && !(end !== ":" && this.peek(1).value === ":") || ["*", "**", "/"].includes(this.peek().value) ?
-          this.delimitedDiagnostic("arguments cannot follow var-keyword argument", this.peek(), end, this.kind("name")) : undefined);
+          this.delimitedDiagnostic("arguments cannot follow var-keyword argument", this.peek(), end, this.kind("name")) :
+          this.expressionBoundary() ? incomplete() : undefined);
       if (bareStar && !kwonly.length && this.at("**")) {
         const token = end === ":" ? this.peek() : bareStar;
         this.fail("A named keyword-only parameter must follow '*'.", token, "SYNTAX", undefined,
           this.delimitedDiagnostic("named arguments must follow bare *", token, end, true));
       }
       if (this.eat("**")) {
-        const token = this.name();
+        const token = parameterName();
         kwarg.push({name: token.value, value: null, span: token.span});
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         if (this.at("=")) this.fail("A variadic keyword parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
@@ -563,18 +572,21 @@ class Parser {
         } else bareStar = separator;
         star = true;
       } else {
-        const token = this.name();
+        const token = parameterName();
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         const value = this.eat("=") ? this.expression() : null;
+        if (end === ":" && value !== null && ["name", "number", "string"].includes(this.peek().kind))
+          this.fail("Expected a lambda parameter separator.");
         if (!star && defaultSeen && value === null) {
           const syntax = this.at(end) || this.at(",") ?
-            this.delimitedDiagnostic("parameter without a default follows parameter with a default", token, end, true) : undefined;
+            this.delimitedDiagnostic("parameter without a default follows parameter with a default", token, end, true) : incomplete();
           this.fail("A required positional parameter follows a default.", token, "SYNTAX", undefined, syntax);
         }
         if (!star && value !== null) defaultSeen = true;
         (star ? kwonly : positional).push({name: token.value, value, span: token.span});
       }
       if (this.at(end)) break;
+      if (end === ":" && !this.at(",")) this.fail("Expected a lambda parameter separator.", this.peek(), "SYNTAX", undefined, incomplete());
       this.expect(",");
     }
     if (bareStar && !kwonly.length) {
@@ -586,6 +598,14 @@ class Parser {
   }
   lambda() {
     const start = this.expect("lambda"), params = this.parameters(":"); this.expect(":");
+    if (this.expressionBoundary()) {
+      let syntax = this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined;
+      if (["pass", "break", "continue"].some(value => this.at(value))) {
+        if (this.peek(1).value === "if") syntax = undefined;
+        else if (syntax && this.peek(1).span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+      }
+      this.fail("Expected a lambda body.", this.peek(), "SYNTAX", undefined, syntax);
+    }
     const before = [this.functionDepth, this.loopDepth]; this.functionDepth++; this.loopDepth = 0;
     let value;
     try { value = this.expression(); } finally { [this.functionDepth, this.loopDepth] = before; }
@@ -620,9 +640,13 @@ class Parser {
     return this.node("If", start, {test, body, otherwise}, otherwise.at(-1) || body.at(-1));
   }
   headerOperand(sequence = false) {
-    if (this.at(":")) this.fail("Expected a compound-header expression.", this.peek(), "SYNTAX", undefined,
-      this.diagnostic("invalid syntax", this.peek().span));
+    if (this.expressionBoundary()) this.fail("Expected a compound-header expression.", this.peek(), "SYNTAX", undefined,
+      this.tokenDiagnostic("invalid syntax"));
     return sequence ? this.expressionList() : this.namedExpression();
+  }
+  expressionBoundary() {
+    return ["newline", "eof"].includes(this.peek().kind) ||
+      ["op", "keyword"].includes(this.peek().kind) && EXPRESSION_BOUNDARIES.has(this.peek().value);
   }
   loop() {
     const start = this.take(), kind = start.value === "for" ? "For" : "While";
@@ -726,6 +750,8 @@ class Parser {
       if (this.at("lambda")) return this.lambda();
       const body = this.disjunction();
       if (!this.eat("if")) return body;
+      if (this.expressionBoundary()) this.fail("Expected a conditional-expression test.", this.peek(), "SYNTAX", undefined,
+        this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined);
       const test = this.disjunction();
       if (!this.at("else")) {
         const first = this.nativeRanges.get(body) ?? body.span, last = this.nativeRanges.get(test) ?? test.span;
