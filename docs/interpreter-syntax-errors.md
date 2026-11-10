@@ -244,3 +244,9 @@ assignment-expression hint; mapping arguments select the `for` token with the
 generic syntax message. Complete adopted clauses, Unicode and multiline text
 have independent observations. Malformed clauses retain their field boundary,
 and valid parenthesized generator keyword values keep their execution behavior.
+
+LA-90 composes both call slices through registry modules, nested dynamic source,
+causes/notes, independent argument snapshots and cyclic filename owners.
+Suspended flags conversion and generator cleanup retain those fields through
+parked collection, cancellation and close. Shared allocation limits, original
+dynamic frames and installed offline Stop/Restart cover the same payloads.
