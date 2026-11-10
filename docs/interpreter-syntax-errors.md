@@ -137,6 +137,13 @@ cover both parser and compiler layouts. The runnable example and installed
 offline acceptance include the new fields, original dynamic frames, retained
 target and cleanup Stop/Restart paths, and reduced-profile updates.
 
+LA-79 adds required positional parameters following defaults, including across
+the positional-only separator, and defaults on variadic positional/keyword
+parameters. Functions and lambdas share the qualified parser messages,
+character ranges and source fields. These grammar errors precede duplicate-name
+binding errors and invalid function bodies. Malformed parameter tails,
+annotations and earlier compound metadata retain their independent boundaries.
+
 The resulting fixed generated-syntax corpus contains 428 cases: 406 supported
 semantic/error comparisons and 22 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains

@@ -20,7 +20,8 @@
     "LA75A",
     "LA76",
     "LA77",
-    "LA78"
+    "LA78",
+    "LA79"
   ],
   "cases": [
     {
@@ -3176,6 +3177,250 @@
       "stage": "LA78",
       "source": "class Name(str): pass\nfilename=Name(\"colon.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile(\"[雪,*b,*c]=value\",filename,\"exec\",Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
       "stdout": "entered\n7 True multiple starred expressions in assignment 1\n"
+    },
+    {
+      "id": "parameter-default-0-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 11 1 12\n'def f(a=1,b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-0-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,b): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 11 1 12\n'def f(a=1,b): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-1-exec",
+      "stage": "LA79",
+      "source": "try: compile('lambda a=1,b: b',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 12 1 13\n'lambda a=1,b: b\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-1-eval",
+      "stage": "LA79",
+      "source": "try: compile('lambda a=1,b: b',\"parameters/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 12 1 13\n'lambda a=1,b: b' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-2-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,/,b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 13 1 14\n'def f(a=1,/,b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-2-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,/,b): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 13 1 14\n'def f(a=1,/,b): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-3-exec",
+      "stage": "LA79",
+      "source": "try: compile('lambda a=1,/,b: b',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 14 1 15\n'lambda a=1,/,b: b\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-3-eval",
+      "stage": "LA79",
+      "source": "try: compile('lambda a=1,/,b: b',\"parameters/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 14 1 15\n'lambda a=1,/,b: b' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-4-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,b=2,c,d): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 15 1 16\n'def f(a=1,b=2,c,d): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-4-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,b=2,c,d): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 15 1 16\n'def f(a=1,b=2,c,d): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-5-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(a,/,b=1,c): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 15 1 16\n'def f(a,/,b=1,c): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-5-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(a,/,b=1,c): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 15 1 16\n'def f(a,/,b=1,c): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-6-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(*a=1): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-positional argument cannot have default value 1 9 1 10\n'def f(*a=1): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-6-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(*a=1): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-positional argument cannot have default value 1 9 1 10\n'def f(*a=1): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-7-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(**a=1): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-keyword argument cannot have default value 1 10 1 11\n'def f(**a=1): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-7-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(**a=1): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-keyword argument cannot have default value 1 10 1 11\n'def f(**a=1): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-8-exec",
+      "stage": "LA79",
+      "source": "try: compile('lambda *a=1: a',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-positional argument cannot have default value 1 10 1 11\n'lambda *a=1: a\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-8-eval",
+      "stage": "LA79",
+      "source": "try: compile('lambda *a=1: a',\"parameters/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-positional argument cannot have default value 1 10 1 11\n'lambda *a=1: a' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-9-exec",
+      "stage": "LA79",
+      "source": "try: compile('lambda **a=1: a',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-keyword argument cannot have default value 1 11 1 12\n'lambda **a=1: a\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-9-eval",
+      "stage": "LA79",
+      "source": "try: compile('lambda **a=1: a',\"parameters/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-keyword argument cannot have default value 1 11 1 12\n'lambda **a=1: a' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-10-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(*a=): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-positional argument cannot have default value 1 9 1 10\n'def f(*a=): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-10-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(*a=): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-positional argument cannot have default value 1 9 1 10\n'def f(*a=): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-11-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(雪=1,π): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 11 1 12\n'def f(雪=1,π): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-11-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(雪=1,π): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 11 1 12\n'def f(雪=1,π): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-12-exec",
+      "stage": "LA79",
+      "source": "try: compile('lambda 雪=1,π: π',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 12 1 13\n'lambda 雪=1,π: π\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-12-eval",
+      "stage": "LA79",
+      "source": "try: compile('lambda 雪=1,π: π',\"parameters/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 12 1 13\n'lambda 雪=1,π: π' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-13-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(\\n 雪=1,\\n π\\n): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 3 2 3 3\n' π' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-13-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(\\n 雪=1,\\n π\\n): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 3 2 3 3\n' π' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-14-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(\\n *雪=1\\n): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-positional argument cannot have default value 2 4 2 5\n' *雪=1\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-14-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(\\n *雪=1\\n): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "var-positional argument cannot have default value 2 4 2 5\n' *雪=1\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-15-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,a): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 11 1 12\n'def f(a=1,a): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-15-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,a): pass',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 11 1 12\n'def f(a=1,a): pass' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-16-exec",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,b): bad syntax',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 11 1 12\n'def f(a=1,b): bad syntax\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-16-single",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,b): bad syntax',\"parameters/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 11 1 12\n'def f(a=1,b): bad syntax' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-unqualified-0",
+      "stage": "FutureBinding",
+      "owner": "#124",
+      "boundary": "Malformed parameter tails retain the independent parser native-field boundary.",
+      "source": "try: compile('def f(a=1,b+c): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "invalid syntax 1 12 1 13\n'def f(a=1,b+c): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-unqualified-1",
+      "stage": "FutureBinding",
+      "owner": "#124",
+      "boundary": "Malformed parameter tails retain the independent parser native-field boundary.",
+      "source": "try: compile('lambda a=1,b+c: 1',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "invalid syntax 1 13 1 14\n'lambda a=1,b+c: 1\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-multiline-0",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,\\n b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 2 2 2 3\n' b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-multiline-1",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,b,\\n): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 1 11 1 12\n'def f(a=1,b,' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-multiline-2",
+      "stage": "LA79",
+      "source": "try: compile('def f(a=1,\\n b #note\\n): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 2 2 2 3\n' b #note' False 2\nTrue True\nparameters/雪.py True\n"
+    },
+    {
+      "id": "parameter-default-multiline-3",
+      "stage": "LA79",
+      "source": "try: compile('lambda a=1,\\\\\\n b: b',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
+      "stdout": "parameter without a default follows parameter with a default 2 2 2 3\n' b: b\\n' False 2\nTrue True\nparameters/雪.py True\n"
     }
   ]
 }

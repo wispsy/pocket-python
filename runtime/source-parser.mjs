@@ -387,7 +387,8 @@ class Parser {
         const token = this.name();
         kwarg.push({name: token.value, value: null, span: token.span});
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
-        if (this.at("=")) this.fail("A variadic keyword parameter cannot have a default.");
+        if (this.at("=")) this.fail("A variadic keyword parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
+          this.diagnostic("var-keyword argument cannot have default value", this.peek().span));
       } else
       if (this.eat("/")) {
         if (slash || star || !positional.length) this.fail("Invalid positional-only separator.");
@@ -398,14 +399,31 @@ class Parser {
           const token = this.take();
           vararg.push({name: token.value, value: null, span: token.span});
           if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
-          if (this.at("=")) this.fail("A variadic positional parameter cannot have a default.");
+          if (this.at("=")) this.fail("A variadic positional parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
+            this.diagnostic("var-positional argument cannot have default value", this.peek().span));
         }
         star = true;
       } else {
         const token = this.name();
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         const value = this.eat("=") ? this.expression() : null;
-        if (!star && defaultSeen && value === null) this.fail("A required positional parameter follows a default.", token);
+        if (!star && defaultSeen && value === null) {
+          let syntax;
+          if (this.at(end) || this.at(",")) {
+            syntax = this.diagnostic("parameter without a default follows parameter with a default", token.span);
+            let depth = 0;
+            for (const next of this.tokens.slice(this.index)) {
+              this.charge();
+              if (!depth && next.value === end) {
+                if (next.span[0] !== token.span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+                break;
+              }
+              if (["(", "[", "{"].includes(next.value)) depth++;
+              if ([")", "]", "}"].includes(next.value)) depth--;
+            }
+          }
+          this.fail("A required positional parameter follows a default.", token, "SYNTAX", undefined, syntax);
+        }
         if (!star && value !== null) defaultSeen = true;
         (star ? kwonly : positional).push({name: token.value, value, span: token.span});
       }
