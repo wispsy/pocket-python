@@ -62,6 +62,7 @@ for (const [source, mode] of [
   ['{雪,**鳥}', 'exec'], ['{雪:鳥,羽:空 for 海 in 山}', 'exec'],
   ['for 雪 鳥: pass', 'exec'], ['for 雪 in : pass', 'exec'],
   ['雪 if 鳥', 'exec'], ['雪 if 鳥 else', 'exec'],
+  ['if else: pass', 'exec'], ['雪 if else 鳥', 'exec'],
 ]) test('retained ' + JSON.stringify(source) + ' payloads share allocation limits', async () => {
   const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile(' + JSON.stringify(source) + ',"selected.py",' + JSON.stringify(mode) + ')\n except SyntaxError as e: held.append(e)\n')],
     compileOptions: {languageProfile: corpus.profile}, memoryLimits: {maxBytes: 100000}, options: {maxSteps: 50000, maxWork: 20000000}});
@@ -95,7 +96,9 @@ for (const [id, filename] of [['generated-syntax-original-dynamic-failure', 'syn
   ['generated-forheader-original-dynamic-failure', 'forheader-payload-original.py'],
   ['generated-headeroperand-original-dynamic-failure', 'headeroperand-payload-original.py'],
   ['generated-conditionalelse-original-dynamic-failure', 'conditionalelse-payload-original.py'],
-  ['generated-conditionalalternative-original-dynamic-failure', 'conditionalalternative-payload-original.py']])
+  ['generated-conditionalalternative-original-dynamic-failure', 'conditionalalternative-payload-original.py'],
+  ['generated-headerstart-original-dynamic-failure', 'headerstart-payload-original.py'],
+  ['generated-conditionaltest-original-dynamic-failure', 'conditionaltest-payload-original.py']])
 test(id + ' keeps the original dynamic call frames', async () => {
   const item = corpus.cases.find(item => item.id === id);
   const result = await runSourceRequest({modules: [unit(item.source)], compileOptions: {languageProfile: corpus.profile}});
