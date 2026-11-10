@@ -306,7 +306,12 @@ cancellation/close and shared limits cover cyclic filenames and suspended
 conversion/cleanup. The example and installed offline console exercise original
 dynamic frames, retained-field/cleanup Stop/Restart and reduced-profile updates.
 
-The current fixed generated-syntax corpus contains 1,415 cases: 1,323 supported
+LA-99A preserves empty tuple grouping. Empty tuple handlers with aliases compile
+and skip nonmatching exceptions normally; redundant grouping around an empty
+tuple import alias keeps the innermost tuple's native range. This prevents a
+host failure while constructing a handler diagnostic.
+
+The current fixed generated-syntax corpus contains 1,434 cases: 1,342 supported
 semantic/error comparisons and 92 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;

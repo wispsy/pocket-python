@@ -902,7 +902,10 @@ class Parser {
       return this.node("Literal", start, {literal: {type, [field]: points}});
     }
     if (this.eat("(")) {
-      if (this.eat(")")) return this.node("Tuple", start, {items: []});
+      if (this.eat(")")) {
+        const value = this.node("Tuple", start, {items: []});
+        this.grouped.add(value); return value;
+      }
       let value = this.expressionList(true);
       if (this.at("for")) {
         if (value.kind === "Tuple" && !this.grouped.has(value)) this.fail("A comprehension element cannot be an unparenthesized tuple.", value);

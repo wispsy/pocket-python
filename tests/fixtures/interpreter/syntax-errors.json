@@ -41,7 +41,8 @@
     "LA96",
     "LA97",
     "LA98",
-    "LA99"
+    "LA99",
+    "LA99A"
   ],
   "cases": [
     {
@@ -8813,6 +8814,120 @@
       "stage": "LA99",
       "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('import 雪 as 鳥.羽',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
       "stdout": "entered\n7 True cannot use attribute as import target 13\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-0-exec",
+      "stage": "LA99A",
+      "source": "try: compile('import a as ()','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 13 1 15\n'import a as ()\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-0-single",
+      "stage": "LA99A",
+      "source": "try: compile('import a as ()','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 13 1 15\n'import a as ()' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-0-exec",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as ()','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 20 1 22\n'from m import a as ()\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-0-single",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as ()','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 20 1 22\n'from m import a as ()' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-handler-0-exec",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept () as e: pass\\n',\"valid.py\",'exec')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-handler-0-single",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept () as e: pass\\n',\"valid.py\",'single')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-1-exec",
+      "stage": "LA99A",
+      "source": "try: compile('import a as (())','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 14 1 16\n'import a as (())\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-1-single",
+      "stage": "LA99A",
+      "source": "try: compile('import a as (())','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 14 1 16\n'import a as (())' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-1-exec",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as (())','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 21 1 23\n'from m import a as (())\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-1-single",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as (())','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 21 1 23\n'from m import a as (())' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-handler-1-exec",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept (()) as e: pass\\n',\"valid.py\",'exec')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-handler-1-single",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept (()) as e: pass\\n',\"valid.py\",'single')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-2-exec",
+      "stage": "LA99A",
+      "source": "try: compile('import a as ((()))','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 15 1 17\n'import a as ((()))\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-plain-2-single",
+      "stage": "LA99A",
+      "source": "try: compile('import a as ((()))','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 15 1 17\n'import a as ((()))' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-2-exec",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as ((()))','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 22 1 24\n'from m import a as ((()))\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-alias-from-2-single",
+      "stage": "LA99A",
+      "source": "try: compile('from m import a as ((()))','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "cannot use tuple as import target\nselected/雪.py 1 22 1 24\n'from m import a as ((()))' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "emptytuple-handler-2-exec",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept ((())) as e: pass\\n',\"valid.py\",'exec')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-handler-2-single",
+      "stage": "LA99A",
+      "source": "compile('try: pass\\nexcept ((())) as e: pass\\n',\"valid.py\",'single')\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "emptytuple-handler-execution",
+      "stage": "LA99A",
+      "source": "try: raise ValueError(\"input\")\nexcept () as e: print(\"wrong\")\nexcept ValueError as e: print(e.args[0])\n",
+      "stdout": "input\n"
     }
   ]
 }
