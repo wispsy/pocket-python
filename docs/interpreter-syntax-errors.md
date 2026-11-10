@@ -197,3 +197,12 @@ suspended flags conversion/cleanup. Parked collection, cancellation/close and
 shared allocation limits cover the retained fields. The example and installed
 offline console exercise fresh source, original dynamic frames, Stop/Restart
 and the reduced-profile update.
+
+LA-85 defers repeated explicit call keywords until full parsing and binding
+finish. Normalized names select the earliest original keyword with a repeated
+name, then its first repeat. The independent native location uses UTF-8 byte
+columns, two arguments and absent text/parser metadata. Nested calls validate
+their own keyword lists before their operands; function decorators/defaults,
+class bodies/bases and generator versus inlined comprehension ordering have
+separate reference cases. Earlier compiler errors retain their priority, and
+ordinary keyword unpacking continues through its existing runtime checks.

@@ -26,7 +26,8 @@
     "LA81",
     "LA82",
     "LA83",
-    "LA84"
+    "LA84",
+    "LA85"
   ],
   "cases": [
     {
@@ -4776,6 +4777,354 @@
       "stage": "LA84",
       "source": "class Name(str): pass\nfilename=Name(\"colon.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile(\"f(**雪,*π)\",filename,\"exec\",Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
       "stdout": "entered\n7 True iterable argument unpacking follows keyword argument unpacking 6\n"
+    },
+    {
+      "id": "repeated-keyword-0-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 7 1 10\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-0-eval",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 7 1 10\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-0-single",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 7 1 10\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-1-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(雪=1,雪=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 雪 1 9 1 14\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: 雪 True\n"
+    },
+    {
+      "id": "repeated-keyword-1-eval",
+      "stage": "LA85",
+      "source": "try: compile('f(雪=1,雪=2)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 雪 1 9 1 14\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: 雪 True\n"
+    },
+    {
+      "id": "repeated-keyword-1-single",
+      "stage": "LA85",
+      "source": "try: compile('f(雪=1,雪=2)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 雪 1 9 1 14\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: 雪 True\n"
+    },
+    {
+      "id": "repeated-keyword-2-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(K=1,K=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: K 1 7 1 12\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: K True\n"
+    },
+    {
+      "id": "repeated-keyword-2-eval",
+      "stage": "LA85",
+      "source": "try: compile('f(K=1,K=2)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: K 1 7 1 12\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: K True\n"
+    },
+    {
+      "id": "repeated-keyword-2-single",
+      "stage": "LA85",
+      "source": "try: compile('f(K=1,K=2)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: K 1 7 1 12\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: K True\n"
+    },
+    {
+      "id": "repeated-keyword-3-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,**d,a=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 11 1 14\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-3-eval",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,**d,a=2)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 11 1 14\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-3-single",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,**d,a=2)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 11 1 14\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-4-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,b=1,b=2,a=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 15 1 18\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-4-eval",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,b=1,b=2,a=2)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 15 1 18\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-4-single",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,b=1,b=2,a=2)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 15 1 18\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-5-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=(1),a=(2))','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 9 1 14\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-5-eval",
+      "stage": "LA85",
+      "source": "try: compile('f(a=(1),a=(2))','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 9 1 14\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-5-single",
+      "stage": "LA85",
+      "source": "try: compile('f(a=(1),a=(2))','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 9 1 14\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-6-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=(\\n 2\\n))','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 7 3 2\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-6-eval",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=(\\n 2\\n))','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 7 3 2\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-6-single",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=(\\n 2\\n))','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 7 3 2\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-7-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=g(x=1,x=2),a=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 16 1 19\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-7-eval",
+      "stage": "LA85",
+      "source": "try: compile('f(a=g(x=1,x=2),a=2)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 16 1 19\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-7-single",
+      "stage": "LA85",
+      "source": "try: compile('f(a=g(x=1,x=2),a=2)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 16 1 19\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-8-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(g(x=1,x=2),a=1,a=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 18 1 21\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-8-eval",
+      "stage": "LA85",
+      "source": "try: compile('f(g(x=1,x=2),a=1,a=2)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 18 1 21\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-8-single",
+      "stage": "LA85",
+      "source": "try: compile('f(g(x=1,x=2),a=1,a=2)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 18 1 21\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-9-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2)(b=1,b=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 1 16 1 19\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "repeated-keyword-9-eval",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2)(b=1,b=2)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 1 16 1 19\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "repeated-keyword-9-single",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2)(b=1,b=2)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 1 16 1 19\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "repeated-keyword-10-exec",
+      "stage": "LA85",
+      "source": "try: compile('return\\nf(a=1,a=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "'return' outside function 1 1 1 7\nNone True 2\nTrue True True\ncalls/雪.py True\n'return' outside function True\n"
+    },
+    {
+      "id": "repeated-keyword-11-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2)\\nreturn','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 7 1 10\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-12-exec",
+      "stage": "LA85",
+      "source": "try: compile('return f(a=1,a=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "'return' outside function 1 1 1 18\nNone True 2\nTrue True True\ncalls/雪.py True\n'return' outside function True\n"
+    },
+    {
+      "id": "repeated-keyword-13-exec",
+      "stage": "LA85",
+      "source": "try: compile('break\\nf(a=1,a=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "'break' outside loop 1 1 1 6\nNone True 2\nTrue True True\ncalls/雪.py True\n'break' outside loop True\n"
+    },
+    {
+      "id": "repeated-keyword-14-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2)\\nbreak','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 7 1 10\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-15-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2)\\nx=','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 3 2 4\n'x=\\n' False 2\n0 0 'f(a=1,a=2)\\nx=\\n'\nTrue True True\ncalls/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "repeated-keyword-16-exec",
+      "stage": "LA85",
+      "source": "try: compile('def f(x,x):\\n f(a=1,a=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,len(e.args))\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "duplicate argument 'x' in function definition 1 9 1 10\nNone True 1\nTrue 1\ncalls/雪.py True\nduplicate argument 'x' in function definition True\n"
+    },
+    {
+      "id": "repeated-keyword-17-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2)\\nnonlocal x','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,len(e.args))\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "nonlocal declaration not allowed at module level 2 1 2 11\nNone True 1\nTrue 1\ncalls/雪.py True\nnonlocal declaration not allowed at module level True\n"
+    },
+    {
+      "id": "repeated-keyword-18-exec",
+      "stage": "LA85",
+      "source": "try: compile('class C:\\n f(__x=1,__x=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: __x 2 10 2 15\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: __x True\n"
+    },
+    {
+      "id": "repeated-keyword-19-exec",
+      "stage": "LA85",
+      "source": "try: compile('@f(a=1,a=2)\\ndef g(x=h(b=1,b=2)):\\n k(c=1,c=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 8 1 11\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-20-exec",
+      "stage": "LA85",
+      "source": "try: compile('def g(x=f(a=1,a=2)):\\n h(b=1,b=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 15 1 18\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-21-exec",
+      "stage": "LA85",
+      "source": "try: compile('class C(f(a=1,a=2)):\\n g(b=1,b=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 2 8 2 11\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "repeated-keyword-22-exec",
+      "stage": "LA85",
+      "source": "try: compile('class C(metaclass=f(a=1,a=2)):\\n g(b=1,b=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 2 8 2 11\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "repeated-keyword-23-exec",
+      "stage": "LA85",
+      "source": "try: compile('[f(a=1,a=2) for x in g(b=1,b=2)]','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 1 28 1 31\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "repeated-keyword-23-eval",
+      "stage": "LA85",
+      "source": "try: compile('[f(a=1,a=2) for x in g(b=1,b=2)]','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 1 28 1 31\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "repeated-keyword-23-single",
+      "stage": "LA85",
+      "source": "try: compile('[f(a=1,a=2) for x in g(b=1,b=2)]','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 1 28 1 31\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "repeated-keyword-24-exec",
+      "stage": "LA85",
+      "source": "try: compile('(f(a=1,a=2) for x in g(b=1,b=2))','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 8 1 11\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-24-eval",
+      "stage": "LA85",
+      "source": "try: compile('(f(a=1,a=2) for x in g(b=1,b=2))','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 8 1 11\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-24-single",
+      "stage": "LA85",
+      "source": "try: compile('(f(a=1,a=2) for x in g(b=1,b=2))','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 8 1 11\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-25-exec",
+      "stage": "LA85",
+      "source": "try: compile('{f(a=1,a=2):g(b=1,b=2) for x in h(c=1,c=2)}','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: c 1 39 1 42\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: c True\n"
+    },
+    {
+      "id": "repeated-keyword-25-eval",
+      "stage": "LA85",
+      "source": "try: compile('{f(a=1,a=2):g(b=1,b=2) for x in h(c=1,c=2)}','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: c 1 39 1 42\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: c True\n"
+    },
+    {
+      "id": "repeated-keyword-25-single",
+      "stage": "LA85",
+      "source": "try: compile('{f(a=1,a=2):g(b=1,b=2) for x in h(c=1,c=2)}','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: c 1 39 1 42\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: c True\n"
+    },
+    {
+      "id": "repeated-keyword-26-exec",
+      "stage": "LA85",
+      "source": "try: compile('if False:\\n f(a=1,a=2)\\ng(b=1,b=2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 2 8 2 11\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-27-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2)\\nf(b=1,2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 2 8 2 9\n'f(b=1,2)\\n' False 2\n0 0 'f(a=1,a=2)\\nf(b=1,2)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "repeated-keyword-28-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(a=1,a=2) # comment\\n','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 7 1 10\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "repeated-keyword-29-exec",
+      "stage": "LA85",
+      "source": "try: compile('f(\\n 雪=1,\\n 雪=2\\n)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 雪 3 2 3 7\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: 雪 True\n"
+    },
+    {
+      "id": "repeated-keyword-29-eval",
+      "stage": "LA85",
+      "source": "try: compile('f(\\n 雪=1,\\n 雪=2\\n)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 雪 3 2 3 7\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: 雪 True\n"
+    },
+    {
+      "id": "repeated-keyword-29-single",
+      "stage": "LA85",
+      "source": "try: compile('f(\\n 雪=1,\\n 雪=2\\n)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 雪 3 2 3 7\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: 雪 True\n"
     }
   ]
 }

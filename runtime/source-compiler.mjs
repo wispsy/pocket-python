@@ -724,15 +724,46 @@ class Compiler {
       if (fn.namespace.length > FUNCTION_LIMITS.names) this.fail("Comprehension namespace budget exceeded.", scope.node, "COMPILE_BUDGET");
     }
   }
+  firstCompileError() {
+    const keywords = new Map(this.parsed.keywordErrors.map(({call, site}) => [call, site]));
+    let found = null;
+    const visit = node => {
+      if (found) return;
+      this.charge(node);
+      if (node === this.parsed.controlError?.node) { found = this.parsed.controlError; return; }
+      const site = keywords.get(node);
+      if (site) { found = {kind: "keyword", token: site, node: site, message: "keyword argument repeated: " + site.name}; return; }
+      const children = value => this.children(value, visit);
+      if (["Function", "Lambda"].includes(node.kind)) {
+        children(node.decorators);
+        for (const group of Object.values(node.params)) for (const param of group) children(param.value);
+        children(node.body);
+      } else if (node.kind === "Class") {
+        children(node.decorators); children(node.body); children(node.bases);
+        children(node.keywords ?? node.metaclass);
+      } else if (node.kind === "Comprehension") {
+        // Generator bodies compile before the outer iterator; inlined displays compile it first.
+        node.clauses.forEach((clause, index) => {
+          if (index || node.form !== "generator") children(clause.iterable);
+          children(clause.target); children(clause.filters);
+        });
+        children(node.key); children(node.element);
+        if (node.form === "generator") children(node.clauses[0].iterable);
+      } else Object.values(node).forEach(children);
+    };
+    visit(this.parsed.module);
+    return found;
+  }
   compile() {
     this.resolve();
-    if (this.parsed.controlError) {
-      const {kind, token, node} = this.parsed.controlError;
-      const message = this.parsed.controlError.message ?? (kind === "return" ? "'return' outside function" : kind === "break" ? "'break' outside loop" : "'continue' not properly in loop");
-      const syntax = this.parsed.controlError.qualified === false ? undefined :
+    const error = this.parsed.keywordErrors ? this.firstCompileError() : this.parsed.controlError;
+    if (error) {
+      const {kind, token, node} = error;
+      const message = error.message ?? (kind === "return" ? "'return' outside function" : kind === "break" ? "'break' outside loop" : "'continue' not properly in loop");
+      const syntax = error.qualified === false ? undefined :
         {...syntaxDiagnostic(this.parsed.source, this.parsed.filename, message, node.span, {text: false}), offset: node.span[1], end_offset: node.span[3]};
-      throw new SourceError("SYNTAX", kind === "target" ? message : kind === "return" ? "Return outside a function." : kind + " outside a loop.",
-        {filename: this.parsed.filename, span: token.span, phase: "parse", syntax});
+      throw new SourceError("SYNTAX", kind === "keyword" ? "Duplicate keyword argument." : kind === "target" ? message : kind === "return" ? "Return outside a function." : kind + " outside a loop.",
+        {filename: this.parsed.filename, span: token.span, phase: kind === "keyword" ? "compile" : "parse", syntax});
     }
     this.scopes.forEach(scope => this.function(scope));
     if (this.classes) this.comprehensionNamespaces();

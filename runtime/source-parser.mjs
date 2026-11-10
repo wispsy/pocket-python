@@ -29,6 +29,7 @@ class Parser {
     this.refusal = null; this.typeExpression = false; this.grouped = new WeakSet();
     this.completedCompound = false;
     this.controlError = null;
+    this.keywordErrors = [];
     this.maxNodes = options.maxNodes ?? PARSER_LIMITS.nodes;
     this.maxDepth = options.maxParseDepth ?? PARSER_LIMITS.depth;
     for (const [value, cap] of [[this.maxNodes, PARSER_LIMITS.nodes], [this.maxDepth, PARSER_LIMITS.depth]])
@@ -165,6 +166,7 @@ class Parser {
     const module = this.node("Module", start, {body});
     return freezeSourceTree({module, source: this.lexed.source, filename: this.filename, languageProfile: this.languageProfile,
       ...(this.controlError ? {controlError: this.controlError} : {}),
+      ...(this.keywordErrors.length ? {keywordErrors: this.keywordErrors} : {}),
       stats: {...this.lexed.stats, work: this.work, nodes: this.nodes}});
   }
   statement() {
@@ -653,7 +655,8 @@ class Parser {
     for (;;) {
       if (this.eat(".")) { const attr = this.name(); value = this.node("Attribute", value, {value, name: attr.value}, attr); }
       else if (this.eat("(")) {
-        const args = [], keywords = [], seen = new Set();
+        const args = [], keywords = [], seen = new Map();
+        let repeated = null;
         let positionalError = null, positionalQualified = true;
         while (!this.at(")")) {
           const separator = this.previous, argumentCount = args.length;
@@ -675,8 +678,13 @@ class Parser {
           } else
           if (this.kind("name") && this.peek(1).value === "=") {
             const token = this.take(); this.expect("=");
-            if (seen.has(token.value)) this.fail("Duplicate keyword argument.", token);
-            seen.add(token.value); keywords.push({name: token.value, value: this.expression()});
+            const argument = this.expression();
+            if (seen.has(token.value)) {
+              const first = seen.get(token.value);
+              if (!repeated || first < repeated.first) repeated = {first, name: token.value,
+                span: [token.span[0], token.span[1], this.previous.span[2], this.previous.span[3]]};
+            } else seen.set(token.value, keywords.length);
+            keywords.push({name: token.value, value: argument});
           } else {
             if (keywords.length) positionalError ??= keywords.some(keyword => keyword.name === null) ?
               "positional argument follows keyword argument unpacking" : "positional argument follows keyword argument";
@@ -705,6 +713,7 @@ class Parser {
         if (positionalError) this.fail("A positional argument follows a keyword argument.", this.peek(), "SYNTAX", undefined,
           positionalQualified && this.at(")") ? this.diagnostic(positionalError, this.peek().span) : undefined);
         this.expect(")"); value = this.node("Call", value, {callable: value, args, keywords});
+        if (repeated) this.keywordErrors.push({call: value, site: repeated});
       } else if (this.eat("[")) {
         const start = this.peek(), items = [this.subscript()]; let tuple = false;
         while (this.eat(",")) { tuple = true; if (this.at("]")) break; items.push(this.subscript()); }
