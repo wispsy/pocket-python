@@ -47,6 +47,20 @@ class Parser {
     syntax.metadataQualified = !this.completedCompound;
     return syntax;
   }
+  tokenDiagnostic(message, token = this.peek()) {
+    const syntax = this.diagnostic(message, token.span);
+    if (["newline", "eof"].includes(token.kind)) {
+      const source = this.lexed.source, line = source.split("\n")[token.span[0] - 1] ?? "";
+      const implicit = this.options.mode && this.options.mode !== "exec" && source[token.start] !== "\n";
+      const lineStart = source.lastIndexOf("\n", token.start - 1) + 1;
+      const comment = source.indexOf("#", this.previous.end);
+      syntax.offset = implicit ? 0 : comment >= lineStart && comment < token.start ?
+        Array.from(source.slice(lineStart, comment)).length + 1 : syntax.offset;
+      syntax.end_lineno = syntax.lineno;
+      syntax.end_offset = implicit ? 0 : Array.from(line).length + 2;
+    }
+    return syntax;
+  }
   unsupported(message, token) { this.fail(message, token, "UNSUPPORTED"); }
   defer(message, node) { this.refusal ??= {message, node}; return node; }
   charge() {
@@ -599,19 +613,26 @@ class Parser {
     return value;
   }
   branch(keyword = "if") {
-    const start = this.expect(keyword), test = this.namedExpression(), body = this.suite(start);
+    const start = this.expect(keyword), test = this.headerOperand(), body = this.suite(start);
     let otherwise = [];
     if (this.at("elif")) otherwise = [this.guard(() => this.branch("elif"))];
     else if (this.eat("else")) otherwise = this.suite(this.previous);
     return this.node("If", start, {test, body, otherwise}, otherwise.at(-1) || body.at(-1));
+  }
+  headerOperand(sequence = false) {
+    if (this.at(":")) this.fail("Expected a compound-header expression.", this.peek(), "SYNTAX", undefined,
+      this.diagnostic("invalid syntax", this.peek().span));
+    return sequence ? this.expressionList() : this.namedExpression();
   }
   loop() {
     const start = this.take(), kind = start.value === "for" ? "For" : "While";
     let test = null, target = null, iterable = null;
     if (kind === "For") {
       target = this.expressionList(false, true); this.target(target, false, false, "loop");
-      this.expect("in"); iterable = this.expressionList();
-    } else test = this.namedExpression();
+      if (!this.at("in")) this.fail("Expected 'in' after for-loop variables.", this.peek(), "SYNTAX", undefined,
+        ["and", "or", "if"].some(value => this.at(value)) ? undefined : this.tokenDiagnostic("invalid syntax"));
+      this.expect("in"); iterable = this.headerOperand(true);
+    } else test = this.headerOperand();
     this.loopDepth++; let body;
     try { body = this.suite(start); } finally { this.loopDepth--; }
     const otherwise = this.eat("else") ? this.suite(this.previous) : [];
@@ -705,7 +726,31 @@ class Parser {
       if (this.at("lambda")) return this.lambda();
       const body = this.disjunction();
       if (!this.eat("if")) return body;
-      const test = this.disjunction(); this.expect("else"); const otherwise = this.expression();
+      const test = this.disjunction();
+      if (!this.at("else")) {
+        const first = this.nativeRanges.get(body) ?? body.span, last = this.nativeRanges.get(test) ?? test.span;
+        const syntax = this.comprehensionClauseFields && !this.at(":") ? this.diagnostic("expected 'else' after 'if' expression",
+          [first[0], first[1], last[2], last[3]]) : undefined;
+        if (syntax && this.peek().span[0] !== first[0]) syntax.text = syntax.text.replace(/\n$/, "");
+        if (syntax && first[0] !== last[2]) {
+          syntax.text = syntax.text.replace(/\n$/, "");
+          const bytes = new TextEncoder().encode(syntax.text + "\0");
+          syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, last[3]))).length;
+        }
+        this.fail("Expected 'else' after 'if' expression.", this.peek(), "SYNTAX", undefined, syntax);
+      }
+      this.expect("else");
+      if ([",", ")", "]", "}"].some(value => this.at(value)) || ["newline", "eof"].includes(this.peek().kind)) {
+        const syntax = this.comprehensionClauseFields ?
+          this.tokenDiagnostic("expected expression after 'else', but statement is given") : undefined;
+        if (syntax && this.options.mode && this.options.mode !== "exec" &&
+            ["newline", "eof"].includes(this.peek().kind) && this.lexed.source[this.peek().start] !== "\n") {
+          syntax.offset = Array.from(this.lexed.source.split("\n")[syntax.lineno - 1]).length;
+          syntax.end_offset = -1;
+        }
+        this.fail("Expected an expression after 'else'.", this.peek(), "SYNTAX", undefined, syntax);
+      }
+      const otherwise = this.expression();
       return this.node("Conditional", body, {body, test, otherwise}, otherwise);
     });
   }

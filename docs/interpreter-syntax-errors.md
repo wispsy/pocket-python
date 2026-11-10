@@ -165,8 +165,8 @@ shared limits and original dynamic frames cover those graphs. The example
 and installed offline console exercise new source, retained-field and cleanup
 Stop/Restart paths, plus the existing reduced-profile boundary.
 
-At LA-81, the fixed generated-syntax corpus contains 627 cases: 603 supported
-semantic/error comparisons and 24 explicit native-field refusals, with no scored
+At LA-81, the fixed generated-syntax corpus contains 2,743 cases: 2,525 supported
+semantic/error comparisons and 218 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
 These finite observations do not measure overall Python compatibility. #600/A2,
@@ -388,8 +388,42 @@ and cleanup survive parked collection, cancellation/close and shared limits.
 The runnable example and installed offline console retain original dynamic
 frames, retained-field/cleanup Stop/Restart paths and reduced-profile updates.
 
-The current fixed generated-syntax corpus contains 2,362 cases: 2,197 supported
-semantic/error comparisons and 165 explicit native-field refusals. The ordinary
+LA-112 qualifies missing `in` separators after adopted for-statement targets.
+Unexpected tokens, implicit/physical newlines, comments and Unicode preserve
+parser fields. Target validation retains priority; malformed targets and prior
+compound metadata keep their independent boundaries.
+
+LA-113 qualifies absent for iterable and if/elif/while conditions at an explicit
+colon. Target errors retain precedence. Earlier compound statements keep the
+independent parser-metadata boundary while native fields remain available.
+
+LA-114 composes both compound-header diagnostics through modules, nested exec,
+chaining/notes and independent fields/arguments. Cyclic filename owners and
+suspended conversion/cleanup retain fields through collection, cancellation,
+shared limits and installed offline Stop/Restart acceptance.
+
+LA-115 qualifies missing conditional-expression else clauses after adopted
+body/test expressions. Native ranges retain grouping, comprehension delimiters,
+Unicode and multiline first-line end-column conversion. Malformed tests and
+unqualified surrounding comprehensions retain explicit field boundaries.
+
+LA-116 qualifies absent conditional alternatives at commas, closing delimiters
+and newlines. Physical/implicit EOF, comments and Unicode retain native
+locations. Keyword/colon/semicolon alternatives, malformed operands and
+unqualified surrounding comprehension contexts keep explicit field boundaries.
+
+LA-112A preserves boolean and conditional for-target continuations as
+explicit native-field boundaries. The reference can select an earlier expression
+range, so the missing-in separator diagnostic is not published for these tails.
+
+LA-117 composes both conditional diagnostics through modules, nested exec,
+chaining/notes and independent fields/arguments. Cyclic filenames and suspended
+conversion/cleanup survive collection, cancellation/close and shared limits.
+The example and installed offline console cover original frames, retained-field
+and cleanup Stop/Restart paths and reduced-profile updates.
+
+The current fixed generated-syntax corpus contains 2,743 cases: 2,525 supported
+semantic/error comparisons and 218 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
