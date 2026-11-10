@@ -370,8 +370,14 @@ multiple-element, starred and dictionary-unpacking comprehensions. Nested clause
 failures share their surrounding diagnostic context, retaining the pinned
 parser priority instead of exposing a later operand location.
 
-The current fixed generated-syntax corpus contains 2,186 cases: 2,035 supported
-semantic/error comparisons and 151 explicit native-field refusals. The ordinary
+LA-109 qualifies mixed dictionary/set displays at the offending star,
+double-star or colon token. Malformed following operands retain the earlier
+display error; Unicode, multiline text and all three modes have independent
+observations. Surrounding unqualified comprehension contexts keep their field
+boundary instead of exposing a later nested display location.
+
+The current fixed generated-syntax corpus contains 2,271 cases: 2,112 supported
+semantic/error comparisons and 159 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

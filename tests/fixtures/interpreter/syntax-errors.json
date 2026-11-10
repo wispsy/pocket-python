@@ -52,7 +52,8 @@
     "LA105A",
     "LA106",
     "LA107",
-    "LA108"
+    "LA108",
+    "LA109"
   ],
   "cases": [
     {
@@ -13522,6 +13523,516 @@
       "source": "try: compile('(*x for x in z if )','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
       "stage": "Future",
       "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*x for x in z if )' 2 6\nTrue True True\n0 0 '(*x for x in z if )'\n"
+    },
+    {
+      "id": "mixed-display-0-exec",
+      "source": "try: compile('{a,**b}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**b}\\n' 2 6\nTrue True True\n0 0 '{a,**b}\\n'\n"
+    },
+    {
+      "id": "mixed-display-0-eval",
+      "source": "try: compile('{a,**b}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**b}' 2 6\nTrue True True\n0 0 '{a,**b}'\n"
+    },
+    {
+      "id": "mixed-display-0-single",
+      "source": "try: compile('{a,**b}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**b}' 2 6\nTrue True True\n0 0 '{a,**b}'\n"
+    },
+    {
+      "id": "mixed-display-1-exec",
+      "source": "try: compile('{a,b,**c}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 8\n'{a,b,**c}\\n' 2 6\nTrue True True\n0 0 '{a,b,**c}\\n'\n"
+    },
+    {
+      "id": "mixed-display-1-eval",
+      "source": "try: compile('{a,b,**c}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 8\n'{a,b,**c}' 2 6\nTrue True True\n0 0 '{a,b,**c}'\n"
+    },
+    {
+      "id": "mixed-display-1-single",
+      "source": "try: compile('{a,b,**c}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 8\n'{a,b,**c}' 2 6\nTrue True True\n0 0 '{a,b,**c}'\n"
+    },
+    {
+      "id": "mixed-display-2-exec",
+      "source": "try: compile('{*a,**b}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 7\n'{*a,**b}\\n' 2 6\nTrue True True\n0 0 '{*a,**b}\\n'\n"
+    },
+    {
+      "id": "mixed-display-2-eval",
+      "source": "try: compile('{*a,**b}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 7\n'{*a,**b}' 2 6\nTrue True True\n0 0 '{*a,**b}'\n"
+    },
+    {
+      "id": "mixed-display-2-single",
+      "source": "try: compile('{*a,**b}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 7\n'{*a,**b}' 2 6\nTrue True True\n0 0 '{*a,**b}'\n"
+    },
+    {
+      "id": "mixed-display-3-exec",
+      "source": "try: compile('{a,**}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**}\\n' 2 6\nTrue True True\n0 0 '{a,**}\\n'\n"
+    },
+    {
+      "id": "mixed-display-3-eval",
+      "source": "try: compile('{a,**}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**}' 2 6\nTrue True True\n0 0 '{a,**}'\n"
+    },
+    {
+      "id": "mixed-display-3-single",
+      "source": "try: compile('{a,**}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**}' 2 6\nTrue True True\n0 0 '{a,**}'\n"
+    },
+    {
+      "id": "mixed-display-4-exec",
+      "source": "try: compile('{a,**b,}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**b,}\\n' 2 6\nTrue True True\n0 0 '{a,**b,}\\n'\n"
+    },
+    {
+      "id": "mixed-display-4-eval",
+      "source": "try: compile('{a,**b,}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**b,}' 2 6\nTrue True True\n0 0 '{a,**b,}'\n"
+    },
+    {
+      "id": "mixed-display-4-single",
+      "source": "try: compile('{a,**b,}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**b,}' 2 6\nTrue True True\n0 0 '{a,**b,}'\n"
+    },
+    {
+      "id": "mixed-display-5-exec",
+      "source": "try: compile('{a:1,*b}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:1,*b}\\n' 2 6\nTrue True True\n0 0 '{a:1,*b}\\n'\n"
+    },
+    {
+      "id": "mixed-display-5-eval",
+      "source": "try: compile('{a:1,*b}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:1,*b}' 2 6\nTrue True True\n0 0 '{a:1,*b}'\n"
+    },
+    {
+      "id": "mixed-display-5-single",
+      "source": "try: compile('{a:1,*b}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:1,*b}' 2 6\nTrue True True\n0 0 '{a:1,*b}'\n"
+    },
+    {
+      "id": "mixed-display-6-exec",
+      "source": "try: compile('{**a,*b}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{**a,*b}\\n' 2 6\nTrue True True\n0 0 '{**a,*b}\\n'\n"
+    },
+    {
+      "id": "mixed-display-6-eval",
+      "source": "try: compile('{**a,*b}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{**a,*b}' 2 6\nTrue True True\n0 0 '{**a,*b}'\n"
+    },
+    {
+      "id": "mixed-display-6-single",
+      "source": "try: compile('{**a,*b}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{**a,*b}' 2 6\nTrue True True\n0 0 '{**a,*b}'\n"
+    },
+    {
+      "id": "mixed-display-7-exec",
+      "source": "try: compile('{a:b,c:d,*e}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'{a:b,c:d,*e}\\n' 2 6\nTrue True True\n0 0 '{a:b,c:d,*e}\\n'\n"
+    },
+    {
+      "id": "mixed-display-7-eval",
+      "source": "try: compile('{a:b,c:d,*e}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'{a:b,c:d,*e}' 2 6\nTrue True True\n0 0 '{a:b,c:d,*e}'\n"
+    },
+    {
+      "id": "mixed-display-7-single",
+      "source": "try: compile('{a:b,c:d,*e}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'{a:b,c:d,*e}' 2 6\nTrue True True\n0 0 '{a:b,c:d,*e}'\n"
+    },
+    {
+      "id": "mixed-display-8-exec",
+      "source": "try: compile('{a:1,*}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:1,*}\\n' 2 6\nTrue True True\n0 0 '{a:1,*}\\n'\n"
+    },
+    {
+      "id": "mixed-display-8-eval",
+      "source": "try: compile('{a:1,*}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:1,*}' 2 6\nTrue True True\n0 0 '{a:1,*}'\n"
+    },
+    {
+      "id": "mixed-display-8-single",
+      "source": "try: compile('{a:1,*}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:1,*}' 2 6\nTrue True True\n0 0 '{a:1,*}'\n"
+    },
+    {
+      "id": "mixed-display-9-exec",
+      "source": "try: compile('{a:1,*b,}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:1,*b,}\\n' 2 6\nTrue True True\n0 0 '{a:1,*b,}\\n'\n"
+    },
+    {
+      "id": "mixed-display-9-eval",
+      "source": "try: compile('{a:1,*b,}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:1,*b,}' 2 6\nTrue True True\n0 0 '{a:1,*b,}'\n"
+    },
+    {
+      "id": "mixed-display-9-single",
+      "source": "try: compile('{a:1,*b,}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:1,*b,}' 2 6\nTrue True True\n0 0 '{a:1,*b,}'\n"
+    },
+    {
+      "id": "mixed-display-10-exec",
+      "source": "try: compile('{a,b:c}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:c}\\n' 2 6\nTrue True True\n0 0 '{a,b:c}\\n'\n"
+    },
+    {
+      "id": "mixed-display-10-eval",
+      "source": "try: compile('{a,b:c}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:c}' 2 6\nTrue True True\n0 0 '{a,b:c}'\n"
+    },
+    {
+      "id": "mixed-display-10-single",
+      "source": "try: compile('{a,b:c}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:c}' 2 6\nTrue True True\n0 0 '{a,b:c}'\n"
+    },
+    {
+      "id": "mixed-display-11-exec",
+      "source": "try: compile('{a,b,c:d}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'{a,b,c:d}\\n' 2 6\nTrue True True\n0 0 '{a,b,c:d}\\n'\n"
+    },
+    {
+      "id": "mixed-display-11-eval",
+      "source": "try: compile('{a,b,c:d}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'{a,b,c:d}' 2 6\nTrue True True\n0 0 '{a,b,c:d}'\n"
+    },
+    {
+      "id": "mixed-display-11-single",
+      "source": "try: compile('{a,b,c:d}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'{a,b,c:d}' 2 6\nTrue True True\n0 0 '{a,b,c:d}'\n"
+    },
+    {
+      "id": "mixed-display-12-exec",
+      "source": "try: compile('{*a,b:c}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{*a,b:c}\\n' 2 6\nTrue True True\n0 0 '{*a,b:c}\\n'\n"
+    },
+    {
+      "id": "mixed-display-12-eval",
+      "source": "try: compile('{*a,b:c}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{*a,b:c}' 2 6\nTrue True True\n0 0 '{*a,b:c}'\n"
+    },
+    {
+      "id": "mixed-display-12-single",
+      "source": "try: compile('{*a,b:c}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{*a,b:c}' 2 6\nTrue True True\n0 0 '{*a,b:c}'\n"
+    },
+    {
+      "id": "mixed-display-13-exec",
+      "source": "try: compile('{a,b:}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:}\\n' 2 6\nTrue True True\n0 0 '{a,b:}\\n'\n"
+    },
+    {
+      "id": "mixed-display-13-eval",
+      "source": "try: compile('{a,b:}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:}' 2 6\nTrue True True\n0 0 '{a,b:}'\n"
+    },
+    {
+      "id": "mixed-display-13-single",
+      "source": "try: compile('{a,b:}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:}' 2 6\nTrue True True\n0 0 '{a,b:}'\n"
+    },
+    {
+      "id": "mixed-display-14-exec",
+      "source": "try: compile('{a,b:*c}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:*c}\\n' 2 6\nTrue True True\n0 0 '{a,b:*c}\\n'\n"
+    },
+    {
+      "id": "mixed-display-14-eval",
+      "source": "try: compile('{a,b:*c}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:*c}' 2 6\nTrue True True\n0 0 '{a,b:*c}'\n"
+    },
+    {
+      "id": "mixed-display-14-single",
+      "source": "try: compile('{a,b:*c}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:*c}' 2 6\nTrue True True\n0 0 '{a,b:*c}'\n"
+    },
+    {
+      "id": "mixed-display-15-exec",
+      "source": "try: compile('{a,b:c for d in e}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:c for d in e}\\n' 2 6\nTrue True True\n0 0 '{a,b:c for d in e}\\n'\n"
+    },
+    {
+      "id": "mixed-display-15-eval",
+      "source": "try: compile('{a,b:c for d in e}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:c for d in e}' 2 6\nTrue True True\n0 0 '{a,b:c for d in e}'\n"
+    },
+    {
+      "id": "mixed-display-15-single",
+      "source": "try: compile('{a,b:c for d in e}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{a,b:c for d in e}' 2 6\nTrue True True\n0 0 '{a,b:c for d in e}'\n"
+    },
+    {
+      "id": "mixed-display-16-exec",
+      "source": "try: compile('{a,**b for c in d}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**b for c in d}\\n' 2 6\nTrue True True\n0 0 '{a,**b for c in d}\\n'\n"
+    },
+    {
+      "id": "mixed-display-16-eval",
+      "source": "try: compile('{a,**b for c in d}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**b for c in d}' 2 6\nTrue True True\n0 0 '{a,**b for c in d}'\n"
+    },
+    {
+      "id": "mixed-display-16-single",
+      "source": "try: compile('{a,**b for c in d}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{a,**b for c in d}' 2 6\nTrue True True\n0 0 '{a,**b for c in d}'\n"
+    },
+    {
+      "id": "mixed-display-17-exec",
+      "source": "try: compile('{a:b,*c for d in e}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:b,*c for d in e}\\n' 2 6\nTrue True True\n0 0 '{a:b,*c for d in e}\\n'\n"
+    },
+    {
+      "id": "mixed-display-17-eval",
+      "source": "try: compile('{a:b,*c for d in e}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:b,*c for d in e}' 2 6\nTrue True True\n0 0 '{a:b,*c for d in e}'\n"
+    },
+    {
+      "id": "mixed-display-17-single",
+      "source": "try: compile('{a:b,*c for d in e}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{a:b,*c for d in e}' 2 6\nTrue True True\n0 0 '{a:b,*c for d in e}'\n"
+    },
+    {
+      "id": "mixed-display-18-exec",
+      "source": "try: compile('{雪,**鳥}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{雪,**鳥}\\n' 2 6\nTrue True True\n0 0 '{雪,**鳥}\\n'\n"
+    },
+    {
+      "id": "mixed-display-18-eval",
+      "source": "try: compile('{雪,**鳥}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{雪,**鳥}' 2 6\nTrue True True\n0 0 '{雪,**鳥}'\n"
+    },
+    {
+      "id": "mixed-display-18-single",
+      "source": "try: compile('{雪,**鳥}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 6\n'{雪,**鳥}' 2 6\nTrue True True\n0 0 '{雪,**鳥}'\n"
+    },
+    {
+      "id": "mixed-display-19-exec",
+      "source": "try: compile('{雪:鳥,*羽}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{雪:鳥,*羽}\\n' 2 6\nTrue True True\n0 0 '{雪:鳥,*羽}\\n'\n"
+    },
+    {
+      "id": "mixed-display-19-eval",
+      "source": "try: compile('{雪:鳥,*羽}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{雪:鳥,*羽}' 2 6\nTrue True True\n0 0 '{雪:鳥,*羽}'\n"
+    },
+    {
+      "id": "mixed-display-19-single",
+      "source": "try: compile('{雪:鳥,*羽}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'{雪:鳥,*羽}' 2 6\nTrue True True\n0 0 '{雪:鳥,*羽}'\n"
+    },
+    {
+      "id": "mixed-display-20-exec",
+      "source": "try: compile('{雪,鳥:羽}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{雪,鳥:羽}\\n' 2 6\nTrue True True\n0 0 '{雪,鳥:羽}\\n'\n"
+    },
+    {
+      "id": "mixed-display-20-eval",
+      "source": "try: compile('{雪,鳥:羽}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{雪,鳥:羽}' 2 6\nTrue True True\n0 0 '{雪,鳥:羽}'\n"
+    },
+    {
+      "id": "mixed-display-20-single",
+      "source": "try: compile('{雪,鳥:羽}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'{雪,鳥:羽}' 2 6\nTrue True True\n0 0 '{雪,鳥:羽}'\n"
+    },
+    {
+      "id": "mixed-display-21-exec",
+      "source": "try: compile('{\\n 雪,\\n **鳥\\n}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 3 2 3 4\n' **鳥\\n' 2 6\nTrue True True\n0 0 '{\\n 雪,\\n **鳥\\n}\\n'\n"
+    },
+    {
+      "id": "mixed-display-21-eval",
+      "source": "try: compile('{\\n 雪,\\n **鳥\\n}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 3 2 3 4\n' **鳥\\n' 2 6\nTrue True True\n0 0 '{\\n 雪,\\n **鳥\\n}'\n"
+    },
+    {
+      "id": "mixed-display-21-single",
+      "source": "try: compile('{\\n 雪,\\n **鳥\\n}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 3 2 3 4\n' **鳥\\n' 2 6\nTrue True True\n0 0 '{\\n 雪,\\n **鳥\\n}'\n"
+    },
+    {
+      "id": "mixed-display-22-exec",
+      "source": "try: compile('{\\n 雪:鳥,\\n *羽 # comment\\n}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 3 2 3 3\n' *羽 # comment\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥,\\n *羽 # comment\\n}\\n'\n"
+    },
+    {
+      "id": "mixed-display-22-eval",
+      "source": "try: compile('{\\n 雪:鳥,\\n *羽 # comment\\n}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 3 2 3 3\n' *羽 # comment\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥,\\n *羽 # comment\\n}'\n"
+    },
+    {
+      "id": "mixed-display-22-single",
+      "source": "try: compile('{\\n 雪:鳥,\\n *羽 # comment\\n}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 3 2 3 3\n' *羽 # comment\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥,\\n *羽 # comment\\n}'\n"
+    },
+    {
+      "id": "mixed-display-23-exec",
+      "source": "try: compile('{\\n 雪,\\n 鳥 # comment\\n :羽\\n}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 4 2 4 3\n' :羽\\n' 2 6\nTrue True True\n0 0 '{\\n 雪,\\n 鳥 # comment\\n :羽\\n}\\n'\n"
+    },
+    {
+      "id": "mixed-display-23-eval",
+      "source": "try: compile('{\\n 雪,\\n 鳥 # comment\\n :羽\\n}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 4 2 4 3\n' :羽\\n' 2 6\nTrue True True\n0 0 '{\\n 雪,\\n 鳥 # comment\\n :羽\\n}'\n"
+    },
+    {
+      "id": "mixed-display-23-single",
+      "source": "try: compile('{\\n 雪,\\n 鳥 # comment\\n :羽\\n}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 4 2 4 3\n' :羽\\n' 2 6\nTrue True True\n0 0 '{\\n 雪,\\n 鳥 # comment\\n :羽\\n}'\n"
+    },
+    {
+      "id": "mixed-display-24-exec",
+      "source": "try: compile('{雪, \\\\\\n **鳥}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 4\n' **鳥}\\n' 2 6\nTrue True True\n0 0 '{雪, \\\\\\n **鳥}\\n'\n"
+    },
+    {
+      "id": "mixed-display-24-eval",
+      "source": "try: compile('{雪, \\\\\\n **鳥}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 4\n' **鳥}' 2 6\nTrue True True\n0 0 '{雪, \\\\\\n **鳥}'\n"
+    },
+    {
+      "id": "mixed-display-24-single",
+      "source": "try: compile('{雪, \\\\\\n **鳥}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 4\n' **鳥}' 2 6\nTrue True True\n0 0 '{雪, \\\\\\n **鳥}'\n"
+    },
+    {
+      "id": "mixed-display-prior-compound-fields",
+      "source": "try: compile('if True: pass\\n{a,**b}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stage": "LA109",
+      "stdout": "invalid syntax\nselected/雪.py 2 4 2 6\n'{a,**b}\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "mixed-display-boundary-0",
+      "source": "try: compile('{a b,**c}','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '{a b,**c}\\n')\n"
+    },
+    {
+      "id": "mixed-display-boundary-1",
+      "source": "try: compile('{a:... ,*b}','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '{a:... ,*b}\\n')\n"
+    },
+    {
+      "id": "mixed-display-boundary-2",
+      "source": "try: compile('{... ,b:c}','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '{... ,b:c}\\n')\n"
+    },
+    {
+      "id": "mixed-display-boundary-3",
+      "source": "try: compile('if True: pass\\n{a,**b}','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(1, 0, 'if True: pass\\n{a,**b}\\n')\n"
+    },
+    {
+      "id": "mixed-display-boundary-4",
+      "source": "try: compile('f(a=x for x in {a,**b})','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, 'f(a=x for x in {a,**b})\\n')\n"
+    },
+    {
+      "id": "mixed-display-boundary-5",
+      "source": "try: compile('class C(x for x in {a:b,*c}): pass','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, 'class C(x for x in {a:b,*c}): pass\\n')\n"
+    },
+    {
+      "id": "mixed-display-boundary-6",
+      "source": "try: compile('[x,y for x in {a,b:c}]','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '[x,y for x in {a,b:c}]\\n')\n"
+    },
+    {
+      "id": "mixed-display-boundary-7",
+      "source": "try: compile('[*x for x in {a,**b}]','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '[*x for x in {a,**b}]\\n')\n"
+    },
+    {
+      "id": "mixed-display-valid",
+      "source": "print(len({*(1,2),3}))\nprint({**{'x':1},'y':2}['y'])\n",
+      "stage": "LA109",
+      "stdout": "3\n2\n"
     }
   ]
 }
