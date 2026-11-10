@@ -354,8 +354,14 @@ The diagnostic precedes target validation and selects the next token with
 character offsets and physical source-line newlines. Ungrouped starred targets,
 unadopted operands and prior-compound metadata keep explicit field boundaries.
 
-The current fixed generated-syntax corpus contains 2,055 cases: 1,936 supported
-semantic/error comparisons and 119 explicit native-field refusals. The ordinary
+LA-107 qualifies absent iterable/filter operands at comma and closing-delimiter
+boundaries, plus comma tails in list/set/dictionary and parenthesized generator
+comprehensions. Native fields select the unexpected token and preserve physical
+source-line newlines. Keyword-valued and unparenthesized class generators keep
+their incomplete-clause field boundary, including nested clause failures.
+
+The current fixed generated-syntax corpus contains 2,152 cases: 2,019 supported
+semantic/error comparisons and 133 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
