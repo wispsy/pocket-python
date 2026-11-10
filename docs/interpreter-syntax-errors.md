@@ -321,7 +321,13 @@ unpacking in dict comprehensions. Iterable errors retain the complete starred
 operand range; dictionary errors select the double-star token. Adopted clauses
 must parse before fields are published. Invalid operands/tails remain bounded.
 
-The current fixed generated-syntax corpus contains 1,619 cases: 1,516 supported
+LA-102 composes comprehension payloads through modules, nested exec, chained
+errors and notes. Independent argument snapshots, cyclic filename owners and
+suspended flags/cleanup retain their fields through parked collection,
+cancellation/close and shared limits. Offline acceptance includes original
+dynamic frames and retained-field/cleanup Stop/Restart paths.
+
+The current fixed generated-syntax corpus contains 1,635 cases: 1,532 supported
 semantic/error comparisons and 103 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;

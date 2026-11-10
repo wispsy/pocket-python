@@ -55,6 +55,7 @@ for (const [source, mode] of [
   ...['if', 'if True:\nvalue=7', 'return 7', 'nonlocal x', 'def f(x,x): pass', 'if True', 'del f()', '[a,1]=value', '[雪,*b,*c]=value', 'def f(a=1,b): pass', 'lambda *,**a: 1', 'f(a=1,2)', 'f(x for x in y,1)', 'f(a=1,a=2)', 'f(a=1,2,**d,*x)', 'f(a=x for x in y)', 'class C(a=1,B): pass', 'class C(a=1,a=2): pass', 'try: pass', 'try: pass\nexcept: pass\nexcept E: pass'].map(source => [source, 'exec']),
   ['x=1\nx=2', 'single'],
   ['from 雪 import 鳥,', 'exec'], ['import 雪 as 鳥.羽', 'exec'],
+  ['[雪,鳥 for 羽 in 空]', 'exec'], ['{**雪 for 羽 in 空}', 'exec'],
 ]) test('retained ' + JSON.stringify(source) + ' payloads share allocation limits', async () => {
   const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile(' + JSON.stringify(source) + ',"selected.py",' + JSON.stringify(mode) + ')\n except SyntaxError as e: held.append(e)\n')],
     compileOptions: {languageProfile: corpus.profile}, memoryLimits: {maxBytes: 100000}, options: {maxSteps: 50000, maxWork: 20000000}});
@@ -76,7 +77,9 @@ for (const [id, filename] of [['generated-syntax-original-dynamic-failure', 'syn
   ['generated-trygrammar-original-dynamic-failure', 'trygrammar-payload-original.py'],
   ['generated-handlerorder-original-dynamic-failure', 'handlerorder-payload-original.py'],
   ['generated-importgrammar-original-dynamic-failure', 'importgrammar-payload-original.py'],
-  ['generated-importalias-original-dynamic-failure', 'importalias-payload-original.py']])
+  ['generated-importalias-original-dynamic-failure', 'importalias-payload-original.py'],
+  ['generated-compelements-original-dynamic-failure', 'compelements-payload-original.py'],
+  ['generated-compunpack-original-dynamic-failure', 'compunpack-payload-original.py']])
 test(id + ' keeps the original dynamic call frames', async () => {
   const item = corpus.cases.find(item => item.id === id);
   const result = await runSourceRequest({modules: [unit(item.source)], compileOptions: {languageProfile: corpus.profile}});

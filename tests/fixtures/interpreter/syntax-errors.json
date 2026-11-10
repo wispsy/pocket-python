@@ -44,7 +44,8 @@
     "LA99",
     "LA99A",
     "LA100",
-    "LA101"
+    "LA101",
+    "LA102"
   ],
   "cases": [
     {
@@ -10040,6 +10041,126 @@
       "stage": "Future",
       "source": "try: compile('if True: pass\\n[*x for x in z]',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e._metadata)\n",
       "stdout": "(1, 0, 'if True: pass\\n[*x for x in z]\\n')\n"
+    },
+    {
+      "id": "generated-compelements-owner-cycle",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('[雪,鳥 for 羽 in 空]',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stage": "LA102",
+      "stdout": "entered\nTrue did you forget parentheses around the comprehension target? 2 False False\n"
+    },
+    {
+      "id": "generated-compelements-chaining",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('[雪,鳥 for 羽 in 空]',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stage": "LA102",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 2\n"
+    },
+    {
+      "id": "generated-compelements-cleanup",
+      "source": "def work():\n try: compile('[雪,鳥 for 羽 in 空]',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stage": "LA102",
+      "stdout": "cleanup cleanup-input.py did you forget parentheses around the comprehension target? False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-compelements-original-dynamic-failure",
+      "source": "exec(compile('def fail():\\n try: compile(\\'[雪,鳥 for 羽 in 空]\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','compelements-payload-original.py',\"exec\"))\n",
+      "error_type": "SyntaxError",
+      "stage": "LA102",
+      "stdout": "dynamic-input.py False 2\n"
+    },
+    {
+      "id": "generated-compelements-nested-exec",
+      "source": "scope={}\nexec('try: compile(\\'[雪,鳥 for 羽 in 空]\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stage": "LA102",
+      "stdout": "nested-input.py did you forget parentheses around the comprehension target? 2 False\n"
+    },
+    {
+      "id": "generated-compelements-field-independence",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('[雪,鳥 for 羽 in 空]',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stage": "LA102",
+      "stdout": "True True True True\n'[雪,鳥 for 羽 in 空]\\n' True True 77 2\n"
+    },
+    {
+      "id": "generated-compelements-module",
+      "source": "import helper\ne=helper.validate('[雪,鳥 for 羽 in 空]')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stage": "LA102",
+      "stdout": "module-input.py did you forget parentheses around the comprehension target? 2 module input\n"
+    },
+    {
+      "id": "generated-compelements-flags-owner-cycle",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('[雪,鳥 for 羽 in 空]',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stage": "LA102",
+      "stdout": "entered\n7 True did you forget parentheses around the comprehension target? 2\n"
+    },
+    {
+      "id": "generated-compunpack-owner-cycle",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('{**雪 for 羽 in 空}',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stage": "LA102",
+      "stdout": "entered\nTrue dict unpacking cannot be used in dict comprehension 2 False False\n"
+    },
+    {
+      "id": "generated-compunpack-chaining",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('{**雪 for 羽 in 空}',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stage": "LA102",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 2\n"
+    },
+    {
+      "id": "generated-compunpack-cleanup",
+      "source": "def work():\n try: compile('{**雪 for 羽 in 空}',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stage": "LA102",
+      "stdout": "cleanup cleanup-input.py dict unpacking cannot be used in dict comprehension False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-compunpack-original-dynamic-failure",
+      "source": "exec(compile('def fail():\\n try: compile(\\'{**雪 for 羽 in 空}\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','compunpack-payload-original.py',\"exec\"))\n",
+      "error_type": "SyntaxError",
+      "stage": "LA102",
+      "stdout": "dynamic-input.py False 2\n"
+    },
+    {
+      "id": "generated-compunpack-nested-exec",
+      "source": "scope={}\nexec('try: compile(\\'{**雪 for 羽 in 空}\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stage": "LA102",
+      "stdout": "nested-input.py dict unpacking cannot be used in dict comprehension 2 False\n"
+    },
+    {
+      "id": "generated-compunpack-field-independence",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('{**雪 for 羽 in 空}',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stage": "LA102",
+      "stdout": "True True True True\n'{**雪 for 羽 in 空}\\n' True True 77 2\n"
+    },
+    {
+      "id": "generated-compunpack-module",
+      "source": "import helper\ne=helper.validate('{**雪 for 羽 in 空}')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stage": "LA102",
+      "stdout": "module-input.py dict unpacking cannot be used in dict comprehension 2 module input\n"
+    },
+    {
+      "id": "generated-compunpack-flags-owner-cycle",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('{**雪 for 羽 in 空}',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stage": "LA102",
+      "stdout": "entered\n7 True dict unpacking cannot be used in dict comprehension 2\n"
     }
   ]
 }
