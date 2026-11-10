@@ -172,3 +172,12 @@ divergences or untested cases. The separate ordinary exception corpus retains
 These finite observations do not measure overall Python compatibility. #600/A2,
 #124, #759, groups/except*, traceback objects/mutation, note export, library/package
 qualification and candidate/release gates remain open.
+
+LA-82 qualifies positional arguments following explicit keywords or keyword
+unpacking, and iterable unpacking following keyword unpacking. Parser locations
+use character columns: positional-order failures select the closing call token,
+while iterable-order failures begin at the preceding comma and cover the
+contiguous starred arguments. Multiline source text and exec/eval/single modes
+have independent reference observations. Malformed argument tails, interacting
+positional/unpacking failures and generator call grammar retain their separate
+native-field boundaries at this checkpoint.

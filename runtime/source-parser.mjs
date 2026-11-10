@@ -654,10 +654,23 @@ class Parser {
       if (this.eat(".")) { const attr = this.name(); value = this.node("Attribute", value, {value, name: attr.value}, attr); }
       else if (this.eat("(")) {
         const args = [], keywords = [], seen = new Set();
+        let positionalError = null, positionalQualified = true;
         while (!this.at(")")) {
+          const separator = this.previous;
           if (this.eat("**")) keywords.push({name: null, value: this.expression()});
           else if (this.eat("*")) {
-            if (keywords.some(keyword => keyword.name === null)) this.fail("Iterable unpacking follows keyword unpacking.");
+            if (keywords.some(keyword => keyword.name === null) && !positionalError) {
+              const start = this.previous;
+              this.expression();
+              while (this.eat(",") && this.eat("*")) this.expression();
+              const end = this.peek();
+              const syntax = this.at(")") || this.kind("name") ? this.diagnostic(
+                "iterable argument unpacking follows keyword argument unpacking",
+                [separator.span[0], separator.span[1], end.span[0], end.span[1]]) : undefined;
+              if (syntax && syntax.lineno !== syntax.end_lineno) syntax.text = syntax.text.replace(/\n$/, "");
+              this.fail("Iterable unpacking follows keyword unpacking.", start, "SYNTAX", undefined, syntax);
+            }
+            if (keywords.some(keyword => keyword.name === null)) positionalQualified = false;
             const start = this.previous; args.push(this.node("StarredArgument", start, {value: this.expression()}));
           } else
           if (this.kind("name") && this.peek(1).value === "=") {
@@ -665,7 +678,8 @@ class Parser {
             if (seen.has(token.value)) this.fail("Duplicate keyword argument.", token);
             seen.add(token.value); keywords.push({name: token.value, value: this.expression()});
           } else {
-            if (keywords.length) this.fail("A positional argument follows a keyword argument.");
+            if (keywords.length) positionalError ??= keywords.some(keyword => keyword.name === null) ?
+              "positional argument follows keyword argument unpacking" : "positional argument follows keyword argument";
             args.push(this.namedExpression());
           }
           if (this.at("for")) {
@@ -675,6 +689,8 @@ class Parser {
           }
           if (!this.eat(",")) break;
         }
+        if (positionalError) this.fail("A positional argument follows a keyword argument.", this.peek(), "SYNTAX", undefined,
+          positionalQualified && this.at(")") ? this.diagnostic(positionalError, this.peek().span) : undefined);
         this.expect(")"); value = this.node("Call", value, {callable: value, args, keywords});
       } else if (this.eat("[")) {
         const start = this.peek(), items = [this.subscript()]; let tuple = false;

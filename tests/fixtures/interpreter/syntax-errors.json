@@ -23,7 +23,8 @@
     "LA78",
     "LA79",
     "LA80",
-    "LA81"
+    "LA81",
+    "LA82"
   ],
   "cases": [
     {
@@ -3907,6 +3908,416 @@
       "stage": "LA81",
       "source": "class Name(str): pass\nfilename=Name(\"colon.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile(\"def f(*雪,*π): pass\",filename,\"exec\",Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
       "stdout": "entered\n7 True * argument may appear only once 10\n"
+    },
+    {
+      "id": "call-order-0-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 8 1 9\n'f(a=1,2)\\n' False 2\n0 0 'f(a=1,2)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-0-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 8 1 9\n'f(a=1,2)' False 2\n0 0 'f(a=1,2)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-0-single",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 8 1 9\n'f(a=1,2)' False 2\n0 0 'f(a=1,2)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-1-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 8 1 9\n'f(**d,2)\\n' False 2\n0 0 'f(**d,2)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-1-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,2)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 8 1 9\n'f(**d,2)' False 2\n0 0 'f(**d,2)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-1-single",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,2)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 8 1 9\n'f(**d,2)' False 2\n0 0 'f(**d,2)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-2-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 9\n'f(**d,*x)\\n' False 2\n0 0 'f(**d,*x)\\n'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-2-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 9\n'f(**d,*x)' False 2\n0 0 'f(**d,*x)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-2-single",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 9\n'f(**d,*x)' False 2\n0 0 'f(**d,*x)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-3-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,雪+2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 10 1 11\n'f(a=1,雪+2)\\n' False 2\n0 0 'f(a=1,雪+2)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-3-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,雪+2)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 10 1 11\n'f(a=1,雪+2)' False 2\n0 0 'f(a=1,雪+2)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-3-single",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,雪+2)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 10 1 11\n'f(a=1,雪+2)' False 2\n0 0 'f(a=1,雪+2)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-4-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,3)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 10 1 11\n'f(a=1,2,3)\\n' False 2\n0 0 'f(a=1,2,3)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-4-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,3)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 10 1 11\n'f(a=1,2,3)' False 2\n0 0 'f(a=1,2,3)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-4-single",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,3)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 10 1 11\n'f(a=1,2,3)' False 2\n0 0 'f(a=1,2,3)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-5-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 9 1 10\n'f(a=1,2,)\\n' False 2\n0 0 'f(a=1,2,)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-5-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 9 1 10\n'f(a=1,2,)' False 2\n0 0 'f(a=1,2,)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-5-single",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 9 1 10\n'f(a=1,2,)' False 2\n0 0 'f(a=1,2,)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-6-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,b=3)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 12 1 13\n'f(a=1,2,b=3)\\n' False 2\n0 0 'f(a=1,2,b=3)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-6-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,b=3)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 12 1 13\n'f(a=1,2,b=3)' False 2\n0 0 'f(a=1,2,b=3)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-6-single",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,b=3)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 12 1 13\n'f(a=1,2,b=3)' False 2\n0 0 'f(a=1,2,b=3)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-7-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,*x)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 11 1 12\n'f(a=1,2,*x)\\n' False 2\n0 0 'f(a=1,2,*x)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-7-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,*x)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 11 1 12\n'f(a=1,2,*x)' False 2\n0 0 'f(a=1,2,*x)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-7-single",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,*x)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 11 1 12\n'f(a=1,2,*x)' False 2\n0 0 'f(a=1,2,*x)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-8-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,**x)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 12 1 13\n'f(a=1,2,**x)\\n' False 2\n0 0 'f(a=1,2,**x)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-8-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,**x)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 12 1 13\n'f(a=1,2,**x)' False 2\n0 0 'f(a=1,2,**x)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-8-single",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2,**x)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 12 1 13\n'f(a=1,2,**x)' False 2\n0 0 'f(a=1,2,**x)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-9-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,(雪+2))','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 12 1 13\n'f(a=1,(雪+2))\\n' False 2\n0 0 'f(a=1,(雪+2))\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-9-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,(雪+2))','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 12 1 13\n'f(a=1,(雪+2))' False 2\n0 0 'f(a=1,(雪+2))'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-9-single",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,(雪+2))','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 12 1 13\n'f(a=1,(雪+2))' False 2\n0 0 'f(a=1,(雪+2))'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-10-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,\\n 雪+2\\n)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 3 1 3 2\n')\\n' False 2\n0 0 'f(a=1,\\n 雪+2\\n)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-10-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,\\n 雪+2\\n)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 3 1 3 2\n')' False 2\n0 0 'f(a=1,\\n 雪+2\\n)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-10-single",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,\\n 雪+2\\n)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 3 1 3 2\n')' False 2\n0 0 'f(a=1,\\n 雪+2\\n)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-11-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,\\n 雪+2,\\n)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 3 1 3 2\n')\\n' False 2\n0 0 'f(a=1,\\n 雪+2,\\n)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-11-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,\\n 雪+2,\\n)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 3 1 3 2\n')' False 2\n0 0 'f(a=1,\\n 雪+2,\\n)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-11-single",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,\\n 雪+2,\\n)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 3 1 3 2\n')' False 2\n0 0 'f(a=1,\\n 雪+2,\\n)'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-12-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x,*y)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 12\n'f(**d,*x,*y)\\n' False 2\n0 0 'f(**d,*x,*y)\\n'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-12-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x,*y)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 12\n'f(**d,*x,*y)' False 2\n0 0 'f(**d,*x,*y)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-12-single",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x,*y)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 12\n'f(**d,*x,*y)' False 2\n0 0 'f(**d,*x,*y)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-13-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x,a=1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 10\n'f(**d,*x,a=1)\\n' False 2\n0 0 'f(**d,*x,a=1)\\n'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-13-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x,a=1)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 10\n'f(**d,*x,a=1)' False 2\n0 0 'f(**d,*x,a=1)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-13-single",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x,a=1)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 10\n'f(**d,*x,a=1)' False 2\n0 0 'f(**d,*x,a=1)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-14-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(**d, *[1,2])','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 14\n'f(**d, *[1,2])\\n' False 2\n0 0 'f(**d, *[1,2])\\n'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-14-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(**d, *[1,2])','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 14\n'f(**d, *[1,2])' False 2\n0 0 'f(**d, *[1,2])'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-14-single",
+      "stage": "LA82",
+      "source": "try: compile('f(**d, *[1,2])','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 14\n'f(**d, *[1,2])' False 2\n0 0 'f(**d, *[1,2])'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-15-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,\\n *雪\\n)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 3 1\n'f(**d,' False 2\n0 0 'f(**d,\\n *雪\\n)\\n'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-15-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,\\n *雪\\n)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 3 1\n'f(**d,' False 2\n0 0 'f(**d,\\n *雪\\n)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-15-single",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,\\n *雪\\n)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 3 1\n'f(**d,' False 2\n0 0 'f(**d,\\n *雪\\n)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-16-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x,)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 10\n'f(**d,*x,)\\n' False 2\n0 0 'f(**d,*x,)\\n'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-16-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x,)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 10\n'f(**d,*x,)' False 2\n0 0 'f(**d,*x,)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-16-single",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x,)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 10\n'f(**d,*x,)' False 2\n0 0 'f(**d,*x,)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-17-exec",
+      "stage": "LA82",
+      "source": "try: compile('def f(a,a):\\n f(k=1,2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 2 9 2 10\n' f(k=1,2)\\n' False 2\n0 0 'def f(a,a):\\n f(k=1,2)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-18-exec",
+      "stage": "LA82",
+      "source": "try: compile('return\\nf(a=1,2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 2 8 2 9\n'f(a=1,2)\\n' False 2\n0 0 'return\\nf(a=1,2)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-19-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2)\\nreturn','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 8 1 9\n'f(a=1,2)\\n' False 2\n0 0 'f(a=1,2)\\nreturn\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-20-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2)\\nx=','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 8 1 9\n'f(a=1,2)\\n' False 2\n0 0 'f(a=1,2)\\nx=\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-21-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(**d,*x)\\nx=','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 1 9\n'f(**d,*x)\\n' False 2\n0 0 'f(**d,*x)\\nx=\\n'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-22-exec",
+      "stage": "LA82",
+      "source": "try: compile('class 雪:\\n f(a=1,2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 2 9 2 10\n' f(a=1,2)\\n' False 2\n0 0 'class 雪:\\n f(a=1,2)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-23-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2) # comment\\n','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 8 1 9\n'f(a=1,2) # comment\\n' False 2\n0 0 'f(a=1,2) # comment\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-23-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2) # comment\\n','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 8 1 9\n'f(a=1,2) # comment\\n' False 2\n0 0 'f(a=1,2) # comment\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-23-single",
+      "stage": "LA82",
+      "source": "try: compile('f(a=1,2) # comment\\n','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 8 1 9\n'f(a=1,2) # comment\\n' False 2\n0 0 'f(a=1,2) # comment\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "call-order-24-exec",
+      "stage": "LA82",
+      "source": "try: compile('f(\\n **d,\\n *[1,2],\\n *x\\n)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 2 5 5 1\n' **d,' False 2\n0 0 'f(\\n **d,\\n *[1,2],\\n *x\\n)\\n'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-24-eval",
+      "stage": "LA82",
+      "source": "try: compile('f(\\n **d,\\n *[1,2],\\n *x\\n)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 2 5 5 1\n' **d,' False 2\n0 0 'f(\\n **d,\\n *[1,2],\\n *x\\n)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-24-single",
+      "stage": "LA82",
+      "source": "try: compile('f(\\n **d,\\n *[1,2],\\n *x\\n)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 2 5 5 1\n' **d,' False 2\n0 0 'f(\\n **d,\\n *[1,2],\\n *x\\n)'\nTrue True True\ncalls/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "call-order-boundary-0",
+      "stage": "FutureCall",
+      "source": "try: compile('f(**d,1,*x)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 11 1 12\n'f(**d,1,*x)\\n' False 2\n0 0 'f(**d,1,*x)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument unpacking True\n",
+      "owner": "#124",
+      "boundary": "Interacting call-order failures and malformed argument tails retain their native-field boundary."
+    },
+    {
+      "id": "call-order-boundary-1",
+      "stage": "FutureCall",
+      "source": "try: compile('f(a=1,2,**d,*x)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x)\\n' False 2\n0 0 'f(a=1,2,**d,*x)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n",
+      "owner": "#124",
+      "boundary": "Interacting call-order failures and malformed argument tails retain their native-field boundary."
+    },
+    {
+      "id": "call-order-boundary-2",
+      "stage": "FutureCall",
+      "source": "try: compile('f(**d,*x=1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "cannot assign to iterable argument unpacking 1 7 1 11\n'f(**d,*x=1)\\n' False 2\n0 0 'f(**d,*x=1)\\n'\nTrue True True\ncalls/雪.py True\ncannot assign to iterable argument unpacking True\n",
+      "owner": "#124",
+      "boundary": "Interacting call-order failures and malformed argument tails retain their native-field boundary."
+    },
+    {
+      "id": "call-order-boundary-3",
+      "stage": "FutureCall",
+      "source": "try: compile('f(a=1,2+)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 9 1 10\n'f(a=1,2+)\\n' False 2\n0 0 'f(a=1,2+)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n",
+      "owner": "#124",
+      "boundary": "Interacting call-order failures and malformed argument tails retain their native-field boundary."
     }
   ]
 }
