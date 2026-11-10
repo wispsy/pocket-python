@@ -287,6 +287,12 @@ suspended conversion/cleanup retain their owned graphs through parked
 collection, cancellation/close and shared limits. The runnable example and
 installed offline console cover original dynamic frames and Stop/Restart.
 
+LA-97 qualifies unparenthesized from-import trailing commas and reversed
+import/from statements. Relative/dotted modules, aliases, comments, Unicode
+and explicit line continuation retain their parser source ranges. Interactive
+implicit EOF has its own offsets. Valid parenthesized imports keep ordinary
+compilation; malformed tails and earlier compound metadata remain bounded.
+
 The LA-93 fixed generated-syntax corpus contains 1,133 cases: 1,077 supported
 semantic/error comparisons and 56 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache

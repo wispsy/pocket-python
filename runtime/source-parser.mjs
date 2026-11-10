@@ -386,6 +386,34 @@ class Parser {
       aliases.push({name, asname});
       if (!this.eat(",")) break;
       if (parenthesized && this.at(")")) break;
+      if (specifier !== null && !parenthesized && this.kind("newline")) {
+        const token = this.peek(), source = this.lexed.source, line = source.split("\n")[token.span[0] - 1];
+        const implicit = this.options.mode === "single" && source[token.start] !== "\n";
+        const syntax = this.diagnostic("trailing comma not allowed without surrounding parentheses", token.span, {newline: !implicit});
+        const lineStart = source.lastIndexOf("\n", token.start - 1) + 1;
+        const comment = source.indexOf("#", this.previous.end);
+        syntax.offset = implicit ? Array.from(line).length : comment >= lineStart && comment < token.start ?
+          Array.from(source.slice(lineStart, comment)).length + 1 : syntax.offset;
+        syntax.end_lineno = syntax.lineno;
+        syntax.end_offset = implicit ? -1 : Array.from(line).length + 2;
+        this.fail("A from-import trailing comma requires parentheses.", token, "SYNTAX", undefined, syntax);
+      }
+    }
+    if (specifier === null && aliases.every(alias => alias.asname === null) && this.eat("from")) {
+      this.qualified();
+      let syntax;
+      if (this.kind("newline")) {
+        const token = this.peek(), implicit = this.options.mode === "single" && this.lexed.source[token.start] !== "\n";
+        syntax = this.diagnostic("Did you mean to use 'from ... import ...' instead?",
+          [start.span[0], start.span[1], token.span[0], token.span[1]], {newline: !implicit});
+        syntax.end_offset = Array.from(this.lexed.source.split("\n")[token.span[0] - 1]).length + (implicit ? 0 : 1);
+        if (syntax.lineno !== syntax.end_lineno) {
+          syntax.text = syntax.text.replace(/\n$/, "");
+          const bytes = new TextEncoder().encode(syntax.text + "\0");
+          syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, token.span[1] - (implicit ? 1 : 0)))).length;
+        }
+      }
+      this.fail("Reversed import statement.", start, "SYNTAX", undefined, syntax);
     }
     if (parenthesized) this.expect(")");
     return this.node("Import", start, {specifier, level, aliases});
