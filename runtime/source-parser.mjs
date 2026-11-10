@@ -33,6 +33,7 @@ class Parser {
     this.completedCompound = false;
     this.comprehensionClauseFields = true;
     this.operandFields = true;
+    this.conditionalTest = false;
     this.controlError = null;
     this.keywordErrors = [];
     this.handlerErrors = [];
@@ -653,6 +654,10 @@ class Parser {
     if (this.expressionBoundary()) this.fail("Expected an expression.", this.peek(), "SYNTAX", undefined,
       this.operandFields && this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined);
   }
+  rightOperand(body) {
+    const before = this.operandFields; this.operandFields &&= !this.conditionalTest;
+    try { this.requiredOperand(); return body(); } finally { this.operandFields = before; }
+  }
   targetExpression(body) {
     const before = this.operandFields; this.operandFields = false;
     try { return body(); } finally { this.operandFields = before; }
@@ -761,7 +766,9 @@ class Parser {
       if (!this.eat("if")) return body;
       if (this.expressionBoundary()) this.fail("Expected a conditional-expression test.", this.peek(), "SYNTAX", undefined,
         this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined);
-      const test = this.disjunction();
+      const before = this.conditionalTest; this.conditionalTest = true;
+      let test;
+      try { test = this.disjunction(); } finally { this.conditionalTest = before; }
       if (!this.at("else")) {
         const first = this.nativeRanges.get(body) ?? body.span, last = this.nativeRanges.get(test) ?? test.span;
         const syntax = this.comprehensionClauseFields && !this.at(":") ? this.diagnostic("expected 'else' after 'if' expression",
@@ -791,12 +798,18 @@ class Parser {
   }
   disjunction() {
     let value = this.conjunction();
-    while (this.eat("or")) { const right = this.conjunction(); value = this.node("Boolean", value, {operator: "or", left: value, right}, right); }
+    while (this.eat("or")) {
+      const right = this.rightOperand(() => this.conjunction());
+      value = this.node("Boolean", value, {operator: "or", left: value, right}, right);
+    }
     return value;
   }
   conjunction() {
     let value = this.negation();
-    while (this.eat("and")) { const right = this.negation(); value = this.node("Boolean", value, {operator: "and", left: value, right}, right); }
+    while (this.eat("and")) {
+      const right = this.rightOperand(() => this.negation());
+      value = this.node("Boolean", value, {operator: "and", left: value, right}, right);
+    }
     return value;
   }
   negation() {
