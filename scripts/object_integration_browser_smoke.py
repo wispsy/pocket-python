@@ -65,7 +65,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     ready()
                     for case in corpus['cases']:
                         if (case.get('modules') or
-                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93', 'LA96', 'LA99', 'LA99A', 'LA102', 'LA105', 'LA108', 'LA111', 'LA114'} or
+                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93', 'LA96', 'LA99', 'LA99A', 'LA102', 'LA105', 'LA108', 'LA111', 'LA114', 'LA117'} or
                             containers and case['stage'] not in {'LA-7', 'LA-6A'} or
                             exceptions and case['stage'] not in {'LA13', 'LA16', 'LA19', 'LA22', 'LA25', 'LA28', 'LA31', 'LA34', 'LA37', 'LA40', 'LA43', 'LA46', 'LA49', 'LA52', 'LA55', 'LA58', 'LA61', 'LA62C'}):
                             continue
@@ -130,7 +130,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                                           'generated-dictmissing-original-dynamic-failure', 'generated-dictstarred-original-dynamic-failure',
                                           'generated-compin-original-dynamic-failure', 'generated-compclause-original-dynamic-failure',
                                           'generated-mixeddisplay-original-dynamic-failure', 'generated-dictentries-original-dynamic-failure',
-                                          'generated-forheader-original-dynamic-failure', 'generated-headeroperand-original-dynamic-failure'}:
+                                          'generated-forheader-original-dynamic-failure', 'generated-headeroperand-original-dynamic-failure',
+                                          'generated-conditionalelse-original-dynamic-failure', 'generated-conditionalalternative-original-dynamic-failure'}:
                             name = case['id'].split('-')[1]
                             assert f'fail at {name}-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         if case['id'] == 'generated-callgrammar-original-dynamic-failure':
@@ -217,6 +218,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     busy_sources = [busy]
                     if syntax_errors:
                         busy_sources += [
+                            "try: compile('雪 if 鳥','conditional-else.py','exec')\nexcept SyntaxError as e:\n e.args=()\n print('entered')\n while True: e._metadata[2]\n",
+                            "def work():\n try: compile('雪 if 鳥 else','conditional-alternative.py','exec')\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print('entered')\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n",
                             "try: compile('for 雪 鳥: pass','for-header.py','exec')\nexcept SyntaxError as e:\n e.args=()\n print('entered')\n while True: e._metadata[2]\n",
                             "def work():\n try: compile('for 雪 in : pass','header-operand.py','exec')\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print('entered')\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n",
                             "try: compile('{雪,**鳥}','mixed-display.py','exec')\nexcept SyntaxError as e:\n e.args=()\n print('entered')\n while True: e._metadata[2]\n",
@@ -404,6 +407,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                   'stop-during-comprehension-in-retention', 'stop-during-comprehension-clause-cleanup',
                   'stop-during-mixed-display-retention', 'stop-during-dictionary-entries-cleanup',
                   'stop-during-for-header-retention', 'stop-during-header-operand-cleanup',
+                  'stop-during-conditional-else-retention', 'stop-during-conditional-alternative-cleanup',
                   'reduced-profile-update', 'old-cache-removed', 'core-dynamic-source-boundary']
     return {'schema_version': 1, 'suite': 'interpreter-syntax-errors-offline/1' if syntax_errors else 'interpreter-exceptions-offline/1' if exceptions else 'interpreter-containers-offline/1' if containers else 'interpreter-object-offline/1',
             'installed_distribution_required': require_installed, 'package_origin': str(package),

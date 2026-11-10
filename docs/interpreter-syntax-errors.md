@@ -165,7 +165,7 @@ shared limits and original dynamic frames cover those graphs. The example
 and installed offline console exercise new source, retained-field and cleanup
 Stop/Restart paths, plus the existing reduced-profile boundary.
 
-At LA-81, the fixed generated-syntax corpus contains 2,727 cases: 2,509 supported
+At LA-81, the fixed generated-syntax corpus contains 2,743 cases: 2,525 supported
 semantic/error comparisons and 218 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
@@ -416,7 +416,13 @@ LA-112A preserves boolean and conditional for-target continuations as
 explicit native-field boundaries. The reference can select an earlier expression
 range, so the missing-in separator diagnostic is not published for these tails.
 
-The current fixed generated-syntax corpus contains 2,727 cases: 2,509 supported
+LA-117 composes both conditional diagnostics through modules, nested exec,
+chaining/notes and independent fields/arguments. Cyclic filenames and suspended
+conversion/cleanup survive collection, cancellation/close and shared limits.
+The example and installed offline console cover original frames, retained-field
+and cleanup Stop/Restart paths and reduced-profile updates.
+
+The current fixed generated-syntax corpus contains 2,743 cases: 2,525 supported
 semantic/error comparisons and 218 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
