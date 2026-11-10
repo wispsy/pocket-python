@@ -281,8 +281,8 @@ missing-colon, nested/starred-target, parameter default/separator, mixed call-or
 keyword-generator, class-argument, repeated call/class keyword, try/handler,
 import-list/alias, comprehension element/unpacking/clause, mixed dictionary/set
 displays, dictionary comprehension entries, incomplete loop/condition headers,
-conditional expressions, missing expression starts and interactive-input
-payloads from dynamic compilation. Native fields,
+conditional expressions, missing expression starts, incomplete lambdas and
+interactive-input payloads from dynamic compilation. Native fields,
 argument snapshots and original filenames retain their independent identity.
 Run `examples/interpreter_generated_syntax.py` for source validation and cleanup.
 Unqualified diagnostics retain explicit field-read boundaries.

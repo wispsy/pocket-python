@@ -455,8 +455,14 @@ when the next token moves to another physical line. Statement/conditional
 combinations retain a separate field boundary because they can select another
 native diagnostic.
 
-The current fixed generated-syntax corpus contains 3,595 cases: 3,347 supported
-semantic/error comparisons and 248 explicit native-field refusals. The ordinary
+LA-123 composes lambda body and separator payloads through modules, nested exec,
+chaining/notes and independent fields/arguments. Retained filenames, suspended
+conversion and cleanup survive collection, cancellation/close and shared
+allocation limits. The example and installed offline console cover original
+frames, multiline source text and Stop/Restart paths.
+
+The current fixed generated-syntax corpus contains 3,612 cases: 3,365 supported
+semantic/error comparisons and 247 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
