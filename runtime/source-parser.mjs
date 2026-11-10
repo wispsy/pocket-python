@@ -382,7 +382,7 @@ class Parser {
         this.unsupported("Wildcard imports are not adopted.");
       }
       const name = specifier === null ? this.qualified() : this.name().value;
-      const asname = this.eat("as") ? this.name().value : null;
+      const asname = this.eat("as") ? this.importAlias() : null;
       aliases.push({name, asname});
       if (!this.eat(",")) break;
       if (parenthesized && this.at(")")) break;
@@ -417,6 +417,48 @@ class Parser {
     }
     if (parenthesized) this.expect(")");
     return this.node("Import", start, {specifier, level, aliases});
+  }
+  importAlias() {
+    if (this.kind("name") && (this.peek(1).kind === "newline" || [",", ")", ";"].includes(this.peek(1).value)))
+      return this.name().value;
+    const first = this.peek(); let value;
+    try { value = this.expression(); }
+    catch (error) {
+      if (error instanceof SourceError && error.code === "SYNTAX") this.fail("Invalid import alias.", first);
+      throw error;
+    }
+    const last = this.previous;
+    let label = {Name: "name", Attribute: "attribute", Subscript: "subscript", Call: "function call",
+      Binary: "expression", Unary: "expression", Boolean: "expression", Compare: "comparison",
+      Conditional: "conditional expression", Lambda: "lambda", Dict: "dict literal", Set: "set display",
+      Tuple: "tuple", List: "list"}[value.kind];
+    if (value.kind === "Literal") label = value.literal.type === "none" ? "None" :
+      value.literal.type === "bool" ? value.literal.value ? "True" : "False" : "literal";
+    if (value.kind === "Comprehension") label = value.form === "generator" ? "generator expression" : value.form + " comprehension";
+    let syntax;
+    if (label) {
+      const span = [...value.span];
+      if (value.kind === "Comprehension") {
+        let depth = 0;
+        for (const token of this.tokens) {
+          this.charge();
+          if (token.start < first.start || token.span[0] < value.span[0] || token.span[0] === value.span[0] && token.span[1] < value.span[1]) continue;
+          if (["(", "[", "{"].includes(token.value)) depth++;
+          if ([")", "]", "}"].includes(token.value) && --depth === 0) {
+            span[2] = token.span[2]; span[3] = token.span[3];
+            break;
+          }
+        }
+      }
+      syntax = this.diagnostic("cannot use " + label + " as import target", span);
+      if (syntax.lineno !== syntax.end_lineno) {
+        syntax.text = syntax.text.replace(/\n$/, "");
+        const bytes = new TextEncoder().encode(syntax.text + "\0");
+        syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, span[3]))).length;
+      }
+      syntax.repair = this.lexed.source.slice(0, first.start) + "__import_target" + this.lexed.source.slice(last.end);
+    }
+    this.fail("Invalid import alias.", value, "SYNTAX", undefined, syntax);
   }
   decorated() {
     const decorators = [];
@@ -867,7 +909,7 @@ class Parser {
         value = this.comprehension(start, "generator", value);
       }
       this.expect(")");
-      if (value.kind === "Tuple") value = this.node("Tuple", start, {items: value.items});
+      if (value.kind === "Tuple" && !this.grouped.has(value)) value = this.node("Tuple", start, {items: value.items});
       this.grouped.add(value); return value;
     }
     if (this.eat("[")) {

@@ -293,6 +293,13 @@ and explicit line continuation retain their parser source ranges. Interactive
 implicit EOF has its own offsets. Valid parenthesized imports keep ordinary
 compilation; malformed tails and earlier compound metadata remain bounded.
 
+LA-98 qualifies invalid import aliases across adopted expression families.
+Target labels and character ranges retain grouping, comprehension closing
+delimiters and multiline/Unicode distinctions. Native fields require a
+successfully parsed source-only alias replacement, charged to the caller's
+compilation budget. Multiple invalid aliases, failed repairs and unadopted
+expressions keep their field boundaries.
+
 The LA-93 fixed generated-syntax corpus contains 1,133 cases: 1,077 supported
 semantic/error comparisons and 56 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
