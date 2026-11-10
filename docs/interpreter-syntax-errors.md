@@ -165,8 +165,8 @@ shared limits and original dynamic frames cover those graphs. The example
 and installed offline console exercise new source, retained-field and cleanup
 Stop/Restart paths, plus the existing reduced-profile boundary.
 
-At LA-81, the fixed generated-syntax corpus contains 4,490 cases: 4,205 supported
-semantic/error comparisons and 285 explicit native-field refusals, with no scored
+At LA-81, the fixed generated-syntax corpus contains 4,544 cases: 4,223 supported
+semantic/error comparisons and 321 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
 These finite observations do not measure overall Python compatibility. #600/A2,
@@ -486,8 +486,13 @@ is/is not and in/not in. Native token ranges, Unicode and multiline/newline mode
 are preserved. Incomplete not-in grammar, invalid target and unqualified
 comprehension contexts retain explicit native-field boundaries.
 
-The current fixed generated-syntax corpus contains 4,490 cases: 4,205 supported
-semantic/error comparisons and 285 explicit native-field refusals. The ordinary
+LA-128A retains explicit native-field boundaries for statement/conditional
+combinations in compound headers. The pinned reference can select a specialized
+message before if. Plain pass/break/continue starts keep their adopted token
+fields; escaped physical lines and compile modes are covered independently.
+
+The current fixed generated-syntax corpus contains 4,544 cases: 4,223 supported
+semantic/error comparisons and 321 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

@@ -73,7 +73,8 @@
     "LA125",
     "LA126",
     "LA127",
-    "LA128"
+    "LA128",
+    "LA128A"
   ],
   "cases": [
     {
@@ -27873,6 +27874,438 @@
       "stage": "LA128",
       "source": "print(1<2<=3,2 in [1,2],3 not in [1,2])\nx=[]\nprint(x is x,x is not None,1==1!=2)\n",
       "stdout": "True True True\nTrue True True\n"
+    },
+    {
+      "id": "header-statement-neighbor-0-exec",
+      "stage": "LA128A",
+      "source": "try: compile('if pass: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 8\n'if pass: pass\\n' 2 6\nTrue True True\n0 0 'if pass: pass\\n'\n"
+    },
+    {
+      "id": "header-statement-neighbor-0-single",
+      "stage": "LA128A",
+      "source": "try: compile('if pass: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 8\n'if pass: pass' 2 6\nTrue True True\n0 0 'if pass: pass'\n"
+    },
+    {
+      "id": "header-statement-neighbor-1-exec",
+      "stage": "LA128A",
+      "source": "try: compile('if break: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 9\n'if break: pass\\n' 2 6\nTrue True True\n0 0 'if break: pass\\n'\n"
+    },
+    {
+      "id": "header-statement-neighbor-1-single",
+      "stage": "LA128A",
+      "source": "try: compile('if break: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 9\n'if break: pass' 2 6\nTrue True True\n0 0 'if break: pass'\n"
+    },
+    {
+      "id": "header-statement-neighbor-2-exec",
+      "stage": "LA128A",
+      "source": "try: compile('if continue: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 12\n'if continue: pass\\n' 2 6\nTrue True True\n0 0 'if continue: pass\\n'\n"
+    },
+    {
+      "id": "header-statement-neighbor-2-single",
+      "stage": "LA128A",
+      "source": "try: compile('if continue: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 12\n'if continue: pass' 2 6\nTrue True True\n0 0 'if continue: pass'\n"
+    },
+    {
+      "id": "header-statement-neighbor-3-exec",
+      "stage": "LA128A",
+      "source": "try: compile('while pass: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 11\n'while pass: pass\\n' 2 6\nTrue True True\n0 0 'while pass: pass\\n'\n"
+    },
+    {
+      "id": "header-statement-neighbor-3-single",
+      "stage": "LA128A",
+      "source": "try: compile('while pass: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 11\n'while pass: pass' 2 6\nTrue True True\n0 0 'while pass: pass'\n"
+    },
+    {
+      "id": "header-statement-neighbor-4-exec",
+      "stage": "LA128A",
+      "source": "try: compile('while break: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 12\n'while break: pass\\n' 2 6\nTrue True True\n0 0 'while break: pass\\n'\n"
+    },
+    {
+      "id": "header-statement-neighbor-4-single",
+      "stage": "LA128A",
+      "source": "try: compile('while break: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 12\n'while break: pass' 2 6\nTrue True True\n0 0 'while break: pass'\n"
+    },
+    {
+      "id": "header-statement-neighbor-5-exec",
+      "stage": "LA128A",
+      "source": "try: compile('while continue: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 15\n'while continue: pass\\n' 2 6\nTrue True True\n0 0 'while continue: pass\\n'\n"
+    },
+    {
+      "id": "header-statement-neighbor-5-single",
+      "stage": "LA128A",
+      "source": "try: compile('while continue: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 15\n'while continue: pass' 2 6\nTrue True True\n0 0 'while continue: pass'\n"
+    },
+    {
+      "id": "header-statement-neighbor-6-exec",
+      "stage": "LA128A",
+      "source": "try: compile('for 雪 in pass: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'for 雪 in pass: pass\\n' 2 6\nTrue True True\n0 0 'for 雪 in pass: pass\\n'\n"
+    },
+    {
+      "id": "header-statement-neighbor-6-single",
+      "stage": "LA128A",
+      "source": "try: compile('for 雪 in pass: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'for 雪 in pass: pass' 2 6\nTrue True True\n0 0 'for 雪 in pass: pass'\n"
+    },
+    {
+      "id": "header-statement-neighbor-7-exec",
+      "stage": "LA128A",
+      "source": "try: compile('for 雪 in break: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 15\n'for 雪 in break: pass\\n' 2 6\nTrue True True\n0 0 'for 雪 in break: pass\\n'\n"
+    },
+    {
+      "id": "header-statement-neighbor-7-single",
+      "stage": "LA128A",
+      "source": "try: compile('for 雪 in break: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 15\n'for 雪 in break: pass' 2 6\nTrue True True\n0 0 'for 雪 in break: pass'\n"
+    },
+    {
+      "id": "header-statement-neighbor-8-exec",
+      "stage": "LA128A",
+      "source": "try: compile('for 雪 in continue: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 18\n'for 雪 in continue: pass\\n' 2 6\nTrue True True\n0 0 'for 雪 in continue: pass\\n'\n"
+    },
+    {
+      "id": "header-statement-neighbor-8-single",
+      "stage": "LA128A",
+      "source": "try: compile('for 雪 in continue: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 18\n'for 雪 in continue: pass' 2 6\nTrue True True\n0 0 'for 雪 in continue: pass'\n"
+    },
+    {
+      "id": "header-statement-priority-0-exec",
+      "stage": "Future",
+      "source": "try: compile('if pass if 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-0-single",
+      "stage": "Future",
+      "source": "try: compile('if pass if 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-1-exec",
+      "stage": "Future",
+      "source": "try: compile('if pass \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-1-single",
+      "stage": "Future",
+      "source": "try: compile('if pass \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-2-exec",
+      "stage": "Future",
+      "source": "try: compile('if break if 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-2-single",
+      "stage": "Future",
+      "source": "try: compile('if break if 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-3-exec",
+      "stage": "Future",
+      "source": "try: compile('if break \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-3-single",
+      "stage": "Future",
+      "source": "try: compile('if break \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-4-exec",
+      "stage": "Future",
+      "source": "try: compile('if continue if 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-4-single",
+      "stage": "Future",
+      "source": "try: compile('if continue if 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-5-exec",
+      "stage": "Future",
+      "source": "try: compile('if continue \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-5-single",
+      "stage": "Future",
+      "source": "try: compile('if continue \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-6-exec",
+      "stage": "Future",
+      "source": "try: compile('while pass if 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-6-single",
+      "stage": "Future",
+      "source": "try: compile('while pass if 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-7-exec",
+      "stage": "Future",
+      "source": "try: compile('while pass \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-7-single",
+      "stage": "Future",
+      "source": "try: compile('while pass \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-8-exec",
+      "stage": "Future",
+      "source": "try: compile('while break if 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-8-single",
+      "stage": "Future",
+      "source": "try: compile('while break if 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-9-exec",
+      "stage": "Future",
+      "source": "try: compile('while break \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-9-single",
+      "stage": "Future",
+      "source": "try: compile('while break \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-10-exec",
+      "stage": "Future",
+      "source": "try: compile('while continue if 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-10-single",
+      "stage": "Future",
+      "source": "try: compile('while continue if 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-11-exec",
+      "stage": "Future",
+      "source": "try: compile('while continue \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-11-single",
+      "stage": "Future",
+      "source": "try: compile('while continue \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-12-exec",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in pass if 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-12-single",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in pass if 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-13-exec",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in pass \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-13-single",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in pass \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-14-exec",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in break if 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-14-single",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in break if 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-15-exec",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in break \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-15-single",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in break \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-16-exec",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in continue if 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-16-single",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in continue if 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-17-exec",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in continue \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "header-statement-priority-17-single",
+      "stage": "Future",
+      "source": "try: compile('for 雪 in continue \\\\\\nif 鳥 else 羽: pass',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
     }
   ]
 }

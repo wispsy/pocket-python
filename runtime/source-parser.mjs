@@ -642,8 +642,11 @@ class Parser {
     return this.node("If", start, {test, body, otherwise}, otherwise.at(-1) || body.at(-1));
   }
   headerOperand(sequence = false) {
-    if (this.expressionBoundary()) this.fail("Expected a compound-header expression.", this.peek(), "SYNTAX", undefined,
-      this.tokenDiagnostic("invalid syntax"));
+    if (this.expressionBoundary()) {
+      const statement = ["pass", "break", "continue"].some(value => this.at(value));
+      this.fail("Expected a compound-header expression.", this.peek(), "SYNTAX", undefined,
+        statement && this.peek(1).value === "if" ? undefined : this.tokenDiagnostic("invalid syntax"));
+    }
     return sequence ? this.expressionList() : this.namedExpression();
   }
   expressionBoundary() {
