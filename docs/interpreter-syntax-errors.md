@@ -229,3 +229,11 @@ semantic/error comparisons and 36 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
+
+LA-88 qualifies positional arguments mixed with later iterable/mapping
+unpacking. The first invalid argument group selects the diagnostic message;
+a mapping followed by an inadmissible star in the second group selects that
+star before parsing its operand. Otherwise the closing call token selects the
+range. Unicode/multiline source and all three compile modes retain parser
+character offsets. Earlier completed compound metadata keeps its independent
+field-read boundary.

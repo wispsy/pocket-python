@@ -683,11 +683,19 @@ class Parser {
       else if (this.eat("(")) {
         const args = [], keywords = [], seen = new Map();
         let repeated = null;
-        let positionalError = null, positionalQualified = true;
+        let positionalError = null, followingMapping = false;
         while (!this.at(")")) {
           const separator = this.previous, argumentCount = args.length;
-          if (this.eat("**")) keywords.push({name: null, value: this.expression()});
+          if (this.eat("**")) {
+            keywords.push({name: null, value: this.expression()});
+            if (positionalError) followingMapping = true;
+          }
           else if (this.eat("*")) {
+            // The second argument group stops before an inadmissible star.
+            // Its already selected positional failure precedes that star's body.
+            if (positionalError && followingMapping)
+              this.fail("A positional argument follows a keyword argument.", this.previous, "SYNTAX", undefined,
+                this.diagnostic(positionalError, this.previous.span));
             if (keywords.some(keyword => keyword.name === null) && !positionalError) {
               const start = this.previous;
               this.expression();
@@ -700,7 +708,6 @@ class Parser {
               if (syntax && syntax.lineno !== syntax.end_lineno) syntax.text = syntax.text.replace(/\n$/, "");
               this.fail("Iterable unpacking follows keyword unpacking.", start, "SYNTAX", undefined, syntax);
             }
-            if (keywords.some(keyword => keyword.name === null)) positionalQualified = false;
             const start = this.previous; args.push(this.node("StarredArgument", start, {value: this.expression()}));
           } else
           if (this.kind("name") && this.peek(1).value === "=") {
@@ -738,7 +745,7 @@ class Parser {
           if (!this.eat(",")) break;
         }
         if (positionalError) this.fail("A positional argument follows a keyword argument.", this.peek(), "SYNTAX", undefined,
-          positionalQualified && this.at(")") ? this.diagnostic(positionalError, this.peek().span) : undefined);
+          this.at(")") ? this.diagnostic(positionalError, this.peek().span) : undefined);
         this.expect(")"); value = this.node("Call", value, {callable: value, args, keywords});
         if (repeated) this.keywordErrors.push({call: value, site: repeated});
       } else if (this.eat("[")) {
