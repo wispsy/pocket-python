@@ -1144,7 +1144,7 @@
         "tests/fixtures/interpreter/exceptions.json:native-attribute-subtype-type-set",
         "tests/fixtures/interpreter/exceptions.json:delete-metadata-dictionary-syntax",
         "tests/fixtures/interpreter/exceptions.json:delete-metadata-inherited-value-native",
-        "tests/fixtures/interpreter/syntax-errors.json:header-operand-unqualified-keyword",
+        "tests/fixtures/interpreter/syntax-errors.json:header-start-unqualified-1",
         "tests/fixtures/interpreter/syntax-errors.json:parser-completed-compound-metadata-0",
         "tests/fixtures/interpreter/syntax-errors.json:lexical-earlier-syntax-0",
         "tests/fixtures/interpreter/syntax-errors.json:control-6-single"

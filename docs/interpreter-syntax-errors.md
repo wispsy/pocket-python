@@ -422,8 +422,14 @@ conversion/cleanup survive collection, cancellation/close and shared limits.
 The example and installed offline console cover original frames, retained-field
 and cleanup Stop/Restart paths and reduced-profile updates.
 
-The current fixed generated-syntax corpus contains 2,743 cases: 2,525 supported
-semantic/error comparisons and 218 explicit native-field refusals. The ordinary
+LA-118 qualifies absent compound-header operands at reserved keywords,
+commas, semicolons and newlines. Adopted if/elif/while headers and for iterables
+preserve native token ranges, Unicode and compile-mode newline behavior.
+Malformed operands, target priority and prior-compound metadata retain their
+independent field boundaries.
+
+The current fixed generated-syntax corpus contains 3,014 cases: 2,791 supported
+semantic/error comparisons and 223 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

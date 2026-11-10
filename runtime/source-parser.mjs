@@ -5,6 +5,8 @@ const BINARY = new Map([["+", "add"], ["-", "subtract"], ["*", "multiply"], ["/"
   ["**", "power"], ["@", "matmul"], ["&", "bit-and"], ["|", "bit-or"], ["^", "bit-xor"], ["<<", "left-shift"], [">>", "right-shift"]]);
 const COMPARISONS = new Map([["==", "equal"], ["!=", "not-equal"], ["<", "less"], ["<=", "less-equal"], [">", "greater"], [">=", "greater-equal"], ["is", "is"], ["in", "contains"]]);
 const AUGMENT = new Set(["+=", "-=", "*=", "/=", "//=", "%=", "**=", "@=", "&=", "|=", "^=", "<<=", ">>="]);
+const EXPRESSION_BOUNDARIES = new Set((": , ; ) ] } and as assert break class continue def del elif else " +
+  "except finally for from global if import in is nonlocal or pass raise return try while with").split(" "));
 
 export function freezeSourceTree(root) {
   const pending = [root], seen = new Set();
@@ -620,9 +622,13 @@ class Parser {
     return this.node("If", start, {test, body, otherwise}, otherwise.at(-1) || body.at(-1));
   }
   headerOperand(sequence = false) {
-    if (this.at(":")) this.fail("Expected a compound-header expression.", this.peek(), "SYNTAX", undefined,
-      this.diagnostic("invalid syntax", this.peek().span));
+    if (this.expressionBoundary()) this.fail("Expected a compound-header expression.", this.peek(), "SYNTAX", undefined,
+      this.tokenDiagnostic("invalid syntax"));
     return sequence ? this.expressionList() : this.namedExpression();
+  }
+  expressionBoundary() {
+    return ["newline", "eof"].includes(this.peek().kind) ||
+      ["op", "keyword"].includes(this.peek().kind) && EXPRESSION_BOUNDARIES.has(this.peek().value);
   }
   loop() {
     const start = this.take(), kind = start.value === "for" ? "For" : "While";
