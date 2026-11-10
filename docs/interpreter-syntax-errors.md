@@ -338,7 +338,12 @@ comma or closing brace. The range starts at the star and reaches the separator,
 including intervening spaces and physical lines. Failed operands and boolean,
 conditional or comprehension tails retain explicit native-field refusals.
 
-The current fixed generated-syntax corpus contains 1,835 cases: 1,721 supported
+LA-105 composes dictionary payloads through modules, nested exec, chained errors
+and notes. Native fields and argument snapshots survive cyclic owners,
+suspended flags/cleanup, parked collection and cancellation/close. The example
+and offline console preserve original dynamic frames and Stop/Restart behavior.
+
+The current fixed generated-syntax corpus contains 1,851 cases: 1,737 supported
 semantic/error comparisons and 114 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;

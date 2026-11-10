@@ -47,7 +47,8 @@
     "LA101",
     "LA102",
     "LA103",
-    "LA104"
+    "LA104",
+    "LA105"
   ],
   "cases": [
     {
@@ -11363,6 +11364,126 @@
       "stage": "Future",
       "source": "try: compile('if True: pass\\n{1:*x}',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e._metadata)\n",
       "stdout": "(0, 0, 'if True: pass\\n{1:*x}\\n')\n"
+    },
+    {
+      "id": "generated-dictmissing-owner-cycle",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('{雪:鳥,羽}',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stage": "LA105",
+      "stdout": "entered\nTrue ':' expected after dictionary key 6 False False\n"
+    },
+    {
+      "id": "generated-dictmissing-chaining",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('{雪:鳥,羽}',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stage": "LA105",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 6\n"
+    },
+    {
+      "id": "generated-dictmissing-cleanup",
+      "source": "def work():\n try: compile('{雪:鳥,羽}',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stage": "LA105",
+      "stdout": "cleanup cleanup-input.py ':' expected after dictionary key False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-dictmissing-original-dynamic-failure",
+      "source": "exec(compile('def fail():\\n try: compile(\\'{雪:鳥,羽}\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','dictmissing-payload-original.py',\"exec\"))\n",
+      "error_type": "SyntaxError",
+      "stage": "LA105",
+      "stdout": "dynamic-input.py False 2\n"
+    },
+    {
+      "id": "generated-dictmissing-nested-exec",
+      "source": "scope={}\nexec('try: compile(\\'{雪:鳥,羽}\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stage": "LA105",
+      "stdout": "nested-input.py ':' expected after dictionary key 6 False\n"
+    },
+    {
+      "id": "generated-dictmissing-field-independence",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('{雪:鳥,羽}',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stage": "LA105",
+      "stdout": "True True True True\n'{雪:鳥,羽}\\n' True True 77 6\n"
+    },
+    {
+      "id": "generated-dictmissing-module",
+      "source": "import helper\ne=helper.validate('{雪:鳥,羽}')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stage": "LA105",
+      "stdout": "module-input.py ':' expected after dictionary key 6 module input\n"
+    },
+    {
+      "id": "generated-dictmissing-flags-owner-cycle",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('{雪:鳥,羽}',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stage": "LA105",
+      "stdout": "entered\n7 True ':' expected after dictionary key 6\n"
+    },
+    {
+      "id": "generated-dictstarred-owner-cycle",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('{雪:*鳥}',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stage": "LA105",
+      "stdout": "entered\nTrue cannot use a starred expression in a dictionary value 4 False False\n"
+    },
+    {
+      "id": "generated-dictstarred-chaining",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('{雪:*鳥}',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stage": "LA105",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 4\n"
+    },
+    {
+      "id": "generated-dictstarred-cleanup",
+      "source": "def work():\n try: compile('{雪:*鳥}',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stage": "LA105",
+      "stdout": "cleanup cleanup-input.py cannot use a starred expression in a dictionary value False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-dictstarred-original-dynamic-failure",
+      "source": "exec(compile('def fail():\\n try: compile(\\'{雪:*鳥}\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','dictstarred-payload-original.py',\"exec\"))\n",
+      "error_type": "SyntaxError",
+      "stage": "LA105",
+      "stdout": "dynamic-input.py False 2\n"
+    },
+    {
+      "id": "generated-dictstarred-nested-exec",
+      "source": "scope={}\nexec('try: compile(\\'{雪:*鳥}\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stage": "LA105",
+      "stdout": "nested-input.py cannot use a starred expression in a dictionary value 4 False\n"
+    },
+    {
+      "id": "generated-dictstarred-field-independence",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('{雪:*鳥}',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stage": "LA105",
+      "stdout": "True True True True\n'{雪:*鳥}\\n' True True 77 4\n"
+    },
+    {
+      "id": "generated-dictstarred-module",
+      "source": "import helper\ne=helper.validate('{雪:*鳥}')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stage": "LA105",
+      "stdout": "module-input.py cannot use a starred expression in a dictionary value 4 module input\n"
+    },
+    {
+      "id": "generated-dictstarred-flags-owner-cycle",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('{雪:*鳥}',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stage": "LA105",
+      "stdout": "entered\n7 True cannot use a starred expression in a dictionary value 4\n"
     }
   ]
 }

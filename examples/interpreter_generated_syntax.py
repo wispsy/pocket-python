@@ -20,7 +20,8 @@ for source in ["雪=", "record=[", "value='unfinished", "if True:\nvalue=7",
                "class Record(value=1,value=2): pass", "try: pass",
                "try: pass\nexcept: pass\nexcept ValueError: pass",
                "from records import value,", "import records as value.field",
-               "[first,last for item in items]", "{**item for item in items}"]:
+               "[first,last for item in items]", "{**item for item in items}",
+               "{first:1,last}", "{first:*last}"]:
     error = validate(source, "records/input.py")
     original = error.args
     error.args = ()
