@@ -428,8 +428,13 @@ preserve native token ranges, Unicode and compile-mode newline behavior.
 Malformed operands, target priority and prior-compound metadata retain their
 independent field boundaries.
 
-The current fixed generated-syntax corpus contains 3,014 cases: 2,791 supported
-semantic/error comparisons and 223 explicit native-field refusals. The ordinary
+LA-119 qualifies missing conditional tests at adopted keywords, delimiters and
+newlines. Native fields retain Unicode columns, multiline text and all compile
+modes. Malformed tests, unparenthesized lambdas and unqualified comprehension
+filters keep explicit boundaries.
+
+The current fixed generated-syntax corpus contains 3,157 cases: 2,931 supported
+semantic/error comparisons and 226 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

@@ -732,6 +732,8 @@ class Parser {
       if (this.at("lambda")) return this.lambda();
       const body = this.disjunction();
       if (!this.eat("if")) return body;
+      if (this.expressionBoundary()) this.fail("Expected a conditional-expression test.", this.peek(), "SYNTAX", undefined,
+        this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined);
       const test = this.disjunction();
       if (!this.at("else")) {
         const first = this.nativeRanges.get(body) ?? body.span, last = this.nativeRanges.get(test) ?? test.span;
