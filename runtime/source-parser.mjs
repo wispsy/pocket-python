@@ -630,7 +630,7 @@ class Parser {
     if (kind === "For") {
       target = this.expressionList(false, true); this.target(target, false, false, "loop");
       if (!this.at("in")) this.fail("Expected 'in' after for-loop variables.", this.peek(), "SYNTAX", undefined,
-        this.tokenDiagnostic("invalid syntax"));
+        ["and", "or", "if"].some(value => this.at(value)) ? undefined : this.tokenDiagnostic("invalid syntax"));
       this.expect("in"); iterable = this.headerOperand(true);
     } else test = this.headerOperand();
     this.loopDepth++; let body;
