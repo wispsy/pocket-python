@@ -528,17 +528,24 @@ class Parser {
   parameters(end) {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
     let bareStar = null;
+    const incomplete = () => end === ":" && this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined;
+    const parameterName = () => {
+      if (end === ":" && (this.expressionBoundary() || this.kind("number") || this.kind("string")))
+        this.fail("Expected a lambda parameter.", this.peek(), "SYNTAX", undefined, incomplete());
+      return this.name();
+    };
     while (!this.at(end)) {
       if (kwarg.length) this.fail("No parameter may follow a variadic keyword parameter.", this.peek(), "SYNTAX", undefined,
         this.kind("name") && !(end !== ":" && this.peek(1).value === ":") || ["*", "**", "/"].includes(this.peek().value) ?
-          this.delimitedDiagnostic("arguments cannot follow var-keyword argument", this.peek(), end, this.kind("name")) : undefined);
+          this.delimitedDiagnostic("arguments cannot follow var-keyword argument", this.peek(), end, this.kind("name")) :
+          this.expressionBoundary() ? incomplete() : undefined);
       if (bareStar && !kwonly.length && this.at("**")) {
         const token = end === ":" ? this.peek() : bareStar;
         this.fail("A named keyword-only parameter must follow '*'.", token, "SYNTAX", undefined,
           this.delimitedDiagnostic("named arguments must follow bare *", token, end, true));
       }
       if (this.eat("**")) {
-        const token = this.name();
+        const token = parameterName();
         kwarg.push({name: token.value, value: null, span: token.span});
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         if (this.at("=")) this.fail("A variadic keyword parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
@@ -565,18 +572,21 @@ class Parser {
         } else bareStar = separator;
         star = true;
       } else {
-        const token = this.name();
+        const token = parameterName();
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         const value = this.eat("=") ? this.expression() : null;
+        if (end === ":" && value !== null && ["name", "number", "string"].includes(this.peek().kind))
+          this.fail("Expected a lambda parameter separator.");
         if (!star && defaultSeen && value === null) {
           const syntax = this.at(end) || this.at(",") ?
-            this.delimitedDiagnostic("parameter without a default follows parameter with a default", token, end, true) : undefined;
+            this.delimitedDiagnostic("parameter without a default follows parameter with a default", token, end, true) : incomplete();
           this.fail("A required positional parameter follows a default.", token, "SYNTAX", undefined, syntax);
         }
         if (!star && value !== null) defaultSeen = true;
         (star ? kwonly : positional).push({name: token.value, value, span: token.span});
       }
       if (this.at(end)) break;
+      if (end === ":" && !this.at(",")) this.fail("Expected a lambda parameter separator.", this.peek(), "SYNTAX", undefined, incomplete());
       this.expect(",");
     }
     if (bareStar && !kwonly.length) {

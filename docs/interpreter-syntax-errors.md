@@ -444,8 +444,14 @@ reserved keywords, Unicode and multiline inputs retain native token fields and
 compile-mode newline distinctions. Parameter errors retain priority; malformed
 body/default operands and unqualified comprehension filters keep boundaries.
 
-The current fixed generated-syntax corpus contains 3,363 cases: 3,132 supported
-semantic/error comparisons and 231 explicit native-field refusals. The ordinary
+LA-122 qualifies incomplete lambda parameter lists and absent comma/colon
+separators after adopted parameters. Empty lists, variadic parameters, Unicode
+and physical/implicit EOF retain native fields. Existing default and separator
+errors retain priority. Adjacent default-value expressions, parenthesized
+parameters and malformed defaults keep explicit native-field boundaries.
+
+The current fixed generated-syntax corpus contains 3,520 cases: 3,281 supported
+semantic/error comparisons and 239 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
