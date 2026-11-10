@@ -123,6 +123,13 @@ The source-only repair must still parse successfully, so multiple invalid
 operands and later grammar failures retain their field boundary. Earlier
 compound statements keep the independent parser metadata boundary.
 
+LA-77 distinguishes parser deletion of starred targets from compiler rejection
+of a lone starred target or multiple stars at the same unpacking level. Parser
+errors retain source text and character columns; compiler errors have absent
+text/metadata and UTF-8 byte columns. Full parsing and binding precede the
+compiler checks, and the first target/control-flow error retains source order.
+Valid starred operands continue through the ordinary unpacking implementation.
+
 The resulting fixed generated-syntax corpus contains 428 cases: 406 supported
 semantic/error comparisons and 22 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains

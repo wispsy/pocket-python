@@ -82,7 +82,7 @@ class Parser {
   invalidTarget(value, action, nested = false) {
     let label = {Call: "function call", Binary: "expression", Unary: "expression", Boolean: "expression",
       Compare: "comparison", Conditional: "conditional expression", Lambda: "lambda",
-      Dict: "dict literal", Set: "set display", Tuple: "tuple", List: "list"}[value.kind];
+      Dict: "dict literal", Set: "set display", Tuple: "tuple", List: "list", Starred: "starred"}[value.kind];
     if (value.kind === "Literal") label = value.literal.type === "none" ? "None" :
       value.literal.type === "bool" ? value.literal.value ? "True" : "False" : "literal";
     if (value.kind === "Comprehension") label = value.form === "generator" ? "generator expression" : value.form + " comprehension";
@@ -124,11 +124,14 @@ class Parser {
   target(value, deletion = false, nested = false, action = "assign") {
     if (value.kind === "Name") return;
     if (["Tuple", "List"].includes(value.kind)) {
-      if (value.items.filter(item => item.kind === "Starred").length > 1) this.fail("Multiple starred targets in one assignment level.", value);
+      if (!deletion && value.items.filter(item => item.kind === "Starred").length > 1)
+        this.controlError ??= {kind: "target", token: value, node: value, message: "multiple starred expressions in assignment"};
       value.items.forEach(item => this.target(item, deletion, true, action)); return;
     }
     if (value.kind === "Starred") {
-      if (deletion || !nested) this.fail("A starred target requires an assignment sequence.", value);
+      if (deletion) this.invalidTarget(value, "delete", nested);
+      if (!nested) this.controlError ??= {kind: "target", token: value, node: value,
+        message: "starred assignment target must be in a list or tuple"};
       this.target(value.value, false, false, "nested"); return;
     }
     if (this.classes && value.kind === "Attribute") return;
@@ -497,7 +500,7 @@ class Parser {
   starredExpression(named = false, target = false) {
     if (this.eat("*")) {
       const start = this.previous, value = this.bitwiseOr();
-      return this.node("Starred", start, {value}, value);
+      return this.node("Starred", start, {value});
     }
     return target ? this.bitwiseOr() : named ? this.namedExpression() : this.expression();
   }
@@ -509,7 +512,8 @@ class Parser {
       if (this.ending() || [")", "]", "}", ":", "="].some(value => this.at(value)) || target && this.at("in")) break;
       items.push(expression());
     }
-    if (!tuple && items[0].kind === "Starred") this.fail("A starred expression requires a sequence display.", items[0]);
+    if (!tuple && items[0].kind === "Starred" && !this.at("=") && !(target && this.at("in")))
+      this.fail("A starred expression requires a sequence display.", items[0]);
     return tuple ? this.node("Tuple", start, {items}) : items[0];
   }
   namedExpression() {

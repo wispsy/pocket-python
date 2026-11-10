@@ -728,10 +728,10 @@ class Compiler {
     this.resolve();
     if (this.parsed.controlError) {
       const {kind, token, node} = this.parsed.controlError;
-      const message = kind === "return" ? "'return' outside function" : kind === "break" ? "'break' outside loop" : "'continue' not properly in loop";
+      const message = this.parsed.controlError.message ?? (kind === "return" ? "'return' outside function" : kind === "break" ? "'break' outside loop" : "'continue' not properly in loop");
       const syntax = this.parsed.controlError.qualified === false ? undefined :
         {...syntaxDiagnostic(this.parsed.source, this.parsed.filename, message, node.span, {text: false}), offset: node.span[1], end_offset: node.span[3]};
-      throw new SourceError("SYNTAX", kind === "return" ? "Return outside a function." : kind + " outside a loop.",
+      throw new SourceError("SYNTAX", kind === "target" ? message : kind === "return" ? "Return outside a function." : kind + " outside a loop.",
         {filename: this.parsed.filename, span: token.span, phase: "parse", syntax});
     }
     this.scopes.forEach(scope => this.function(scope));

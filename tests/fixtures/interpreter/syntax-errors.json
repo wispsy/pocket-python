@@ -18,7 +18,8 @@
     "LA74",
     "LA75",
     "LA75A",
-    "LA76"
+    "LA76",
+    "LA77"
   ],
   "cases": [
     {
@@ -2926,6 +2927,194 @@
       "stage": "LA76",
       "source": "try: compile('del [雪,π()]',\"nested/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n original=e.args\n e.args=()\n print(e.msg is original[0],e.filename is original[1][0])\n",
       "stdout": "cannot delete function call 1 8 1 11\n'del [雪,π()]' 0 0 'del [雪,π()]'\nTrue True\nTrue True\n"
+    },
+    {
+      "id": "starred-target-0-exec",
+      "stage": "LA77",
+      "source": "try: compile('*a=value',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "starred assignment target must be in a list or tuple 1 1 1 3\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-0-single",
+      "stage": "LA77",
+      "source": "try: compile('*a=value',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "starred assignment target must be in a list or tuple 1 1 1 3\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-1-exec",
+      "stage": "LA77",
+      "source": "try: compile('a,*b,*c=value',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 1 1 8\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-1-single",
+      "stage": "LA77",
+      "source": "try: compile('a,*b,*c=value',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 1 1 8\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-2-exec",
+      "stage": "LA77",
+      "source": "try: compile('[a,*b,*c]=value',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 1 1 10\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-2-single",
+      "stage": "LA77",
+      "source": "try: compile('[a,*b,*c]=value',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 1 1 10\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-3-exec",
+      "stage": "LA77",
+      "source": "try: compile('for *a in []: pass\\n',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "starred assignment target must be in a list or tuple 1 5 1 7\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-3-single",
+      "stage": "LA77",
+      "source": "try: compile('for *a in []: pass\\n',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "starred assignment target must be in a list or tuple 1 5 1 7\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-4-exec",
+      "stage": "LA77",
+      "source": "try: compile('for [a,*b,*c] in []: pass\\n',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 5 1 14\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-4-single",
+      "stage": "LA77",
+      "source": "try: compile('for [a,*b,*c] in []: pass\\n',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 5 1 14\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-5-exec",
+      "stage": "LA77",
+      "source": "try: compile('[雪,*b,*c]=value',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 1 1 12\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-5-single",
+      "stage": "LA77",
+      "source": "try: compile('[雪,*b,*c]=value',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 1 1 12\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-6-exec",
+      "stage": "LA77",
+      "source": "try: compile('for [雪,*b,*c] in []: pass\\n',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 5 1 16\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-6-single",
+      "stage": "LA77",
+      "source": "try: compile('for [雪,*b,*c] in []: pass\\n',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 5 1 16\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-7-exec",
+      "stage": "LA77",
+      "source": "try: compile('[a,(*b,*c)]=value',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 4 1 11\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-7-single",
+      "stage": "LA77",
+      "source": "try: compile('[a,(*b,*c)]=value',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 4 1 11\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-8-exec",
+      "stage": "LA77",
+      "source": "try: compile('del [*a]',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "cannot delete starred 1 6 1 8\n'del [*a]\\n' False 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-8-single",
+      "stage": "LA77",
+      "source": "try: compile('del [*a]',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "cannot delete starred 1 6 1 8\n'del [*a]' False 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-9-exec",
+      "stage": "LA77",
+      "source": "try: compile('del [a,*(b+c)]',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "cannot delete starred 1 8 1 14\n'del [a,*(b+c)]\\n' False 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-9-single",
+      "stage": "LA77",
+      "source": "try: compile('del [a,*(b+c)]',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "cannot delete starred 1 8 1 14\n'del [a,*(b+c)]' False 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-10-exec",
+      "stage": "LA77",
+      "source": "try: compile('del [雪,*π]',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "cannot delete starred 1 8 1 10\n'del [雪,*π]\\n' False 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-10-single",
+      "stage": "LA77",
+      "source": "try: compile('del [雪,*π]',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "cannot delete starred 1 8 1 10\n'del [雪,*π]' False 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-11-exec",
+      "stage": "LA77",
+      "source": "try: compile('return\\na,*b,*c=value',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "'return' outside function 1 1 1 7\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-12-exec",
+      "stage": "LA77",
+      "source": "try: compile('a,*b,*c=value\\nreturn',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple starred expressions in assignment 1 1 1 8\nNone True 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-12-single",
+      "stage": "FutureTarget",
+      "source": "try: compile('a,*b,*c=value\\nreturn',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "multiple statements found while compiling a single statement 1 14 1 15\n'a,*b,*c=value\\n' True 2\nTrue\nstarred/雪.py True\n",
+      "owner": "#124",
+      "boundary": "The independent multiple-statements-in-single-mode payload remains unqualified."
+    },
+    {
+      "id": "starred-target-13-exec",
+      "stage": "LA77",
+      "source": "try: compile('def f(x,x):\\n a,*b,*c=value',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "duplicate argument 'x' in function definition 1 9 1 10\nNone True 1\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-13-single",
+      "stage": "LA77",
+      "source": "try: compile('def f(x,x):\\n a,*b,*c=value',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "duplicate argument 'x' in function definition 1 9 1 10\nNone True 1\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-14-exec",
+      "stage": "LA77",
+      "source": "try: compile('a,*b,*c=\\n',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "invalid syntax 1 9 1 10\n'a,*b,*c=\\n' False 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-14-single",
+      "stage": "LA77",
+      "source": "try: compile('a,*b,*c=\\n',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "invalid syntax 1 9 1 10\n'a,*b,*c=\\n' False 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-15-exec",
+      "stage": "LA77",
+      "source": "try: compile('[a,*b,*c,1]=value',\"starred/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "cannot assign to literal 1 10 1 11\n'[a,*b,*c,1]=value\\n' False 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "starred-target-15-single",
+      "stage": "LA77",
+      "source": "try: compile('[a,*b,*c,1]=value',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
+      "stdout": "cannot assign to literal 1 10 1 11\n'[a,*b,*c,1]=value' False 2\nTrue\nstarred/雪.py True\n"
     }
   ]
 }
