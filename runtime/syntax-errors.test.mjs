@@ -51,8 +51,11 @@ test('dynamic syntax fields retain cyclic filename owners through collection and
 for (const item of corpus.cases.filter(item => item.id.endsWith('owner-cycle')))
   test(item.id + ' survives collection, cancellation and close', async () => lifetime(item.source, item.stdout));
 
-for (const source of ['if', 'if True:\nvalue=7', 'return 7', 'nonlocal x', 'def f(x,x): pass', 'if True', 'del f()', '[a,1]=value', '[雪,*b,*c]=value', 'def f(a=1,b): pass', 'lambda *,**a: 1']) test('retained ' + JSON.stringify(source) + ' payloads share allocation limits', async () => {
-  const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile(' + JSON.stringify(source) + ',"selected.py","exec")\n except SyntaxError as e: held.append(e)\n')],
+for (const [source, mode] of [
+  ...['if', 'if True:\nvalue=7', 'return 7', 'nonlocal x', 'def f(x,x): pass', 'if True', 'del f()', '[a,1]=value', '[雪,*b,*c]=value', 'def f(a=1,b): pass', 'lambda *,**a: 1', 'f(a=1,2)', 'f(x for x in y,1)', 'f(a=1,a=2)'].map(source => [source, 'exec']),
+  ['x=1\nx=2', 'single'],
+]) test('retained ' + JSON.stringify(source) + ' payloads share allocation limits', async () => {
+  const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile(' + JSON.stringify(source) + ',"selected.py",' + JSON.stringify(mode) + ')\n except SyntaxError as e: held.append(e)\n')],
     compileOptions: {languageProfile: corpus.profile}, memoryLimits: {maxBytes: 100000}, options: {maxSteps: 50000, maxWork: 20000000}});
   assert.equal(result.stdout, 'ready\n'); assert.equal(result.error?.code, 'OOM', JSON.stringify(result.error)); closed(result.closed);
 });
@@ -61,7 +64,10 @@ for (const [id, filename] of [['generated-syntax-original-dynamic-failure', 'syn
   ['generated-binding-original-dynamic-failure', 'binding-payload-original.py'],
   ['generated-target-original-dynamic-failure', 'target-payload-original.py'],
   ['generated-unpacking-original-dynamic-failure', 'unpacking-payload-original.py'],
-  ['generated-signature-original-dynamic-failure', 'signature-payload-original.py']])
+  ['generated-signature-original-dynamic-failure', 'signature-payload-original.py'],
+  ['generated-callgrammar-original-dynamic-failure', 'callgrammar-payload-original.py'],
+  ['generated-keyword-original-dynamic-failure', 'keyword-payload-original.py'],
+  ['generated-interactive-original-dynamic-failure', 'interactive-payload-original.py']])
 test(id + ' keeps the original dynamic call frames', async () => {
   const item = corpus.cases.find(item => item.id === id);
   const result = await runSourceRequest({modules: [unit(item.source)], compileOptions: {languageProfile: corpus.profile}});

@@ -165,10 +165,67 @@ shared limits and original dynamic frames cover those graphs. The example
 and installed offline console exercise new source, retained-field and cleanup
 Stop/Restart paths, plus the existing reduced-profile boundary.
 
-The resulting fixed generated-syntax corpus contains 627 cases: 603 supported
+At LA-81, the fixed generated-syntax corpus contains 627 cases: 603 supported
 semantic/error comparisons and 24 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
 These finite observations do not measure overall Python compatibility. #600/A2,
 #124, #759, groups/except*, traceback objects/mutation, note export, library/package
 qualification and candidate/release gates remain open.
+
+LA-82 qualifies positional arguments following explicit keywords or keyword
+unpacking, and iterable unpacking following keyword unpacking. Parser locations
+use character columns: positional-order failures select the closing call token,
+while iterable-order failures begin at the preceding comma and cover the
+contiguous starred arguments. Multiline source text and exec/eval/single modes
+have independent reference observations. Malformed argument tails, interacting
+positional/unpacking failures and generator call grammar retain their separate
+native-field boundaries at this checkpoint.
+
+LA-83 adds unparenthesized generator call arguments with a trailing comma or
+other arguments, and lone starred generator elements. Native ranges end at
+the last iterable/filter expression, independently of grouping delimiters.
+Multiline calls preserve the tokenizer's source-line newline behavior and the
+pinned parser's conversion of both offsets against the starting error line. Full
+comprehension parsing precedes these diagnostics; malformed clauses and
+keyword-valued generator calls retain their separate field boundaries. Valid
+sole generator arguments keep their existing execution behavior.
+
+LA-84 composes call grammar payloads with registry modules, nested exec/eval,
+causes/notes, independent argument snapshots, cyclic filename owners and
+suspended flags conversion/cleanup. Parked collection, cancellation/close and
+shared allocation limits cover the retained fields. The example and installed
+offline console exercise fresh source, original dynamic frames, Stop/Restart
+and the reduced-profile update.
+
+LA-85 defers repeated explicit call keywords until full parsing and binding
+finish. Normalized names select the earliest original keyword with a repeated
+name, then its first repeat. The independent native location uses UTF-8 byte
+columns, two arguments and absent text/parser metadata. Nested calls validate
+their own keyword lists before their operands; function decorators/defaults,
+class bodies/bases and generator versus inlined comprehension ordering have
+separate reference cases. Earlier compiler errors retain their priority, and
+ordinary keyword unpacking continues through its existing runtime checks.
+
+LA-86 qualifies multiple simple statements on separate physical lines in
+`single` mode. The native range selects the first statement's terminating
+newline, including an actual trailing comment, and parser metadata is absent.
+This failure precedes later grammar/binding/compiler errors. Empty and
+comment-only inputs expose their zero-offset parser layout. Semicolon-separated
+statements, trailing blank/comment lines and exec/eval retain their ordinary
+behavior. Compound interactive input, later tokenizer failures and unterminated
+whitespace-only indentation retain independent field boundaries.
+
+LA-87 composes repeated-keyword and interactive-input diagnostics through
+modules, nested exec, causes/notes, retained filename cycles and suspended
+flags conversion/cleanup. Native fields survive argument replacement and
+retain their original dynamic frames. Expression-order cases cover conditional
+tests, assignment values and loop iterables before their targets. Parked
+collection, cancellation/close, shared limits and installed offline
+Stop/Restart/reduced-profile acceptance exercise both layouts.
+
+The current fixed generated-syntax corpus contains 881 cases: 845 supported
+semantic/error comparisons and 36 explicit native-field refusals. The ordinary
+exception corpus retains its separate 2,443 cases and seven host/crash/cache
+qualifications. Finite observations do not measure overall Python completion;
+#124, #600/A2, #759 and library/package/candidate/release gates remain open.

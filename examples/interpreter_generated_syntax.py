@@ -13,7 +13,9 @@ def validate(source, filename):
 for source in ["雪=", "record=[", "value='unfinished", "if True:\nvalue=7",
                "return 雪", "if record", "del record()", "[record,1]=value",
                "del [*record]", "[雪,*first,*last]=value",
-               "def record(value=1,required): pass", "lambda *,**options: 1"]:
+               "def record(value=1,required): pass", "lambda *,**options: 1",
+               "record(value=1,2)", "record(x for x in values,1)",
+               "record(value=1,value=2)"]:
     error = validate(source, "records/input.py")
     original = error.args
     error.args = ()
@@ -26,6 +28,14 @@ for source in ["nonlocal missing", "def record(value,value): pass"]:
     error.args = ()
     print(error.msg, error.filename, error.lineno, error.offset)
     print(len(original), original[0] is error.msg, error._metadata is None)
+
+try:
+    compile("record=1\nrecord=2", "records/interactive.py", "single")
+except SyntaxError as error:
+    original = error.args
+    error.args = ()
+    print(error.msg, error.filename, error.lineno, error.offset)
+    print(repr(error.text), original[1][0], error._metadata is None)
 
 
 def pending(source):
