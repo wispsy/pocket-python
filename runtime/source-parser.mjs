@@ -541,19 +541,43 @@ class Parser {
       const clause = this.previous;
       if (this.at("*")) this.unsupported("Exception groups are not adopted.");
       if (bare) this.fail("A bare handler must be last.", clause);
-      const parenthesized = this.at("(");
       const type = this.at(":") || this.kind("newline") ? null : this.expressionList();
-      if (type?.kind === "Tuple" && !parenthesized && this.at("as")) this.fail("Multiple handler types require parentheses with an alias.");
       const alias = this.eat("as") ? this.name().value : null;
+      if (type?.kind === "Tuple" && !this.grouped.has(type) && alias !== null) {
+        let syntax;
+        if (this.at(":")) {
+          const first = type.items[0], last = this.previous;
+          syntax = this.diagnostic("multiple exception types must be parenthesized when using 'as'",
+            [first.span[0], first.span[1], last.span[2], last.span[3]]);
+          if (syntax.lineno !== syntax.end_lineno) {
+            syntax.text = syntax.text.replace(/\n$/, "");
+            const bytes = new TextEncoder().encode(syntax.text + "\0");
+            syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, last.span[3]))).length;
+          }
+        }
+        this.fail("Multiple handler types require parentheses with an alias.", type, "SYNTAX", undefined, syntax);
+      }
       if (type === null && alias !== null) this.fail("A bare handler cannot bind an alias.", clause);
       bare = type === null;
       const handlerBody = this.suite(clause);
       handlers.push(this.node("Handler", clause, {expression: type, alias, body: handlerBody}, handlerBody.at(-1)));
     }
     let otherwise = [], final = [];
-    if (this.eat("else")) { if (!handlers.length) this.fail("Try else requires an exception handler."); otherwise = this.suite(this.previous); }
+    if (!handlers.length && !this.at("finally")) {
+      const token = this.peek(), syntax = this.diagnostic("expected 'except' or 'finally' block", token.span);
+      if (token.kind === "eof") {
+        const lines = syntax.metadata.split("\n"), line = lines.length - (syntax.metadata.endsWith("\n") ? 1 : 0);
+        syntax.lineno = syntax.end_lineno = line;
+        syntax.text = lines[line - 1] + (syntax.metadata.endsWith("\n") ? "\n" : "");
+        syntax.offset = Array.from(syntax.text).length; syntax.end_offset = -1;
+        if (this.options.mode === "single" && !syntax.metadata.endsWith("\n") && /^[ \t\f]*#/.test(syntax.text)) {
+          syntax.msg = "invalid syntax"; syntax.offset = syntax.end_offset = 0;
+        }
+      } else if (token.kind === "dedent") { syntax.offset = 0; syntax.end_offset = -1; }
+      this.fail("Try requires except or finally.", token, "SYNTAX", undefined, syntax);
+    }
+    if (this.eat("else")) otherwise = this.suite(this.previous);
     if (this.eat("finally")) final = this.suite(this.previous);
-    if (!handlers.length && !final.length) this.fail("Try requires except or finally.");
     return this.node("Try", start, {body, handlers, otherwise, final}, final.at(-1) || otherwise.at(-1) || handlers.at(-1) || body.at(-1));
   }
   starredExpression(named = false, target = false) {
@@ -812,7 +836,9 @@ class Parser {
         if (value.kind === "Tuple" && !this.grouped.has(value)) this.fail("A comprehension element cannot be an unparenthesized tuple.", value);
         value = this.comprehension(start, "generator", value);
       }
-      this.expect(")"); this.grouped.add(value); return value.kind === "Tuple" ? this.node("Tuple", start, {items: value.items}) : value;
+      this.expect(")");
+      if (value.kind === "Tuple") value = this.node("Tuple", start, {items: value.items});
+      this.grouped.add(value); return value;
     }
     if (this.eat("[")) {
       const items = [];

@@ -35,7 +35,8 @@
     "LA90",
     "LA91",
     "LA92",
-    "LA93"
+    "LA93",
+    "LA94"
   ],
   "cases": [
     {
@@ -7067,6 +7068,306 @@
       "stage": "LA93",
       "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('class 雪(字=1,字=2): pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
       "stdout": "entered\n7 True keyword argument repeated: 字 17\n"
+    },
+    {
+      "id": "trygrammar-0-exec",
+      "stage": "LA94",
+      "source": "try: compile('try: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 1 10 1 -1\n'try: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-0-single",
+      "stage": "LA94",
+      "source": "try: compile('try: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 1 9 1 -1\n'try: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-1-exec",
+      "stage": "LA94",
+      "source": "try: compile('try: pass\\n','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 1 10 1 -1\n'try: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-1-single",
+      "stage": "LA94",
+      "source": "try: compile('try: pass\\n','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 1 10 1 -1\n'try: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-2-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 6 2 -1\n' pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-2-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 5 2 -1\n' pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-3-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\n','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 6 2 -1\n' pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-3-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\n','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 6 2 -1\n' pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-4-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\n# hello','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 8 3 -1\n'# hello\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-4-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\n# hello','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 0 3 0\n'# hello' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-5-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n 雪=1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 5 2 -1\n' 雪=1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-5-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n 雪=1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 4 2 -1\n' 雪=1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-6-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n 雪=1\\n#雪','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 3 3 -1\n'#雪\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-6-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n 雪=1\\n#雪','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 0 3 0\n'#雪' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-7-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nx=1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 2\n'x=1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-7-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nx=1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 2\n'x=1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-8-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nelse: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 5\n'else: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-8-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nelse: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 5\n'else: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-9-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nelif True: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 5\n'elif True: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-9-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nelif True: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 5\n'elif True: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-10-exec",
+      "stage": "LA94",
+      "source": "try: compile('def f():\\n try:\\n  pass\\nx=1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 4 0 4 -1\n'x=1\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-10-single",
+      "stage": "LA94",
+      "source": "try: compile('def f():\\n try:\\n  pass\\nx=1','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 4 0 4 -1\n'x=1' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-11-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A,B as e: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 16\n'except A,B as e: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-11-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A,B as e: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 16\n'except A,B as e: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-12-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (A), B as e: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 9 3 19\n'except (A), B as e: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-12-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (A), B as e: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 9 3 19\n'except (A), B as e: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-13-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B, C as caught: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 25\n'except A, B, C as caught: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-13-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B, C as caught: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 25\n'except A, B, C as caught: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-14-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept 雪, 鳥 as caught: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 22\n'except 雪, 鳥 as caught: pass\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-14-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept 雪, 鳥 as caught: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 22\n'except 雪, 鳥 as caught: pass' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-15-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B as e:\\n x=','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 17\n'except A, B as e:\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-15-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B as e:\\n x=','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 17\n'except A, B as e:\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-16-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (\\n A\\n), B as e: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 4 2 5 3\n' A' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-16-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (\\n A\\n), B as e: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 4 2 5 3\n' A' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-17-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (\\n 雪\\n), B as e: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 4 2 5 3\n' 雪' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-17-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept (\\n 雪\\n), B as e: pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 4 2 5 3\n' 雪' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-18-exec",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B as e:\\n pass\\n','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 17\n'except A, B as e:\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-18-single",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n pass\\nexcept A, B as e:\\n pass\\n','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 17\n'except A, B as e:\\n' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "trygrammar-19-exec",
+      "stage": "LA94",
+      "source": "try: compile('def f(a,a): pass\\ntry:\\n pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 6 3 -1\n' pass\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "trygrammar-19-single",
+      "stage": "Future",
+      "source": "try: compile('def f(a,a): pass\\ntry:\\n pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 1 2 4\n'try:\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "trygrammar-prior-compound-0",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n if True: pass\\nx=1','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 3 1 3 2\n'x=1\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "trygrammar-metadata-boundary-0",
+      "stage": "Future",
+      "source": "try: compile('try:\\n if True: pass\\nx=1',\"boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(2, 1, 'try:\\n if True: pass\\nx=1\\n')\n"
+    },
+    {
+      "id": "trygrammar-prior-compound-1",
+      "stage": "LA94",
+      "source": "try: compile('if True: pass\\ntry: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "expected 'except' or 'finally' block\nselected/雪.py 2 10 2 -1\n'try: pass\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "trygrammar-metadata-boundary-1",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\ntry: pass',\"boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(1, 0, 'if True: pass\\ntry: pass\\n')\n"
+    },
+    {
+      "id": "trygrammar-prior-compound-2",
+      "stage": "LA94",
+      "source": "try: compile('try:\\n if True: pass\\nexcept A,B as e: pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "multiple exception types must be parenthesized when using 'as'\nselected/雪.py 3 8 3 16\n'except A,B as e: pass\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "trygrammar-metadata-boundary-2",
+      "stage": "Future",
+      "source": "try: compile('try:\\n if True: pass\\nexcept A,B as e: pass',\"boundary.py\",\"exec\")\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(2, 1, 'try:\\n if True: pass\\nexcept A,B as e: pass\\n')\n"
+    },
+    {
+      "id": "trygrammar-valid-0",
+      "stage": "LA94",
+      "source": "compile('try: pass\\nfinally: pass',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "trygrammar-valid-1",
+      "stage": "LA94",
+      "source": "compile('try: pass\\nexcept A,B: pass',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "trygrammar-valid-2",
+      "stage": "LA94",
+      "source": "compile('try: pass\\nexcept (A,B) as e: pass',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "trygrammar-valid-3",
+      "stage": "LA94",
+      "source": "compile('try: pass\\nexcept (A): pass',\"valid.py\",\"exec\")\nprint(\"compiled\")\n",
+      "stdout": "compiled\n"
     }
   ]
 }

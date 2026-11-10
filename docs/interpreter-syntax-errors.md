@@ -269,7 +269,13 @@ parked collection, cancellation/close and shared allocation limits. The runnable
 example and installed offline console retain original dynamic frames, fresh
 Stop/Restart behavior and the reduced-profile dynamic-compilation boundary.
 
-The current fixed generated-syntax corpus contains 1,133 cases: 1,077 supported
+LA-94 qualifies missing except/finally blocks and unparenthesized multiple
+handler types with an alias. Parser ranges retain physical/implicit EOF,
+comment and Unicode distinctions, including multiline starting-line end-column
+conversion. Parenthesized handler tuples remain valid. Earlier completed
+compound statements keep the independent parser metadata boundary.
+
+The LA-93 fixed generated-syntax corpus contains 1,133 cases: 1,077 supported
 semantic/error comparisons and 56 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
