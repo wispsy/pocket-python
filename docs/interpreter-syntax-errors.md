@@ -114,8 +114,59 @@ including later reads of other declared names. Invalid operands inside starred
 targets retain the nested-target field boundary instead of inheriting an
 ordinary assignment hint.
 
-The resulting fixed generated-syntax corpus contains 428 cases: 406 supported
-semantic/error comparisons and 22 explicit native-field refusals, with no scored
+LA-76 qualifies invalid operands nested inside list/tuple assignment targets,
+including starred operands and loop targets. Nested operands use the plain
+assignment message without the outer assignment's equality hint. Character
+ranges select the invalid expression independently of surrounding grouping;
+native fields and argument snapshots retain their existing independence.
+The source-only repair must still parse successfully, so multiple invalid
+operands and later grammar failures retain their field boundary. Earlier
+compound statements keep the independent parser metadata boundary.
+
+LA-77 distinguishes parser deletion of starred targets from compiler rejection
+of a lone starred target or multiple stars at the same unpacking level. Parser
+errors retain source text and character columns; compiler errors have absent
+text/metadata and UTF-8 byte columns. Full parsing and binding precede the
+compiler checks, and the first target/control-flow error retains source order.
+Valid starred operands continue through the ordinary unpacking implementation.
+
+LA-78 composes nested/starred diagnostics with modules, nested dynamic source,
+causes/notes, argument replacement, retained filename cycles and suspended
+cleanup. Parked collection, cancellation/close and shared allocation limits
+cover both parser and compiler layouts. The runnable example and installed
+offline acceptance include the new fields, original dynamic frames, retained
+target and cleanup Stop/Restart paths, and reduced-profile updates.
+
+LA-79 adds required positional parameters following defaults, including across
+the positional-only separator, and defaults on variadic positional/keyword
+parameters. Functions and lambdas share the qualified parser messages,
+character ranges and source fields. These grammar errors precede duplicate-name
+binding errors and invalid function bodies. Malformed parameter tails,
+annotations and earlier compound metadata retain their independent boundaries.
+
+LA-80 adds repeated/misordered positional-only and keyword-only separators,
+missing names after a bare star, and parameters after a variadic keyword
+parameter. Function and lambda diagnostics retain their distinct bare-star
+locations. Qualified multiline parameter diagnostics also preserve whether
+the tokenizer's source line includes its physical newline. UTF-8 identifiers,
+exec/eval/single modes and grammar-before-binding priority have independent
+reference cases. Malformed separator tails and annotations remain bounded.
+
+The diagnostic observations use the pinned
+[parameter grammar](https://github.com/python/cpython/blob/v3.14.7/Grammar/python.gram)
+and [target compiler](https://github.com/python/cpython/blob/v3.14.7/Python/codegen.c)
+as primary references, with separately executed source programs as the oracle.
+
+LA-81 composes signature diagnostics with module factories, nested exec/eval,
+chaining and notes, retained filename cycles and suspended cleanup. Native
+fields remain owned after replacing arguments and releasing the caller's
+filename binding during flags conversion. Collection, cancellation/close,
+shared limits and original dynamic frames cover those graphs. The example
+and installed offline console exercise new source, retained-field and cleanup
+Stop/Restart paths, plus the existing reduced-profile boundary.
+
+The resulting fixed generated-syntax corpus contains 627 cases: 603 supported
+semantic/error comparisons and 24 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
 These finite observations do not measure overall Python compatibility. #600/A2,

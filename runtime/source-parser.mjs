@@ -82,12 +82,12 @@ class Parser {
   invalidTarget(value, action, nested = false) {
     let label = {Call: "function call", Binary: "expression", Unary: "expression", Boolean: "expression",
       Compare: "comparison", Conditional: "conditional expression", Lambda: "lambda",
-      Dict: "dict literal", Set: "set display", Tuple: "tuple", List: "list"}[value.kind];
+      Dict: "dict literal", Set: "set display", Tuple: "tuple", List: "list", Starred: "starred"}[value.kind];
     if (value.kind === "Literal") label = value.literal.type === "none" ? "None" :
       value.literal.type === "bool" ? value.literal.value ? "True" : "False" : "literal";
     if (value.kind === "Comprehension") label = value.form === "generator" ? "generator expression" : value.form + " comprehension";
     let syntax;
-    if (label && action !== "nested" && (!nested || action === "delete")) {
+    if (label) {
       let chain = action === "chain", depth = 0;
       const hint = !["lambda", "yield", "*"].includes(this.peek().value);
       if (action === "assign") for (const token of this.tokens.slice(this.index)) {
@@ -99,7 +99,7 @@ class Parser {
       }
       const message = action === "augment" ? "'" + label + "' is an illegal expression for augmented assignment" :
         "cannot " + (action === "delete" ? "delete " : "assign to ") + label +
-        (action === "assign" && !chain && hint && !["None", "True", "False", "generator expression"].includes(label) ? " here. Maybe you meant '==' instead of '='?" : "");
+        (action === "assign" && !nested && !chain && hint && !["None", "True", "False", "generator expression"].includes(label) ? " here. Maybe you meant '==' instead of '='?" : "");
       let first, last;
       for (const token of this.tokens) {
         this.charge();
@@ -124,11 +124,14 @@ class Parser {
   target(value, deletion = false, nested = false, action = "assign") {
     if (value.kind === "Name") return;
     if (["Tuple", "List"].includes(value.kind)) {
-      if (value.items.filter(item => item.kind === "Starred").length > 1) this.fail("Multiple starred targets in one assignment level.", value);
+      if (!deletion && value.items.filter(item => item.kind === "Starred").length > 1)
+        this.controlError ??= {kind: "target", token: value, node: value, message: "multiple starred expressions in assignment"};
       value.items.forEach(item => this.target(item, deletion, true, action)); return;
     }
     if (value.kind === "Starred") {
-      if (deletion || !nested) this.fail("A starred target requires an assignment sequence.", value);
+      if (deletion) this.invalidTarget(value, "delete", nested);
+      if (!nested) this.controlError ??= {kind: "target", token: value, node: value,
+        message: "starred assignment target must be in a list or tuple"};
       this.target(value.value, false, false, "nested"); return;
     }
     if (this.classes && value.kind === "Attribute") return;
@@ -376,40 +379,81 @@ class Parser {
     try { body = this.suite(start); } finally { [this.functionDepth, this.loopDepth] = before; }
     return this.node("Function", start, {name, params, body, ...(decorators.length ? {decorators} : {})}, body.at(-1));
   }
+  parameterDiagnostic(message, token, end, joined = false) {
+    const syntax = this.diagnostic(message, token.span);
+    if (joined) {
+      let depth = 0;
+      for (const next of this.tokens.slice(this.index)) {
+        this.charge();
+        if (!depth && next.value === end) {
+          if (next.span[0] !== token.span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+          break;
+        }
+        if (["(", "[", "{"].includes(next.value)) depth++;
+        if ([")", "]", "}"].includes(next.value)) depth--;
+      }
+    }
+    return syntax;
+  }
   parameters(end) {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
+    let bareStar = null;
     while (!this.at(end)) {
-      if (kwarg.length) this.fail("No parameter may follow a variadic keyword parameter.");
+      if (kwarg.length) this.fail("No parameter may follow a variadic keyword parameter.", this.peek(), "SYNTAX", undefined,
+        this.kind("name") && !(end !== ":" && this.peek(1).value === ":") || ["*", "**", "/"].includes(this.peek().value) ?
+          this.parameterDiagnostic("arguments cannot follow var-keyword argument", this.peek(), end, this.kind("name")) : undefined);
+      if (bareStar && !kwonly.length && this.at("**")) {
+        const token = end === ":" ? this.peek() : bareStar;
+        this.fail("A named keyword-only parameter must follow '*'.", token, "SYNTAX", undefined,
+          this.parameterDiagnostic("named arguments must follow bare *", token, end, true));
+      }
       if (this.eat("**")) {
         const token = this.name();
         kwarg.push({name: token.value, value: null, span: token.span});
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
-        if (this.at("=")) this.fail("A variadic keyword parameter cannot have a default.");
+        if (this.at("=")) this.fail("A variadic keyword parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
+          this.diagnostic("var-keyword argument cannot have default value", this.peek().span));
       } else
       if (this.eat("/")) {
-        if (slash || star || !positional.length) this.fail("Invalid positional-only separator.");
+        if (slash || star || !positional.length) {
+          const message = star ? "/ must be ahead of *" : slash ? "/ may appear only once" :
+            this.at(",") ? "at least one argument must precede /" : this.at(end) ? "invalid syntax" : null;
+          this.fail("Invalid positional-only separator.", this.previous, "SYNTAX", undefined,
+            message ? this.parameterDiagnostic(message, this.previous, end) : undefined);
+        }
         slash = true; posonly = positional; positional = [];
       } else if (this.eat("*")) {
-        if (star) this.fail("Duplicate keyword-only separator.");
+        const separator = this.previous;
+        if (star) this.fail("Duplicate keyword-only separator.", separator, "SYNTAX", undefined,
+          this.kind("name") || this.at(",") ? this.parameterDiagnostic("* argument may appear only once", separator, end) : undefined);
         if (this.kind("name")) {
           const token = this.take();
           vararg.push({name: token.value, value: null, span: token.span});
           if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
-          if (this.at("=")) this.fail("A variadic positional parameter cannot have a default.");
-        }
+          if (this.at("=")) this.fail("A variadic positional parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
+            this.diagnostic("var-positional argument cannot have default value", this.peek().span));
+        } else bareStar = separator;
         star = true;
       } else {
         const token = this.name();
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         const value = this.eat("=") ? this.expression() : null;
-        if (!star && defaultSeen && value === null) this.fail("A required positional parameter follows a default.", token);
+        if (!star && defaultSeen && value === null) {
+          const syntax = this.at(end) || this.at(",") ?
+            this.parameterDiagnostic("parameter without a default follows parameter with a default", token, end, true) : undefined;
+          this.fail("A required positional parameter follows a default.", token, "SYNTAX", undefined, syntax);
+        }
         if (!star && value !== null) defaultSeen = true;
         (star ? kwonly : positional).push({name: token.value, value, span: token.span});
       }
       if (this.at(end)) break;
       this.expect(",");
     }
-    if (star && !kwonly.length && !vararg.length) this.fail("A named keyword-only parameter must follow '*'.");
+    if (bareStar && !kwonly.length) {
+      const token = end === ":" ? this.peek() : bareStar;
+      this.fail("A named keyword-only parameter must follow '*'.", token, "SYNTAX", undefined,
+        this.parameterDiagnostic("named arguments must follow bare *", token, end, true));
+    }
     return {posonly, positional, kwonly, ...(vararg.length ? {vararg} : {}), ...(kwarg.length ? {kwarg} : {})};
   }
   lambda() {
@@ -497,7 +541,7 @@ class Parser {
   starredExpression(named = false, target = false) {
     if (this.eat("*")) {
       const start = this.previous, value = this.bitwiseOr();
-      return this.node("Starred", start, {value}, value);
+      return this.node("Starred", start, {value});
     }
     return target ? this.bitwiseOr() : named ? this.namedExpression() : this.expression();
   }
@@ -509,7 +553,8 @@ class Parser {
       if (this.ending() || [")", "]", "}", ":", "="].some(value => this.at(value)) || target && this.at("in")) break;
       items.push(expression());
     }
-    if (!tuple && items[0].kind === "Starred") this.fail("A starred expression requires a sequence display.", items[0]);
+    if (!tuple && items[0].kind === "Starred" && !this.at("=") && !(target && this.at("in")))
+      this.fail("A starred expression requires a sequence display.", items[0]);
     return tuple ? this.node("Tuple", start, {items}) : items[0];
   }
   namedExpression() {
