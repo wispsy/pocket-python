@@ -224,8 +224,53 @@ tests, assignment values and loop iterables before their targets. Parked
 collection, cancellation/close, shared limits and installed offline
 Stop/Restart/reduced-profile acceptance exercise both layouts.
 
-The current fixed generated-syntax corpus contains 881 cases: 845 supported
-semantic/error comparisons and 36 explicit native-field refusals. The ordinary
+LA-88 qualifies positional arguments mixed with later iterable/mapping
+unpacking. The first invalid argument group selects the diagnostic message;
+a mapping followed by an inadmissible star in the second group selects that
+star before parsing its operand. Otherwise the closing call token selects the
+range. Unicode/multiline source and all three compile modes retain parser
+character offsets. Earlier completed compound metadata keeps its independent
+field-read boundary.
+
+LA-89 qualifies generator clauses after explicit keyword or mapping arguments.
+The keyword form selects the name and equals sign with the native comparison/
+assignment-expression hint; mapping arguments select the `for` token with the
+generic syntax message. Complete adopted clauses, Unicode and multiline text
+have independent observations. Malformed clauses retain their field boundary,
+and valid parenthesized generator keyword values keep their execution behavior.
+
+LA-90 composes both call slices through registry modules, nested dynamic source,
+causes/notes, independent argument snapshots and cyclic filename owners.
+Suspended flags conversion and generator cleanup retain those fields through
+parked collection, cancellation and close. Shared allocation limits, original
+dynamic frames and installed offline Stop/Restart cover the same payloads.
+
+LA-91 shares the adopted argument-list parser between calls and class headers.
+Class positional/keyword and iterable/mapping ordering, generator parentheses
+and keyword-generator failures retain their exact messages and character
+ranges. Sole generator bases require parentheses; class header diagnostics
+precede body grammar failures. Multiline unpacking converts its end column
+against the starting source line, including Unicode. Valid expanded bases,
+metaclass keywords, parenthesized generator bases and named-expression bases
+have separate controls; class keyword and shared parser budgets remain bounded.
+
+LA-92 qualifies repeated normalized class keywords after full parsing and
+binding. Decorators and the class body compile before the class keyword list;
+that list validates before base and keyword-value expressions. Native fields
+use UTF-8 byte columns, two arguments and absent source text/parser metadata.
+Earlier binding/control failures retain their priority. Incomplete inline
+compound input in `single` mode keeps its native field-read boundary; newline-
+terminated input has independent compiler comparisons.
+
+LA-93 composes the class header/parser and repeated-keyword/compiler layouts
+through registry modules, nested exec, chaining/notes and independent argument
+snapshots. Cyclic filename owners and suspended flags conversion/cleanup survive
+parked collection, cancellation/close and shared allocation limits. The runnable
+example and installed offline console retain original dynamic frames, fresh
+Stop/Restart behavior and the reduced-profile dynamic-compilation boundary.
+
+The current fixed generated-syntax corpus contains 1,133 cases: 1,077 supported
+semantic/error comparisons and 56 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

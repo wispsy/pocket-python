@@ -65,7 +65,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     ready()
                     for case in corpus['cases']:
                         if (case.get('modules') or
-                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87'} or
+                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93'} or
                             containers and case['stage'] not in {'LA-7', 'LA-6A'} or
                             exceptions and case['stage'] not in {'LA13', 'LA16', 'LA19', 'LA22', 'LA25', 'LA28', 'LA31', 'LA34', 'LA37', 'LA40', 'LA43', 'LA46', 'LA49', 'LA52', 'LA55', 'LA58', 'LA61', 'LA62C'}):
                             continue
@@ -128,7 +128,9 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                             assert 'fail at signature-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         if case['id'] == 'generated-callgrammar-original-dynamic-failure':
                             assert 'fail at callgrammar-payload-original.py:2' in page.locator('#diagnostic').inner_text()
-                        if case['id'] in {'generated-keyword-original-dynamic-failure', 'generated-interactive-original-dynamic-failure'}:
+                        if case['id'] in {'generated-keyword-original-dynamic-failure', 'generated-interactive-original-dynamic-failure',
+                                          'generated-mixedcall-original-dynamic-failure', 'generated-keywordgenerator-original-dynamic-failure',
+                                          'generated-classgrammar-original-dynamic-failure', 'generated-classkeyword-original-dynamic-failure'}:
                             filename = case['id'].split('-')[1] + '-payload-original.py'
                             assert f'fail at {filename}:2' in page.locator('#diagnostic').inner_text()
                         records.append({'id': case['id'], 'status': 'pass'})
@@ -208,6 +210,10 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     busy_sources = [busy]
                     if syntax_errors:
                         busy_sources += [
+                            'try: compile("class C(a=1,B): pass","class-grammar.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',
+                            'def work():\n try: compile("class C(a=1,a=2): pass","class-keyword.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
+                            'try: compile("f(a=1,2,**d,*x)","mixed.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',
+                            'def work():\n try: compile("f(a=x for x in y)","keyword-generator.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
                             'try: compile("f(a=1,a=2)","keyword.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e.filename\n',
                             'def work():\n try: compile("x=1\\nx=2","interactive.py","single")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
                             'try: compile("f(a=1,2)","call-order.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',
@@ -370,6 +376,10 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                   'stop-during-indentation-owner', 'stop-during-control-cleanup',
                   'stop-during-nested-target-retention', 'stop-during-starred-target-cleanup',
                   'stop-during-parameter-default-retention', 'stop-during-parameter-separator-cleanup',
+                  'stop-during-call-order-retention', 'stop-during-generator-call-cleanup',
+                  'stop-during-keyword-retention', 'stop-during-interactive-cleanup',
+                  'stop-during-mixed-call-retention', 'stop-during-keyword-generator-cleanup',
+                  'stop-during-class-grammar-retention', 'stop-during-class-keyword-cleanup',
                   'reduced-profile-update', 'old-cache-removed', 'core-dynamic-source-boundary']
     return {'schema_version': 1, 'suite': 'interpreter-syntax-errors-offline/1' if syntax_errors else 'interpreter-exceptions-offline/1' if exceptions else 'interpreter-containers-offline/1' if containers else 'interpreter-object-offline/1',
             'installed_distribution_required': require_installed, 'package_origin': str(package),

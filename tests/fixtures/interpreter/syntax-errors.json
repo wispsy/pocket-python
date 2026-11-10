@@ -29,7 +29,13 @@
     "LA84",
     "LA85",
     "LA86",
-    "LA87"
+    "LA87",
+    "LA88",
+    "LA89",
+    "LA90",
+    "LA91",
+    "LA92",
+    "LA93"
   ],
   "cases": [
     {
@@ -4292,7 +4298,7 @@
     },
     {
       "id": "call-order-boundary-0",
-      "stage": "FutureCall",
+      "stage": "LA88",
       "source": "try: compile('f(**d,1,*x)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
       "stdout": "positional argument follows keyword argument unpacking 1 11 1 12\n'f(**d,1,*x)\\n' False 2\n0 0 'f(**d,1,*x)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument unpacking True\n",
       "owner": "#124",
@@ -4300,7 +4306,7 @@
     },
     {
       "id": "call-order-boundary-1",
-      "stage": "FutureCall",
+      "stage": "LA88",
       "source": "try: compile('f(a=1,2,**d,*x)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
       "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x)\\n' False 2\n0 0 'f(a=1,2,**d,*x)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n",
       "owner": "#124",
@@ -4666,7 +4672,7 @@
     },
     {
       "id": "generator-call-boundary-0",
-      "stage": "FutureCall",
+      "stage": "LA89",
       "source": "try: compile('f(a=x for x in y)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
       "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y)\\n' False 2\n0 0 'f(a=x for x in y)\\n'\nTrue True True\ncalls/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n",
       "owner": "#124",
@@ -5497,6 +5503,1570 @@
       "stdout": "invalid syntax. Perhaps you forgot a comma? 2 3 3 4\n' *x' False 2\n0 0 'f(**雪,\\n *x\\n 雪=1)\\n'\nTrue True True\ncalls/雪.py True\ninvalid syntax. Perhaps you forgot a comma? True\n",
       "owner": "#124",
       "boundary": "A missing comma after iterable unpacking retains the independent parser native-field boundary."
+    },
+    {
+      "id": "mixed-call-0-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,*x)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 11 1 12\n'f(**d,1,*x)\\n' False 2\n0 0 'f(**d,1,*x)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-0-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,*x)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 11 1 12\n'f(**d,1,*x)' False 2\n0 0 'f(**d,1,*x)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-0-single",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,*x)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 11 1 12\n'f(**d,1,*x)' False 2\n0 0 'f(**d,1,*x)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-1-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,*x,2)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 13 1 14\n'f(**d,1,*x,2)\\n' False 2\n0 0 'f(**d,1,*x,2)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-1-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,*x,2)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 13 1 14\n'f(**d,1,*x,2)' False 2\n0 0 'f(**d,1,*x,2)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-1-single",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,*x,2)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 13 1 14\n'f(**d,1,*x,2)' False 2\n0 0 'f(**d,1,*x,2)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-2-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,*x,**q,*y)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 16 1 17\n'f(**d,1,*x,**q,*y)\\n' False 2\n0 0 'f(**d,1,*x,**q,*y)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-2-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,*x,**q,*y)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 16 1 17\n'f(**d,1,*x,**q,*y)' False 2\n0 0 'f(**d,1,*x,**q,*y)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-2-single",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,*x,**q,*y)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 16 1 17\n'f(**d,1,*x,**q,*y)' False 2\n0 0 'f(**d,1,*x,**q,*y)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-3-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x)\\n' False 2\n0 0 'f(a=1,2,**d,*x)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-3-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x)' False 2\n0 0 'f(a=1,2,**d,*x)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-3-single",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x)' False 2\n0 0 'f(a=1,2,**d,*x)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-4-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x,3)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x,3)\\n' False 2\n0 0 'f(a=1,2,**d,*x,3)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-4-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x,3)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x,3)' False 2\n0 0 'f(a=1,2,**d,*x,3)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-4-single",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x,3)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x,3)' False 2\n0 0 'f(a=1,2,**d,*x,3)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-5-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x+)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x+)\\n' False 2\n0 0 'f(a=1,2,**d,*x+)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-5-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x+)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x+)' False 2\n0 0 'f(a=1,2,**d,*x+)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-5-single",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x+)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x+)' False 2\n0 0 'f(a=1,2,**d,*x+)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-6-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x=1)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x=1)\\n' False 2\n0 0 'f(a=1,2,**d,*x=1)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-6-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x=1)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x=1)' False 2\n0 0 'f(a=1,2,**d,*x=1)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-6-single",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x=1)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x=1)' False 2\n0 0 'f(a=1,2,**d,*x=1)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-7-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x for x in y)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x for x in y)\\n' False 2\n0 0 'f(a=1,2,**d,*x for x in y)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-7-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x for x in y)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x for x in y)' False 2\n0 0 'f(a=1,2,**d,*x for x in y)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-7-single",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,*x for x in y)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(a=1,2,**d,*x for x in y)' False 2\n0 0 'f(a=1,2,**d,*x for x in y)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-8-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,**q,*x)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 17 1 18\n'f(a=1,2,**d,**q,*x)\\n' False 2\n0 0 'f(a=1,2,**d,**q,*x)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-8-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,**q,*x)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 17 1 18\n'f(a=1,2,**d,**q,*x)' False 2\n0 0 'f(a=1,2,**d,**q,*x)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-8-single",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,2,**d,**q,*x)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 17 1 18\n'f(a=1,2,**d,**q,*x)' False 2\n0 0 'f(a=1,2,**d,**q,*x)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-9-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,**q,*x)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 13 1 14\n'f(**d,1,**q,*x)\\n' False 2\n0 0 'f(**d,1,**q,*x)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-9-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,**q,*x)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 13 1 14\n'f(**d,1,**q,*x)' False 2\n0 0 'f(**d,1,**q,*x)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-9-single",
+      "stage": "LA88",
+      "source": "try: compile('f(**d,1,**q,*x)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 13 1 14\n'f(**d,1,**q,*x)' False 2\n0 0 'f(**d,1,**q,*x)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-10-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(雪=1,雪,**字,*字)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(雪=1,雪,**字,*字)\\n' False 2\n0 0 'f(雪=1,雪,**字,*字)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-10-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(雪=1,雪,**字,*字)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(雪=1,雪,**字,*字)' False 2\n0 0 'f(雪=1,雪,**字,*字)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-10-single",
+      "stage": "LA88",
+      "source": "try: compile('f(雪=1,雪,**字,*字)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 13 1 14\n'f(雪=1,雪,**字,*字)' False 2\n0 0 'f(雪=1,雪,**字,*字)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-11-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(**雪,\\n 雪,\\n *字)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 3 4 3 5\n' *字)\\n' False 2\n0 0 'f(**雪,\\n 雪,\\n *字)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-11-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(**雪,\\n 雪,\\n *字)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 3 4 3 5\n' *字)' False 2\n0 0 'f(**雪,\\n 雪,\\n *字)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-11-single",
+      "stage": "LA88",
+      "source": "try: compile('f(**雪,\\n 雪,\\n *字)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 3 4 3 5\n' *字)' False 2\n0 0 'f(**雪,\\n 雪,\\n *字)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-12-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(雪=1,\\n 字,\\n **雪,\\n *字)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 4 2 4 3\n' *字)\\n' False 2\n0 0 'f(雪=1,\\n 字,\\n **雪,\\n *字)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-12-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(雪=1,\\n 字,\\n **雪,\\n *字)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 4 2 4 3\n' *字)' False 2\n0 0 'f(雪=1,\\n 字,\\n **雪,\\n *字)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-12-single",
+      "stage": "LA88",
+      "source": "try: compile('f(雪=1,\\n 字,\\n **雪,\\n *字)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 4 2 4 3\n' *字)' False 2\n0 0 'f(雪=1,\\n 字,\\n **雪,\\n *字)'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-13-exec",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,(2),**d,*(x))',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 15 1 16\n'f(a=1,(2),**d,*(x))\\n' False 2\n0 0 'f(a=1,(2),**d,*(x))\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-13-eval",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,(2),**d,*(x))',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 15 1 16\n'f(a=1,(2),**d,*(x))' False 2\n0 0 'f(a=1,(2),**d,*(x))'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-13-single",
+      "stage": "LA88",
+      "source": "try: compile('f(a=1,(2),**d,*(x))',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 15 1 16\n'f(a=1,(2),**d,*(x))' False 2\n0 0 'f(a=1,(2),**d,*(x))'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-priority-0",
+      "stage": "LA88",
+      "source": "try: compile('return 1\\nf(**d,1,*x)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 2 11 2 12\n'f(**d,1,*x)\\n' False 2\n0 0 'return 1\\nf(**d,1,*x)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-priority-1",
+      "stage": "LA88",
+      "source": "try: compile('nonlocal x\\nf(a=1,2,**d,*x)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 2 13 2 14\n'f(a=1,2,**d,*x)\\n' False 2\n0 0 'nonlocal x\\nf(a=1,2,**d,*x)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "mixed-call-priority-2",
+      "stage": "FutureCall",
+      "source": "try: compile('def f(x,x): pass\\ng(**d,1,*x)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 2 11 2 12\n'g(**d,1,*x)\\n' False 2\n0 0 'def f(x,x): pass\\ng(**d,1,*x)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "mixed-call-priority-3",
+      "stage": "LA88",
+      "source": "try: compile('g(h(a=1,2,**d,*x),a=1,2)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 15 1 16\n'g(h(a=1,2,**d,*x),a=1,2)\\n' False 2\n0 0 'g(h(a=1,2,**d,*x),a=1,2)\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "keyword-generator-0-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y)\\n' False 2\n0 0 'f(a=x for x in y)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-0-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y)' False 2\n0 0 'f(a=x for x in y)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-0-single",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y)' False 2\n0 0 'f(a=x for x in y)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-1-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(1,a=x for x in y)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 5 1 7\n'f(1,a=x for x in y)\\n' False 2\n0 0 'f(1,a=x for x in y)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-1-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(1,a=x for x in y)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 5 1 7\n'f(1,a=x for x in y)' False 2\n0 0 'f(1,a=x for x in y)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-1-single",
+      "stage": "LA89",
+      "source": "try: compile('f(1,a=x for x in y)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 5 1 7\n'f(1,a=x for x in y)' False 2\n0 0 'f(1,a=x for x in y)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-2-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(**d,a=x for x in y)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 7 1 9\n'f(**d,a=x for x in y)\\n' False 2\n0 0 'f(**d,a=x for x in y)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-2-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(**d,a=x for x in y)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 7 1 9\n'f(**d,a=x for x in y)' False 2\n0 0 'f(**d,a=x for x in y)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-2-single",
+      "stage": "LA89",
+      "source": "try: compile('f(**d,a=x for x in y)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 7 1 9\n'f(**d,a=x for x in y)' False 2\n0 0 'f(**d,a=x for x in y)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-3-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y,1)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y,1)\\n' False 2\n0 0 'f(a=x for x in y,1)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-3-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y,1)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y,1)' False 2\n0 0 'f(a=x for x in y,1)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-3-single",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y,1)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y,1)' False 2\n0 0 'f(a=x for x in y,1)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-4-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y,)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y,)\\n' False 2\n0 0 'f(a=x for x in y,)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-4-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y,)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y,)' False 2\n0 0 'f(a=x for x in y,)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-4-single",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y,)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y,)' False 2\n0 0 'f(a=x for x in y,)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-5-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y if x)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y if x)\\n' False 2\n0 0 'f(a=x for x in y if x)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-5-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y if x)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y if x)' False 2\n0 0 'f(a=x for x in y if x)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-5-single",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y if x)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y if x)' False 2\n0 0 'f(a=x for x in y if x)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-6-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y for z in q)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y for z in q)\\n' False 2\n0 0 'f(a=x for x in y for z in q)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-6-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y for z in q)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y for z in q)' False 2\n0 0 'f(a=x for x in y for z in q)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-6-single",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y for z in q)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y for z in q)' False 2\n0 0 'f(a=x for x in y for z in q)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-7-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(雪=字 for 字 in 雪)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(雪=字 for 字 in 雪)\\n' False 2\n0 0 'f(雪=字 for 字 in 雪)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-7-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(雪=字 for 字 in 雪)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(雪=字 for 字 in 雪)' False 2\n0 0 'f(雪=字 for 字 in 雪)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-7-single",
+      "stage": "LA89",
+      "source": "try: compile('f(雪=字 for 字 in 雪)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(雪=字 for 字 in 雪)' False 2\n0 0 'f(雪=字 for 字 in 雪)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-8-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(雪=(字) for 字 in (雪))',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(雪=(字) for 字 in (雪))\\n' False 2\n0 0 'f(雪=(字) for 字 in (雪))\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-8-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(雪=(字) for 字 in (雪))',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(雪=(字) for 字 in (雪))' False 2\n0 0 'f(雪=(字) for 字 in (雪))'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-8-single",
+      "stage": "LA89",
+      "source": "try: compile('f(雪=(字) for 字 in (雪))',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(雪=(字) for 字 in (雪))' False 2\n0 0 'f(雪=(字) for 字 in (雪))'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-9-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(雪=字\\n for 字 in 雪)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(雪=字' False 2\n0 0 'f(雪=字\\n for 字 in 雪)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-9-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(雪=字\\n for 字 in 雪)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(雪=字' False 2\n0 0 'f(雪=字\\n for 字 in 雪)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-9-single",
+      "stage": "LA89",
+      "source": "try: compile('f(雪=字\\n for 字 in 雪)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(雪=字' False 2\n0 0 'f(雪=字\\n for 字 in 雪)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-10-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y\\n)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y' False 2\n0 0 'f(a=x for x in y\\n)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-10-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y\\n)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y' False 2\n0 0 'f(a=x for x in y\\n)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-10-single",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y\\n)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y' False 2\n0 0 'f(a=x for x in y\\n)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-11-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(**x for x in y)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 7 1 10\n'f(**x for x in y)\\n' False 2\n0 0 'f(**x for x in y)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-11-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(**x for x in y)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 7 1 10\n'f(**x for x in y)' False 2\n0 0 'f(**x for x in y)'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-11-single",
+      "stage": "LA89",
+      "source": "try: compile('f(**x for x in y)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 7 1 10\n'f(**x for x in y)' False 2\n0 0 'f(**x for x in y)'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-12-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(a=1,**x for x in y)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 11 1 14\n'f(a=1,**x for x in y)\\n' False 2\n0 0 'f(a=1,**x for x in y)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-12-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(a=1,**x for x in y)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 11 1 14\n'f(a=1,**x for x in y)' False 2\n0 0 'f(a=1,**x for x in y)'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-12-single",
+      "stage": "LA89",
+      "source": "try: compile('f(a=1,**x for x in y)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 11 1 14\n'f(a=1,**x for x in y)' False 2\n0 0 'f(a=1,**x for x in y)'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-13-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(**雪\\n for 字 in 雪)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 2 2 5\n' for 字 in 雪)\\n' False 2\n0 0 'f(**雪\\n for 字 in 雪)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-13-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(**雪\\n for 字 in 雪)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 2 2 5\n' for 字 in 雪)' False 2\n0 0 'f(**雪\\n for 字 in 雪)'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-13-single",
+      "stage": "LA89",
+      "source": "try: compile('f(**雪\\n for 字 in 雪)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 2 2 5\n' for 字 in 雪)' False 2\n0 0 'f(**雪\\n for 字 in 雪)'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-14-exec",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y, bad=)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y, bad=)\\n' False 2\n0 0 'f(a=x for x in y, bad=)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-14-eval",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y, bad=)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y, bad=)' False 2\n0 0 'f(a=x for x in y, bad=)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-14-single",
+      "stage": "LA89",
+      "source": "try: compile('f(a=x for x in y, bad=)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y, bad=)' False 2\n0 0 'f(a=x for x in y, bad=)'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-boundary-0",
+      "stage": "FutureCall",
+      "source": "try: compile('f(a=x for x in)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 7 1 10\n'f(a=x for x in)\\n' False 2\n0 0 'f(a=x for x in)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-boundary-1",
+      "stage": "FutureCall",
+      "source": "try: compile('f(a=x for x in (y+))',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 7 1 10\n'f(a=x for x in (y+))\\n' False 2\n0 0 'f(a=x for x in (y+))\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-boundary-2",
+      "stage": "FutureCall",
+      "source": "try: compile('f(a=x for x in y =2)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y =2)\\n' False 2\n0 0 'f(a=x for x in y =2)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-boundary-3",
+      "stage": "FutureCall",
+      "source": "try: compile('f(a=x for x in y+)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y+)\\n' False 2\n0 0 'f(a=x for x in y+)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-priority-0",
+      "stage": "LA89",
+      "source": "try: compile('return 1\\nf(a=x for x in y)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 2 3 2 5\n'f(a=x for x in y)\\n' False 2\n0 0 'return 1\\nf(a=x for x in y)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-priority-1",
+      "stage": "LA89",
+      "source": "try: compile('nonlocal x\\nf(**x for x in y)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 7 2 10\n'f(**x for x in y)\\n' False 2\n0 0 'nonlocal x\\nf(**x for x in y)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "keyword-generator-priority-2",
+      "stage": "LA89",
+      "source": "try: compile('g(h(a=x for x in y),k=1,2)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 5 1 7\n'g(h(a=x for x in y),k=1,2)\\n' False 2\n0 0 'g(h(a=x for x in y),k=1,2)\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "keyword-generator-valid-parenthesized",
+      "stage": "LA89",
+      "source": "def f(**kw):\n return kw[\"a\"]\ng=f(a=(x+1 for x in [1,2]))\nprint(next(g),next(g))\n",
+      "stdout": "2 3\n"
+    },
+    {
+      "id": "generated-mixedcall-owner-cycle",
+      "stage": "LA90",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('f(雪=1,2,**d,*字)',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue positional argument follows keyword argument 13 False False\n"
+    },
+    {
+      "id": "generated-mixedcall-chaining",
+      "stage": "LA90",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('f(雪=1,2,**d,*字)',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 13\n"
+    },
+    {
+      "id": "generated-mixedcall-cleanup",
+      "stage": "LA90",
+      "source": "def work():\n try: compile('f(雪=1,2,**d,*字)',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py positional argument follows keyword argument False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-mixedcall-original-dynamic-failure",
+      "stage": "LA90",
+      "source": "exec(compile('def fail():\\n try: compile(\\'f(雪=1,2,**d,*字)\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','mixedcall-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-mixedcall-nested-exec",
+      "stage": "LA90",
+      "source": "scope={}\nexec('try: compile(\\'f(雪=1,2,**d,*字)\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py positional argument follows keyword argument 13 False\n"
+    },
+    {
+      "id": "generated-mixedcall-field-independence",
+      "stage": "LA90",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('f(雪=1,2,**d,*字)',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'f(雪=1,2,**d,*字)\\n' True True 77 13\n"
+    },
+    {
+      "id": "generated-mixedcall-module",
+      "stage": "LA90",
+      "source": "import helper\ne=helper.validate('f(雪=1,2,**d,*字)')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py positional argument follows keyword argument 13 module input\n"
+    },
+    {
+      "id": "generated-mixedcall-flags-owner-cycle",
+      "stage": "LA90",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('f(雪=1,2,**d,*字)',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True positional argument follows keyword argument 13\n"
+    },
+    {
+      "id": "generated-keywordgenerator-owner-cycle",
+      "stage": "LA90",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('f(雪=字 for 字 in 值)',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue invalid syntax. Maybe you meant '==' or ':=' instead of '='? 3 False False\n"
+    },
+    {
+      "id": "generated-keywordgenerator-chaining",
+      "stage": "LA90",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('f(雪=字 for 字 in 值)',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 3\n"
+    },
+    {
+      "id": "generated-keywordgenerator-cleanup",
+      "stage": "LA90",
+      "source": "def work():\n try: compile('f(雪=字 for 字 in 值)',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py invalid syntax. Maybe you meant '==' or ':=' instead of '='? False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-keywordgenerator-original-dynamic-failure",
+      "stage": "LA90",
+      "source": "exec(compile('def fail():\\n try: compile(\\'f(雪=字 for 字 in 值)\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','keywordgenerator-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-keywordgenerator-nested-exec",
+      "stage": "LA90",
+      "source": "scope={}\nexec('try: compile(\\'f(雪=字 for 字 in 值)\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py invalid syntax. Maybe you meant '==' or ':=' instead of '='? 3 False\n"
+    },
+    {
+      "id": "generated-keywordgenerator-field-independence",
+      "stage": "LA90",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('f(雪=字 for 字 in 值)',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'f(雪=字 for 字 in 值)\\n' True True 77 3\n"
+    },
+    {
+      "id": "generated-keywordgenerator-module",
+      "stage": "LA90",
+      "source": "import helper\ne=helper.validate('f(雪=字 for 字 in 值)')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py invalid syntax. Maybe you meant '==' or ':=' instead of '='? 3 module input\n"
+    },
+    {
+      "id": "generated-keywordgenerator-flags-owner-cycle",
+      "stage": "LA90",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('f(雪=字 for 字 in 值)',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True invalid syntax. Maybe you meant '==' or ':=' instead of '='? 3\n"
+    },
+    {
+      "id": "class-arguments-0-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=1,B): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 14 1 15\n'class C(a=1,B): pass\\n' False 2\n0 0 'class C(a=1,B): pass\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "class-arguments-0-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=1,B): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 14 1 15\n'class C(a=1,B): pass' False 2\n0 0 'class C(a=1,B): pass'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "class-arguments-1-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(**d,B): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 14 1 15\n'class C(**d,B): pass\\n' False 2\n0 0 'class C(**d,B): pass\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-1-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(**d,B): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 14 1 15\n'class C(**d,B): pass' False 2\n0 0 'class C(**d,B): pass'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-2-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(**d,*x): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 12 1 15\n'class C(**d,*x): pass\\n' False 2\n0 0 'class C(**d,*x): pass\\n'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-2-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(**d,*x): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 12 1 15\n'class C(**d,*x): pass' False 2\n0 0 'class C(**d,*x): pass'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-3-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=1,2,**d,*x): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 19 1 20\n'class C(a=1,2,**d,*x): pass\\n' False 2\n0 0 'class C(a=1,2,**d,*x): pass\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "class-arguments-3-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=1,2,**d,*x): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 19 1 20\n'class C(a=1,2,**d,*x): pass' False 2\n0 0 'class C(a=1,2,**d,*x): pass'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "class-arguments-4-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(**d,1,*x): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 17 1 18\n'class C(**d,1,*x): pass\\n' False 2\n0 0 'class C(**d,1,*x): pass\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-4-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(**d,1,*x): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument unpacking 1 17 1 18\n'class C(**d,1,*x): pass' False 2\n0 0 'class C(**d,1,*x): pass'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-5-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(x for x in y,1): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 9 1 21\n'class C(x for x in y,1): pass\\n' False 2\n0 0 'class C(x for x in y,1): pass\\n'\nTrue True True\narguments/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "class-arguments-5-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(x for x in y,1): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 9 1 21\n'class C(x for x in y,1): pass' False 2\n0 0 'class C(x for x in y,1): pass'\nTrue True True\narguments/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "class-arguments-6-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(1,x for x in y): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 11 1 23\n'class C(1,x for x in y): pass\\n' False 2\n0 0 'class C(1,x for x in y): pass\\n'\nTrue True True\narguments/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "class-arguments-6-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(1,x for x in y): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 11 1 23\n'class C(1,x for x in y): pass' False 2\n0 0 'class C(1,x for x in y): pass'\nTrue True True\narguments/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "class-arguments-7-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(*x for x in y): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 12 1 15\n'class C(*x for x in y): pass\\n' False 2\n0 0 'class C(*x for x in y): pass\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-arguments-7-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(*x for x in y): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 12 1 15\n'class C(*x for x in y): pass' False 2\n0 0 'class C(*x for x in y): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-arguments-8-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=x for x in y): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 9 1 11\n'class C(a=x for x in y): pass\\n' False 2\n0 0 'class C(a=x for x in y): pass\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "class-arguments-8-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=x for x in y): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 9 1 11\n'class C(a=x for x in y): pass' False 2\n0 0 'class C(a=x for x in y): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "class-arguments-9-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(**x for x in y): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 13 1 16\n'class C(**x for x in y): pass\\n' False 2\n0 0 'class C(**x for x in y): pass\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-arguments-9-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(**x for x in y): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 13 1 16\n'class C(**x for x in y): pass' False 2\n0 0 'class C(**x for x in y): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-arguments-10-exec",
+      "stage": "LA91",
+      "source": "try: compile('class 雪(字=1,字): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 14 1 15\n'class 雪(字=1,字): pass\\n' False 2\n0 0 'class 雪(字=1,字): pass\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "class-arguments-10-single",
+      "stage": "LA91",
+      "source": "try: compile('class 雪(字=1,字): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 14 1 15\n'class 雪(字=1,字): pass' False 2\n0 0 'class 雪(字=1,字): pass'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "class-arguments-11-exec",
+      "stage": "LA91",
+      "source": "try: compile('class 雪(**字,\\n *雪): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 12 2 6\n'class 雪(**字,' False 2\n0 0 'class 雪(**字,\\n *雪): pass\\n'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-11-single",
+      "stage": "LA91",
+      "source": "try: compile('class 雪(**字,\\n *雪): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 12 2 6\n'class 雪(**字,' False 2\n0 0 'class 雪(**字,\\n *雪): pass'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-12-exec",
+      "stage": "LA91",
+      "source": "try: compile('class 雪(字=雪\\n for 雪 in 字): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 9 1 11\n'class 雪(字=雪' False 2\n0 0 'class 雪(字=雪\\n for 雪 in 字): pass\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "class-arguments-12-single",
+      "stage": "LA91",
+      "source": "try: compile('class 雪(字=雪\\n for 雪 in 字): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 9 1 11\n'class 雪(字=雪' False 2\n0 0 'class 雪(字=雪\\n for 雪 in 字): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "class-arguments-13-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=1,B,): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 15 1 16\n'class C(a=1,B,): pass\\n' False 2\n0 0 'class C(a=1,B,): pass\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "class-arguments-13-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=1,B,): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 15 1 16\n'class C(a=1,B,): pass' False 2\n0 0 'class C(a=1,B,): pass'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "class-arguments-14-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(**d,*x,*y,k=1): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 12 1 19\n'class C(**d,*x,*y,k=1): pass\\n' False 2\n0 0 'class C(**d,*x,*y,k=1): pass\\n'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-14-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(**d,*x,*y,k=1): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 12 1 19\n'class C(**d,*x,*y,k=1): pass' False 2\n0 0 'class C(**d,*x,*y,k=1): pass'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-15-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=x for x in y, bad=): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 9 1 11\n'class C(a=x for x in y, bad=): pass\\n' False 2\n0 0 'class C(a=x for x in y, bad=): pass\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "class-arguments-15-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=x for x in y, bad=): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 9 1 11\n'class C(a=x for x in y, bad=): pass' False 2\n0 0 'class C(a=x for x in y, bad=): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n"
+    },
+    {
+      "id": "class-arguments-16-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=1,B):\\n value=',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 14 1 15\n'class C(a=1,B):\\n' False 2\n0 0 'class C(a=1,B):\\n value=\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "class-arguments-16-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(a=1,B):\\n value=',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 14 1 15\n'class C(a=1,B):\\n' False 2\n0 0 'class C(a=1,B):\\n value='\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "class-arguments-17-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(**d,*x):\\n global x\\n x=1',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 12 1 15\n'class C(**d,*x):\\n' False 2\n0 0 'class C(**d,*x):\\n global x\\n x=1\\n'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-17-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(**d,*x):\\n global x\\n x=1',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 12 1 15\n'class C(**d,*x):\\n' False 2\n0 0 'class C(**d,*x):\\n global x\\n x=1'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-boundary-0",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(a=1,2+): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "positional argument follows keyword argument 1 15 1 16\n'class C(a=1,2+): pass\\n' False 2\n0 0 'class C(a=1,2+): pass\\n'\nTrue True True\narguments/雪.py True\npositional argument follows keyword argument True\n"
+    },
+    {
+      "id": "class-arguments-boundary-1",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(a=x for x in): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 13 1 16\n'class C(a=x for x in): pass\\n' False 2\n0 0 'class C(a=x for x in): pass\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-arguments-boundary-2",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(**d,*x=1): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "cannot assign to iterable argument unpacking 1 13 1 17\n'class C(**d,*x=1): pass\\n' False 2\n0 0 'class C(**d,*x=1): pass\\n'\nTrue True True\narguments/雪.py True\ncannot assign to iterable argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-boundary-3",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(**雪,\\n *x\\n 雪=1): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma? 2 3 3 4\n' *x' False 2\n0 0 'class C(**雪,\\n *x\\n 雪=1): pass\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax. Perhaps you forgot a comma? True\n"
+    },
+    {
+      "id": "class-arguments-valid-0",
+      "stage": "LA91",
+      "source": "print(compile(\"class C((x for x in [])): pass\",\"valid.py\",\"exec\").co_name)\n",
+      "stdout": "<module>\n"
+    },
+    {
+      "id": "class-arguments-valid-1",
+      "stage": "LA91",
+      "source": "class B: pass\nclass C(base:=B): pass\nprint(C.__bases__[0] is B,base is B)\n",
+      "stdout": "True True\n"
+    },
+    {
+      "id": "class-arguments-valid-2",
+      "stage": "LA91",
+      "source": "def factory(name,bases,namespace,**kw):\n print(name,len(bases),kw[\"flag\"],namespace[\"value\"])\n return bases\nclass C(*[object],flag=7,metaclass=factory):\n value=9\nprint(C[0] is object)\n",
+      "stdout": "C 1 7 9\nTrue\n"
+    },
+    {
+      "id": "class-arguments-generator-0-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(x for x in y): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 11 1 14\n'class C(x for x in y): pass\\n' False 2\n0 0 'class C(x for x in y): pass\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-arguments-generator-0-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(x for x in y): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 11 1 14\n'class C(x for x in y): pass' False 2\n0 0 'class C(x for x in y): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-arguments-generator-1-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(x for x in y,): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 9 1 21\n'class C(x for x in y,): pass\\n' False 2\n0 0 'class C(x for x in y,): pass\\n'\nTrue True True\narguments/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "class-arguments-generator-1-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(x for x in y,): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 9 1 21\n'class C(x for x in y,): pass' False 2\n0 0 'class C(x for x in y,): pass'\nTrue True True\narguments/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "class-arguments-generator-2-exec",
+      "stage": "LA91",
+      "source": "try: compile('class C(*x for x in y,): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 12 1 15\n'class C(*x for x in y,): pass\\n' False 2\n0 0 'class C(*x for x in y,): pass\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-arguments-generator-2-single",
+      "stage": "LA91",
+      "source": "try: compile('class C(*x for x in y,): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 12 1 15\n'class C(*x for x in y,): pass' False 2\n0 0 'class C(*x for x in y,): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-arguments-generator-3-exec",
+      "stage": "LA91",
+      "source": "try: compile('class 雪(字 for 字 in 雪\\n): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 11 1 14\n'class 雪(字 for 字 in 雪' False 2\n0 0 'class 雪(字 for 字 in 雪\\n): pass\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-arguments-generator-3-single",
+      "stage": "LA91",
+      "source": "try: compile('class 雪(字 for 字 in 雪\\n): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 11 1 14\n'class 雪(字 for 字 in 雪' False 2\n0 0 'class 雪(字 for 字 in 雪\\n): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-arguments-shared-range-0-exec",
+      "stage": "LA91",
+      "source": "try: compile('f(**字,\\n *雪)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 2 5\n'f(**字,' False 2\n0 0 'f(**字,\\n *雪)\\n'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-shared-range-0-eval",
+      "stage": "LA91",
+      "source": "try: compile('f(**字,\\n *雪)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 2 5\n'f(**字,' False 2\n0 0 'f(**字,\\n *雪)'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-shared-range-0-single",
+      "stage": "LA91",
+      "source": "try: compile('f(**字,\\n *雪)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 2 5\n'f(**字,' False 2\n0 0 'f(**字,\\n *雪)'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-shared-range-1-exec",
+      "stage": "LA91",
+      "source": "try: compile('f(**d,\\n *雪)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 2 6\n'f(**d,' False 2\n0 0 'f(**d,\\n *雪)\\n'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-shared-range-1-eval",
+      "stage": "LA91",
+      "source": "try: compile('f(**d,\\n *雪)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 2 6\n'f(**d,' False 2\n0 0 'f(**d,\\n *雪)'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-shared-range-1-single",
+      "stage": "LA91",
+      "source": "try: compile('f(**d,\\n *雪)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 2 6\n'f(**d,' False 2\n0 0 'f(**d,\\n *雪)'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-shared-range-2-exec",
+      "stage": "LA91",
+      "source": "try: compile('f(**d,\\n *x,*雪,k=1)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 2 7\n'f(**d,' False 2\n0 0 'f(**d,\\n *x,*雪,k=1)\\n'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-shared-range-2-eval",
+      "stage": "LA91",
+      "source": "try: compile('f(**d,\\n *x,*雪,k=1)',\"arguments/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 2 7\n'f(**d,' False 2\n0 0 'f(**d,\\n *x,*雪,k=1)'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-arguments-shared-range-2-single",
+      "stage": "LA91",
+      "source": "try: compile('f(**d,\\n *x,*雪,k=1)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable argument unpacking follows keyword argument unpacking 1 6 2 7\n'f(**d,' False 2\n0 0 'f(**d,\\n *x,*雪,k=1)'\nTrue True True\narguments/雪.py True\niterable argument unpacking follows keyword argument unpacking True\n"
+    },
+    {
+      "id": "class-keywords-0-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 13 1 16\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-0-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(a=1,a=2): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'class C(a=1,a=2): pass' False 2\n1 0 'class C(a=1,a=2): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-1-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(ｘ=1,x=2): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: x 1 15 1 18\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: x True\n"
+    },
+    {
+      "id": "class-keywords-1-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(ｘ=1,x=2): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'class C(ｘ=1,x=2): pass' False 2\n1 0 'class C(ｘ=1,x=2): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-2-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(雪=1,雪=2): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 雪 1 15 1 20\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: 雪 True\n"
+    },
+    {
+      "id": "class-keywords-2-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(雪=1,雪=2): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'class C(雪=1,雪=2): pass' False 2\n1 0 'class C(雪=1,雪=2): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-3-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,b=2,b=3,a=4): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 21 1 24\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-3-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(a=1,b=2,b=3,a=4): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'class C(a=1,b=2,b=3,a=4): pass' False 2\n1 0 'class C(a=1,b=2,b=3,a=4): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-4-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2,a=3): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 13 1 16\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-4-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(a=1,a=2,a=3): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'class C(a=1,a=2,a=3): pass' False 2\n1 0 'class C(a=1,a=2,a=3): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-5-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(**d,a=1,**q,a=2): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 21 1 24\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-5-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(**d,a=1,**q,a=2): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'class C(**d,a=1,**q,a=2): pass' False 2\n1 0 'class C(**d,a=1,**q,a=2): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-6-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(metaclass=type,metaclass=type): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: metaclass 1 24 1 38\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: metaclass True\n"
+    },
+    {
+      "id": "class-keywords-6-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(metaclass=type,metaclass=type): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'class C(metaclass=type,metaclass=type): pass' False 2\n1 0 'class C(metaclass=type,metaclass=type): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-7-exec",
+      "stage": "LA92",
+      "source": "try: compile('class 雪(字=1,\\n 字=2): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 字 2 2 2 7\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: 字 True\n"
+    },
+    {
+      "id": "class-keywords-7-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class 雪(字=1,\\n 字=2): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 0 2 0\n' 字=2): pass' False 2\n1 0 'class 雪(字=1,\\n 字=2): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-8-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(雪=1,雪=(2+3)): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 雪 1 15 1 24\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: 雪 True\n"
+    },
+    {
+      "id": "class-keywords-8-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(雪=1,雪=(2+3)): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'class C(雪=1,雪=(2+3)): pass' False 2\n1 0 'class C(雪=1,雪=(2+3)): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-9-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(__x=1,__x=2): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: __x 1 15 1 20\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: __x True\n"
+    },
+    {
+      "id": "class-keywords-9-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(__x=1,__x=2): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'class C(__x=1,__x=2): pass' False 2\n1 0 'class C(__x=1,__x=2): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-10-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n return 1',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "'return' outside function 2 2 2 10\nNone True 2\nTrue True True\narguments/雪.py True\n'return' outside function True\n"
+    },
+    {
+      "id": "class-keywords-10-single",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n return 1',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "'return' outside function 2 2 2 10\nNone True 2\nTrue True True\narguments/雪.py True\n'return' outside function True\n"
+    },
+    {
+      "id": "class-keywords-11-exec",
+      "stage": "LA92",
+      "source": "try: compile('@f(k=1,k=2)\\nclass C(a=1,a=2): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: k 1 8 1 11\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: k True\n"
+    },
+    {
+      "id": "class-keywords-11-single",
+      "stage": "FutureClass",
+      "source": "try: compile('@f(k=1,k=2)\\nclass C(a=1,a=2): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 0 2 0\n'class C(a=1,a=2): pass' False 2\n2 0 '@f(k=1,k=2)\\nclass C(a=1,a=2): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-12-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(f(b=1,b=2),a=1,a=2): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 24 1 27\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-12-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(f(b=1,b=2),a=1,a=2): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'class C(f(b=1,b=2),a=1,a=2): pass' False 2\n1 0 'class C(f(b=1,b=2),a=1,a=2): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-13-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=f(b=1,b=2),a=2): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 22 1 25\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-13-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(a=f(b=1,b=2),a=2): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'class C(a=f(b=1,b=2),a=2): pass' False 2\n1 0 'class C(a=f(b=1,b=2),a=2): pass'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-14-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n f(b=1,b=2)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 2 8 2 11\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "class-keywords-14-single",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n f(b=1,b=2)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 2 8 2 11\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "class-keywords-15-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n nonlocal x',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "no binding for nonlocal 'x' found 2 2 2 12\nNone True 1\n",
+      "error_type": "IndexError"
+    },
+    {
+      "id": "class-keywords-15-single",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n nonlocal x',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "no binding for nonlocal 'x' found 2 2 2 12\nNone True 1\n",
+      "error_type": "IndexError"
+    },
+    {
+      "id": "class-keywords-16-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n def f(x,x): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "duplicate argument 'x' in function definition 2 10 2 11\nNone True 1\n",
+      "error_type": "IndexError"
+    },
+    {
+      "id": "class-keywords-16-single",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n def f(x,x): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "duplicate argument 'x' in function definition 2 10 2 11\nNone True 1\n",
+      "error_type": "IndexError"
+    },
+    {
+      "id": "class-keywords-17-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n class D(b=1,b=2): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 2 14 2 17\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "class-keywords-17-single",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n class D(b=1,b=2): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: b 2 14 2 17\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: b True\n"
+    },
+    {
+      "id": "class-keywords-18-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n [*a,*b]=v',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple starred expressions in assignment 2 2 2 9\nNone True 2\nTrue True True\narguments/雪.py True\nmultiple starred expressions in assignment True\n"
+    },
+    {
+      "id": "class-keywords-18-single",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n [*a,*b]=v',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple starred expressions in assignment 2 2 2 9\nNone True 2\nTrue True True\narguments/雪.py True\nmultiple starred expressions in assignment True\n"
+    },
+    {
+      "id": "class-keywords-19-exec",
+      "stage": "LA92",
+      "source": "try: compile('def f():\\n class C(a=1,a=2): pass\\n global f',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 2 14 2 17\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-19-single",
+      "stage": "LA92",
+      "source": "try: compile('def f():\\n class C(a=1,a=2): pass\\n global f',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 2 14 2 17\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-20-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n value=',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 8 2 9\n' value=\\n' False 2\n0 0 'class C(a=1,a=2):\\n value=\\n'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-20-single",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2):\\n value=',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 0 2 0\n' value=' False 2\n0 0 'class C(a=1,a=2):\\n value='\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-21-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2)\\n pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "expected ':' 1 17 1 18\n'class C(a=1,a=2)\\n' False 2\n0 0 'class C(a=1,a=2)\\n pass\\n'\nTrue True True\narguments/雪.py True\nexpected ':' True\n"
+    },
+    {
+      "id": "class-keywords-21-single",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2)\\n pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "expected ':' 1 17 1 18\n'class C(a=1,a=2)\\n' False 2\n0 0 'class C(a=1,a=2)\\n pass'\nTrue True True\narguments/雪.py True\nexpected ':' True\n"
+    },
+    {
+      "id": "class-keywords-22-exec",
+      "stage": "LA92",
+      "source": "try: compile('f(c=1,c=2)\\nclass C(a=1,a=2): pass',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: c 1 7 1 10\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: c True\n"
+    },
+    {
+      "id": "class-keywords-22-single",
+      "stage": "LA92",
+      "source": "try: compile('f(c=1,c=2)\\nclass C(a=1,a=2): pass',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 11 1 12\n'f(c=1,c=2)\\n' True 2\nTrue True True\narguments/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "class-keywords-23-exec",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2): pass\\nf(c=1,c=2)',\"arguments/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 13 1 16\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-23-single",
+      "stage": "FutureClass",
+      "source": "try: compile('class C(a=1,a=2): pass\\nf(c=1,c=2)',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 1 2 2\n'f(c=1,c=2)' False 2\n1 0 'class C(a=1,a=2): pass\\nf(c=1,c=2)'\nTrue True True\narguments/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "class-keywords-0-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 13 1 16\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-1-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class C(ｘ=1,x=2): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: x 1 15 1 18\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: x True\n"
+    },
+    {
+      "id": "class-keywords-2-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class C(雪=1,雪=2): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 雪 1 15 1 20\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: 雪 True\n"
+    },
+    {
+      "id": "class-keywords-3-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,b=2,b=3,a=4): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 21 1 24\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-4-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=1,a=2,a=3): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 13 1 16\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-5-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class C(**d,a=1,**q,a=2): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 21 1 24\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-6-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class C(metaclass=type,metaclass=type): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: metaclass 1 24 1 38\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: metaclass True\n"
+    },
+    {
+      "id": "class-keywords-7-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class 雪(字=1,\\n 字=2): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 字 2 2 2 7\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: 字 True\n"
+    },
+    {
+      "id": "class-keywords-8-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class C(雪=1,雪=(2+3)): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: 雪 1 15 1 24\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: 雪 True\n"
+    },
+    {
+      "id": "class-keywords-9-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class C(__x=1,__x=2): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: __x 1 15 1 20\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: __x True\n"
+    },
+    {
+      "id": "class-keywords-11-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('@f(k=1,k=2)\\nclass C(a=1,a=2): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: k 1 8 1 11\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: k True\n"
+    },
+    {
+      "id": "class-keywords-12-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class C(f(b=1,b=2),a=1,a=2): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 24 1 27\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "class-keywords-13-single-newline",
+      "stage": "LA92",
+      "source": "try: compile('class C(a=f(b=1,b=2),a=2): pass\\n',\"arguments/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "keyword argument repeated: a 1 22 1 25\nNone True 2\nTrue True True\narguments/雪.py True\nkeyword argument repeated: a True\n"
+    },
+    {
+      "id": "generated-classgrammar-owner-cycle",
+      "stage": "LA93",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('class 雪(字=1,雪): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue positional argument follows keyword argument 14 False False\n"
+    },
+    {
+      "id": "generated-classgrammar-chaining",
+      "stage": "LA93",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('class 雪(字=1,雪): pass',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 14\n"
+    },
+    {
+      "id": "generated-classgrammar-cleanup",
+      "stage": "LA93",
+      "source": "def work():\n try: compile('class 雪(字=1,雪): pass',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py positional argument follows keyword argument False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-classgrammar-original-dynamic-failure",
+      "stage": "LA93",
+      "source": "exec(compile('def fail():\\n try: compile(\\'class 雪(字=1,雪): pass\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','classgrammar-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-classgrammar-nested-exec",
+      "stage": "LA93",
+      "source": "scope={}\nexec('try: compile(\\'class 雪(字=1,雪): pass\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py positional argument follows keyword argument 14 False\n"
+    },
+    {
+      "id": "generated-classgrammar-field-independence",
+      "stage": "LA93",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('class 雪(字=1,雪): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'class 雪(字=1,雪): pass\\n' True True 77 14\n"
+    },
+    {
+      "id": "generated-classgrammar-module",
+      "stage": "LA93",
+      "source": "import helper\ne=helper.validate('class 雪(字=1,雪): pass')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py positional argument follows keyword argument 14 module input\n"
+    },
+    {
+      "id": "generated-classgrammar-flags-owner-cycle",
+      "stage": "LA93",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('class 雪(字=1,雪): pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True positional argument follows keyword argument 14\n"
+    },
+    {
+      "id": "generated-classkeyword-owner-cycle",
+      "stage": "LA93",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('class 雪(字=1,字=2): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue keyword argument repeated: 字 17 True True\n"
+    },
+    {
+      "id": "generated-classkeyword-chaining",
+      "stage": "LA93",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('class 雪(字=1,字=2): pass',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py True True 2\nTrue supplied input 17\n"
+    },
+    {
+      "id": "generated-classkeyword-cleanup",
+      "stage": "LA93",
+      "source": "def work():\n try: compile('class 雪(字=1,字=2): pass',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py keyword argument repeated: 字 True 0\ncleanup-input.py True\n"
+    },
+    {
+      "id": "generated-classkeyword-original-dynamic-failure",
+      "stage": "LA93",
+      "source": "exec(compile('def fail():\\n try: compile(\\'class 雪(字=1,字=2): pass\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','classkeyword-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py True 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-classkeyword-nested-exec",
+      "stage": "LA93",
+      "source": "scope={}\nexec('try: compile(\\'class 雪(字=1,字=2): pass\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py keyword argument repeated: 字 17 True\n"
+    },
+    {
+      "id": "generated-classkeyword-field-independence",
+      "stage": "LA93",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('class 雪(字=1,字=2): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\nNone True True 77 17\n"
+    },
+    {
+      "id": "generated-classkeyword-module",
+      "stage": "LA93",
+      "source": "import helper\ne=helper.validate('class 雪(字=1,字=2): pass')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py keyword argument repeated: 字 17 module input\n"
+    },
+    {
+      "id": "generated-classkeyword-flags-owner-cycle",
+      "stage": "LA93",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('class 雪(字=1,字=2): pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True keyword argument repeated: 字 17\n"
     }
   ]
 }

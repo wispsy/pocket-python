@@ -183,6 +183,9 @@ class Parser {
       syntax.offset = syntax.end_offset = 0;
       this.fail("invalid syntax", this.peek(), "SYNTAX", undefined, syntax);
     }
+    if (mode === "single" && this.keywordErrors.length && !this.lexed.source.endsWith("\n") &&
+        ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind) && !this.tokens.some(token => token.kind === "indent"))
+      this.fail("Interactive compound input requires a terminating newline.");
     if (mode === "single" && this.controlError && !this.lexed.source.endsWith("\n") && ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind)) {
       const last = this.tokens.filter(token => !["newline", "eof", "indent", "dedent"].includes(token.kind)).at(-1);
       const lines = this.lexed.source.split("\n");
@@ -493,37 +496,24 @@ class Parser {
   }
   classDefinition(decorators = []) {
     const start = this.expect("class"), name = this.name().value, bases = [];
-    let metaclass = null;
+    let metaclass = null, repeated = null;
     const keywords = [];
     if (this.at("[")) this.unsupported("Generic classes are not adopted.");
     if (this.eat("(")) {
-      while (!this.at(")")) {
-        if (this.eat("**")) {
-          keywords.push({name: null, value: this.expression()});
-        } else if (this.eat("*")) {
-          if (keywords.some(item => item.name === null)) this.fail("Iterable expansion follows keyword mapping expansion.");
-          const value = this.expression(); bases.push(this.node("StarredArgument", value, {value}, value));
-        } else if (this.kind("name") && this.peek(1).value === "=") {
-          const keyword = this.name(); this.expect("=");
-          if (keywords.some(item => item.name === keyword.value)) this.fail("Duplicate class keyword.");
-          if (keywords.length >= 128) this.fail("Class keyword budget exceeded.", this.peek(), "COMPILE_BUDGET");
-          const value = this.expression();
-          keywords.push({name: keyword.value, value});
-          if (keyword.value === "metaclass") metaclass = value;
-        } else {
-          if (keywords.length) this.fail("Positional class bases follow a keyword.");
-          bases.push(this.expression());
-        }
-        if (!this.eat(",")) break;
-      }
+      const parsed = this.arguments(true);
+      bases.push(...parsed.args); keywords.push(...parsed.keywords);
+      metaclass = keywords.find(item => item.name === "metaclass")?.value ?? null;
+      repeated = parsed.repeated;
       this.expect(")");
     }
     const before = [this.functionDepth, this.loopDepth]; this.functionDepth = 0; this.loopDepth = 0;
     let body;
     try { body = this.suite(start); } finally { [this.functionDepth, this.loopDepth] = before; }
-    return this.node("Class", start, {name, bases, body,
+    const value = this.node("Class", start, {name, bases, body,
       ...((keywords.some(item => item.name !== "metaclass") || bases.some(item => item.kind === "StarredArgument")) ? {keywords} : metaclass ? {metaclass} : {}),
       ...(decorators.length ? {decorators} : {})}, body.at(-1));
+    if (repeated) this.keywordErrors.push({node: value, site: repeated});
+    return value;
   }
   branch(keyword = "if") {
     const start = this.expect(keyword), test = this.namedExpression(), body = this.suite(start);
@@ -676,71 +666,99 @@ class Parser {
     }
     return value;
   }
+  arguments(classBases = false) {
+    const args = [], keywords = [], seen = new Map();
+    let repeated = null;
+    let positionalError = null, followingMapping = false;
+    while (!this.at(")")) {
+      const separator = this.previous, argumentCount = args.length;
+      let keywordSite = null;
+      if (this.eat("**")) {
+        keywords.push({name: null, value: this.expression()});
+        if (positionalError) followingMapping = true;
+      }
+      else if (this.eat("*")) {
+        // The second argument group stops before an inadmissible star.
+        // Its already selected positional failure precedes that star's body.
+        if (positionalError && followingMapping)
+          this.fail("A positional argument follows a keyword argument.", this.previous, "SYNTAX", undefined,
+            this.diagnostic(positionalError, this.previous.span));
+        if (keywords.some(keyword => keyword.name === null) && !positionalError) {
+          const start = this.previous;
+          this.expression();
+          let comma = this.eat(",");
+          while (comma && this.eat("*")) { this.expression(); comma = this.eat(","); }
+          const end = this.peek();
+          const syntax = this.at(")") || comma && this.kind("name") ? this.diagnostic(
+            "iterable argument unpacking follows keyword argument unpacking",
+            [separator.span[0], separator.span[1], end.span[0], end.span[1]]) : undefined;
+          if (syntax && syntax.lineno !== syntax.end_lineno) {
+            syntax.text = syntax.text.replace(/\n$/, "");
+            const bytes = new TextEncoder().encode(syntax.text + "\0");
+            syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, end.span[1]))).length;
+          }
+          this.fail("Iterable unpacking follows keyword unpacking.", start, "SYNTAX", undefined, syntax);
+        }
+        const start = this.previous; args.push(this.node("StarredArgument", start, {value: this.expression()}));
+      } else
+      if (this.kind("name") && this.peek(1).value === "=") {
+        const token = this.take(), equal = this.expect("=");
+        if (classBases && keywords.length >= 128) this.fail("Class keyword budget exceeded.", this.peek(), "COMPILE_BUDGET");
+        const argument = this.expression();
+        keywordSite = {span: [token.span[0], token.span[1], equal.span[2], equal.span[3]]};
+        if (seen.has(token.value)) {
+          const first = seen.get(token.value);
+          if (!repeated || first < repeated.first) repeated = {first, name: token.value,
+            span: [token.span[0], token.span[1], this.previous.span[2], this.previous.span[3]]};
+        } else seen.set(token.value, keywords.length);
+        keywords.push({name: token.value, value: argument});
+      } else {
+        if (keywords.length) positionalError ??= keywords.some(keyword => keyword.name === null) ?
+          "positional argument follows keyword argument unpacking" : "positional argument follows keyword argument";
+        args.push(this.namedExpression());
+      }
+      if (this.at("for")) {
+        if (args.length === argumentCount) {
+          const token = this.peek(), element = keywords.at(-1).value;
+          this.comprehension(element, "generator", element);
+          const syntax = this.at(")") || this.at(",") ? this.delimitedDiagnostic(keywordSite ?
+            "invalid syntax. Maybe you meant '==' or ':=' instead of '='?" : "invalid syntax", keywordSite ?? token, ")", true) : undefined;
+          this.fail("A generator clause follows a keyword argument.", token, "SYNTAX", undefined, syntax);
+        }
+        const token = this.peek(), element = args.at(-1), generator = this.comprehension(element, "generator", element);
+        if (classBases && args.length === 1 && !keywords.length &&
+            (this.at(")") || element.kind === "StarredArgument" && this.at(",")))
+          this.fail("A class generator base requires parentheses.", token, "SYNTAX", undefined,
+            this.delimitedDiagnostic("invalid syntax", token, ")", true));
+        if (args.length !== 1 || keywords.length || element.kind === "StarredArgument" || !this.at(")")) {
+          const starred = args.length === 1 && !keywords.length && element.kind === "StarredArgument";
+          const last = generator.clauses.at(-1), end = last.filters.at(-1) ?? last.iterable;
+          const span = starred ? element.span : [element.span[0], element.span[1], end.span[2], end.span[3]];
+          const syntax = this.at(")") || this.at(",") ? this.delimitedDiagnostic(starred ?
+            "iterable unpacking cannot be used in comprehension" : "Generator expression must be parenthesized", {span}, ")", true) : undefined;
+          if (syntax && span[0] !== span[2]) {
+            // The pinned parser converts both offsets against the first error line.
+            const bytes = new TextEncoder().encode(syntax.text + "\0");
+            syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, span[3]))).length;
+          }
+          this.fail("A generator expression requires parentheses in this call.", element, "SYNTAX", undefined, syntax);
+        }
+        args[0] = generator;
+      }
+      if (!this.eat(",")) break;
+    }
+    if (positionalError) this.fail("A positional argument follows a keyword argument.", this.peek(), "SYNTAX", undefined,
+      this.at(")") ? this.diagnostic(positionalError, this.peek().span) : undefined);
+    return {args, keywords, repeated};
+  }
   primary() {
     let value = this.atom();
     for (;;) {
       if (this.eat(".")) { const attr = this.name(); value = this.node("Attribute", value, {value, name: attr.value}, attr); }
       else if (this.eat("(")) {
-        const args = [], keywords = [], seen = new Map();
-        let repeated = null;
-        let positionalError = null, positionalQualified = true;
-        while (!this.at(")")) {
-          const separator = this.previous, argumentCount = args.length;
-          if (this.eat("**")) keywords.push({name: null, value: this.expression()});
-          else if (this.eat("*")) {
-            if (keywords.some(keyword => keyword.name === null) && !positionalError) {
-              const start = this.previous;
-              this.expression();
-              let comma = this.eat(",");
-              while (comma && this.eat("*")) { this.expression(); comma = this.eat(","); }
-              const end = this.peek();
-              const syntax = this.at(")") || comma && this.kind("name") ? this.diagnostic(
-                "iterable argument unpacking follows keyword argument unpacking",
-                [separator.span[0], separator.span[1], end.span[0], end.span[1]]) : undefined;
-              if (syntax && syntax.lineno !== syntax.end_lineno) syntax.text = syntax.text.replace(/\n$/, "");
-              this.fail("Iterable unpacking follows keyword unpacking.", start, "SYNTAX", undefined, syntax);
-            }
-            if (keywords.some(keyword => keyword.name === null)) positionalQualified = false;
-            const start = this.previous; args.push(this.node("StarredArgument", start, {value: this.expression()}));
-          } else
-          if (this.kind("name") && this.peek(1).value === "=") {
-            const token = this.take(); this.expect("=");
-            const argument = this.expression();
-            if (seen.has(token.value)) {
-              const first = seen.get(token.value);
-              if (!repeated || first < repeated.first) repeated = {first, name: token.value,
-                span: [token.span[0], token.span[1], this.previous.span[2], this.previous.span[3]]};
-            } else seen.set(token.value, keywords.length);
-            keywords.push({name: token.value, value: argument});
-          } else {
-            if (keywords.length) positionalError ??= keywords.some(keyword => keyword.name === null) ?
-              "positional argument follows keyword argument unpacking" : "positional argument follows keyword argument";
-            args.push(this.namedExpression());
-          }
-          if (this.at("for")) {
-            if (args.length === argumentCount) this.fail("A generator expression must be the sole unparenthesized argument.");
-            const element = args.at(-1), generator = this.comprehension(element, "generator", element);
-            if (args.length !== 1 || keywords.length || element.kind === "StarredArgument" || !this.at(")")) {
-              const starred = args.length === 1 && !keywords.length && element.kind === "StarredArgument";
-              const last = generator.clauses.at(-1), end = last.filters.at(-1) ?? last.iterable;
-              const span = starred ? element.span : [element.span[0], element.span[1], end.span[2], end.span[3]];
-              const syntax = this.at(")") || this.at(",") ? this.delimitedDiagnostic(starred ?
-                "iterable unpacking cannot be used in comprehension" : "Generator expression must be parenthesized", {span}, ")", true) : undefined;
-              if (syntax && span[0] !== span[2]) {
-                // The pinned parser converts both offsets against the first error line.
-                const bytes = new TextEncoder().encode(syntax.text + "\0");
-                syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, span[3]))).length;
-              }
-              this.fail("A generator expression requires parentheses in this call.", element, "SYNTAX", undefined, syntax);
-            }
-            args[0] = generator;
-          }
-          if (!this.eat(",")) break;
-        }
-        if (positionalError) this.fail("A positional argument follows a keyword argument.", this.peek(), "SYNTAX", undefined,
-          positionalQualified && this.at(")") ? this.diagnostic(positionalError, this.peek().span) : undefined);
+        const {args, keywords, repeated} = this.arguments();
         this.expect(")"); value = this.node("Call", value, {callable: value, args, keywords});
-        if (repeated) this.keywordErrors.push({call: value, site: repeated});
+        if (repeated) this.keywordErrors.push({node: value, site: repeated});
       } else if (this.eat("[")) {
         const start = this.peek(), items = [this.subscript()]; let tuple = false;
         while (this.eat(",")) { tuple = true; if (this.at("]")) break; items.push(this.subscript()); }
