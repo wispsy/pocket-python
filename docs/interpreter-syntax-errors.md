@@ -281,6 +281,12 @@ precedes its own body and later handlers. Native fields use the entire handler's
 UTF-8 byte range, two arguments and absent source text/parser metadata.
 Unterminated interactive compound input keeps its independent field boundary.
 
+LA-96 composes try parser/compiler payloads through modules, nested exec,
+chaining/notes and independent fields/argument snapshots. Cyclic filenames and
+suspended conversion/cleanup retain their owned graphs through parked
+collection, cancellation/close and shared limits. The runnable example and
+installed offline console cover original dynamic frames and Stop/Restart.
+
 The LA-93 fixed generated-syntax corpus contains 1,133 cases: 1,077 supported
 semantic/error comparisons and 56 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
