@@ -24,7 +24,8 @@
     "LA79",
     "LA80",
     "LA81",
-    "LA82"
+    "LA82",
+    "LA83"
   ],
   "cases": [
     {
@@ -4318,6 +4319,402 @@
       "stdout": "positional argument follows keyword argument 1 9 1 10\n'f(a=1,2+)\\n' False 2\n0 0 'f(a=1,2+)\\n'\nTrue True True\ncalls/雪.py True\npositional argument follows keyword argument True\n",
       "owner": "#124",
       "boundary": "Interacting call-order failures and malformed argument tails retain their native-field boundary."
+    },
+    {
+      "id": "generator-call-0-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y,1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(x for x in y,1)\\n' False 2\n0 0 'f(x for x in y,1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-0-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y,1)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(x for x in y,1)' False 2\n0 0 'f(x for x in y,1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-0-single",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y,1)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(x for x in y,1)' False 2\n0 0 'f(x for x in y,1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-1-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(1,x for x in y)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 5 1 17\n'f(1,x for x in y)\\n' False 2\n0 0 'f(1,x for x in y)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-1-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(1,x for x in y)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 5 1 17\n'f(1,x for x in y)' False 2\n0 0 'f(1,x for x in y)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-1-single",
+      "stage": "LA83",
+      "source": "try: compile('f(1,x for x in y)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 5 1 17\n'f(1,x for x in y)' False 2\n0 0 'f(1,x for x in y)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-2-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(a=1,x for x in y)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 7 1 19\n'f(a=1,x for x in y)\\n' False 2\n0 0 'f(a=1,x for x in y)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-2-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(a=1,x for x in y)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 7 1 19\n'f(a=1,x for x in y)' False 2\n0 0 'f(a=1,x for x in y)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-2-single",
+      "stage": "LA83",
+      "source": "try: compile('f(a=1,x for x in y)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 7 1 19\n'f(a=1,x for x in y)' False 2\n0 0 'f(a=1,x for x in y)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-3-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y,)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(x for x in y,)\\n' False 2\n0 0 'f(x for x in y,)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-3-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y,)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(x for x in y,)' False 2\n0 0 'f(x for x in y,)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-3-single",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y,)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(x for x in y,)' False 2\n0 0 'f(x for x in y,)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-4-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y if x,1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 20\n'f(x for x in y if x,1)\\n' False 2\n0 0 'f(x for x in y if x,1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-4-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y if x,1)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 20\n'f(x for x in y if x,1)' False 2\n0 0 'f(x for x in y if x,1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-4-single",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y if x,1)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 20\n'f(x for x in y if x,1)' False 2\n0 0 'f(x for x in y if x,1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-5-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y for y in z if y,1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 31\n'f(x for x in y for y in z if y,1)\\n' False 2\n0 0 'f(x for x in y for y in z if y,1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-5-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y for y in z if y,1)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 31\n'f(x for x in y for y in z if y,1)' False 2\n0 0 'f(x for x in y for y in z if y,1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-5-single",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y for y in z if y,1)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 31\n'f(x for x in y for y in z if y,1)' False 2\n0 0 'f(x for x in y for y in z if y,1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-6-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(*x for x in y)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable unpacking cannot be used in comprehension 1 3 1 5\n'f(*x for x in y)\\n' False 2\n0 0 'f(*x for x in y)\\n'\nTrue True True\ncalls/雪.py True\niterable unpacking cannot be used in comprehension True\n"
+    },
+    {
+      "id": "generator-call-6-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(*x for x in y)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable unpacking cannot be used in comprehension 1 3 1 5\n'f(*x for x in y)' False 2\n0 0 'f(*x for x in y)'\nTrue True True\ncalls/雪.py True\niterable unpacking cannot be used in comprehension True\n"
+    },
+    {
+      "id": "generator-call-6-single",
+      "stage": "LA83",
+      "source": "try: compile('f(*x for x in y)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable unpacking cannot be used in comprehension 1 3 1 5\n'f(*x for x in y)' False 2\n0 0 'f(*x for x in y)'\nTrue True True\ncalls/雪.py True\niterable unpacking cannot be used in comprehension True\n"
+    },
+    {
+      "id": "generator-call-7-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(1,*雪 for 雪 in y)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 5 1 18\n'f(1,*雪 for 雪 in y)\\n' False 2\n0 0 'f(1,*雪 for 雪 in y)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-7-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(1,*雪 for 雪 in y)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 5 1 18\n'f(1,*雪 for 雪 in y)' False 2\n0 0 'f(1,*雪 for 雪 in y)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-7-single",
+      "stage": "LA83",
+      "source": "try: compile('f(1,*雪 for 雪 in y)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 5 1 18\n'f(1,*雪 for 雪 in y)' False 2\n0 0 'f(1,*雪 for 雪 in y)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-8-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(\\n 雪 for 雪 in y,\\n 1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 2 2 2 14\n' 雪 for 雪 in y,' False 2\n0 0 'f(\\n 雪 for 雪 in y,\\n 1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-8-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(\\n 雪 for 雪 in y,\\n 1)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 2 2 2 14\n' 雪 for 雪 in y,' False 2\n0 0 'f(\\n 雪 for 雪 in y,\\n 1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-8-single",
+      "stage": "LA83",
+      "source": "try: compile('f(\\n 雪 for 雪 in y,\\n 1)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 2 2 2 14\n' 雪 for 雪 in y,' False 2\n0 0 'f(\\n 雪 for 雪 in y,\\n 1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-9-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(\\n 雪 for 雪 in (\\n y\\n ),1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 2 2 3 2\n' 雪 for 雪 in (' False 2\n0 0 'f(\\n 雪 for 雪 in (\\n y\\n ),1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-9-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(\\n 雪 for 雪 in (\\n y\\n ),1)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 2 2 3 2\n' 雪 for 雪 in (' False 2\n0 0 'f(\\n 雪 for 雪 in (\\n y\\n ),1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-9-single",
+      "stage": "LA83",
+      "source": "try: compile('f(\\n 雪 for 雪 in (\\n y\\n ),1)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 2 2 3 2\n' 雪 for 雪 in (' False 2\n0 0 'f(\\n 雪 for 雪 in (\\n y\\n ),1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-10-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(雪 for 雪 in y\\n ,1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(雪 for 雪 in y' False 2\n0 0 'f(雪 for 雪 in y\\n ,1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-10-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(雪 for 雪 in y\\n ,1)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(雪 for 雪 in y' False 2\n0 0 'f(雪 for 雪 in y\\n ,1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-10-single",
+      "stage": "LA83",
+      "source": "try: compile('f(雪 for 雪 in y\\n ,1)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(雪 for 雪 in y' False 2\n0 0 'f(雪 for 雪 in y\\n ,1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-11-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(雪 for 雪 in y,\\n)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(雪 for 雪 in y,' False 2\n0 0 'f(雪 for 雪 in y,\\n)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-11-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(雪 for 雪 in y,\\n)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(雪 for 雪 in y,' False 2\n0 0 'f(雪 for 雪 in y,\\n)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-11-single",
+      "stage": "LA83",
+      "source": "try: compile('f(雪 for 雪 in y,\\n)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(雪 for 雪 in y,' False 2\n0 0 'f(雪 for 雪 in y,\\n)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-12-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y,1)\\nx=','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(x for x in y,1)\\n' False 2\n0 0 'f(x for x in y,1)\\nx=\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-13-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(1,雪 for 雪 in y)\\nreturn','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 5 1 17\n'f(1,雪 for 雪 in y)\\n' False 2\n0 0 'f(1,雪 for 雪 in y)\\nreturn\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-14-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y,+)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(x for x in y,+)\\n' False 2\n0 0 'f(x for x in y,+)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-14-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y,+)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(x for x in y,+)' False 2\n0 0 'f(x for x in y,+)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-14-single",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y,+)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(x for x in y,+)' False 2\n0 0 'f(x for x in y,+)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-15-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(\\n *雪\\n for 雪 in y\\n)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable unpacking cannot be used in comprehension 2 2 2 4\n' *雪' False 2\n0 0 'f(\\n *雪\\n for 雪 in y\\n)\\n'\nTrue True True\ncalls/雪.py True\niterable unpacking cannot be used in comprehension True\n"
+    },
+    {
+      "id": "generator-call-15-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(\\n *雪\\n for 雪 in y\\n)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable unpacking cannot be used in comprehension 2 2 2 4\n' *雪' False 2\n0 0 'f(\\n *雪\\n for 雪 in y\\n)'\nTrue True True\ncalls/雪.py True\niterable unpacking cannot be used in comprehension True\n"
+    },
+    {
+      "id": "generator-call-15-single",
+      "stage": "LA83",
+      "source": "try: compile('f(\\n *雪\\n for 雪 in y\\n)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable unpacking cannot be used in comprehension 2 2 2 4\n' *雪' False 2\n0 0 'f(\\n *雪\\n for 雪 in y\\n)'\nTrue True True\ncalls/雪.py True\niterable unpacking cannot be used in comprehension True\n"
+    },
+    {
+      "id": "generator-call-16-exec",
+      "stage": "LA83",
+      "source": "try: compile('def f(a,a):\\n f(x for x in y,1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 2 4 2 16\n' f(x for x in y,1)\\n' False 2\n0 0 'def f(a,a):\\n f(x for x in y,1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-17-exec",
+      "stage": "LA83",
+      "source": "try: compile('f((x) for x in y,1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 4 1 17\n'f((x) for x in y,1)\\n' False 2\n0 0 'f((x) for x in y,1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-17-eval",
+      "stage": "LA83",
+      "source": "try: compile('f((x) for x in y,1)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 4 1 17\n'f((x) for x in y,1)' False 2\n0 0 'f((x) for x in y,1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-17-single",
+      "stage": "LA83",
+      "source": "try: compile('f((x) for x in y,1)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 4 1 17\n'f((x) for x in y,1)' False 2\n0 0 'f((x) for x in y,1)'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-18-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(* (雪) for 雪 in y)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable unpacking cannot be used in comprehension 1 3 1 8\n'f(* (雪) for 雪 in y)\\n' False 2\n0 0 'f(* (雪) for 雪 in y)\\n'\nTrue True True\ncalls/雪.py True\niterable unpacking cannot be used in comprehension True\n"
+    },
+    {
+      "id": "generator-call-18-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(* (雪) for 雪 in y)','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable unpacking cannot be used in comprehension 1 3 1 8\n'f(* (雪) for 雪 in y)' False 2\n0 0 'f(* (雪) for 雪 in y)'\nTrue True True\ncalls/雪.py True\niterable unpacking cannot be used in comprehension True\n"
+    },
+    {
+      "id": "generator-call-18-single",
+      "stage": "LA83",
+      "source": "try: compile('f(* (雪) for 雪 in y)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "iterable unpacking cannot be used in comprehension 1 3 1 8\n'f(* (雪) for 雪 in y)' False 2\n0 0 'f(* (雪) for 雪 in y)'\nTrue True True\ncalls/雪.py True\niterable unpacking cannot be used in comprehension True\n"
+    },
+    {
+      "id": "generator-call-19-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(1,x for x in y if (\\n x\\n ))','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 5 2 3\n'f(1,x for x in y if (' False 2\n0 0 'f(1,x for x in y if (\\n x\\n ))\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-19-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(1,x for x in y if (\\n x\\n ))','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 5 2 3\n'f(1,x for x in y if (' False 2\n0 0 'f(1,x for x in y if (\\n x\\n ))'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-19-single",
+      "stage": "LA83",
+      "source": "try: compile('f(1,x for x in y if (\\n x\\n ))','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 5 2 3\n'f(1,x for x in y if (' False 2\n0 0 'f(1,x for x in y if (\\n x\\n ))'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-20-exec",
+      "stage": "LA83",
+      "source": "try: compile('f(雪 for 雪 in y,1) # comment\\n','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(雪 for 雪 in y,1) # comment\\n' False 2\n0 0 'f(雪 for 雪 in y,1) # comment\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-20-eval",
+      "stage": "LA83",
+      "source": "try: compile('f(雪 for 雪 in y,1) # comment\\n','calls/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(雪 for 雪 in y,1) # comment\\n' False 2\n0 0 'f(雪 for 雪 in y,1) # comment\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-20-single",
+      "stage": "LA83",
+      "source": "try: compile('f(雪 for 雪 in y,1) # comment\\n','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 1 15\n'f(雪 for 雪 in y,1) # comment\\n' False 2\n0 0 'f(雪 for 雪 in y,1) # comment\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-boundary-0",
+      "stage": "FutureCall",
+      "source": "try: compile('f(a=x for x in y)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax. Maybe you meant '==' or ':=' instead of '='? 1 3 1 5\n'f(a=x for x in y)\\n' False 2\n0 0 'f(a=x for x in y)\\n'\nTrue True True\ncalls/雪.py True\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? True\n",
+      "owner": "#124",
+      "boundary": "Keyword-valued or malformed generator calls retain their independent grammar field boundary."
+    },
+    {
+      "id": "generator-call-boundary-1",
+      "stage": "FutureCall",
+      "source": "try: compile('f(x for x in)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 13 1 14\n'f(x for x in)\\n' False 2\n0 0 'f(x for x in)\\n'\nTrue True True\ncalls/雪.py True\ninvalid syntax True\n",
+      "owner": "#124",
+      "boundary": "Keyword-valued or malformed generator calls retain their independent grammar field boundary."
+    },
+    {
+      "id": "generator-call-boundary-2",
+      "stage": "FutureCall",
+      "source": "try: compile('f(1,x for x in y = 2)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 5 1 17\n'f(1,x for x in y = 2)\\n' False 2\n0 0 'f(1,x for x in y = 2)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n",
+      "owner": "#124",
+      "boundary": "Keyword-valued or malformed generator calls retain their independent grammar field boundary."
+    },
+    {
+      "id": "generator-call-multiline-0",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in (\\n y\\n ),1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 2 3\n'f(x for x in (' False 2\n0 0 'f(x for x in (\\n y\\n ),1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-multiline-1",
+      "stage": "LA83",
+      "source": "try: compile('f(雪 for 雪 in (\\n 雪雪\\n ),1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 2 6\n'f(雪 for 雪 in (' False 2\n0 0 'f(雪 for 雪 in (\\n 雪雪\\n ),1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-multiline-2",
+      "stage": "LA83",
+      "source": "try: compile('f(雪 for 雪 in y if (\\n 雪雪\\n ),1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 2 6\n'f(雪 for 雪 in y if (' False 2\n0 0 'f(雪 for 雪 in y if (\\n 雪雪\\n ),1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-multiline-3",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y\\n if 雪,1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 2 8\n'f(x for x in y' False 2\n0 0 'f(x for x in y\\n if 雪,1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
+    },
+    {
+      "id": "generator-call-multiline-4",
+      "stage": "LA83",
+      "source": "try: compile('f(x for x in y\\n for x in xyz,1)','calls/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "Generator expression must be parenthesized 1 3 2 14\n'f(x for x in y' False 2\n0 0 'f(x for x in y\\n for x in xyz,1)\\n'\nTrue True True\ncalls/雪.py True\nGenerator expression must be parenthesized True\n"
     }
   ]
 }

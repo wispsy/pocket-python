@@ -181,3 +181,12 @@ contiguous starred arguments. Multiline source text and exec/eval/single modes
 have independent reference observations. Malformed argument tails, interacting
 positional/unpacking failures and generator call grammar retain their separate
 native-field boundaries at this checkpoint.
+
+LA-83 adds unparenthesized generator call arguments with a trailing comma or
+other arguments, and lone starred generator elements. Native ranges end at
+the last iterable/filter expression, independently of grouping delimiters.
+Multiline calls preserve the tokenizer's source-line newline behavior and the
+pinned parser's conversion of both offsets against the starting error line. Full
+comprehension parsing precedes these diagnostics; malformed clauses and
+keyword-valued generator calls retain their separate field boundaries. Valid
+sole generator arguments keep their existing execution behavior.

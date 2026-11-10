@@ -379,7 +379,7 @@ class Parser {
     try { body = this.suite(start); } finally { [this.functionDepth, this.loopDepth] = before; }
     return this.node("Function", start, {name, params, body, ...(decorators.length ? {decorators} : {})}, body.at(-1));
   }
-  parameterDiagnostic(message, token, end, joined = false) {
+  delimitedDiagnostic(message, token, end, joined = false) {
     const syntax = this.diagnostic(message, token.span);
     if (joined) {
       let depth = 0;
@@ -401,11 +401,11 @@ class Parser {
     while (!this.at(end)) {
       if (kwarg.length) this.fail("No parameter may follow a variadic keyword parameter.", this.peek(), "SYNTAX", undefined,
         this.kind("name") && !(end !== ":" && this.peek(1).value === ":") || ["*", "**", "/"].includes(this.peek().value) ?
-          this.parameterDiagnostic("arguments cannot follow var-keyword argument", this.peek(), end, this.kind("name")) : undefined);
+          this.delimitedDiagnostic("arguments cannot follow var-keyword argument", this.peek(), end, this.kind("name")) : undefined);
       if (bareStar && !kwonly.length && this.at("**")) {
         const token = end === ":" ? this.peek() : bareStar;
         this.fail("A named keyword-only parameter must follow '*'.", token, "SYNTAX", undefined,
-          this.parameterDiagnostic("named arguments must follow bare *", token, end, true));
+          this.delimitedDiagnostic("named arguments must follow bare *", token, end, true));
       }
       if (this.eat("**")) {
         const token = this.name();
@@ -419,13 +419,13 @@ class Parser {
           const message = star ? "/ must be ahead of *" : slash ? "/ may appear only once" :
             this.at(",") ? "at least one argument must precede /" : this.at(end) ? "invalid syntax" : null;
           this.fail("Invalid positional-only separator.", this.previous, "SYNTAX", undefined,
-            message ? this.parameterDiagnostic(message, this.previous, end) : undefined);
+            message ? this.delimitedDiagnostic(message, this.previous, end) : undefined);
         }
         slash = true; posonly = positional; positional = [];
       } else if (this.eat("*")) {
         const separator = this.previous;
         if (star) this.fail("Duplicate keyword-only separator.", separator, "SYNTAX", undefined,
-          this.kind("name") || this.at(",") ? this.parameterDiagnostic("* argument may appear only once", separator, end) : undefined);
+          this.kind("name") || this.at(",") ? this.delimitedDiagnostic("* argument may appear only once", separator, end) : undefined);
         if (this.kind("name")) {
           const token = this.take();
           vararg.push({name: token.value, value: null, span: token.span});
@@ -440,7 +440,7 @@ class Parser {
         const value = this.eat("=") ? this.expression() : null;
         if (!star && defaultSeen && value === null) {
           const syntax = this.at(end) || this.at(",") ?
-            this.parameterDiagnostic("parameter without a default follows parameter with a default", token, end, true) : undefined;
+            this.delimitedDiagnostic("parameter without a default follows parameter with a default", token, end, true) : undefined;
           this.fail("A required positional parameter follows a default.", token, "SYNTAX", undefined, syntax);
         }
         if (!star && value !== null) defaultSeen = true;
@@ -452,7 +452,7 @@ class Parser {
     if (bareStar && !kwonly.length) {
       const token = end === ":" ? this.peek() : bareStar;
       this.fail("A named keyword-only parameter must follow '*'.", token, "SYNTAX", undefined,
-        this.parameterDiagnostic("named arguments must follow bare *", token, end, true));
+        this.delimitedDiagnostic("named arguments must follow bare *", token, end, true));
     }
     return {posonly, positional, kwonly, ...(vararg.length ? {vararg} : {}), ...(kwarg.length ? {kwarg} : {})};
   }
@@ -656,7 +656,7 @@ class Parser {
         const args = [], keywords = [], seen = new Set();
         let positionalError = null, positionalQualified = true;
         while (!this.at(")")) {
-          const separator = this.previous;
+          const separator = this.previous, argumentCount = args.length;
           if (this.eat("**")) keywords.push({name: null, value: this.expression()});
           else if (this.eat("*")) {
             if (keywords.some(keyword => keyword.name === null) && !positionalError) {
@@ -683,9 +683,22 @@ class Parser {
             args.push(this.namedExpression());
           }
           if (this.at("for")) {
-            if (args.length !== 1 || keywords.length || args[0].kind === "StarredArgument") this.fail("A generator expression must be the sole unparenthesized argument.");
-            args[0] = this.comprehension(args[0], "generator", args[0]);
-            if (!this.at(")")) this.fail("A generator expression requires parentheses in this call.");
+            if (args.length === argumentCount) this.fail("A generator expression must be the sole unparenthesized argument.");
+            const element = args.at(-1), generator = this.comprehension(element, "generator", element);
+            if (args.length !== 1 || keywords.length || element.kind === "StarredArgument" || !this.at(")")) {
+              const starred = args.length === 1 && !keywords.length && element.kind === "StarredArgument";
+              const last = generator.clauses.at(-1), end = last.filters.at(-1) ?? last.iterable;
+              const span = starred ? element.span : [element.span[0], element.span[1], end.span[2], end.span[3]];
+              const syntax = this.at(")") || this.at(",") ? this.delimitedDiagnostic(starred ?
+                "iterable unpacking cannot be used in comprehension" : "Generator expression must be parenthesized", {span}, ")", true) : undefined;
+              if (syntax && span[0] !== span[2]) {
+                // The pinned parser converts both offsets against the first error line.
+                const bytes = new TextEncoder().encode(syntax.text + "\0");
+                syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, span[3]))).length;
+              }
+              this.fail("A generator expression requires parentheses in this call.", element, "SYNTAX", undefined, syntax);
+            }
+            args[0] = generator;
           }
           if (!this.eat(",")) break;
         }
