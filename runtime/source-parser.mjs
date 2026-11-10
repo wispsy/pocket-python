@@ -655,10 +655,12 @@ class Parser {
       this.operandFields && this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined);
   }
   rightOperand(body) {
+    // A partial conditional test can select an earlier expected-else range.
     const before = this.operandFields; this.operandFields &&= !this.conditionalTest;
     try { this.requiredOperand(); return body(); } finally { this.operandFields = before; }
   }
   targetExpression(body) {
+    // Loop/deletion grammar can reject a target before its missing operand.
     const before = this.operandFields; this.operandFields = false;
     try { return body(); } finally { this.operandFields = before; }
   }
@@ -831,7 +833,7 @@ class Parser {
   binaryLayer(next, operators) {
     let value = this[next]();
     while (operators.some(operator => this.at(operator))) {
-      const operator = BINARY.get(this.take().value), right = this[next]();
+      const operator = BINARY.get(this.take().value), right = this.rightOperand(() => this[next]());
       value = this.node("Binary", value, {operator, left: value, right}, right);
     }
     return value;
@@ -842,13 +844,17 @@ class Parser {
   shift() { return this.binaryLayer("addition", ["<<", ">>"]); }
   addition() {
     let value = this.product();
-    while (this.at("+") || this.at("-")) { const operator = BINARY.get(this.take().value), right = this.product(); value = this.node("Binary", value, {operator, left: value, right}, right); }
+    while (this.at("+") || this.at("-")) {
+      const operator = BINARY.get(this.take().value), right = this.rightOperand(() => this.product());
+      value = this.node("Binary", value, {operator, left: value, right}, right);
+    }
     return value;
   }
   product() {
     let value = this.unary();
     while (["*", "@", "/", "//", "%"].some(value => this.at(value))) {
-      const operator = BINARY.get(this.take().value), right = this.unary(); value = this.node("Binary", value, {operator, left: value, right}, right);
+      const operator = BINARY.get(this.take().value), right = this.rightOperand(() => this.unary());
+      value = this.node("Binary", value, {operator, left: value, right}, right);
     }
     return value;
   }
@@ -862,7 +868,7 @@ class Parser {
     if (["await", "yield"].some(value => this.at(value))) this.unsupported("This generator/async expression is not adopted.");
     const value = this.primary();
     if (this.eat("**")) {
-      const right = this.guard(() => this.unary());
+      const right = this.rightOperand(() => this.guard(() => this.unary()));
       return this.node("Binary", value, {operator: "power", left: value, right}, right);
     }
     return value;
