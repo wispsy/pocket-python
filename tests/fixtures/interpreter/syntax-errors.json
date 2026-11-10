@@ -27,7 +27,8 @@
     "LA82",
     "LA83",
     "LA84",
-    "LA85"
+    "LA85",
+    "LA86"
   ],
   "cases": [
     {
@@ -3082,11 +3083,9 @@
     },
     {
       "id": "starred-target-12-single",
-      "stage": "FutureTarget",
+      "stage": "LA86",
       "source": "try: compile('a,*b,*c=value\\nreturn',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
-      "stdout": "multiple statements found while compiling a single statement 1 14 1 15\n'a,*b,*c=value\\n' True 2\nTrue\nstarred/雪.py True\n",
-      "owner": "#124",
-      "boundary": "The independent multiple-statements-in-single-mode payload remains unqualified."
+      "stdout": "multiple statements found while compiling a single statement 1 14 1 15\n'a,*b,*c=value\\n' True 2\nTrue\nstarred/雪.py True\n"
     },
     {
       "id": "starred-target-13-exec",
@@ -5125,6 +5124,220 @@
       "stage": "LA85",
       "source": "try: compile('f(\\n 雪=1,\\n 雪=2\\n)','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
       "stdout": "keyword argument repeated: 雪 3 2 3 7\nNone True 2\nTrue True True\ncalls/雪.py True\nkeyword argument repeated: 雪 True\n"
+    },
+    {
+      "id": "single-input-0",
+      "stage": "LA86",
+      "source": "try: compile('x=1\\ny=2','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 4 1 5\n'x=1\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-1",
+      "stage": "LA86",
+      "source": "try: compile('pass\\npass','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 5 1 6\n'pass\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-2",
+      "stage": "LA86",
+      "source": "try: compile('雪=1\\ny=2','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 4 1 5\n'雪=1\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-3",
+      "stage": "LA86",
+      "source": "try: compile('x=1 # comment\\ny=2','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 5 1 15\n'x=1 # comment\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-4",
+      "stage": "LA86",
+      "source": "try: compile('x=1; y=2\\nz=3','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 9 1 10\n'x=1; y=2\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-5",
+      "stage": "LA86",
+      "source": "try: compile('\\n# lead\\n雪=1\\n\\n# gap\\npass','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 3 4 3 5\n'雪=1\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-6",
+      "stage": "LA86",
+      "source": "try: compile('x=(\\n 雪\\n)\\ny=2','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 3 2 3 3\n')\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-7",
+      "stage": "LA86",
+      "source": "try: compile('x=1\\ny=','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 4 1 5\n'x=1\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-8",
+      "stage": "LA86",
+      "source": "try: compile('x=1\\nreturn','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 4 1 5\n'x=1\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-9",
+      "stage": "LA86",
+      "source": "try: compile('return 1\\npass','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 9 1 10\n'return 1\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-10",
+      "stage": "LA86",
+      "source": "try: compile('f(a=1,a=2)\\npass','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 11 1 12\n'f(a=1,a=2)\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-11",
+      "stage": "LA86",
+      "source": "try: compile('x=1\\n if','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 4 1 5\n'x=1\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-12",
+      "stage": "LA86",
+      "source": "try: compile('x=1\\n;','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 4 1 5\n'x=1\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-13",
+      "stage": "LA86",
+      "source": "try: compile('x=1\\r\\ny=2','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 4 1 5\n'x=1\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-14",
+      "stage": "LA86",
+      "source": "try: compile('x=1\\\\\\n+2\\ny=3','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 2 3 2 4\n'+2\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-15",
+      "stage": "LA86",
+      "source": "try: compile('','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 0 0 0 0\n'' False 2\n0 0 ''\nTrue True True\ninteractive/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "single-input-16",
+      "stage": "LA86",
+      "source": "try: compile('\\n','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'\\n' False 2\n0 0 '\\n'\nTrue True True\ninteractive/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "single-input-17",
+      "stage": "LA86",
+      "source": "try: compile('# comment\\n','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'# comment\\n' False 2\n0 0 '# comment\\n'\nTrue True True\ninteractive/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "single-input-18",
+      "stage": "LA86",
+      "source": "try: compile('  # comment\\n','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'  # comment\\n' False 2\n0 0 '  # comment\\n'\nTrue True True\ninteractive/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "single-input-19",
+      "stage": "LA86",
+      "source": "try: compile('\\n\\n','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 0 2 0\n'\\n' False 2\n0 0 '\\n\\n'\nTrue True True\ninteractive/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "single-input-20",
+      "stage": "LA86",
+      "source": "try: compile('#x\\n\\n#y','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 3 0 3 0\n'#y' False 2\n0 0 '#x\\n\\n#y'\nTrue True True\ninteractive/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "single-input-21",
+      "stage": "FutureSingle",
+      "source": "try: compile('   ','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "unexpected indent 1 3 1 -1\n'   ' False 2\n0 0 '   '\nTrue True True\ninteractive/雪.py True\nunexpected indent True\n",
+      "owner": "#124",
+      "boundary": "Unterminated whitespace-only indentation retains its native-field boundary."
+    },
+    {
+      "id": "single-input-22",
+      "stage": "LA86",
+      "source": "try: compile('#comment','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 1 0 1 0\n'#comment' False 2\n0 0 '#comment'\nTrue True True\ninteractive/雪.py True\ninvalid syntax True\n"
+    },
+    {
+      "id": "single-input-23",
+      "stage": "LA86",
+      "source": "try: compile('a,*b,*c=value\\nreturn','interactive/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 14 1 15\n'a,*b,*c=value\\n' True 2\nTrue True True\ninteractive/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-boundary-0",
+      "stage": "FutureSingle",
+      "source": "try: compile('if True: pass\\nx=1','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 2 1 2 2\n'x=1' False 2\n1 0 'if True: pass\\nx=1'\nTrue True True\ncalls/雪.py True\ninvalid syntax True\n",
+      "owner": "#124",
+      "boundary": "Compound interactive inputs and later tokenizer errors retain independent native-field boundaries."
+    },
+    {
+      "id": "single-input-boundary-1",
+      "stage": "FutureSingle",
+      "source": "try: compile('if True:\\n pass\\nx=1','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "invalid syntax 3 1 3 2\n'x=1' False 2\n1 0 'if True:\\n pass\\nx=1'\nTrue True True\ncalls/雪.py True\ninvalid syntax True\n",
+      "owner": "#124",
+      "boundary": "Compound interactive inputs and later tokenizer errors retain independent native-field boundaries."
+    },
+    {
+      "id": "single-input-boundary-2",
+      "stage": "FutureSingle",
+      "source": "try: compile('x=1\\n]','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 4 1 5\n'x=1\\n' True 2\nTrue True True\ncalls/雪.py True\nmultiple statements found while compiling a single statement True\n",
+      "owner": "#124",
+      "boundary": "Compound interactive inputs and later tokenizer errors retain independent native-field boundaries."
+    },
+    {
+      "id": "single-input-boundary-3",
+      "stage": "FutureSingle",
+      "source": "try: compile('x=1\\n\"unfinished','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 4 1 5\n'x=1\\n' True 2\nTrue True True\ncalls/雪.py True\nmultiple statements found while compiling a single statement True\n",
+      "owner": "#124",
+      "boundary": "Compound interactive inputs and later tokenizer errors retain independent native-field boundaries."
+    },
+    {
+      "id": "single-input-comment-0",
+      "stage": "LA86",
+      "source": "try: compile('x=\"#\"\\ny=2','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 6 1 7\n'x=\"#\"\\n' True 2\nTrue True True\ncalls/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-comment-1",
+      "stage": "LA86",
+      "source": "try: compile('x=\"#\" # end\\ny=2','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 7 1 13\n'x=\"#\" # end\\n' True 2\nTrue True True\ncalls/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-comment-2",
+      "stage": "LA86",
+      "source": "try: compile('雪=\"a#b\"\\npass','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 8 1 9\n'雪=\"a#b\"\\n' True 2\nTrue True True\ncalls/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-comment-3",
+      "stage": "LA86",
+      "source": "try: compile('x=1  # 雪\\npass','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 1 6 1 10\n'x=1  # 雪\\n' True 2\nTrue True True\ncalls/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-comment-4",
+      "stage": "LA86",
+      "source": "try: compile('x=\"\"\"a\\nb\"\"\"\\ny=2','calls/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n e.msg=\"changed\"\n print(original[0],e.args==())\n",
+      "stdout": "multiple statements found while compiling a single statement 2 5 2 6\n'b\"\"\"\\n' True 2\nTrue True True\ncalls/雪.py True\nmultiple statements found while compiling a single statement True\n"
+    },
+    {
+      "id": "single-input-positive-modes",
+      "stage": "LA86",
+      "source": "exec(compile(\"x=1;y=2\",\"interactive.py\",\"single\"))\nprint(x+y)\nexec(compile(\"x=4\\n# comment\",\"interactive.py\",\"single\"))\nprint(x)\nexec(compile(\"x=5\\ny=6\",\"module.py\",\"exec\"))\nprint(x+y,eval(compile(\"1+2\",\"expression.py\",\"eval\")))\n",
+      "stdout": "3\n4\n11 3\n"
     }
   ]
 }

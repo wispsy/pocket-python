@@ -206,3 +206,12 @@ their own keyword lists before their operands; function decorators/defaults,
 class bodies/bases and generator versus inlined comprehension ordering have
 separate reference cases. Earlier compiler errors retain their priority, and
 ordinary keyword unpacking continues through its existing runtime checks.
+
+LA-86 qualifies multiple simple statements on separate physical lines in
+`single` mode. The native range selects the first statement's terminating
+newline, including an actual trailing comment, and parser metadata is absent.
+This failure precedes later grammar/binding/compiler errors. Empty and
+comment-only inputs expose their zero-offset parser layout. Semicolon-separated
+statements, trailing blank/comment lines and exec/eval retain their ordinary
+behavior. Compound interactive input, later tokenizer failures and unterminated
+whitespace-only indentation retain independent field boundaries.

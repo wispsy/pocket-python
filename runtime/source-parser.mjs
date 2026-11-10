@@ -150,13 +150,39 @@ class Parser {
       if (!this.kind("eof")) this.fail("Expected a single expression.");
       body.push(this.node("Return", start, {value}));
     }
-    let statements = 0;
+    let statements = 0, firstNewline = null;
     while (!this.kind("eof")) {
       if (this.kind("newline")) { this.take(); continue; }
-      if (mode === "single" && statements++) this.fail("multiple statements found while compiling a single statement");
+      if (mode === "single" && statements++) {
+        const message = "multiple statements found while compiling a single statement";
+        let syntax;
+        if (firstNewline) {
+          syntax = this.diagnostic(message, firstNewline.span, {newline: true});
+          const source = this.lexed.source, line = source.split("\n")[syntax.lineno - 1];
+          const lineStart = source.lastIndexOf("\n", firstNewline.start - 1) + 1;
+          const comment = source.indexOf("#", firstNewline.codeEnd);
+          // A comment belongs to NEWLINE's range, including its terminating newline.
+          if (comment >= lineStart && comment < firstNewline.start)
+            syntax.offset = Array.from(source.slice(lineStart, comment)).length + 1;
+          syntax.end_lineno = syntax.lineno;
+          syntax.end_offset = Array.from(line).length + 2;
+          delete syntax.metadata;
+        }
+        this.fail(message, this.peek(), "SYNTAX", undefined, syntax);
+      }
       body.push(...this.statement());
+      if (mode === "single" && statements === 1 && this.previous.kind === "newline" && !this.completedCompound)
+        firstNewline = {...this.previous, codeEnd: this.tokens[this.index - 2].end};
     }
-    if (mode === "single" && !body.length) this.fail("invalid syntax");
+    if (mode === "single" && !body.length) {
+      const source = this.lexed.source, lines = source.split("\n"), newline = source.endsWith("\n");
+      if (!newline && /^[ \t\f]+$/.test(lines.at(-1))) this.fail("invalid syntax");
+      const line = source.length ? lines.length - (newline ? 1 : 0) : 0;
+      const syntax = this.diagnostic("invalid syntax", [line, 1, line, 1], {newline});
+      syntax.text = line ? lines[line - 1] + (newline ? "\n" : "") : "";
+      syntax.offset = syntax.end_offset = 0;
+      this.fail("invalid syntax", this.peek(), "SYNTAX", undefined, syntax);
+    }
     if (mode === "single" && this.controlError && !this.lexed.source.endsWith("\n") && ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind)) {
       const last = this.tokens.filter(token => !["newline", "eof", "indent", "dedent"].includes(token.kind)).at(-1);
       const lines = this.lexed.source.split("\n");
