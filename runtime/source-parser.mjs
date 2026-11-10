@@ -826,7 +826,7 @@ class Parser {
       const token = this.take(); let operator = COMPARISONS.get(token.value), invert = false;
       if (token.value === "not") { this.expect("in"); operator = "contains"; invert = true; }
       else if (token.value === "is" && this.eat("not")) invert = true;
-      parts.push({operator, invert, right: this.bitwiseOr()});
+      parts.push({operator, invert, right: this.rightOperand(() => this.bitwiseOr())});
     }
     return parts.length ? this.node("Compare", left, {left, parts}, parts.at(-1).right) : left;
   }

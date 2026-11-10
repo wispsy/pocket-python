@@ -72,7 +72,8 @@
     "LA124",
     "LA125",
     "LA126",
-    "LA127"
+    "LA127",
+    "LA128"
   ],
   "cases": [
     {
@@ -26480,6 +26481,1398 @@
       "stage": "LA127",
       "source": "print(2**+2,1+-2,7//-2,1<<+2,3&~1)\nprint(2*3+4,7%4,5|2,5^2)\n",
       "stdout": "4 -1 -4 4 2\n10 3 7 7\n"
+    },
+    {
+      "id": "comparison-operand-0-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 == else 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 == else 鳥\\n' 2 6\nTrue True True\n0 0 '雪 == else 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-0-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 == else 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 == else 鳥' 2 6\nTrue True True\n0 0 '雪 == else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-0-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 == else 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 == else 鳥' 2 6\nTrue True True\n0 0 '雪 == else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-1-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 == :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 == :\\n' 2 6\nTrue True True\n0 0 '雪 == :\\n'\n"
+    },
+    {
+      "id": "comparison-operand-1-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 == :',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 == :' 2 6\nTrue True True\n0 0 '雪 == :'\n"
+    },
+    {
+      "id": "comparison-operand-1-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 == :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 == :' 2 6\nTrue True True\n0 0 '雪 == :'\n"
+    },
+    {
+      "id": "comparison-operand-2-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 == ; 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 == ; 鳥\\n' 2 6\nTrue True True\n0 0 '雪 == ; 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-2-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 == ; 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 == ; 鳥' 2 6\nTrue True True\n0 0 '雪 == ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-2-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 == ; 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 == ; 鳥' 2 6\nTrue True True\n0 0 '雪 == ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-3-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 != else 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 != else 鳥\\n' 2 6\nTrue True True\n0 0 '雪 != else 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-3-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 != else 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 != else 鳥' 2 6\nTrue True True\n0 0 '雪 != else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-3-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 != else 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 != else 鳥' 2 6\nTrue True True\n0 0 '雪 != else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-4-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 != :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 != :\\n' 2 6\nTrue True True\n0 0 '雪 != :\\n'\n"
+    },
+    {
+      "id": "comparison-operand-4-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 != :',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 != :' 2 6\nTrue True True\n0 0 '雪 != :'\n"
+    },
+    {
+      "id": "comparison-operand-4-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 != :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 != :' 2 6\nTrue True True\n0 0 '雪 != :'\n"
+    },
+    {
+      "id": "comparison-operand-5-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 != ; 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 != ; 鳥\\n' 2 6\nTrue True True\n0 0 '雪 != ; 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-5-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 != ; 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 != ; 鳥' 2 6\nTrue True True\n0 0 '雪 != ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-5-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 != ; 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 != ; 鳥' 2 6\nTrue True True\n0 0 '雪 != ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-6-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 < else 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'雪 < else 鳥\\n' 2 6\nTrue True True\n0 0 '雪 < else 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-6-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 < else 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'雪 < else 鳥' 2 6\nTrue True True\n0 0 '雪 < else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-6-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 < else 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'雪 < else 鳥' 2 6\nTrue True True\n0 0 '雪 < else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-7-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 < :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 < :\\n' 2 6\nTrue True True\n0 0 '雪 < :\\n'\n"
+    },
+    {
+      "id": "comparison-operand-7-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 < :',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 < :' 2 6\nTrue True True\n0 0 '雪 < :'\n"
+    },
+    {
+      "id": "comparison-operand-7-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 < :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 < :' 2 6\nTrue True True\n0 0 '雪 < :'\n"
+    },
+    {
+      "id": "comparison-operand-8-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 < ; 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 < ; 鳥\\n' 2 6\nTrue True True\n0 0 '雪 < ; 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-8-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 < ; 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 < ; 鳥' 2 6\nTrue True True\n0 0 '雪 < ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-8-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 < ; 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 < ; 鳥' 2 6\nTrue True True\n0 0 '雪 < ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-9-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 <= else 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 <= else 鳥\\n' 2 6\nTrue True True\n0 0 '雪 <= else 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-9-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 <= else 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 <= else 鳥' 2 6\nTrue True True\n0 0 '雪 <= else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-9-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 <= else 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 <= else 鳥' 2 6\nTrue True True\n0 0 '雪 <= else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-10-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 <= :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 <= :\\n' 2 6\nTrue True True\n0 0 '雪 <= :\\n'\n"
+    },
+    {
+      "id": "comparison-operand-10-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 <= :',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 <= :' 2 6\nTrue True True\n0 0 '雪 <= :'\n"
+    },
+    {
+      "id": "comparison-operand-10-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 <= :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 <= :' 2 6\nTrue True True\n0 0 '雪 <= :'\n"
+    },
+    {
+      "id": "comparison-operand-11-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 <= ; 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 <= ; 鳥\\n' 2 6\nTrue True True\n0 0 '雪 <= ; 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-11-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 <= ; 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 <= ; 鳥' 2 6\nTrue True True\n0 0 '雪 <= ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-11-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 <= ; 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 <= ; 鳥' 2 6\nTrue True True\n0 0 '雪 <= ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-12-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 > else 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'雪 > else 鳥\\n' 2 6\nTrue True True\n0 0 '雪 > else 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-12-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 > else 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'雪 > else 鳥' 2 6\nTrue True True\n0 0 '雪 > else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-12-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 > else 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'雪 > else 鳥' 2 6\nTrue True True\n0 0 '雪 > else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-13-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 > :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 > :\\n' 2 6\nTrue True True\n0 0 '雪 > :\\n'\n"
+    },
+    {
+      "id": "comparison-operand-13-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 > :',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 > :' 2 6\nTrue True True\n0 0 '雪 > :'\n"
+    },
+    {
+      "id": "comparison-operand-13-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 > :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 > :' 2 6\nTrue True True\n0 0 '雪 > :'\n"
+    },
+    {
+      "id": "comparison-operand-14-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 > ; 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 > ; 鳥\\n' 2 6\nTrue True True\n0 0 '雪 > ; 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-14-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 > ; 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 > ; 鳥' 2 6\nTrue True True\n0 0 '雪 > ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-14-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 > ; 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 > ; 鳥' 2 6\nTrue True True\n0 0 '雪 > ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-15-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 >= else 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 >= else 鳥\\n' 2 6\nTrue True True\n0 0 '雪 >= else 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-15-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 >= else 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 >= else 鳥' 2 6\nTrue True True\n0 0 '雪 >= else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-15-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 >= else 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 >= else 鳥' 2 6\nTrue True True\n0 0 '雪 >= else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-16-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 >= :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 >= :\\n' 2 6\nTrue True True\n0 0 '雪 >= :\\n'\n"
+    },
+    {
+      "id": "comparison-operand-16-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 >= :',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 >= :' 2 6\nTrue True True\n0 0 '雪 >= :'\n"
+    },
+    {
+      "id": "comparison-operand-16-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 >= :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 >= :' 2 6\nTrue True True\n0 0 '雪 >= :'\n"
+    },
+    {
+      "id": "comparison-operand-17-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 >= ; 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 >= ; 鳥\\n' 2 6\nTrue True True\n0 0 '雪 >= ; 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-17-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 >= ; 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 >= ; 鳥' 2 6\nTrue True True\n0 0 '雪 >= ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-17-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 >= ; 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 >= ; 鳥' 2 6\nTrue True True\n0 0 '雪 >= ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-18-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is else 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 is else 鳥\\n' 2 6\nTrue True True\n0 0 '雪 is else 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-18-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is else 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 is else 鳥' 2 6\nTrue True True\n0 0 '雪 is else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-18-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is else 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 is else 鳥' 2 6\nTrue True True\n0 0 '雪 is else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-19-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 is :\\n' 2 6\nTrue True True\n0 0 '雪 is :\\n'\n"
+    },
+    {
+      "id": "comparison-operand-19-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is :',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 is :' 2 6\nTrue True True\n0 0 '雪 is :'\n"
+    },
+    {
+      "id": "comparison-operand-19-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 is :' 2 6\nTrue True True\n0 0 '雪 is :'\n"
+    },
+    {
+      "id": "comparison-operand-20-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is ; 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 is ; 鳥\\n' 2 6\nTrue True True\n0 0 '雪 is ; 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-20-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is ; 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 is ; 鳥' 2 6\nTrue True True\n0 0 '雪 is ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-20-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is ; 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 is ; 鳥' 2 6\nTrue True True\n0 0 '雪 is ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-21-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not else 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'雪 is not else 鳥\\n' 2 6\nTrue True True\n0 0 '雪 is not else 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-21-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not else 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'雪 is not else 鳥' 2 6\nTrue True True\n0 0 '雪 is not else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-21-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not else 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'雪 is not else 鳥' 2 6\nTrue True True\n0 0 '雪 is not else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-22-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 is not :\\n' 2 6\nTrue True True\n0 0 '雪 is not :\\n'\n"
+    },
+    {
+      "id": "comparison-operand-22-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not :',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 is not :' 2 6\nTrue True True\n0 0 '雪 is not :'\n"
+    },
+    {
+      "id": "comparison-operand-22-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 is not :' 2 6\nTrue True True\n0 0 '雪 is not :'\n"
+    },
+    {
+      "id": "comparison-operand-23-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not ; 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 is not ; 鳥\\n' 2 6\nTrue True True\n0 0 '雪 is not ; 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-23-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not ; 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 is not ; 鳥' 2 6\nTrue True True\n0 0 '雪 is not ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-23-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not ; 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 is not ; 鳥' 2 6\nTrue True True\n0 0 '雪 is not ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-24-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 in else 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 in else 鳥\\n' 2 6\nTrue True True\n0 0 '雪 in else 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-24-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 in else 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 in else 鳥' 2 6\nTrue True True\n0 0 '雪 in else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-24-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 in else 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'雪 in else 鳥' 2 6\nTrue True True\n0 0 '雪 in else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-25-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 in :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 in :\\n' 2 6\nTrue True True\n0 0 '雪 in :\\n'\n"
+    },
+    {
+      "id": "comparison-operand-25-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 in :',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 in :' 2 6\nTrue True True\n0 0 '雪 in :'\n"
+    },
+    {
+      "id": "comparison-operand-25-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 in :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 in :' 2 6\nTrue True True\n0 0 '雪 in :'\n"
+    },
+    {
+      "id": "comparison-operand-26-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 in ; 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 in ; 鳥\\n' 2 6\nTrue True True\n0 0 '雪 in ; 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-26-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 in ; 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 in ; 鳥' 2 6\nTrue True True\n0 0 '雪 in ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-26-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 in ; 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'雪 in ; 鳥' 2 6\nTrue True True\n0 0 '雪 in ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-27-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in else 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'雪 not in else 鳥\\n' 2 6\nTrue True True\n0 0 '雪 not in else 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-27-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in else 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'雪 not in else 鳥' 2 6\nTrue True True\n0 0 '雪 not in else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-27-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in else 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'雪 not in else 鳥' 2 6\nTrue True True\n0 0 '雪 not in else 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-28-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 not in :\\n' 2 6\nTrue True True\n0 0 '雪 not in :\\n'\n"
+    },
+    {
+      "id": "comparison-operand-28-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in :',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 not in :' 2 6\nTrue True True\n0 0 '雪 not in :'\n"
+    },
+    {
+      "id": "comparison-operand-28-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 not in :' 2 6\nTrue True True\n0 0 '雪 not in :'\n"
+    },
+    {
+      "id": "comparison-operand-29-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in ; 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 not in ; 鳥\\n' 2 6\nTrue True True\n0 0 '雪 not in ; 鳥\\n'\n"
+    },
+    {
+      "id": "comparison-operand-29-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in ; 鳥',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 not in ; 鳥' 2 6\nTrue True True\n0 0 '雪 not in ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-29-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in ; 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'雪 not in ; 鳥' 2 6\nTrue True True\n0 0 '雪 not in ; 鳥'\n"
+    },
+    {
+      "id": "comparison-operand-30-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 ==',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 ==\\n' 2 6\nTrue True True\n0 0 '雪 ==\\n'\n"
+    },
+    {
+      "id": "comparison-operand-30-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 ==',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 ==' 2 6\nTrue True True\n0 0 '雪 =='\n"
+    },
+    {
+      "id": "comparison-operand-30-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 ==',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 ==' 2 6\nTrue True True\n0 0 '雪 =='\n"
+    },
+    {
+      "id": "comparison-operand-31-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 ==\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 ==\\n' 2 6\nTrue True True\n0 0 '雪 ==\\n'\n"
+    },
+    {
+      "id": "comparison-operand-31-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 ==\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 ==\\n' 2 6\nTrue True True\n0 0 '雪 ==\\n'\n"
+    },
+    {
+      "id": "comparison-operand-31-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 ==\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 ==\\n' 2 6\nTrue True True\n0 0 '雪 ==\\n'\n"
+    },
+    {
+      "id": "comparison-operand-32-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 == # comment',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 16\n'雪 == # comment\\n' 2 6\nTrue True True\n0 0 '雪 == # comment\\n'\n"
+    },
+    {
+      "id": "comparison-operand-32-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 == # comment',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 == # comment' 2 6\nTrue True True\n0 0 '雪 == # comment'\n"
+    },
+    {
+      "id": "comparison-operand-32-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 == # comment',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 == # comment' 2 6\nTrue True True\n0 0 '雪 == # comment'\n"
+    },
+    {
+      "id": "comparison-operand-33-exec",
+      "stage": "LA128",
+      "source": "try: compile('(雪 ==)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'(雪 ==)\\n' 2 6\nTrue True True\n0 0 '(雪 ==)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-33-eval",
+      "stage": "LA128",
+      "source": "try: compile('(雪 ==)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'(雪 ==)' 2 6\nTrue True True\n0 0 '(雪 ==)'\n"
+    },
+    {
+      "id": "comparison-operand-33-single",
+      "stage": "LA128",
+      "source": "try: compile('(雪 ==)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'(雪 ==)' 2 6\nTrue True True\n0 0 '(雪 ==)'\n"
+    },
+    {
+      "id": "comparison-operand-34-exec",
+      "stage": "LA128",
+      "source": "try: compile('[雪 ==]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'[雪 ==]\\n' 2 6\nTrue True True\n0 0 '[雪 ==]\\n'\n"
+    },
+    {
+      "id": "comparison-operand-34-eval",
+      "stage": "LA128",
+      "source": "try: compile('[雪 ==]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'[雪 ==]' 2 6\nTrue True True\n0 0 '[雪 ==]'\n"
+    },
+    {
+      "id": "comparison-operand-34-single",
+      "stage": "LA128",
+      "source": "try: compile('[雪 ==]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'[雪 ==]' 2 6\nTrue True True\n0 0 '[雪 ==]'\n"
+    },
+    {
+      "id": "comparison-operand-35-exec",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 ==)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'f(雪 ==)\\n' 2 6\nTrue True True\n0 0 'f(雪 ==)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-35-eval",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 ==)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'f(雪 ==)' 2 6\nTrue True True\n0 0 'f(雪 ==)'\n"
+    },
+    {
+      "id": "comparison-operand-35-single",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 ==)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'f(雪 ==)' 2 6\nTrue True True\n0 0 'f(雪 ==)'\n"
+    },
+    {
+      "id": "comparison-operand-36-exec",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 ==\\n)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')\\n' 2 6\nTrue True True\n0 0 '(\\n 雪 ==\\n)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-36-eval",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 ==\\n)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')' 2 6\nTrue True True\n0 0 '(\\n 雪 ==\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-36-single",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 ==\\n)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')' 2 6\nTrue True True\n0 0 '(\\n 雪 ==\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-37-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 is\\n' 2 6\nTrue True True\n0 0 '雪 is\\n'\n"
+    },
+    {
+      "id": "comparison-operand-37-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 is' 2 6\nTrue True True\n0 0 '雪 is'\n"
+    },
+    {
+      "id": "comparison-operand-37-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 is' 2 6\nTrue True True\n0 0 '雪 is'\n"
+    },
+    {
+      "id": "comparison-operand-38-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 is\\n' 2 6\nTrue True True\n0 0 '雪 is\\n'\n"
+    },
+    {
+      "id": "comparison-operand-38-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 is\\n' 2 6\nTrue True True\n0 0 '雪 is\\n'\n"
+    },
+    {
+      "id": "comparison-operand-38-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 is\\n' 2 6\nTrue True True\n0 0 '雪 is\\n'\n"
+    },
+    {
+      "id": "comparison-operand-39-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is # comment',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 16\n'雪 is # comment\\n' 2 6\nTrue True True\n0 0 '雪 is # comment\\n'\n"
+    },
+    {
+      "id": "comparison-operand-39-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is # comment',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 is # comment' 2 6\nTrue True True\n0 0 '雪 is # comment'\n"
+    },
+    {
+      "id": "comparison-operand-39-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is # comment',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 is # comment' 2 6\nTrue True True\n0 0 '雪 is # comment'\n"
+    },
+    {
+      "id": "comparison-operand-40-exec",
+      "stage": "LA128",
+      "source": "try: compile('(雪 is)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'(雪 is)\\n' 2 6\nTrue True True\n0 0 '(雪 is)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-40-eval",
+      "stage": "LA128",
+      "source": "try: compile('(雪 is)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'(雪 is)' 2 6\nTrue True True\n0 0 '(雪 is)'\n"
+    },
+    {
+      "id": "comparison-operand-40-single",
+      "stage": "LA128",
+      "source": "try: compile('(雪 is)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'(雪 is)' 2 6\nTrue True True\n0 0 '(雪 is)'\n"
+    },
+    {
+      "id": "comparison-operand-41-exec",
+      "stage": "LA128",
+      "source": "try: compile('[雪 is]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'[雪 is]\\n' 2 6\nTrue True True\n0 0 '[雪 is]\\n'\n"
+    },
+    {
+      "id": "comparison-operand-41-eval",
+      "stage": "LA128",
+      "source": "try: compile('[雪 is]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'[雪 is]' 2 6\nTrue True True\n0 0 '[雪 is]'\n"
+    },
+    {
+      "id": "comparison-operand-41-single",
+      "stage": "LA128",
+      "source": "try: compile('[雪 is]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'[雪 is]' 2 6\nTrue True True\n0 0 '[雪 is]'\n"
+    },
+    {
+      "id": "comparison-operand-42-exec",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 is)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'f(雪 is)\\n' 2 6\nTrue True True\n0 0 'f(雪 is)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-42-eval",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 is)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'f(雪 is)' 2 6\nTrue True True\n0 0 'f(雪 is)'\n"
+    },
+    {
+      "id": "comparison-operand-42-single",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 is)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'f(雪 is)' 2 6\nTrue True True\n0 0 'f(雪 is)'\n"
+    },
+    {
+      "id": "comparison-operand-43-exec",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 is\\n)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')\\n' 2 6\nTrue True True\n0 0 '(\\n 雪 is\\n)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-43-eval",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 is\\n)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')' 2 6\nTrue True True\n0 0 '(\\n 雪 is\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-43-single",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 is\\n)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')' 2 6\nTrue True True\n0 0 '(\\n 雪 is\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-44-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'雪 is not\\n' 2 6\nTrue True True\n0 0 '雪 is not\\n'\n"
+    },
+    {
+      "id": "comparison-operand-44-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 is not' 2 6\nTrue True True\n0 0 '雪 is not'\n"
+    },
+    {
+      "id": "comparison-operand-44-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 is not' 2 6\nTrue True True\n0 0 '雪 is not'\n"
+    },
+    {
+      "id": "comparison-operand-45-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'雪 is not\\n' 2 6\nTrue True True\n0 0 '雪 is not\\n'\n"
+    },
+    {
+      "id": "comparison-operand-45-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'雪 is not\\n' 2 6\nTrue True True\n0 0 '雪 is not\\n'\n"
+    },
+    {
+      "id": "comparison-operand-45-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'雪 is not\\n' 2 6\nTrue True True\n0 0 '雪 is not\\n'\n"
+    },
+    {
+      "id": "comparison-operand-46-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not # comment',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 20\n'雪 is not # comment\\n' 2 6\nTrue True True\n0 0 '雪 is not # comment\\n'\n"
+    },
+    {
+      "id": "comparison-operand-46-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not # comment',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 is not # comment' 2 6\nTrue True True\n0 0 '雪 is not # comment'\n"
+    },
+    {
+      "id": "comparison-operand-46-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 is not # comment',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 is not # comment' 2 6\nTrue True True\n0 0 '雪 is not # comment'\n"
+    },
+    {
+      "id": "comparison-operand-47-exec",
+      "stage": "LA128",
+      "source": "try: compile('(雪 is not)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'(雪 is not)\\n' 2 6\nTrue True True\n0 0 '(雪 is not)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-47-eval",
+      "stage": "LA128",
+      "source": "try: compile('(雪 is not)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'(雪 is not)' 2 6\nTrue True True\n0 0 '(雪 is not)'\n"
+    },
+    {
+      "id": "comparison-operand-47-single",
+      "stage": "LA128",
+      "source": "try: compile('(雪 is not)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'(雪 is not)' 2 6\nTrue True True\n0 0 '(雪 is not)'\n"
+    },
+    {
+      "id": "comparison-operand-48-exec",
+      "stage": "LA128",
+      "source": "try: compile('[雪 is not]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'[雪 is not]\\n' 2 6\nTrue True True\n0 0 '[雪 is not]\\n'\n"
+    },
+    {
+      "id": "comparison-operand-48-eval",
+      "stage": "LA128",
+      "source": "try: compile('[雪 is not]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'[雪 is not]' 2 6\nTrue True True\n0 0 '[雪 is not]'\n"
+    },
+    {
+      "id": "comparison-operand-48-single",
+      "stage": "LA128",
+      "source": "try: compile('[雪 is not]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'[雪 is not]' 2 6\nTrue True True\n0 0 '[雪 is not]'\n"
+    },
+    {
+      "id": "comparison-operand-49-exec",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 is not)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'f(雪 is not)\\n' 2 6\nTrue True True\n0 0 'f(雪 is not)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-49-eval",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 is not)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'f(雪 is not)' 2 6\nTrue True True\n0 0 'f(雪 is not)'\n"
+    },
+    {
+      "id": "comparison-operand-49-single",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 is not)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'f(雪 is not)' 2 6\nTrue True True\n0 0 'f(雪 is not)'\n"
+    },
+    {
+      "id": "comparison-operand-50-exec",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 is not\\n)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')\\n' 2 6\nTrue True True\n0 0 '(\\n 雪 is not\\n)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-50-eval",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 is not\\n)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')' 2 6\nTrue True True\n0 0 '(\\n 雪 is not\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-50-single",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 is not\\n)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')' 2 6\nTrue True True\n0 0 '(\\n 雪 is not\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-51-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 in',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 in\\n' 2 6\nTrue True True\n0 0 '雪 in\\n'\n"
+    },
+    {
+      "id": "comparison-operand-51-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 in',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 in' 2 6\nTrue True True\n0 0 '雪 in'\n"
+    },
+    {
+      "id": "comparison-operand-51-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 in',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 in' 2 6\nTrue True True\n0 0 '雪 in'\n"
+    },
+    {
+      "id": "comparison-operand-52-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 in\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 in\\n' 2 6\nTrue True True\n0 0 '雪 in\\n'\n"
+    },
+    {
+      "id": "comparison-operand-52-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 in\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 in\\n' 2 6\nTrue True True\n0 0 '雪 in\\n'\n"
+    },
+    {
+      "id": "comparison-operand-52-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 in\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'雪 in\\n' 2 6\nTrue True True\n0 0 '雪 in\\n'\n"
+    },
+    {
+      "id": "comparison-operand-53-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 in # comment',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 16\n'雪 in # comment\\n' 2 6\nTrue True True\n0 0 '雪 in # comment\\n'\n"
+    },
+    {
+      "id": "comparison-operand-53-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 in # comment',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 in # comment' 2 6\nTrue True True\n0 0 '雪 in # comment'\n"
+    },
+    {
+      "id": "comparison-operand-53-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 in # comment',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 in # comment' 2 6\nTrue True True\n0 0 '雪 in # comment'\n"
+    },
+    {
+      "id": "comparison-operand-54-exec",
+      "stage": "LA128",
+      "source": "try: compile('(雪 in)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'(雪 in)\\n' 2 6\nTrue True True\n0 0 '(雪 in)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-54-eval",
+      "stage": "LA128",
+      "source": "try: compile('(雪 in)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'(雪 in)' 2 6\nTrue True True\n0 0 '(雪 in)'\n"
+    },
+    {
+      "id": "comparison-operand-54-single",
+      "stage": "LA128",
+      "source": "try: compile('(雪 in)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'(雪 in)' 2 6\nTrue True True\n0 0 '(雪 in)'\n"
+    },
+    {
+      "id": "comparison-operand-55-exec",
+      "stage": "LA128",
+      "source": "try: compile('[雪 in]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'[雪 in]\\n' 2 6\nTrue True True\n0 0 '[雪 in]\\n'\n"
+    },
+    {
+      "id": "comparison-operand-55-eval",
+      "stage": "LA128",
+      "source": "try: compile('[雪 in]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'[雪 in]' 2 6\nTrue True True\n0 0 '[雪 in]'\n"
+    },
+    {
+      "id": "comparison-operand-55-single",
+      "stage": "LA128",
+      "source": "try: compile('[雪 in]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'[雪 in]' 2 6\nTrue True True\n0 0 '[雪 in]'\n"
+    },
+    {
+      "id": "comparison-operand-56-exec",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 in)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'f(雪 in)\\n' 2 6\nTrue True True\n0 0 'f(雪 in)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-56-eval",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 in)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'f(雪 in)' 2 6\nTrue True True\n0 0 'f(雪 in)'\n"
+    },
+    {
+      "id": "comparison-operand-56-single",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 in)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'f(雪 in)' 2 6\nTrue True True\n0 0 'f(雪 in)'\n"
+    },
+    {
+      "id": "comparison-operand-57-exec",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 in\\n)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')\\n' 2 6\nTrue True True\n0 0 '(\\n 雪 in\\n)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-57-eval",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 in\\n)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')' 2 6\nTrue True True\n0 0 '(\\n 雪 in\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-57-single",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 in\\n)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')' 2 6\nTrue True True\n0 0 '(\\n 雪 in\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-58-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'雪 not in\\n' 2 6\nTrue True True\n0 0 '雪 not in\\n'\n"
+    },
+    {
+      "id": "comparison-operand-58-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 not in' 2 6\nTrue True True\n0 0 '雪 not in'\n"
+    },
+    {
+      "id": "comparison-operand-58-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 not in' 2 6\nTrue True True\n0 0 '雪 not in'\n"
+    },
+    {
+      "id": "comparison-operand-59-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'雪 not in\\n' 2 6\nTrue True True\n0 0 '雪 not in\\n'\n"
+    },
+    {
+      "id": "comparison-operand-59-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'雪 not in\\n' 2 6\nTrue True True\n0 0 '雪 not in\\n'\n"
+    },
+    {
+      "id": "comparison-operand-59-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'雪 not in\\n' 2 6\nTrue True True\n0 0 '雪 not in\\n'\n"
+    },
+    {
+      "id": "comparison-operand-60-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in # comment',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 20\n'雪 not in # comment\\n' 2 6\nTrue True True\n0 0 '雪 not in # comment\\n'\n"
+    },
+    {
+      "id": "comparison-operand-60-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in # comment',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 not in # comment' 2 6\nTrue True True\n0 0 '雪 not in # comment'\n"
+    },
+    {
+      "id": "comparison-operand-60-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 not in # comment',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'雪 not in # comment' 2 6\nTrue True True\n0 0 '雪 not in # comment'\n"
+    },
+    {
+      "id": "comparison-operand-61-exec",
+      "stage": "LA128",
+      "source": "try: compile('(雪 not in)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'(雪 not in)\\n' 2 6\nTrue True True\n0 0 '(雪 not in)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-61-eval",
+      "stage": "LA128",
+      "source": "try: compile('(雪 not in)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'(雪 not in)' 2 6\nTrue True True\n0 0 '(雪 not in)'\n"
+    },
+    {
+      "id": "comparison-operand-61-single",
+      "stage": "LA128",
+      "source": "try: compile('(雪 not in)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'(雪 not in)' 2 6\nTrue True True\n0 0 '(雪 not in)'\n"
+    },
+    {
+      "id": "comparison-operand-62-exec",
+      "stage": "LA128",
+      "source": "try: compile('[雪 not in]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'[雪 not in]\\n' 2 6\nTrue True True\n0 0 '[雪 not in]\\n'\n"
+    },
+    {
+      "id": "comparison-operand-62-eval",
+      "stage": "LA128",
+      "source": "try: compile('[雪 not in]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'[雪 not in]' 2 6\nTrue True True\n0 0 '[雪 not in]'\n"
+    },
+    {
+      "id": "comparison-operand-62-single",
+      "stage": "LA128",
+      "source": "try: compile('[雪 not in]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'[雪 not in]' 2 6\nTrue True True\n0 0 '[雪 not in]'\n"
+    },
+    {
+      "id": "comparison-operand-63-exec",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 not in)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'f(雪 not in)\\n' 2 6\nTrue True True\n0 0 'f(雪 not in)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-63-eval",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 not in)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'f(雪 not in)' 2 6\nTrue True True\n0 0 'f(雪 not in)'\n"
+    },
+    {
+      "id": "comparison-operand-63-single",
+      "stage": "LA128",
+      "source": "try: compile('f(雪 not in)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'f(雪 not in)' 2 6\nTrue True True\n0 0 'f(雪 not in)'\n"
+    },
+    {
+      "id": "comparison-operand-64-exec",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 not in\\n)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')\\n' 2 6\nTrue True True\n0 0 '(\\n 雪 not in\\n)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-64-eval",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 not in\\n)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')' 2 6\nTrue True True\n0 0 '(\\n 雪 not in\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-64-single",
+      "stage": "LA128",
+      "source": "try: compile('(\\n 雪 not in\\n)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 1 3 2\n')' 2 6\nTrue True True\n0 0 '(\\n 雪 not in\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-65-exec",
+      "stage": "LA128",
+      "source": "try: compile('雪 < 鳥 is not else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 14 1 18\n'雪 < 鳥 is not else\\n' 2 6\nTrue True True\n0 0 '雪 < 鳥 is not else\\n'\n"
+    },
+    {
+      "id": "comparison-operand-65-eval",
+      "stage": "LA128",
+      "source": "try: compile('雪 < 鳥 is not else',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 14 1 18\n'雪 < 鳥 is not else' 2 6\nTrue True True\n0 0 '雪 < 鳥 is not else'\n"
+    },
+    {
+      "id": "comparison-operand-65-single",
+      "stage": "LA128",
+      "source": "try: compile('雪 < 鳥 is not else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 14 1 18\n'雪 < 鳥 is not else' 2 6\nTrue True True\n0 0 '雪 < 鳥 is not else'\n"
+    },
+    {
+      "id": "comparison-operand-66-exec",
+      "stage": "LA128",
+      "source": "try: compile('[雪 for 鳥 in 空 if 羽 <=]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 22 1 23\n'[雪 for 鳥 in 空 if 羽 <=]\\n' 2 6\nTrue True True\n0 0 '[雪 for 鳥 in 空 if 羽 <=]\\n'\n"
+    },
+    {
+      "id": "comparison-operand-66-eval",
+      "stage": "LA128",
+      "source": "try: compile('[雪 for 鳥 in 空 if 羽 <=]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 22 1 23\n'[雪 for 鳥 in 空 if 羽 <=]' 2 6\nTrue True True\n0 0 '[雪 for 鳥 in 空 if 羽 <=]'\n"
+    },
+    {
+      "id": "comparison-operand-66-single",
+      "stage": "LA128",
+      "source": "try: compile('[雪 for 鳥 in 空 if 羽 <=]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 22 1 23\n'[雪 for 鳥 in 空 if 羽 <=]' 2 6\nTrue True True\n0 0 '[雪 for 鳥 in 空 if 羽 <=]'\n"
+    },
+    {
+      "id": "comparison-operand-67-exec",
+      "stage": "LA128",
+      "source": "try: compile('lambda: 雪 not in else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 22\n'lambda: 雪 not in else\\n' 2 6\nTrue True True\n0 0 'lambda: 雪 not in else\\n'\n"
+    },
+    {
+      "id": "comparison-operand-67-eval",
+      "stage": "LA128",
+      "source": "try: compile('lambda: 雪 not in else',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 22\n'lambda: 雪 not in else' 2 6\nTrue True True\n0 0 'lambda: 雪 not in else'\n"
+    },
+    {
+      "id": "comparison-operand-67-single",
+      "stage": "LA128",
+      "source": "try: compile('lambda: 雪 not in else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 22\n'lambda: 雪 not in else' 2 6\nTrue True True\n0 0 'lambda: 雪 not in else'\n"
+    },
+    {
+      "id": "comparison-operand-68-exec",
+      "stage": "LA128",
+      "source": "try: compile('(雪\\n is not else)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 13\n' is not else)\\n' 2 6\nTrue True True\n0 0 '(雪\\n is not else)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-68-eval",
+      "stage": "LA128",
+      "source": "try: compile('(雪\\n is not else)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 13\n' is not else)' 2 6\nTrue True True\n0 0 '(雪\\n is not else)'\n"
+    },
+    {
+      "id": "comparison-operand-68-single",
+      "stage": "LA128",
+      "source": "try: compile('(雪\\n is not else)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 13\n' is not else)' 2 6\nTrue True True\n0 0 '(雪\\n is not else)'\n"
+    },
+    {
+      "id": "comparison-operand-69-exec",
+      "stage": "LA128",
+      "source": "try: compile('(雪 not in # comment\\n)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 1 2 2\n')\\n' 2 6\nTrue True True\n0 0 '(雪 not in # comment\\n)\\n'\n"
+    },
+    {
+      "id": "comparison-operand-69-eval",
+      "stage": "LA128",
+      "source": "try: compile('(雪 not in # comment\\n)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 1 2 2\n')' 2 6\nTrue True True\n0 0 '(雪 not in # comment\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-69-single",
+      "stage": "LA128",
+      "source": "try: compile('(雪 not in # comment\\n)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 1 2 2\n')' 2 6\nTrue True True\n0 0 '(雪 not in # comment\\n)'\n"
+    },
+    {
+      "id": "comparison-operand-statement-0-exec",
+      "stage": "LA128",
+      "source": "try: compile('if 雪 ==: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'if 雪 ==: pass\\n' 2 6\nTrue True True\n0 0 'if 雪 ==: pass\\n'\n"
+    },
+    {
+      "id": "comparison-operand-statement-1-exec",
+      "stage": "LA128",
+      "source": "try: compile('while 雪 is not: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 15 1 16\n'while 雪 is not: pass\\n' 2 6\nTrue True True\n0 0 'while 雪 is not: pass\\n'\n"
+    },
+    {
+      "id": "comparison-operand-statement-2-exec",
+      "stage": "LA128",
+      "source": "try: compile('for 鳥 in 雪 not in: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 19\n'for 鳥 in 雪 not in: pass\\n' 2 6\nTrue True True\n0 0 'for 鳥 in 雪 not in: pass\\n'\n"
+    },
+    {
+      "id": "comparison-operand-statement-3-exec",
+      "stage": "LA128",
+      "source": "try: compile('assert 雪 <=;',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'assert 雪 <=;\\n' 2 6\nTrue True True\n0 0 'assert 雪 <=;\\n'\n"
+    },
+    {
+      "id": "comparison-operand-statement-4-exec",
+      "stage": "LA128",
+      "source": "try: compile('def f():\\n return 雪 in else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 14 2 18\n' return 雪 in else\\n' 2 6\nTrue True True\n0 0 'def f():\\n return 雪 in else\\n'\n"
+    },
+    {
+      "id": "comparison-operand-prior-fields-0-exec",
+      "stage": "LA128",
+      "source": "try: compile('if True: pass\\n雪 is else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 6 2 10\n'雪 is else\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "comparison-operand-unqualified-0",
+      "stage": "Future",
+      "source": "try: compile('del 雪 == else',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "comparison-operand-unqualified-1",
+      "stage": "Future",
+      "source": "try: compile('del (雪 is not)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "comparison-operand-unqualified-2",
+      "stage": "Future",
+      "source": "try: compile('[雪,鳥 for 羽 in (空 ==)]',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "comparison-operand-unqualified-3",
+      "stage": "Future",
+      "source": "try: compile('f(雪=鳥 for 羽 in (空 in))',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "comparison-operand-unqualified-4",
+      "stage": "Future",
+      "source": "try: compile('(雪 not else)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "comparison-operand-unqualified-5",
+      "stage": "Future",
+      "source": "try: compile('(雪 is lambda: 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "comparison-operand-unqualified-6",
+      "stage": "Future",
+      "source": "try: compile('(雪 < 鳥..羽)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "comparison-operand-unqualified-7",
+      "stage": "Future",
+      "source": "try: compile('雪 in not 鳥',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "comparison-operand-unqualified-8",
+      "stage": "Future",
+      "source": "try: compile('(雪 if 鳥 == else 羽)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "comparison-operand-prior-metadata",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\n雪 is else',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "boundary": "Native metadata after a completed compound statement remains unqualified.",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "stdout": "(1, 0, 'if True: pass\\n雪 is else\\n')\n"
+    },
+    {
+      "id": "comparison-operand-valid",
+      "stage": "LA128",
+      "source": "print(1<2<=3,2 in [1,2],3 not in [1,2])\nx=[]\nprint(x is x,x is not None,1==1!=2)\n",
+      "stdout": "True True True\nTrue True True\n"
     }
   ]
 }
