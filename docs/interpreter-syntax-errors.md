@@ -428,19 +428,24 @@ preserve native token ranges, Unicode and compile-mode newline behavior.
 Malformed operands, target priority and prior-compound metadata retain their
 independent field boundaries.
 
+LA-119 qualifies missing conditional tests at adopted keywords, delimiters and
+newlines. Native fields retain Unicode columns, multiline text and all compile
+modes. Malformed tests, unparenthesized lambdas and unqualified comprehension
+filters keep explicit boundaries.
+
 LA-120 composes header-start and conditional-test payloads through modules,
 nested exec, chaining/notes and independent fields/arguments. Cyclic filenames,
 suspended conversion and cleanup survive parked collection and interruption.
 The example and installed offline console cover retained fields, cleanup and
 Stop/Restart paths.
 
-LA-119 qualifies missing conditional tests at adopted keywords, delimiters and
-newlines. Native fields retain Unicode columns, multiline text and all compile
-modes. Malformed tests, unparenthesized lambdas and unqualified comprehension
-filters keep explicit boundaries.
+LA-121 qualifies absent lambda bodies after adopted parameter lists. Delimiters,
+reserved keywords, Unicode and multiline inputs retain native token fields and
+compile-mode newline distinctions. Parameter errors retain priority; malformed
+body/default operands and unqualified comprehension filters keep boundaries.
 
-The current fixed generated-syntax corpus contains 3,173 cases: 2,947 supported
-semantic/error comparisons and 226 explicit native-field refusals. The ordinary
+The current fixed generated-syntax corpus contains 3,363 cases: 3,132 supported
+semantic/error comparisons and 231 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

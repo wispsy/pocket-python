@@ -588,6 +588,8 @@ class Parser {
   }
   lambda() {
     const start = this.expect("lambda"), params = this.parameters(":"); this.expect(":");
+    if (this.expressionBoundary()) this.fail("Expected a lambda body.", this.peek(), "SYNTAX", undefined,
+      this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined);
     const before = [this.functionDepth, this.loopDepth]; this.functionDepth++; this.loopDepth = 0;
     let value;
     try { value = this.expression(); } finally { [this.functionDepth, this.loopDepth] = before; }
