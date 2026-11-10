@@ -19,7 +19,8 @@
     "LA75",
     "LA75A",
     "LA76",
-    "LA77"
+    "LA77",
+    "LA78"
   ],
   "cases": [
     {
@@ -3115,6 +3116,66 @@
       "stage": "LA77",
       "source": "try: compile('[a,*b,*c,1]=value',\"starred/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg)\n original=e.args\n e.args=()\n print(e.filename,e.msg is original[0])\n",
       "stdout": "cannot assign to literal 1 10 1 11\n'[a,*b,*c,1]=value' False 2\nTrue\nstarred/雪.py True\n"
+    },
+    {
+      "id": "generated-unpacking-owner-cycle",
+      "stage": "LA78",
+      "source": "class Name(str): pass\nfilename=Name(\"target.py\")\ntry: compile(\"雪=1; [a,1]=value\",filename,\"exec\")\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue cannot assign to literal 9 False False\n"
+    },
+    {
+      "id": "generated-unpacking-chaining",
+      "stage": "LA78",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile(\"[a,1]=value\",\"target.py\",\"exec\")\nexcept SyntaxError as e:\n e.add_note(\"target input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True target.py False False 2\nTrue target input 4\n"
+    },
+    {
+      "id": "generated-unpacking-cleanup",
+      "stage": "LA78",
+      "source": "def work():\n try: compile(\"del [*a]\",\"cleanup.py\",\"exec\")\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup.py cannot delete starred False 0\ncleanup.py False\n"
+    },
+    {
+      "id": "generated-unpacking-original-dynamic-failure",
+      "stage": "LA78",
+      "source": "exec(compile(\"def fail():\\n try: compile('[a,1]=value','target-input.py','exec')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n\", \"unpacking-payload-original.py\", \"exec\"))\n",
+      "stdout": "target-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-unpacking-eval",
+      "stage": "LA78",
+      "source": "try: eval(\"[x for [a,1] in []]\")\nexcept SyntaxError as e: print(e.msg,e.filename,len(e.args),e.offset)\n",
+      "stdout": "cannot assign to literal <string> 2 11\n"
+    },
+    {
+      "id": "generated-unpacking-field-independence",
+      "stage": "LA78",
+      "source": "class Name(str): pass\nname=Name(\"target-fields.py\")\ntry: compile(\"del [*a]\",name,\"exec\")\nexcept SyntaxError as e:\n args=e.args\n metadata=e._metadata\n e.args=()\n print(e.filename is name,args[0] is e.msg,args[1][0] is name,e._metadata is metadata)\n e.text=None\n e.filename=None\n print(repr(args[1][3]),args[1][0] is name,e.text is None,e.filename is None)\n",
+      "stdout": "True True True True\n'del [*a]\\n' True True True\n"
+    },
+    {
+      "id": "generated-unpacking-module",
+      "stage": "LA78",
+      "source": "import helper\ne=helper.validate(\"[a,1]=value\")\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "stdout": "target-module.py cannot assign to literal 4 module input\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"target-module.py\",\"exec\")\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ]
+    },
+    {
+      "id": "generated-starred-owner-cycle",
+      "stage": "LA78",
+      "source": "class Name(str): pass\nfilename=Name(\"colon.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile(\"[雪,*b,*c]=value\",filename,\"exec\",Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True multiple starred expressions in assignment 1\n"
     }
   ]
 }

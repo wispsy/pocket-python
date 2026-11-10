@@ -51,7 +51,7 @@ test('dynamic syntax fields retain cyclic filename owners through collection and
 for (const item of corpus.cases.filter(item => item.id.endsWith('owner-cycle')))
   test(item.id + ' survives collection, cancellation and close', async () => lifetime(item.source, item.stdout));
 
-for (const source of ['if', 'if True:\nvalue=7', 'return 7', 'nonlocal x', 'def f(x,x): pass', 'if True', 'del f()']) test('retained ' + JSON.stringify(source) + ' payloads share allocation limits', async () => {
+for (const source of ['if', 'if True:\nvalue=7', 'return 7', 'nonlocal x', 'def f(x,x): pass', 'if True', 'del f()', '[a,1]=value', '[雪,*b,*c]=value']) test('retained ' + JSON.stringify(source) + ' payloads share allocation limits', async () => {
   const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile(' + JSON.stringify(source) + ',"selected.py","exec")\n except SyntaxError as e: held.append(e)\n')],
     compileOptions: {languageProfile: corpus.profile}, memoryLimits: {maxBytes: 100000}, options: {maxSteps: 50000, maxWork: 20000000}});
   assert.equal(result.stdout, 'ready\n'); assert.equal(result.error?.code, 'OOM', JSON.stringify(result.error)); closed(result.closed);
@@ -59,7 +59,8 @@ for (const source of ['if', 'if True:\nvalue=7', 'return 7', 'nonlocal x', 'def 
 
 for (const [id, filename] of [['generated-syntax-original-dynamic-failure', 'syntax-payload-original.py'],
   ['generated-binding-original-dynamic-failure', 'binding-payload-original.py'],
-  ['generated-target-original-dynamic-failure', 'target-payload-original.py']])
+  ['generated-target-original-dynamic-failure', 'target-payload-original.py'],
+  ['generated-unpacking-original-dynamic-failure', 'unpacking-payload-original.py']])
 test(id + ' keeps the original dynamic call frames', async () => {
   const item = corpus.cases.find(item => item.id === id);
   const result = await runSourceRequest({modules: [unit(item.source)], compileOptions: {languageProfile: corpus.profile}});

@@ -130,6 +130,13 @@ text/metadata and UTF-8 byte columns. Full parsing and binding precede the
 compiler checks, and the first target/control-flow error retains source order.
 Valid starred operands continue through the ordinary unpacking implementation.
 
+LA-78 composes nested/starred diagnostics with modules, nested dynamic source,
+causes/notes, argument replacement, retained filename cycles and suspended
+cleanup. Parked collection, cancellation/close and shared allocation limits
+cover both parser and compiler layouts. The runnable example and installed
+offline acceptance include the new fields, original dynamic frames, retained
+target and cleanup Stop/Restart paths, and reduced-profile updates.
+
 The resulting fixed generated-syntax corpus contains 428 cases: 406 supported
 semantic/error comparisons and 22 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
