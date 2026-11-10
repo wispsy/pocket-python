@@ -311,8 +311,13 @@ and skip nonmatching exceptions normally; redundant grouping around an empty
 tuple import alias keeps the innermost tuple's native range. This prevents a
 host failure while constructing a handler diagnostic.
 
-The current fixed generated-syntax corpus contains 1,434 cases: 1,342 supported
-semantic/error comparisons and 92 explicit native-field refusals. The ordinary
+LA-100 qualifies multiple and trailing-comma elements in list/set comprehensions.
+Adopted clauses are parsed before the specialized message is selected. Grouping,
+starred operands, character ranges and multiline first-line conversion follow the
+pinned grammar; malformed clauses and prior-compound metadata retain boundaries.
+
+The current fixed generated-syntax corpus contains 1,522 cases: 1,425 supported
+semantic/error comparisons and 97 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

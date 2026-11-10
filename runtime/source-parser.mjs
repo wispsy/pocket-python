@@ -884,6 +884,18 @@ class Parser {
     if (this.at("async")) this.unsupported("Async comprehensions require a separate stage.");
     return this.node("Comprehension", start, {form, element, key, clauses});
   }
+  comprehensionElements(start, form, items, comma, end) {
+    const first = items[0], last = items.length === 1 ? comma : items.at(-1);
+    this.comprehension(start, form, first.kind === "Starred" ? first.value : first);
+    const span = [first.span[0], first.span[1], last.span[2], last.span[3]];
+    const syntax = this.at(end) ? this.delimitedDiagnostic(
+      "did you forget parentheses around the comprehension target?", {span}, end, true) : undefined;
+    if (syntax && span[0] !== span[2]) {
+      const bytes = new TextEncoder().encode(syntax.text + "\0");
+      syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, span[3]))).length;
+    }
+    this.fail("A comprehension requires one element.", first, "SYNTAX", undefined, syntax);
+  }
   atom() {
     const start = this.peek();
     if (this.kind("name")) { this.take(); return this.node("Name", start, {name: start.value}); }
@@ -916,20 +928,22 @@ class Parser {
       this.grouped.add(value); return value;
     }
     if (this.eat("[")) {
-      const items = [];
+      const items = []; let comma = null;
       while (!this.at("]")) {
+        if (comma && this.at("for")) this.comprehensionElements(start, "list", items, comma, "]");
         items.push(this.starredExpression(true));
         if (this.at("for")) {
-          if (items.length !== 1) this.fail("A comprehension requires one element.");
+          if (items.length !== 1) this.comprehensionElements(start, "list", items, comma, "]");
           const result = this.comprehension(start, "list", items[0]); this.expect("]"); return result;
         }
-        if (!this.eat(",")) break;
+        if (!(comma = this.eat(","))) break;
       }
       this.expect("]"); return this.node("List", start, {items});
     }
     if (this.eat("{")) {
-      const entries = [], items = []; let form = null;
+      const entries = [], items = []; let form = null, comma = null;
       while (!this.at("}")) {
+        if (form === "set" && comma && this.at("for")) this.comprehensionElements(start, "set", items, comma, "}");
         if (this.at("*")) {
           if (form === "dict") this.fail("A dictionary display cannot contain a starred set element.");
           form = "set"; items.push(this.starredExpression(true));
@@ -949,11 +963,12 @@ class Parser {
           }
         }
         if (this.at("for")) {
+          if (form === "set" && items.length !== 1) this.comprehensionElements(start, "set", items, comma, "}");
           if (items.length + entries.length !== 1 || entries[0]?.[0] === null) this.fail("A comprehension requires one element or pair.");
           const result = this.comprehension(start, form, form === "set" ? items[0] : entries[0][1], form === "dict" ? entries[0][0] : null);
           this.expect("}"); return result;
         }
-        if (!this.eat(",")) break;
+        if (!(comma = this.eat(","))) break;
       }
       this.expect("}"); return this.node(form === "set" ? "Set" : "Dict", start, form === "set" ? {items} : {entries});
     }
