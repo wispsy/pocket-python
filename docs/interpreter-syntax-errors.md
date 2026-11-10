@@ -165,7 +165,7 @@ shared limits and original dynamic frames cover those graphs. The example
 and installed offline console exercise new source, retained-field and cleanup
 Stop/Restart paths, plus the existing reduced-profile boundary.
 
-At LA-81, the fixed generated-syntax corpus contains 4,544 cases: 4,223 supported
+At LA-81, the fixed generated-syntax corpus contains 4,560 cases: 4,239 supported
 semantic/error comparisons and 321 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
@@ -491,7 +491,12 @@ combinations in compound headers. The pinned reference can select a specialized
 message before if. Plain pass/break/continue starts keep their adopted token
 fields; escaped physical lines and compile modes are covered independently.
 
-The current fixed generated-syntax corpus contains 4,544 cases: 4,223 supported
+LA-129 composes both operand diagnostics through modules, nested exec, chaining/notes
+and independent fields/arguments. Cyclic filenames and suspended conversion/cleanup
+survive collection, cancellation/close and shared allocation limits. The example
+and installed offline console cover original frames and Stop/Restart paths.
+
+The current fixed generated-syntax corpus contains 4,560 cases: 4,239 supported
 semantic/error comparisons and 321 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
