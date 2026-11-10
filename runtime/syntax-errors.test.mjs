@@ -57,6 +57,7 @@ for (const [source, mode] of [
   ['from 雪 import 鳥,', 'exec'], ['import 雪 as 鳥.羽', 'exec'],
   ['[雪,鳥 for 羽 in 空]', 'exec'], ['{**雪 for 羽 in 空}', 'exec'],
   ['{雪:鳥,羽}', 'exec'], ['{雪:*鳥}', 'exec'],
+  ['[雪 for 鳥 羽]', 'exec'], ['{雪:鳥 for 羽 in 空 if}', 'exec'],
 ]) test('retained ' + JSON.stringify(source) + ' payloads share allocation limits', async () => {
   const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile(' + JSON.stringify(source) + ',"selected.py",' + JSON.stringify(mode) + ')\n except SyntaxError as e: held.append(e)\n')],
     compileOptions: {languageProfile: corpus.profile}, memoryLimits: {maxBytes: 100000}, options: {maxSteps: 50000, maxWork: 20000000}});
@@ -82,7 +83,9 @@ for (const [id, filename] of [['generated-syntax-original-dynamic-failure', 'syn
   ['generated-compelements-original-dynamic-failure', 'compelements-payload-original.py'],
   ['generated-compunpack-original-dynamic-failure', 'compunpack-payload-original.py'],
   ['generated-dictmissing-original-dynamic-failure', 'dictmissing-payload-original.py'],
-  ['generated-dictstarred-original-dynamic-failure', 'dictstarred-payload-original.py']])
+  ['generated-dictstarred-original-dynamic-failure', 'dictstarred-payload-original.py'],
+  ['generated-compin-original-dynamic-failure', 'compin-payload-original.py'],
+  ['generated-compclause-original-dynamic-failure', 'compclause-payload-original.py']])
 test(id + ' keeps the original dynamic call frames', async () => {
   const item = corpus.cases.find(item => item.id === id);
   const result = await runSourceRequest({modules: [unit(item.source)], compileOptions: {languageProfile: corpus.profile}});

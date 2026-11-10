@@ -65,7 +65,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     ready()
                     for case in corpus['cases']:
                         if (case.get('modules') or
-                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93', 'LA96', 'LA99', 'LA99A', 'LA102', 'LA105'} or
+                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93', 'LA96', 'LA99', 'LA99A', 'LA102', 'LA105', 'LA108'} or
                             containers and case['stage'] not in {'LA-7', 'LA-6A'} or
                             exceptions and case['stage'] not in {'LA13', 'LA16', 'LA19', 'LA22', 'LA25', 'LA28', 'LA31', 'LA34', 'LA37', 'LA40', 'LA43', 'LA46', 'LA49', 'LA52', 'LA55', 'LA58', 'LA61', 'LA62C'}):
                             continue
@@ -127,7 +127,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                         if case['id'] == 'generated-signature-original-dynamic-failure':
                             assert 'fail at signature-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         if case['id'] in {'generated-compelements-original-dynamic-failure', 'generated-compunpack-original-dynamic-failure',
-                                          'generated-dictmissing-original-dynamic-failure', 'generated-dictstarred-original-dynamic-failure'}:
+                                          'generated-dictmissing-original-dynamic-failure', 'generated-dictstarred-original-dynamic-failure',
+                                          'generated-compin-original-dynamic-failure', 'generated-compclause-original-dynamic-failure'}:
                             name = case['id'].split('-')[1]
                             assert f'fail at {name}-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         if case['id'] == 'generated-callgrammar-original-dynamic-failure':
@@ -214,6 +215,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     busy_sources = [busy]
                     if syntax_errors:
                         busy_sources += [
+                            "try: compile('[雪 for 鳥 羽]','comprehension-in.py','exec')\nexcept SyntaxError as e:\n e.args=()\n print('entered')\n while True: e._metadata[2]\n",
+                            "def work():\n try: compile('{雪:鳥 for 羽 in 空 if}','comprehension-clause.py','exec')\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print('entered')\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n",
                             'try: compile("{雪:鳥,羽}","dictionary-missing.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',
                             'def work():\n try: compile("{雪:*鳥}","dictionary-starred.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
                             'try: compile("[雪,鳥 for 羽 in 空]","comprehension-elements.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e._metadata[2]\n',
@@ -392,6 +395,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                   'stop-during-keyword-retention', 'stop-during-interactive-cleanup',
                   'stop-during-mixed-call-retention', 'stop-during-keyword-generator-cleanup',
                   'stop-during-class-grammar-retention', 'stop-during-class-keyword-cleanup',
+                  'stop-during-comprehension-in-retention', 'stop-during-comprehension-clause-cleanup',
                   'reduced-profile-update', 'old-cache-removed', 'core-dynamic-source-boundary']
     return {'schema_version': 1, 'suite': 'interpreter-syntax-errors-offline/1' if syntax_errors else 'interpreter-exceptions-offline/1' if exceptions else 'interpreter-containers-offline/1' if containers else 'interpreter-object-offline/1',
             'installed_distribution_required': require_installed, 'package_origin': str(package),
