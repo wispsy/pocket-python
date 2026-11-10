@@ -348,8 +348,14 @@ Nested comprehension delimiters and operand grouping contribute to the new
 comprehension-element and missing-dictionary-key diagnostics without changing
 the host locations used by valid execution.
 
-The current fixed generated-syntax corpus contains 1,968 cases: 1,854 supported
-semantic/error comparisons and 114 explicit native-field refusals. The ordinary
+LA-106 qualifies missing `in` after adopted comprehension targets in list, set,
+dictionary and generator forms, including call and class-header contexts.
+The diagnostic precedes target validation and selects the next token with
+character offsets and physical source-line newlines. Ungrouped starred targets,
+unadopted operands and prior-compound metadata keep explicit field boundaries.
+
+The current fixed generated-syntax corpus contains 2,055 cases: 1,936 supported
+semantic/error comparisons and 119 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

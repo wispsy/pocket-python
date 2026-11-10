@@ -49,7 +49,8 @@
     "LA103",
     "LA104",
     "LA105",
-    "LA105A"
+    "LA105A",
+    "LA106"
   ],
   "cases": [
     {
@@ -12187,6 +12188,528 @@
       "source": "try: compile('{1:2,(\\n雪+[鳥 for 鳥 in 空]\\n)}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
       "stage": "LA105A",
       "stdout": "':' expected after dictionary key\nselected/雪.py 2 16 2 0\n'雪+[鳥 for 鳥 in 空]' 2 6\nTrue True True\n0 0 '{1:2,(\\n雪+[鳥 for 鳥 in 空]\\n)}'\n"
+    },
+    {
+      "id": "comprehension-in-0-exec",
+      "source": "try: compile('[x for x xs]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'[x for x xs]\\n' 2 6\nTrue True True\n0 0 '[x for x xs]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-0-eval",
+      "source": "try: compile('[x for x xs]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'[x for x xs]' 2 6\nTrue True True\n0 0 '[x for x xs]'\n"
+    },
+    {
+      "id": "comprehension-in-0-single",
+      "source": "try: compile('[x for x xs]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'[x for x xs]' 2 6\nTrue True True\n0 0 '[x for x xs]'\n"
+    },
+    {
+      "id": "comprehension-in-1-exec",
+      "source": "try: compile('{x for x xs}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'{x for x xs}\\n' 2 6\nTrue True True\n0 0 '{x for x xs}\\n'\n"
+    },
+    {
+      "id": "comprehension-in-1-eval",
+      "source": "try: compile('{x for x xs}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'{x for x xs}' 2 6\nTrue True True\n0 0 '{x for x xs}'\n"
+    },
+    {
+      "id": "comprehension-in-1-single",
+      "source": "try: compile('{x for x xs}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'{x for x xs}' 2 6\nTrue True True\n0 0 '{x for x xs}'\n"
+    },
+    {
+      "id": "comprehension-in-2-exec",
+      "source": "try: compile('(x for x xs)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'(x for x xs)\\n' 2 6\nTrue True True\n0 0 '(x for x xs)\\n'\n"
+    },
+    {
+      "id": "comprehension-in-2-eval",
+      "source": "try: compile('(x for x xs)','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'(x for x xs)' 2 6\nTrue True True\n0 0 '(x for x xs)'\n"
+    },
+    {
+      "id": "comprehension-in-2-single",
+      "source": "try: compile('(x for x xs)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'(x for x xs)' 2 6\nTrue True True\n0 0 '(x for x xs)'\n"
+    },
+    {
+      "id": "comprehension-in-3-exec",
+      "source": "try: compile('{x:x for x xs}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 14\n'{x:x for x xs}\\n' 2 6\nTrue True True\n0 0 '{x:x for x xs}\\n'\n"
+    },
+    {
+      "id": "comprehension-in-3-eval",
+      "source": "try: compile('{x:x for x xs}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 14\n'{x:x for x xs}' 2 6\nTrue True True\n0 0 '{x:x for x xs}'\n"
+    },
+    {
+      "id": "comprehension-in-3-single",
+      "source": "try: compile('{x:x for x xs}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 14\n'{x:x for x xs}' 2 6\nTrue True True\n0 0 '{x:x for x xs}'\n"
+    },
+    {
+      "id": "comprehension-in-4-exec",
+      "source": "try: compile('f(x for x xs)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 11 1 13\n'f(x for x xs)\\n' 2 6\nTrue True True\n0 0 'f(x for x xs)\\n'\n"
+    },
+    {
+      "id": "comprehension-in-4-eval",
+      "source": "try: compile('f(x for x xs)','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 11 1 13\n'f(x for x xs)' 2 6\nTrue True True\n0 0 'f(x for x xs)'\n"
+    },
+    {
+      "id": "comprehension-in-4-single",
+      "source": "try: compile('f(x for x xs)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 11 1 13\n'f(x for x xs)' 2 6\nTrue True True\n0 0 'f(x for x xs)'\n"
+    },
+    {
+      "id": "comprehension-in-5-exec",
+      "source": "try: compile('f(a=x for x xs)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 13 1 15\n'f(a=x for x xs)\\n' 2 6\nTrue True True\n0 0 'f(a=x for x xs)\\n'\n"
+    },
+    {
+      "id": "comprehension-in-5-eval",
+      "source": "try: compile('f(a=x for x xs)','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 13 1 15\n'f(a=x for x xs)' 2 6\nTrue True True\n0 0 'f(a=x for x xs)'\n"
+    },
+    {
+      "id": "comprehension-in-5-single",
+      "source": "try: compile('f(a=x for x xs)','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 13 1 15\n'f(a=x for x xs)' 2 6\nTrue True True\n0 0 'f(a=x for x xs)'\n"
+    },
+    {
+      "id": "comprehension-in-6-exec",
+      "source": "try: compile('class C(x for x xs): pass','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 17 1 19\n'class C(x for x xs): pass\\n' 2 6\nTrue True True\n0 0 'class C(x for x xs): pass\\n'\n"
+    },
+    {
+      "id": "comprehension-in-6-eval",
+      "source": "try: compile('class C(x for x xs): pass','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "Future",
+      "stdout": "invalid syntax\nselected/雪.py 1 1 1 6\n'class C(x for x xs): pass' 2 6\nTrue True True\n0 0 'class C(x for x xs): pass'\n"
+    },
+    {
+      "id": "comprehension-in-6-single",
+      "source": "try: compile('class C(x for x xs): pass','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 17 1 19\n'class C(x for x xs): pass' 2 6\nTrue True True\n0 0 'class C(x for x xs): pass'\n"
+    },
+    {
+      "id": "comprehension-in-7-exec",
+      "source": "try: compile('[x for x]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 9 1 10\n'[x for x]\\n' 2 6\nTrue True True\n0 0 '[x for x]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-7-eval",
+      "source": "try: compile('[x for x]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 9 1 10\n'[x for x]' 2 6\nTrue True True\n0 0 '[x for x]'\n"
+    },
+    {
+      "id": "comprehension-in-7-single",
+      "source": "try: compile('[x for x]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 9 1 10\n'[x for x]' 2 6\nTrue True True\n0 0 '[x for x]'\n"
+    },
+    {
+      "id": "comprehension-in-8-exec",
+      "source": "try: compile('[x for x,]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 11\n'[x for x,]\\n' 2 6\nTrue True True\n0 0 '[x for x,]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-8-eval",
+      "source": "try: compile('[x for x,]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 11\n'[x for x,]' 2 6\nTrue True True\n0 0 '[x for x,]'\n"
+    },
+    {
+      "id": "comprehension-in-8-single",
+      "source": "try: compile('[x for x,]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 11\n'[x for x,]' 2 6\nTrue True True\n0 0 '[x for x,]'\n"
+    },
+    {
+      "id": "comprehension-in-9-exec",
+      "source": "try: compile('[x for a,b values]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 18\n'[x for a,b values]\\n' 2 6\nTrue True True\n0 0 '[x for a,b values]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-9-eval",
+      "source": "try: compile('[x for a,b values]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 18\n'[x for a,b values]' 2 6\nTrue True True\n0 0 '[x for a,b values]'\n"
+    },
+    {
+      "id": "comprehension-in-9-single",
+      "source": "try: compile('[x for a,b values]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 18\n'[x for a,b values]' 2 6\nTrue True True\n0 0 '[x for a,b values]'\n"
+    },
+    {
+      "id": "comprehension-in-10-exec",
+      "source": "try: compile('[x for (a,b) values]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 14 1 20\n'[x for (a,b) values]\\n' 2 6\nTrue True True\n0 0 '[x for (a,b) values]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-10-eval",
+      "source": "try: compile('[x for (a,b) values]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 14 1 20\n'[x for (a,b) values]' 2 6\nTrue True True\n0 0 '[x for (a,b) values]'\n"
+    },
+    {
+      "id": "comprehension-in-10-single",
+      "source": "try: compile('[x for (a,b) values]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 14 1 20\n'[x for (a,b) values]' 2 6\nTrue True True\n0 0 '[x for (a,b) values]'\n"
+    },
+    {
+      "id": "comprehension-in-11-exec",
+      "source": "try: compile('[x for [] values]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 11 1 17\n'[x for [] values]\\n' 2 6\nTrue True True\n0 0 '[x for [] values]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-11-eval",
+      "source": "try: compile('[x for [] values]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 11 1 17\n'[x for [] values]' 2 6\nTrue True True\n0 0 '[x for [] values]'\n"
+    },
+    {
+      "id": "comprehension-in-11-single",
+      "source": "try: compile('[x for [] values]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 11 1 17\n'[x for [] values]' 2 6\nTrue True True\n0 0 '[x for [] values]'\n"
+    },
+    {
+      "id": "comprehension-in-12-exec",
+      "source": "try: compile('[x for 1 values]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 16\n'[x for 1 values]\\n' 2 6\nTrue True True\n0 0 '[x for 1 values]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-12-eval",
+      "source": "try: compile('[x for 1 values]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 16\n'[x for 1 values]' 2 6\nTrue True True\n0 0 '[x for 1 values]'\n"
+    },
+    {
+      "id": "comprehension-in-12-single",
+      "source": "try: compile('[x for 1 values]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 16\n'[x for 1 values]' 2 6\nTrue True True\n0 0 '[x for 1 values]'\n"
+    },
+    {
+      "id": "comprehension-in-13-exec",
+      "source": "try: compile('[x for a+b values]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 18\n'[x for a+b values]\\n' 2 6\nTrue True True\n0 0 '[x for a+b values]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-13-eval",
+      "source": "try: compile('[x for a+b values]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 18\n'[x for a+b values]' 2 6\nTrue True True\n0 0 '[x for a+b values]'\n"
+    },
+    {
+      "id": "comprehension-in-13-single",
+      "source": "try: compile('[x for a+b values]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 18\n'[x for a+b values]' 2 6\nTrue True True\n0 0 '[x for a+b values]'\n"
+    },
+    {
+      "id": "comprehension-in-14-exec",
+      "source": "try: compile('[x for a==b values]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 9 1 11\n'[x for a==b values]\\n' 2 6\nTrue True True\n0 0 '[x for a==b values]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-14-eval",
+      "source": "try: compile('[x for a==b values]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 9 1 11\n'[x for a==b values]' 2 6\nTrue True True\n0 0 '[x for a==b values]'\n"
+    },
+    {
+      "id": "comprehension-in-14-single",
+      "source": "try: compile('[x for a==b values]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 9 1 11\n'[x for a==b values]' 2 6\nTrue True True\n0 0 '[x for a==b values]'\n"
+    },
+    {
+      "id": "comprehension-in-15-exec",
+      "source": "try: compile('[x for a if b]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'[x for a if b]\\n' 2 6\nTrue True True\n0 0 '[x for a if b]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-15-eval",
+      "source": "try: compile('[x for a if b]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'[x for a if b]' 2 6\nTrue True True\n0 0 '[x for a if b]'\n"
+    },
+    {
+      "id": "comprehension-in-15-single",
+      "source": "try: compile('[x for a if b]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 12\n'[x for a if b]' 2 6\nTrue True True\n0 0 '[x for a if b]'\n"
+    },
+    {
+      "id": "comprehension-in-16-exec",
+      "source": "try: compile('[x for a not b]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 13\n'[x for a not b]\\n' 2 6\nTrue True True\n0 0 '[x for a not b]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-16-eval",
+      "source": "try: compile('[x for a not b]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 13\n'[x for a not b]' 2 6\nTrue True True\n0 0 '[x for a not b]'\n"
+    },
+    {
+      "id": "comprehension-in-16-single",
+      "source": "try: compile('[x for a not b]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 13\n'[x for a not b]' 2 6\nTrue True True\n0 0 '[x for a not b]'\n"
+    },
+    {
+      "id": "comprehension-in-17-exec",
+      "source": "try: compile('[x for a in b for c values]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 21 1 27\n'[x for a in b for c values]\\n' 2 6\nTrue True True\n0 0 '[x for a in b for c values]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-17-eval",
+      "source": "try: compile('[x for a in b for c values]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 21 1 27\n'[x for a in b for c values]' 2 6\nTrue True True\n0 0 '[x for a in b for c values]'\n"
+    },
+    {
+      "id": "comprehension-in-17-single",
+      "source": "try: compile('[x for a in b for c values]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 21 1 27\n'[x for a in b for c values]' 2 6\nTrue True True\n0 0 '[x for a in b for c values]'\n"
+    },
+    {
+      "id": "comprehension-in-18-exec",
+      "source": "try: compile('[x for a in b if a for c values]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 26 1 32\n'[x for a in b if a for c values]\\n' 2 6\nTrue True True\n0 0 '[x for a in b if a for c values]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-18-eval",
+      "source": "try: compile('[x for a in b if a for c values]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 26 1 32\n'[x for a in b if a for c values]' 2 6\nTrue True True\n0 0 '[x for a in b if a for c values]'\n"
+    },
+    {
+      "id": "comprehension-in-18-single",
+      "source": "try: compile('[x for a in b if a for c values]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 26 1 32\n'[x for a in b if a for c values]' 2 6\nTrue True True\n0 0 '[x for a in b if a for c values]'\n"
+    },
+    {
+      "id": "comprehension-in-19-exec",
+      "source": "try: compile('[雪 for 鳥 羽]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 11\n'[雪 for 鳥 羽]\\n' 2 6\nTrue True True\n0 0 '[雪 for 鳥 羽]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-19-eval",
+      "source": "try: compile('[雪 for 鳥 羽]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 11\n'[雪 for 鳥 羽]' 2 6\nTrue True True\n0 0 '[雪 for 鳥 羽]'\n"
+    },
+    {
+      "id": "comprehension-in-19-single",
+      "source": "try: compile('[雪 for 鳥 羽]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 10 1 11\n'[雪 for 鳥 羽]' 2 6\nTrue True True\n0 0 '[雪 for 鳥 羽]'\n"
+    },
+    {
+      "id": "comprehension-in-20-exec",
+      "source": "try: compile('{雪:鳥 for (羽,空) 海}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 16 1 17\n'{雪:鳥 for (羽,空) 海}\\n' 2 6\nTrue True True\n0 0 '{雪:鳥 for (羽,空) 海}\\n'\n"
+    },
+    {
+      "id": "comprehension-in-20-eval",
+      "source": "try: compile('{雪:鳥 for (羽,空) 海}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 16 1 17\n'{雪:鳥 for (羽,空) 海}' 2 6\nTrue True True\n0 0 '{雪:鳥 for (羽,空) 海}'\n"
+    },
+    {
+      "id": "comprehension-in-20-single",
+      "source": "try: compile('{雪:鳥 for (羽,空) 海}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 16 1 17\n'{雪:鳥 for (羽,空) 海}' 2 6\nTrue True True\n0 0 '{雪:鳥 for (羽,空) 海}'\n"
+    },
+    {
+      "id": "comprehension-in-21-exec",
+      "source": "try: compile('[雪 for (鳥+羽) 海]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 14 1 15\n'[雪 for (鳥+羽) 海]\\n' 2 6\nTrue True True\n0 0 '[雪 for (鳥+羽) 海]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-21-eval",
+      "source": "try: compile('[雪 for (鳥+羽) 海]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 14 1 15\n'[雪 for (鳥+羽) 海]' 2 6\nTrue True True\n0 0 '[雪 for (鳥+羽) 海]'\n"
+    },
+    {
+      "id": "comprehension-in-21-single",
+      "source": "try: compile('[雪 for (鳥+羽) 海]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 14 1 15\n'[雪 for (鳥+羽) 海]' 2 6\nTrue True True\n0 0 '[雪 for (鳥+羽) 海]'\n"
+    },
+    {
+      "id": "comprehension-in-22-exec",
+      "source": "try: compile('[\\n 雪 for 鳥\\n 羽\\n]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 3 2 3 3\n' 羽\\n' 2 6\nTrue True True\n0 0 '[\\n 雪 for 鳥\\n 羽\\n]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-22-eval",
+      "source": "try: compile('[\\n 雪 for 鳥\\n 羽\\n]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 3 2 3 3\n' 羽\\n' 2 6\nTrue True True\n0 0 '[\\n 雪 for 鳥\\n 羽\\n]'\n"
+    },
+    {
+      "id": "comprehension-in-22-single",
+      "source": "try: compile('[\\n 雪 for 鳥\\n 羽\\n]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 3 2 3 3\n' 羽\\n' 2 6\nTrue True True\n0 0 '[\\n 雪 for 鳥\\n 羽\\n]'\n"
+    },
+    {
+      "id": "comprehension-in-23-exec",
+      "source": "try: compile('{\\n 雪:鳥 for 羽\\n 空 # comment\\n}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 3 2 3 3\n' 空 # comment\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥 for 羽\\n 空 # comment\\n}\\n'\n"
+    },
+    {
+      "id": "comprehension-in-23-eval",
+      "source": "try: compile('{\\n 雪:鳥 for 羽\\n 空 # comment\\n}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 3 2 3 3\n' 空 # comment\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥 for 羽\\n 空 # comment\\n}'\n"
+    },
+    {
+      "id": "comprehension-in-23-single",
+      "source": "try: compile('{\\n 雪:鳥 for 羽\\n 空 # comment\\n}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 3 2 3 3\n' 空 # comment\\n' 2 6\nTrue True True\n0 0 '{\\n 雪:鳥 for 羽\\n 空 # comment\\n}'\n"
+    },
+    {
+      "id": "comprehension-in-24-exec",
+      "source": "try: compile('[雪 for 鳥 \\\\\\n 羽]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 2 2 2 3\n' 羽]\\n' 2 6\nTrue True True\n0 0 '[雪 for 鳥 \\\\\\n 羽]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-24-eval",
+      "source": "try: compile('[雪 for 鳥 \\\\\\n 羽]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 2 2 2 3\n' 羽]' 2 6\nTrue True True\n0 0 '[雪 for 鳥 \\\\\\n 羽]'\n"
+    },
+    {
+      "id": "comprehension-in-24-single",
+      "source": "try: compile('[雪 for 鳥 \\\\\\n 羽]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 2 2 2 3\n' 羽]' 2 6\nTrue True True\n0 0 '[雪 for 鳥 \\\\\\n 羽]'\n"
+    },
+    {
+      "id": "comprehension-in-25-exec",
+      "source": "try: compile('[x, y for z values]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 13 1 19\n'[x, y for z values]\\n' 2 6\nTrue True True\n0 0 '[x, y for z values]\\n'\n"
+    },
+    {
+      "id": "comprehension-in-25-eval",
+      "source": "try: compile('[x, y for z values]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 13 1 19\n'[x, y for z values]' 2 6\nTrue True True\n0 0 '[x, y for z values]'\n"
+    },
+    {
+      "id": "comprehension-in-25-single",
+      "source": "try: compile('[x, y for z values]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 13 1 19\n'[x, y for z values]' 2 6\nTrue True True\n0 0 '[x, y for z values]'\n"
+    },
+    {
+      "id": "comprehension-in-26-exec",
+      "source": "try: compile('{**x for y values}','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 18\n'{**x for y values}\\n' 2 6\nTrue True True\n0 0 '{**x for y values}\\n'\n"
+    },
+    {
+      "id": "comprehension-in-26-eval",
+      "source": "try: compile('{**x for y values}','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 18\n'{**x for y values}' 2 6\nTrue True True\n0 0 '{**x for y values}'\n"
+    },
+    {
+      "id": "comprehension-in-26-single",
+      "source": "try: compile('{**x for y values}','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 1 12 1 18\n'{**x for y values}' 2 6\nTrue True True\n0 0 '{**x for y values}'\n"
+    },
+    {
+      "id": "comprehension-in-prior-compound-fields",
+      "source": "try: compile('if True: pass\\n[x for x xs]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stage": "LA106",
+      "stdout": "'in' expected after for-loop variables\nselected/雪.py 2 10 2 12\n'[x for x xs]\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "comprehension-in-boundary-0",
+      "source": "try: compile('[x for *x xs]','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '[x for *x xs]\\n')\n"
+    },
+    {
+      "id": "comprehension-in-boundary-1",
+      "source": "try: compile('[x for a,*b xs]','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '[x for a,*b xs]\\n')\n"
+    },
+    {
+      "id": "comprehension-in-boundary-2",
+      "source": "try: compile('[x for x ...]','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(0, 0, '[x for x ...]\\n')\n"
+    },
+    {
+      "id": "comprehension-in-boundary-3",
+      "source": "try: compile('if True: pass\\n[x for x xs]','boundary.py','exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stage": "Future",
+      "stdout": "(1, 0, 'if True: pass\\n[x for x xs]\\n')\n"
+    },
+    {
+      "id": "comprehension-in-valid",
+      "source": "print(len([x for x in (1,2)]))\nprint({x:x for x in (1,2)}[2])\nprint(next(x for x in (3,)))\n",
+      "stage": "LA106",
+      "stdout": "2\n2\n3\n"
     }
   ]
 }

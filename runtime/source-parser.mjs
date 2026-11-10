@@ -884,7 +884,14 @@ class Parser {
   comprehension(start, form, element, key = null) {
     const clauses = [];
     while (this.eat("for")) {
-      const target = this.expressionList(false, true); this.target(target, false, false, "loop"); this.expect("in");
+      const target = this.expressionList(false, true);
+      if (!this.at("in")) {
+        const targets = target.kind === "Tuple" && !this.grouped.has(target) ? target.items : [target];
+        const qualified = targets.every(value => value.kind !== "Starred");
+        this.fail("Expected 'in' after comprehension variables.", this.peek(), "SYNTAX", undefined,
+          qualified ? this.diagnostic("'in' expected after for-loop variables", this.peek().span) : undefined);
+      }
+      this.target(target, false, false, "loop"); this.expect("in");
       const iterable = this.disjunction(), filters = [];
       while (this.eat("if")) filters.push(this.disjunction());
       clauses.push({target, iterable, filters});
