@@ -32,6 +32,7 @@ class Parser {
     this.nativeRanges = new WeakMap(); this.groupRanges = new WeakMap();
     this.completedCompound = false;
     this.comprehensionClauseFields = true;
+    this.operandFields = true;
     this.controlError = null;
     this.keywordErrors = [];
     this.handlerErrors = [];
@@ -331,8 +332,8 @@ class Parser {
       return this.node("Raise", start, {value, cause});
     }
     if (this.eat("del")) {
-      const targets = [this.expression()];
-      while (this.eat(",")) { if (this.ending()) break; targets.push(this.expression()); }
+      const targets = [this.targetExpression(() => this.expression())];
+      while (this.eat(",")) { if (this.ending()) break; targets.push(this.targetExpression(() => this.expression())); }
       targets.forEach(value => this.target(value, true)); return this.node("Delete", start, {targets});
     }
     if (this.at("import") || this.at("from")) return this.imports();
@@ -648,11 +649,19 @@ class Parser {
     return ["newline", "eof"].includes(this.peek().kind) ||
       ["op", "keyword"].includes(this.peek().kind) && EXPRESSION_BOUNDARIES.has(this.peek().value);
   }
+  requiredOperand() {
+    if (this.expressionBoundary()) this.fail("Expected an expression.", this.peek(), "SYNTAX", undefined,
+      this.operandFields && this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined);
+  }
+  targetExpression(body) {
+    const before = this.operandFields; this.operandFields = false;
+    try { return body(); } finally { this.operandFields = before; }
+  }
   loop() {
     const start = this.take(), kind = start.value === "for" ? "For" : "While";
     let test = null, target = null, iterable = null;
     if (kind === "For") {
-      target = this.expressionList(false, true); this.target(target, false, false, "loop");
+      target = this.targetExpression(() => this.expressionList(false, true)); this.target(target, false, false, "loop");
       if (!this.at("in")) this.fail("Expected 'in' after for-loop variables.", this.peek(), "SYNTAX", undefined,
         ["and", "or", "if"].some(value => this.at(value)) ? undefined : this.tokenDiagnostic("invalid syntax"));
       this.expect("in"); iterable = this.headerOperand(true);
@@ -792,6 +801,7 @@ class Parser {
   }
   negation() {
     if (!this.eat("not")) return this.comparison();
+    this.requiredOperand();
     const start = this.previous, value = this.guard(() => this.negation());
     return this.node("Unary", start, {operator: "not", value}, value);
   }
@@ -831,7 +841,8 @@ class Parser {
   }
   unary() {
     if (this.at("+") || this.at("-") || this.at("~")) {
-      const start = this.take(), value = this.guard(() => this.unary());
+      const start = this.take(); this.requiredOperand();
+      const value = this.guard(() => this.unary());
       return this.node("Unary", start, {operator: {"+": "positive", "-": "negative", "~": "invert"}[start.value], value}, value);
     }
     if (this.typeExpression && (this.at("yield") || this.at("await"))) this.fail("Yield and await cannot occur in type expressions.");
@@ -973,7 +984,7 @@ class Parser {
   comprehensionClauses(start, form, element, key = null) {
     const clauses = [];
     while (this.eat("for")) {
-      const target = this.expressionList(false, true);
+      const target = this.targetExpression(() => this.expressionList(false, true));
       if (!this.at("in")) {
         const targets = target.kind === "Tuple" && !this.grouped.has(target) ? target.items : [target];
         const qualified = targets.every(value => value.kind !== "Starred");
