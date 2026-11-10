@@ -83,7 +83,8 @@
     "LA132",
     "LA133",
     "LA133A",
-    "LA134"
+    "LA134",
+    "LA135"
   ],
   "cases": [
     {
@@ -18727,11 +18728,8 @@
     },
     {
       "id": "header-start-unqualified-2",
-      "stage": "Future",
+      "stage": "LA133",
       "source": "try: compile('for x in *: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
-      "boundary": "The surrounding grammar or malformed operand retains an explicit native-field boundary.",
-      "classification": "explicit-refusal",
-      "owner": "#124",
       "stdout": "selected.py\n"
     },
     {
@@ -32443,6 +32441,138 @@
       "stage": "LA134",
       "source": "def f(**items): return items[\"a\"]\nprint(f(**{\"a\":7}),len({**{\"a\":1},\"b\":2}))\nclass C(**{}): value=8\nprint(C.value)\n",
       "stdout": "7 2\n8\n"
+    },
+    {
+      "id": "generated-iterableoperand-owner-cycle",
+      "stage": "LA135",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('f(*else)',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue Invalid star expression 4 False False\n"
+    },
+    {
+      "id": "generated-iterableoperand-chaining",
+      "stage": "LA135",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('f(*else)',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 4\n"
+    },
+    {
+      "id": "generated-iterableoperand-cleanup",
+      "stage": "LA135",
+      "source": "def work():\n try: compile('f(*else)',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py Invalid star expression False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-iterableoperand-original-dynamic-failure",
+      "stage": "LA135",
+      "source": "exec(compile('def fail():\\n try: compile(\\'f(*else)\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','iterableoperand-payload-original.py',\"exec\"))\n",
+      "error_type": "SyntaxError",
+      "stdout": "dynamic-input.py False 2\n"
+    },
+    {
+      "id": "generated-iterableoperand-nested-exec",
+      "stage": "LA135",
+      "source": "scope={}\nexec('try: compile(\\'f(*else)\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py Invalid star expression 4 False\n"
+    },
+    {
+      "id": "generated-iterableoperand-field-independence",
+      "stage": "LA135",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('f(*else)',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'f(*else)\\n' True True 77 4\n"
+    },
+    {
+      "id": "generated-iterableoperand-module",
+      "stage": "LA135",
+      "source": "import helper\ne=helper.validate('f(*else)')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py Invalid star expression 4 module input\n"
+    },
+    {
+      "id": "generated-iterableoperand-flags-owner-cycle",
+      "stage": "LA135",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('f(*else)',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True Invalid star expression 4\n"
+    },
+    {
+      "id": "generated-mappingoperand-owner-cycle",
+      "stage": "LA135",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('f(**else)',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue invalid syntax 5 False False\n"
+    },
+    {
+      "id": "generated-mappingoperand-chaining",
+      "stage": "LA135",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('f(**else)',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 5\n"
+    },
+    {
+      "id": "generated-mappingoperand-cleanup",
+      "stage": "LA135",
+      "source": "def work():\n try: compile('f(**else)',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py invalid syntax False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-mappingoperand-original-dynamic-failure",
+      "stage": "LA135",
+      "source": "exec(compile('def fail():\\n try: compile(\\'f(**else)\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','mappingoperand-payload-original.py',\"exec\"))\n",
+      "error_type": "SyntaxError",
+      "stdout": "dynamic-input.py False 2\n"
+    },
+    {
+      "id": "generated-mappingoperand-nested-exec",
+      "stage": "LA135",
+      "source": "scope={}\nexec('try: compile(\\'f(**else)\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py invalid syntax 5 False\n"
+    },
+    {
+      "id": "generated-mappingoperand-field-independence",
+      "stage": "LA135",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('f(**else)',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'f(**else)\\n' True True 77 5\n"
+    },
+    {
+      "id": "generated-mappingoperand-module",
+      "stage": "LA135",
+      "source": "import helper\ne=helper.validate('f(**else)')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py invalid syntax 5 module input\n"
+    },
+    {
+      "id": "generated-mappingoperand-flags-owner-cycle",
+      "stage": "LA135",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('f(**else)',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True invalid syntax 5\n"
+    },
+    {
+      "id": "iterable-unpacking-adopted-header-0-exec",
+      "stage": "LA133",
+      "source": "try: compile('for x in *: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'for x in *: pass\\n' 2 6\nTrue True True\n0 0 'for x in *: pass\\n'\n"
+    },
+    {
+      "id": "iterable-unpacking-adopted-header-0-single",
+      "stage": "LA133",
+      "source": "try: compile('for x in *: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'for x in *: pass' 2 6\nTrue True True\n0 0 'for x in *: pass'\n"
     }
   ]
 }

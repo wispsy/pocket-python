@@ -165,9 +165,9 @@ shared limits and original dynamic frames cover those graphs. The example
 and installed offline console exercise new source, retained-field and cleanup
 Stop/Restart paths, plus the existing reduced-profile boundary.
 
-At LA-81, the fixed generated-syntax corpus contains 5,181 cases: 4,774 supported
-semantic/error comparisons and 407 explicit native-field refusals, with no scored
-divergences or untested cases. The separate ordinary exception corpus retains
+The generated-syntax corpus keeps supported semantic/error comparisons,
+explicit native-field refusals, divergences and untested cases separate. Its
+current fixed denominator is recorded below. The ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
 These finite observations do not measure overall Python compatibility. #600/A2,
 #124, #759, groups/except*, traceback objects/mutation, note export, library/package
@@ -506,6 +506,9 @@ fields preserve Unicode, multiline text and physical/implicit newline modes.
 Conditional tests, target contexts, malformed dictionary values and unqualified
 call/comprehension contexts retain their independent field boundaries.
 
+Four older malformed-attribute refusals are adopted with their original field
+assertions preserved and complete native payload comparisons added.
+
 LA-131 qualifies absent subscription indices and required slice operands at
 adopted delimiter and keyword boundaries. Optional start/stop/step components
 and multidimensional indices retain their behavior. Conditional tests, targets,
@@ -528,6 +531,9 @@ the native Invalid star expression message; later display elements use the gener
 message. Top-level exec/single and eval keep distinct token locations. Malformed
 operands, statement starts, targets and invalid surrounding grammar stay bounded.
 
+The older missing for-iterable star case retains its original assertion and gains
+complete exec/single payload comparisons under this slice.
+
 LA-133A retains mixed-display native-field boundaries inside invalid call
 argument groups and malformed iterable operands. Direct set/dictionary displays
 keep their qualified fields; preceding call-order diagnostics remain independent.
@@ -537,8 +543,14 @@ and class headers. Token fields preserve Unicode, multiline text and compile
 modes. Earlier mixed-display/call failures retain priority; statement/conditional
 combinations and unqualified surrounding grammar keep explicit field boundaries.
 
-The current fixed generated-syntax corpus contains 5,181 cases: 4,774 supported
-semantic/error comparisons and 407 explicit native-field refusals. The ordinary
+LA-135 composes both unpacking layouts through modules, nested dynamic source,
+chaining/notes and independent fields/argument snapshots. Cyclic filenames and
+suspended conversion/cleanup survive collection, cancellation/close and shared
+limits. The example and installed offline console retain original frames, fresh
+Stop/Restart behavior and reduced-profile dynamic-compilation boundaries.
+
+The current fixed generated-syntax corpus contains 5,199 cases: 4,793 supported
+semantic/error comparisons and 406 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
