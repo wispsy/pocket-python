@@ -333,8 +333,8 @@ class Parser {
       return this.node("Raise", start, {value, cause});
     }
     if (this.eat("del")) {
-      const targets = [this.targetExpression(() => this.expression())];
-      while (this.eat(",")) { if (this.ending()) break; targets.push(this.targetExpression(() => this.expression())); }
+      const targets = [this.withoutOperandFields(() => this.expression())];
+      while (this.eat(",")) { if (this.ending()) break; targets.push(this.withoutOperandFields(() => this.expression())); }
       targets.forEach(value => this.target(value, true)); return this.node("Delete", start, {targets});
     }
     if (this.at("import") || this.at("from")) return this.imports();
@@ -662,8 +662,8 @@ class Parser {
     const before = this.operandFields; this.operandFields &&= !this.conditionalTest;
     try { this.requiredOperand(); return body(); } finally { this.operandFields = before; }
   }
-  targetExpression(body) {
-    // Loop/deletion grammar can reject a target before its missing operand.
+  withoutOperandFields(body) {
+    // Surrounding grammar can select a diagnostic before the missing operand.
     const before = this.operandFields; this.operandFields = false;
     try { return body(); } finally { this.operandFields = before; }
   }
@@ -671,7 +671,7 @@ class Parser {
     const start = this.take(), kind = start.value === "for" ? "For" : "While";
     let test = null, target = null, iterable = null;
     if (kind === "For") {
-      target = this.targetExpression(() => this.expressionList(false, true)); this.target(target, false, false, "loop");
+      target = this.withoutOperandFields(() => this.expressionList(false, true)); this.target(target, false, false, "loop");
       if (!this.at("in")) this.fail("Expected 'in' after for-loop variables.", this.peek(), "SYNTAX", undefined,
         ["and", "or", "if"].some(value => this.at(value)) ? undefined : this.tokenDiagnostic("invalid syntax"));
       this.expect("in"); iterable = this.headerOperand(true);
@@ -880,11 +880,12 @@ class Parser {
     const args = [], keywords = [], seen = new Map();
     let repeated = null;
     let positionalError = null, followingMapping = false;
+    const parseArgument = body => positionalError ? this.withoutOperandFields(body) : body();
     while (!this.at(")")) {
       const separator = this.previous, argumentCount = args.length;
       let keywordSite = null;
       if (this.eat("**")) {
-        keywords.push({name: null, value: this.expression()});
+        keywords.push({name: null, value: parseArgument(() => this.expression())});
         if (positionalError) followingMapping = true;
       }
       else if (this.eat("*")) {
@@ -895,9 +896,9 @@ class Parser {
             this.diagnostic(positionalError, this.previous.span));
         if (keywords.some(keyword => keyword.name === null) && !positionalError) {
           const start = this.previous;
-          this.expression();
+          parseArgument(() => this.expression());
           let comma = this.eat(",");
-          while (comma && this.eat("*")) { this.expression(); comma = this.eat(","); }
+          while (comma && this.eat("*")) { parseArgument(() => this.expression()); comma = this.eat(","); }
           const end = this.peek();
           const syntax = this.at(")") || comma && this.kind("name") ? this.diagnostic(
             "iterable argument unpacking follows keyword argument unpacking",
@@ -909,12 +910,12 @@ class Parser {
           }
           this.fail("Iterable unpacking follows keyword unpacking.", start, "SYNTAX", undefined, syntax);
         }
-        const start = this.previous; args.push(this.node("StarredArgument", start, {value: this.expression()}));
+        const start = this.previous; args.push(this.node("StarredArgument", start, {value: parseArgument(() => this.expression())}));
       } else
       if (this.kind("name") && this.peek(1).value === "=") {
         const token = this.take(), equal = this.expect("=");
         if (classBases && keywords.length >= 128) this.fail("Class keyword budget exceeded.", this.peek(), "COMPILE_BUDGET");
-        const argument = this.expression();
+        const argument = parseArgument(() => this.expression());
         keywordSite = {span: [token.span[0], token.span[1], equal.span[2], equal.span[3]]};
         if (seen.has(token.value)) {
           const first = seen.get(token.value);
@@ -925,7 +926,7 @@ class Parser {
       } else {
         if (keywords.length) positionalError ??= keywords.some(keyword => keyword.name === null) ?
           "positional argument follows keyword argument unpacking" : "positional argument follows keyword argument";
-        args.push(this.namedExpression());
+        args.push(parseArgument(() => this.namedExpression()));
       }
       if (this.at("for")) {
         if (args.length === argumentCount) {
@@ -1006,7 +1007,7 @@ class Parser {
   comprehensionClauses(start, form, element, key = null) {
     const clauses = [];
     while (this.eat("for")) {
-      const target = this.targetExpression(() => this.expressionList(false, true));
+      const target = this.withoutOperandFields(() => this.expressionList(false, true));
       if (!this.at("in")) {
         const targets = target.kind === "Tuple" && !this.grouped.has(target) ? target.items : [target];
         const qualified = targets.every(value => value.kind !== "Starred");
@@ -1104,7 +1105,7 @@ class Parser {
           form = "dict"; entries.push([null, this.bitwiseOr()]);
         }
         else {
-          const key = this.namedExpression();
+          const key = form === "dict" ? this.withoutOperandFields(() => this.namedExpression()) : this.namedExpression();
           if (this.eat(":")) {
             if (key.kind === "NamedExpression" && !this.grouped.has(key)) this.fail("A dictionary-key assignment expression requires parentheses.", key);
             if (form === "set") this.fail("Mixed set and dictionary display.", this.peek(), "SYNTAX", undefined,
@@ -1114,7 +1115,7 @@ class Parser {
               this.delimitedDiagnostic("expression expected after dictionary key and ':'", colon, "}", true));
             if (this.eat("*")) {
               const starred = this.previous;
-              this.bitwiseOr();
+              this.withoutOperandFields(() => this.bitwiseOr());
               const end = this.peek(), span = [starred.span[0], starred.span[1], end.span[0], end.span[1]];
               this.fail("A dictionary value cannot be starred.", starred, "SYNTAX", undefined,
                 this.at("}") || this.at(",") ? this.delimitedDiagnostic(

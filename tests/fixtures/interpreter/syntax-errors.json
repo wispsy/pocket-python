@@ -75,7 +75,8 @@
     "LA127",
     "LA128",
     "LA128A",
-    "LA129"
+    "LA129",
+    "LA129A"
   ],
   "cases": [
     {
@@ -16661,11 +16662,8 @@
     },
     {
       "id": "conditional-alternative-malformed-operand",
-      "stage": "Future",
+      "stage": "LA129A",
       "source": "try: compile('(x if y else z+)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
-      "boundary": "The surrounding grammar or malformed target remains an explicit native-field boundary.",
-      "classification": "explicit-refusal",
-      "owner": "#124",
       "stdout": "selected.py\n"
     },
     {
@@ -18710,20 +18708,14 @@
     },
     {
       "id": "header-start-unqualified-0",
-      "stage": "Future",
+      "stage": "LA129A",
       "source": "try: compile('if +: pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
-      "boundary": "The surrounding grammar or malformed operand retains an explicit native-field boundary.",
-      "classification": "explicit-refusal",
-      "owner": "#124",
       "stdout": "selected.py\n"
     },
     {
       "id": "header-start-unqualified-1",
-      "stage": "Future",
+      "stage": "LA129A",
       "source": "try: compile('while not : pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
-      "boundary": "The surrounding grammar or malformed operand retains an explicit native-field boundary.",
-      "classification": "explicit-refusal",
-      "owner": "#124",
       "stdout": "selected.py\n"
     },
     {
@@ -19613,11 +19605,8 @@
     },
     {
       "id": "conditional-test-unqualified-2",
-      "stage": "Future",
+      "stage": "LA129A",
       "source": "try: compile('雪 if +: 鳥',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
-      "boundary": "The surrounding grammar or malformed operand retains an explicit native-field boundary.",
-      "classification": "explicit-refusal",
-      "owner": "#124",
       "stdout": "selected.py\n"
     },
     {
@@ -20852,11 +20841,8 @@
     },
     {
       "id": "lambda-body-unqualified-0",
-      "stage": "Future",
+      "stage": "LA129A",
       "source": "try: compile('lambda 雪: +:',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
-      "boundary": "The surrounding grammar or malformed operand retains an explicit native-field boundary.",
-      "classification": "explicit-refusal",
-      "owner": "#124",
       "stdout": "selected.py\n"
     },
     {
@@ -20888,11 +20874,8 @@
     },
     {
       "id": "lambda-body-unqualified-4",
-      "stage": "Future",
+      "stage": "LA129A",
       "source": "try: compile('lambda 雪: not :',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
-      "boundary": "The surrounding grammar or malformed operand retains an explicit native-field boundary.",
-      "classification": "explicit-refusal",
-      "owner": "#124",
       "stdout": "selected.py\n"
     },
     {
@@ -28427,6 +28410,78 @@
       "stage": "LA129",
       "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('雪 is not else',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
       "stdout": "entered\n7 True invalid syntax 10\n"
+    },
+    {
+      "id": "operand-priority-fields-0-exec",
+      "stage": "Future",
+      "source": "try: compile('f(a=1,2+)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "positional argument follows keyword argument\nselected/雪.py 1 9 1 10\n'f(a=1,2+)\\n' 2 6\nTrue True True\n0 0 'f(a=1,2+)\\n'\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Call-order and malformed dictionary diagnostics retain priority over missing operands."
+    },
+    {
+      "id": "operand-priority-fields-1-exec",
+      "stage": "Future",
+      "source": "try: compile('class C(a=1,2+): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "positional argument follows keyword argument\nselected/雪.py 1 15 1 16\n'class C(a=1,2+): pass\\n' 2 6\nTrue True True\n0 0 'class C(a=1,2+): pass\\n'\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Call-order and malformed dictionary diagnostics retain priority over missing operands."
+    },
+    {
+      "id": "operand-priority-fields-2-exec",
+      "stage": "Future",
+      "source": "try: compile('{1:2,3+}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 6 1 0\n'{1:2,3+}\\n' 2 6\nTrue True True\n0 0 '{1:2,3+}\\n'\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Call-order and malformed dictionary diagnostics retain priority over missing operands."
+    },
+    {
+      "id": "operand-priority-fields-3-exec",
+      "stage": "Future",
+      "source": "try: compile('{1:*x+}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use a starred expression in a dictionary value\nselected/雪.py 1 4 1 7\n'{1:*x+}\\n' 2 6\nTrue True True\n0 0 '{1:*x+}\\n'\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Call-order and malformed dictionary diagnostics retain priority over missing operands."
+    },
+    {
+      "id": "operand-adopted-fields-4-exec",
+      "stage": "LA129A",
+      "source": "try: compile('(x if y else z+)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'(x if y else z+)\\n' 2 6\nTrue True True\n0 0 '(x if y else z+)\\n'\n"
+    },
+    {
+      "id": "operand-adopted-fields-5-exec",
+      "stage": "LA129A",
+      "source": "try: compile('if +: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'if +: pass\\n' 2 6\nTrue True True\n0 0 'if +: pass\\n'\n"
+    },
+    {
+      "id": "operand-adopted-fields-6-exec",
+      "stage": "LA129A",
+      "source": "try: compile('while not : pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'while not : pass\\n' 2 6\nTrue True True\n0 0 'while not : pass\\n'\n"
+    },
+    {
+      "id": "operand-adopted-fields-7-exec",
+      "stage": "LA129A",
+      "source": "try: compile('雪 if +: 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'雪 if +: 鳥\\n' 2 6\nTrue True True\n0 0 '雪 if +: 鳥\\n'\n"
+    },
+    {
+      "id": "operand-adopted-fields-8-exec",
+      "stage": "LA129A",
+      "source": "try: compile('lambda 雪: +:',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'lambda 雪: +:\\n' 2 6\nTrue True True\n0 0 'lambda 雪: +:\\n'\n"
+    },
+    {
+      "id": "operand-adopted-fields-9-exec",
+      "stage": "LA129A",
+      "source": "try: compile('lambda 雪: not :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 15 1 16\n'lambda 雪: not :\\n' 2 6\nTrue True True\n0 0 'lambda 雪: not :\\n'\n"
     }
   ]
 }
