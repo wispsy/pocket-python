@@ -826,12 +826,12 @@ class Parser {
       if (this.at("for")) {
         if (args.length === argumentCount) {
           const token = this.peek(), element = keywords.at(-1).value;
-          this.argumentComprehension(element, false);
+          this.comprehension(element, "generator", element, null, false);
           const syntax = this.at(")") || this.at(",") ? this.delimitedDiagnostic(keywordSite ?
             "invalid syntax. Maybe you meant '==' or ':=' instead of '='?" : "invalid syntax", keywordSite ?? token, ")", true) : undefined;
           this.fail("A generator clause follows a keyword argument.", token, "SYNTAX", undefined, syntax);
         }
-        const token = this.peek(), element = args.at(-1), generator = this.argumentComprehension(element, !classBases);
+        const token = this.peek(), element = args.at(-1), generator = this.comprehension(element, "generator", element, null, !classBases);
         if (classBases && args.length === 1 && !keywords.length &&
             (this.at(")") || element.kind === "StarredArgument" && this.at(",")))
           this.fail("A class generator base requires parentheses.", token, "SYNTAX", undefined,
@@ -882,10 +882,10 @@ class Parser {
     const step = this.eat(":") ? [",", "]"].some(value => this.at(value)) ? null : this.expression() : null;
     return this.node("Slice", start, {start: index, stop, step});
   }
-  argumentComprehension(element, qualified) {
+  comprehension(start, form, element, key = null, clauseFields = true) {
     const before = this.comprehensionClauseFields;
-    this.comprehensionClauseFields = before && qualified;
-    try { return this.comprehension(element, "generator", element); }
+    this.comprehensionClauseFields = before && clauseFields && !["Starred", "StarredArgument"].includes(element.kind);
+    try { return this.comprehensionClauses(start, form, element, key); }
     finally { this.comprehensionClauseFields = before; }
   }
   comprehensionOperand() {
@@ -899,7 +899,7 @@ class Parser {
       this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
     return this.expect(end);
   }
-  comprehension(start, form, element, key = null) {
+  comprehensionClauses(start, form, element, key = null) {
     const clauses = [];
     while (this.eat("for")) {
       const target = this.expressionList(false, true);
@@ -925,7 +925,7 @@ class Parser {
   comprehensionElements(start, form, items, comma, end) {
     const first = items[0], last = items.length === 1 ? comma : items.at(-1);
     const begin = this.nativeRanges.get(first) ?? first.span, finish = this.nativeRanges.get(last) ?? last.span;
-    this.comprehension(start, form, first.kind === "Starred" ? first.value : first);
+    this.comprehension(start, form, first.kind === "Starred" ? first.value : first, null, false);
     const span = [begin[0], begin[1], finish[2], finish[3]];
     const syntax = this.at(end) ? this.delimitedDiagnostic(
       "did you forget parentheses around the comprehension target?", {span}, end, true) : undefined;
@@ -1026,7 +1026,7 @@ class Parser {
         if (this.at("for")) {
           if (form === "set" && items.length !== 1) this.comprehensionElements(start, "set", items, comma, "}");
           if (entries.length === 1 && entries[0][0] === null) {
-            this.comprehension(start, "dict", entries[0][1]);
+            this.comprehension(start, "dict", entries[0][1], null, false);
             this.fail("A dictionary comprehension cannot unpack its element.", unpacking, "SYNTAX", undefined,
               this.at("}") ? this.delimitedDiagnostic("dict unpacking cannot be used in dict comprehension", unpacking, "}", true) : undefined);
           }

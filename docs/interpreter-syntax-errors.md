@@ -365,8 +365,13 @@ and independent fields/arguments. Cyclic filename owners and suspended flags or
 cleanup survive parked collection, cancellation/close and shared limits. The
 example and installed offline console retain original frames and Stop/Restart.
 
-The current fixed generated-syntax corpus contains 2,186 cases: 2,059 supported
-semantic/error comparisons and 127 explicit native-field refusals. The ordinary
+LA-108A preserves incomplete-clause field boundaries inside already invalid
+multiple-element, starred and dictionary-unpacking comprehensions. Nested clause
+failures share their surrounding diagnostic context, retaining the pinned
+parser priority instead of exposing a later operand location.
+
+The current fixed generated-syntax corpus contains 2,186 cases: 2,035 supported
+semantic/error comparisons and 151 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

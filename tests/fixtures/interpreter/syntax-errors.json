@@ -9439,19 +9439,19 @@
     },
     {
       "id": "comprehension-elements-boundary-0",
-      "stage": "LA107",
+      "stage": "Future",
       "source": "try: compile('[x,y for x in ]',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e.msg)\n",
       "stdout": "invalid syntax\n"
     },
     {
       "id": "comprehension-elements-boundary-1",
-      "stage": "LA107",
+      "stage": "Future",
       "source": "try: compile('{x, for x in }',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e.msg)\n",
       "stdout": "invalid syntax\n"
     },
     {
       "id": "comprehension-elements-boundary-2",
-      "stage": "LA107",
+      "stage": "Future",
       "source": "try: compile('[x,y for x in z if ]',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e.msg)\n",
       "stdout": "did you forget parentheses around the comprehension target?\n"
     },
@@ -10015,19 +10015,19 @@
     },
     {
       "id": "comprehension-unpacking-boundary-0",
-      "stage": "LA107",
+      "stage": "Future",
       "source": "try: compile('[*x for x in ]',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e.msg)\n",
       "stdout": "invalid syntax\n"
     },
     {
       "id": "comprehension-unpacking-boundary-1",
-      "stage": "LA107",
+      "stage": "Future",
       "source": "try: compile('{**x for x in }',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e.msg)\n",
       "stdout": "invalid syntax\n"
     },
     {
       "id": "comprehension-unpacking-boundary-2",
-      "stage": "LA107",
+      "stage": "Future",
       "source": "try: compile('(*x for x in z if )',\"boundary.py\",'exec')\nexcept SyntaxError as e: print(e.msg)\n",
       "stdout": "iterable unpacking cannot be used in comprehension\n"
     },
@@ -13418,109 +13418,109 @@
     {
       "id": "comprehension-clause-priority-0-exec",
       "source": "try: compile('[x,y for x in ]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 6 1 9\n'[x,y for x in ]\\n' 2 6\nTrue True True\n0 0 '[x,y for x in ]\\n'\n"
     },
     {
       "id": "comprehension-clause-priority-0-eval",
       "source": "try: compile('[x,y for x in ]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 6 1 9\n'[x,y for x in ]' 2 6\nTrue True True\n0 0 '[x,y for x in ]'\n"
     },
     {
       "id": "comprehension-clause-priority-0-single",
       "source": "try: compile('[x,y for x in ]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 6 1 9\n'[x,y for x in ]' 2 6\nTrue True True\n0 0 '[x,y for x in ]'\n"
     },
     {
       "id": "comprehension-clause-priority-1-exec",
       "source": "try: compile('{x, for x in }','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 5 1 8\n'{x, for x in }\\n' 2 6\nTrue True True\n0 0 '{x, for x in }\\n'\n"
     },
     {
       "id": "comprehension-clause-priority-1-eval",
       "source": "try: compile('{x, for x in }','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 5 1 8\n'{x, for x in }' 2 6\nTrue True True\n0 0 '{x, for x in }'\n"
     },
     {
       "id": "comprehension-clause-priority-1-single",
       "source": "try: compile('{x, for x in }','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 5 1 8\n'{x, for x in }' 2 6\nTrue True True\n0 0 '{x, for x in }'\n"
     },
     {
       "id": "comprehension-clause-priority-2-exec",
       "source": "try: compile('[x,y for x in z if ]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 5\n'[x,y for x in z if ]\\n' 2 6\nTrue True True\n0 0 '[x,y for x in z if ]\\n'\n"
     },
     {
       "id": "comprehension-clause-priority-2-eval",
       "source": "try: compile('[x,y for x in z if ]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 5\n'[x,y for x in z if ]' 2 6\nTrue True True\n0 0 '[x,y for x in z if ]'\n"
     },
     {
       "id": "comprehension-clause-priority-2-single",
       "source": "try: compile('[x,y for x in z if ]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 5\n'[x,y for x in z if ]' 2 6\nTrue True True\n0 0 '[x,y for x in z if ]'\n"
     },
     {
       "id": "comprehension-clause-priority-3-exec",
       "source": "try: compile('[*x for x in ]','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 5 1 8\n'[*x for x in ]\\n' 2 6\nTrue True True\n0 0 '[*x for x in ]\\n'\n"
     },
     {
       "id": "comprehension-clause-priority-3-eval",
       "source": "try: compile('[*x for x in ]','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 5 1 8\n'[*x for x in ]' 2 6\nTrue True True\n0 0 '[*x for x in ]'\n"
     },
     {
       "id": "comprehension-clause-priority-3-single",
       "source": "try: compile('[*x for x in ]','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 5 1 8\n'[*x for x in ]' 2 6\nTrue True True\n0 0 '[*x for x in ]'\n"
     },
     {
       "id": "comprehension-clause-priority-4-exec",
       "source": "try: compile('{**x for x in }','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 6 1 9\n'{**x for x in }\\n' 2 6\nTrue True True\n0 0 '{**x for x in }\\n'\n"
     },
     {
       "id": "comprehension-clause-priority-4-eval",
       "source": "try: compile('{**x for x in }','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 6 1 9\n'{**x for x in }' 2 6\nTrue True True\n0 0 '{**x for x in }'\n"
     },
     {
       "id": "comprehension-clause-priority-4-single",
       "source": "try: compile('{**x for x in }','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "invalid syntax\nselected/雪.py 1 6 1 9\n'{**x for x in }' 2 6\nTrue True True\n0 0 '{**x for x in }'\n"
     },
     {
       "id": "comprehension-clause-priority-5-exec",
       "source": "try: compile('(*x for x in z if )','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*x for x in z if )\\n' 2 6\nTrue True True\n0 0 '(*x for x in z if )\\n'\n"
     },
     {
       "id": "comprehension-clause-priority-5-eval",
       "source": "try: compile('(*x for x in z if )','selected/雪.py','eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*x for x in z if )' 2 6\nTrue True True\n0 0 '(*x for x in z if )'\n"
     },
     {
       "id": "comprehension-clause-priority-5-single",
       "source": "try: compile('(*x for x in z if )','selected/雪.py','single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
-      "stage": "LA108",
+      "stage": "Future",
       "stdout": "iterable unpacking cannot be used in comprehension\nselected/雪.py 1 2 1 4\n'(*x for x in z if )' 2 6\nTrue True True\n0 0 '(*x for x in z if )'\n"
     }
   ]
