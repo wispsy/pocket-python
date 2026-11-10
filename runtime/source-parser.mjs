@@ -613,11 +613,16 @@ class Parser {
     return value;
   }
   branch(keyword = "if") {
-    const start = this.expect(keyword), test = this.namedExpression(), body = this.suite(start);
+    const start = this.expect(keyword), test = this.headerOperand(), body = this.suite(start);
     let otherwise = [];
     if (this.at("elif")) otherwise = [this.guard(() => this.branch("elif"))];
     else if (this.eat("else")) otherwise = this.suite(this.previous);
     return this.node("If", start, {test, body, otherwise}, otherwise.at(-1) || body.at(-1));
+  }
+  headerOperand(sequence = false) {
+    if (this.at(":")) this.fail("Expected a compound-header expression.", this.peek(), "SYNTAX", undefined,
+      this.diagnostic("invalid syntax", this.peek().span));
+    return sequence ? this.expressionList() : this.namedExpression();
   }
   loop() {
     const start = this.take(), kind = start.value === "for" ? "For" : "While";
@@ -626,8 +631,8 @@ class Parser {
       target = this.expressionList(false, true); this.target(target, false, false, "loop");
       if (!this.at("in")) this.fail("Expected 'in' after for-loop variables.", this.peek(), "SYNTAX", undefined,
         this.tokenDiagnostic("invalid syntax"));
-      this.expect("in"); iterable = this.expressionList();
-    } else test = this.namedExpression();
+      this.expect("in"); iterable = this.headerOperand(true);
+    } else test = this.headerOperand();
     this.loopDepth++; let body;
     try { body = this.suite(start); } finally { this.loopDepth--; }
     const otherwise = this.eat("else") ? this.suite(this.previous) : [];
