@@ -1146,10 +1146,17 @@ class Parser {
           } else {
             if (form === "dict") {
               const range = this.nativeRanges.get(key) ?? key.span;
-              const span = [range[2], range[3], range[2], range[3]];
+              const span = [range[0], range[3], range[2], range[3]];
               const syntax = key.kind === "NamedExpression" && !this.grouped.has(key) ? undefined :
                 this.delimitedDiagnostic("':' expected after dictionary key", {span}, "}", true);
-              if (syntax) { syntax.offset--; syntax.end_offset = 0; }
+              if (syntax) {
+                syntax.offset--;
+                if (range[0] !== range[2]) {
+                  const bytes = new TextEncoder().encode(syntax.text + "\0");
+                  syntax.offset = Array.from(new TextDecoder().decode(bytes.subarray(0, range[3] - 1))).length;
+                }
+                syntax.end_offset = 0;
+              }
               this.fail("A dictionary element requires a value.", key, "SYNTAX", undefined, syntax);
             }
             form = "set"; items.push(key);
