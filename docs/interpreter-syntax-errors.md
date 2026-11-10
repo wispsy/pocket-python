@@ -55,7 +55,7 @@ fresh source and original dynamic frames, stops a retained-payload loop and
 generator cleanup, restarts with fresh state and applies a reduced-profile
 update that retains the core dynamic-compilation boundary.
 
-Primary references: the pinned [diagnostic payload](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen_errors.c), [parser metadata](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen.c) and [statement registration](https://github.com/python/cpython/blob/v3.14.7/Parser/action_helpers.c).
+Primary references: the pinned [grammar](https://github.com/python/cpython/blob/v3.14.7/Grammar/python.gram), [diagnostic payload](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen_errors.c), [parser metadata](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen.c) and [statement registration](https://github.com/python/cpython/blob/v3.14.7/Parser/action_helpers.c).
 
 LA-67 adds qualified unexpected indentation, missing suites for adopted statement headers, inconsistent tabs/spaces and unmatched dedentation. Native IndentationError/TabError ancestry, descriptors, args independence and EOF/text/end-position differences in exec and single modes have source comparisons. Indentation repairs share the lexical validation gate, preserving earlier-error and unsupported-repair boundaries. Prior compound-statement metadata keeps its independent LA-66A boundary.
 
@@ -343,7 +343,12 @@ and notes. Native fields and argument snapshots survive cyclic owners,
 suspended flags/cleanup, parked collection and cancellation/close. The example
 and offline console preserve original dynamic frames and Stop/Restart behavior.
 
-The current fixed generated-syntax corpus contains 1,851 cases: 1,737 supported
+LA-105A retains native expression ranges independently of execution spans.
+Nested comprehension delimiters and operand grouping contribute to the new
+comprehension-element and missing-dictionary-key diagnostics without changing
+the host locations used by valid execution.
+
+The current fixed generated-syntax corpus contains 1,968 cases: 1,854 supported
 semantic/error comparisons and 114 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;

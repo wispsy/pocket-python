@@ -27,6 +27,7 @@ class Parser {
     this.previous = this.tokens[0]; this.work = this.lexed.stats.work; this.nodes = 0; this.depth = 0;
     this.functionDepth = 0; this.loopDepth = 0; this.heights = new WeakMap();
     this.refusal = null; this.typeExpression = false; this.grouped = new WeakSet();
+    this.nativeRanges = new WeakMap(); this.groupRanges = new WeakMap();
     this.completedCompound = false;
     this.controlError = null;
     this.keywordErrors = [];
@@ -70,7 +71,15 @@ class Parser {
     Object.values(fields).forEach(scan);
     if (height > this.maxDepth) this.fail("Source tree depth budget exceeded.", start, "COMPILE_BUDGET");
     const result = {kind, span: [start.span[0], start.span[1], end.span[2], end.span[3]], ...fields};
+    const first = this.groupRanges.get(start) ?? this.nativeRanges.get(start) ?? start.span;
+    const last = this.groupRanges.get(end) ?? this.nativeRanges.get(end) ?? end.span;
+    this.nativeRanges.set(result, [first[0], first[1], last[2], last[3]]);
     this.heights.set(result, height); return result;
+  }
+  closeComprehension(value) {
+    const span = this.nativeRanges.get(value);
+    this.nativeRanges.set(value, [span[0], span[1], this.previous.span[2], this.previous.span[3]]);
+    return value;
   }
   peek(ahead = 0) { return this.tokens[Math.min(this.index + ahead, this.tokens.length - 1)]; }
   at(value) { const t = this.peek(); return ["op", "keyword"].includes(t.kind) && t.value === value; }
@@ -890,8 +899,9 @@ class Parser {
   }
   comprehensionElements(start, form, items, comma, end) {
     const first = items[0], last = items.length === 1 ? comma : items.at(-1);
+    const begin = this.nativeRanges.get(first) ?? first.span, finish = this.nativeRanges.get(last) ?? last.span;
     this.comprehension(start, form, first.kind === "Starred" ? first.value : first);
-    const span = [first.span[0], first.span[1], last.span[2], last.span[3]];
+    const span = [begin[0], begin[1], finish[2], finish[3]];
     const syntax = this.at(end) ? this.delimitedDiagnostic(
       "did you forget parentheses around the comprehension target?", {span}, end, true) : undefined;
     if (syntax && span[0] !== span[2]) {
@@ -929,6 +939,8 @@ class Parser {
       }
       this.expect(")");
       if (value.kind === "Tuple" && !this.grouped.has(value)) value = this.node("Tuple", start, {items: value.items});
+      if (value.kind === "Comprehension" && value.form === "generator" && !this.grouped.has(value)) this.closeComprehension(value);
+      this.groupRanges.set(value, [start.span[0], start.span[1], this.previous.span[2], this.previous.span[3]]);
       this.grouped.add(value); return value;
     }
     if (this.eat("[")) {
@@ -938,7 +950,7 @@ class Parser {
         items.push(this.starredExpression(true));
         if (this.at("for")) {
           if (items.length !== 1) this.comprehensionElements(start, "list", items, comma, "]");
-          const result = this.comprehension(start, "list", items[0]); this.expect("]"); return result;
+          const result = this.comprehension(start, "list", items[0]); this.expect("]"); return this.closeComprehension(result);
         }
         if (!(comma = this.eat(","))) break;
       }
@@ -975,8 +987,8 @@ class Parser {
             form = "dict"; const value = this.expression(); entries.push([key, value]);
           } else {
             if (form === "dict") {
-              const last = key.kind === "Comprehension" ? this.previous : key;
-              const span = [last.span[2], last.span[3], last.span[2], last.span[3]];
+              const range = this.nativeRanges.get(key) ?? key.span;
+              const span = [range[2], range[3], range[2], range[3]];
               const syntax = key.kind === "NamedExpression" && !this.grouped.has(key) ? undefined :
                 this.delimitedDiagnostic("':' expected after dictionary key", {span}, "}", true);
               if (syntax) { syntax.offset--; syntax.end_offset = 0; }
@@ -994,7 +1006,7 @@ class Parser {
           }
           if (items.length + entries.length !== 1 || entries[0]?.[0] === null) this.fail("A comprehension requires one element or pair.");
           const result = this.comprehension(start, form, form === "set" ? items[0] : entries[0][1], form === "dict" ? entries[0][0] : null);
-          this.expect("}"); return result;
+          this.expect("}"); return this.closeComprehension(result);
         }
         if (!(comma = this.eat(","))) break;
       }

@@ -48,7 +48,8 @@
     "LA102",
     "LA103",
     "LA104",
-    "LA105"
+    "LA105",
+    "LA105A"
   ],
   "cases": [
     {
@@ -11484,6 +11485,708 @@
       "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('{雪:*鳥}',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
       "stage": "LA105",
       "stdout": "entered\n7 True cannot use a starred expression in a dictionary value 4\n"
+    },
+    {
+      "id": "nested-expression-range-0-exec",
+      "source": "try: compile('[羽,[雪 for 雪 in 鳥] for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'[羽,[雪 for 雪 in 鳥] for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,[雪 for 雪 in 鳥] for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-0-eval",
+      "source": "try: compile('[羽,[雪 for 雪 in 鳥] for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'[羽,[雪 for 雪 in 鳥] for x in y]' 2 6\nTrue True True\n0 0 '[羽,[雪 for 雪 in 鳥] for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-0-single",
+      "source": "try: compile('[羽,[雪 for 雪 in 鳥] for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'[羽,[雪 for 雪 in 鳥] for x in y]' 2 6\nTrue True True\n0 0 '[羽,[雪 for 雪 in 鳥] for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-1-exec",
+      "source": "try: compile('{羽,[雪 for 雪 in 鳥] for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'{羽,[雪 for 雪 in 鳥] for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,[雪 for 雪 in 鳥] for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-1-eval",
+      "source": "try: compile('{羽,[雪 for 雪 in 鳥] for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'{羽,[雪 for 雪 in 鳥] for x in y}' 2 6\nTrue True True\n0 0 '{羽,[雪 for 雪 in 鳥] for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-1-single",
+      "source": "try: compile('{羽,[雪 for 雪 in 鳥] for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'{羽,[雪 for 雪 in 鳥] for x in y}' 2 6\nTrue True True\n0 0 '{羽,[雪 for 雪 in 鳥] for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-2-exec",
+      "source": "try: compile('{1:2,[雪 for 雪 in 鳥]}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 19 1 0\n'{1:2,[雪 for 雪 in 鳥]}\\n' 2 6\nTrue True True\n0 0 '{1:2,[雪 for 雪 in 鳥]}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-2-eval",
+      "source": "try: compile('{1:2,[雪 for 雪 in 鳥]}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 19 1 0\n'{1:2,[雪 for 雪 in 鳥]}' 2 6\nTrue True True\n0 0 '{1:2,[雪 for 雪 in 鳥]}'\n"
+    },
+    {
+      "id": "nested-expression-range-2-single",
+      "source": "try: compile('{1:2,[雪 for 雪 in 鳥]}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 19 1 0\n'{1:2,[雪 for 雪 in 鳥]}' 2 6\nTrue True True\n0 0 '{1:2,[雪 for 雪 in 鳥]}'\n"
+    },
+    {
+      "id": "nested-expression-range-3-exec",
+      "source": "try: compile('[羽,{雪 for 雪 in 鳥} for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'[羽,{雪 for 雪 in 鳥} for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,{雪 for 雪 in 鳥} for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-3-eval",
+      "source": "try: compile('[羽,{雪 for 雪 in 鳥} for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'[羽,{雪 for 雪 in 鳥} for x in y]' 2 6\nTrue True True\n0 0 '[羽,{雪 for 雪 in 鳥} for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-3-single",
+      "source": "try: compile('[羽,{雪 for 雪 in 鳥} for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'[羽,{雪 for 雪 in 鳥} for x in y]' 2 6\nTrue True True\n0 0 '[羽,{雪 for 雪 in 鳥} for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-4-exec",
+      "source": "try: compile('{羽,{雪 for 雪 in 鳥} for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'{羽,{雪 for 雪 in 鳥} for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,{雪 for 雪 in 鳥} for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-4-eval",
+      "source": "try: compile('{羽,{雪 for 雪 in 鳥} for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'{羽,{雪 for 雪 in 鳥} for x in y}' 2 6\nTrue True True\n0 0 '{羽,{雪 for 雪 in 鳥} for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-4-single",
+      "source": "try: compile('{羽,{雪 for 雪 in 鳥} for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'{羽,{雪 for 雪 in 鳥} for x in y}' 2 6\nTrue True True\n0 0 '{羽,{雪 for 雪 in 鳥} for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-5-exec",
+      "source": "try: compile('{1:2,{雪 for 雪 in 鳥}}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 19 1 0\n'{1:2,{雪 for 雪 in 鳥}}\\n' 2 6\nTrue True True\n0 0 '{1:2,{雪 for 雪 in 鳥}}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-5-eval",
+      "source": "try: compile('{1:2,{雪 for 雪 in 鳥}}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 19 1 0\n'{1:2,{雪 for 雪 in 鳥}}' 2 6\nTrue True True\n0 0 '{1:2,{雪 for 雪 in 鳥}}'\n"
+    },
+    {
+      "id": "nested-expression-range-5-single",
+      "source": "try: compile('{1:2,{雪 for 雪 in 鳥}}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 19 1 0\n'{1:2,{雪 for 雪 in 鳥}}' 2 6\nTrue True True\n0 0 '{1:2,{雪 for 雪 in 鳥}}'\n"
+    },
+    {
+      "id": "nested-expression-range-6-exec",
+      "source": "try: compile('[羽,{雪:鳥 for 雪 in 空} for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'[羽,{雪:鳥 for 雪 in 空} for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,{雪:鳥 for 雪 in 空} for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-6-eval",
+      "source": "try: compile('[羽,{雪:鳥 for 雪 in 空} for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'[羽,{雪:鳥 for 雪 in 空} for x in y]' 2 6\nTrue True True\n0 0 '[羽,{雪:鳥 for 雪 in 空} for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-6-single",
+      "source": "try: compile('[羽,{雪:鳥 for 雪 in 空} for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'[羽,{雪:鳥 for 雪 in 空} for x in y]' 2 6\nTrue True True\n0 0 '[羽,{雪:鳥 for 雪 in 空} for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-7-exec",
+      "source": "try: compile('{羽,{雪:鳥 for 雪 in 空} for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'{羽,{雪:鳥 for 雪 in 空} for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,{雪:鳥 for 雪 in 空} for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-7-eval",
+      "source": "try: compile('{羽,{雪:鳥 for 雪 in 空} for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'{羽,{雪:鳥 for 雪 in 空} for x in y}' 2 6\nTrue True True\n0 0 '{羽,{雪:鳥 for 雪 in 空} for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-7-single",
+      "source": "try: compile('{羽,{雪:鳥 for 雪 in 空} for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'{羽,{雪:鳥 for 雪 in 空} for x in y}' 2 6\nTrue True True\n0 0 '{羽,{雪:鳥 for 雪 in 空} for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-8-exec",
+      "source": "try: compile('{1:2,{雪:鳥 for 雪 in 空}}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 21 1 0\n'{1:2,{雪:鳥 for 雪 in 空}}\\n' 2 6\nTrue True True\n0 0 '{1:2,{雪:鳥 for 雪 in 空}}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-8-eval",
+      "source": "try: compile('{1:2,{雪:鳥 for 雪 in 空}}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 21 1 0\n'{1:2,{雪:鳥 for 雪 in 空}}' 2 6\nTrue True True\n0 0 '{1:2,{雪:鳥 for 雪 in 空}}'\n"
+    },
+    {
+      "id": "nested-expression-range-8-single",
+      "source": "try: compile('{1:2,{雪:鳥 for 雪 in 空}}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 21 1 0\n'{1:2,{雪:鳥 for 雪 in 空}}' 2 6\nTrue True True\n0 0 '{1:2,{雪:鳥 for 雪 in 空}}'\n"
+    },
+    {
+      "id": "nested-expression-range-9-exec",
+      "source": "try: compile('[羽,(雪 for 雪 in 鳥) for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'[羽,(雪 for 雪 in 鳥) for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,(雪 for 雪 in 鳥) for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-9-eval",
+      "source": "try: compile('[羽,(雪 for 雪 in 鳥) for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'[羽,(雪 for 雪 in 鳥) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪 for 雪 in 鳥) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-9-single",
+      "source": "try: compile('[羽,(雪 for 雪 in 鳥) for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'[羽,(雪 for 雪 in 鳥) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪 for 雪 in 鳥) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-10-exec",
+      "source": "try: compile('{羽,(雪 for 雪 in 鳥) for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'{羽,(雪 for 雪 in 鳥) for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,(雪 for 雪 in 鳥) for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-10-eval",
+      "source": "try: compile('{羽,(雪 for 雪 in 鳥) for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'{羽,(雪 for 雪 in 鳥) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪 for 雪 in 鳥) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-10-single",
+      "source": "try: compile('{羽,(雪 for 雪 in 鳥) for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 18\n'{羽,(雪 for 雪 in 鳥) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪 for 雪 in 鳥) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-11-exec",
+      "source": "try: compile('{1:2,(雪 for 雪 in 鳥)}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 19 1 0\n'{1:2,(雪 for 雪 in 鳥)}\\n' 2 6\nTrue True True\n0 0 '{1:2,(雪 for 雪 in 鳥)}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-11-eval",
+      "source": "try: compile('{1:2,(雪 for 雪 in 鳥)}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 19 1 0\n'{1:2,(雪 for 雪 in 鳥)}' 2 6\nTrue True True\n0 0 '{1:2,(雪 for 雪 in 鳥)}'\n"
+    },
+    {
+      "id": "nested-expression-range-11-single",
+      "source": "try: compile('{1:2,(雪 for 雪 in 鳥)}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 19 1 0\n'{1:2,(雪 for 雪 in 鳥)}' 2 6\nTrue True True\n0 0 '{1:2,(雪 for 雪 in 鳥)}'\n"
+    },
+    {
+      "id": "nested-expression-range-12-exec",
+      "source": "try: compile('[羽,(([雪 for 雪 in 鳥])) for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'[羽,(([雪 for 雪 in 鳥])) for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,(([雪 for 雪 in 鳥])) for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-12-eval",
+      "source": "try: compile('[羽,(([雪 for 雪 in 鳥])) for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'[羽,(([雪 for 雪 in 鳥])) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(([雪 for 雪 in 鳥])) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-12-single",
+      "source": "try: compile('[羽,(([雪 for 雪 in 鳥])) for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'[羽,(([雪 for 雪 in 鳥])) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(([雪 for 雪 in 鳥])) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-13-exec",
+      "source": "try: compile('{羽,(([雪 for 雪 in 鳥])) for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'{羽,(([雪 for 雪 in 鳥])) for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,(([雪 for 雪 in 鳥])) for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-13-eval",
+      "source": "try: compile('{羽,(([雪 for 雪 in 鳥])) for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'{羽,(([雪 for 雪 in 鳥])) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(([雪 for 雪 in 鳥])) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-13-single",
+      "source": "try: compile('{羽,(([雪 for 雪 in 鳥])) for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'{羽,(([雪 for 雪 in 鳥])) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(([雪 for 雪 in 鳥])) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-14-exec",
+      "source": "try: compile('{1:2,(([雪 for 雪 in 鳥]))}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 21 1 0\n'{1:2,(([雪 for 雪 in 鳥]))}\\n' 2 6\nTrue True True\n0 0 '{1:2,(([雪 for 雪 in 鳥]))}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-14-eval",
+      "source": "try: compile('{1:2,(([雪 for 雪 in 鳥]))}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 21 1 0\n'{1:2,(([雪 for 雪 in 鳥]))}' 2 6\nTrue True True\n0 0 '{1:2,(([雪 for 雪 in 鳥]))}'\n"
+    },
+    {
+      "id": "nested-expression-range-14-single",
+      "source": "try: compile('{1:2,(([雪 for 雪 in 鳥]))}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 21 1 0\n'{1:2,(([雪 for 雪 in 鳥]))}' 2 6\nTrue True True\n0 0 '{1:2,(([雪 for 雪 in 鳥]))}'\n"
+    },
+    {
+      "id": "nested-expression-range-15-exec",
+      "source": "try: compile('[羽,雪+[鳥 for 鳥 in 空] for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'[羽,雪+[鳥 for 鳥 in 空] for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,雪+[鳥 for 鳥 in 空] for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-15-eval",
+      "source": "try: compile('[羽,雪+[鳥 for 鳥 in 空] for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'[羽,雪+[鳥 for 鳥 in 空] for x in y]' 2 6\nTrue True True\n0 0 '[羽,雪+[鳥 for 鳥 in 空] for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-15-single",
+      "source": "try: compile('[羽,雪+[鳥 for 鳥 in 空] for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'[羽,雪+[鳥 for 鳥 in 空] for x in y]' 2 6\nTrue True True\n0 0 '[羽,雪+[鳥 for 鳥 in 空] for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-16-exec",
+      "source": "try: compile('{羽,雪+[鳥 for 鳥 in 空] for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'{羽,雪+[鳥 for 鳥 in 空] for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,雪+[鳥 for 鳥 in 空] for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-16-eval",
+      "source": "try: compile('{羽,雪+[鳥 for 鳥 in 空] for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'{羽,雪+[鳥 for 鳥 in 空] for x in y}' 2 6\nTrue True True\n0 0 '{羽,雪+[鳥 for 鳥 in 空] for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-16-single",
+      "source": "try: compile('{羽,雪+[鳥 for 鳥 in 空] for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 20\n'{羽,雪+[鳥 for 鳥 in 空] for x in y}' 2 6\nTrue True True\n0 0 '{羽,雪+[鳥 for 鳥 in 空] for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-17-exec",
+      "source": "try: compile('{1:2,雪+[鳥 for 鳥 in 空]}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 21 1 0\n'{1:2,雪+[鳥 for 鳥 in 空]}\\n' 2 6\nTrue True True\n0 0 '{1:2,雪+[鳥 for 鳥 in 空]}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-17-eval",
+      "source": "try: compile('{1:2,雪+[鳥 for 鳥 in 空]}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 21 1 0\n'{1:2,雪+[鳥 for 鳥 in 空]}' 2 6\nTrue True True\n0 0 '{1:2,雪+[鳥 for 鳥 in 空]}'\n"
+    },
+    {
+      "id": "nested-expression-range-17-single",
+      "source": "try: compile('{1:2,雪+[鳥 for 鳥 in 空]}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 21 1 0\n'{1:2,雪+[鳥 for 鳥 in 空]}' 2 6\nTrue True True\n0 0 '{1:2,雪+[鳥 for 鳥 in 空]}'\n"
+    },
+    {
+      "id": "nested-expression-range-18-exec",
+      "source": "try: compile('[羽,(雪)+(鳥) for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'[羽,(雪)+(鳥) for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,(雪)+(鳥) for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-18-eval",
+      "source": "try: compile('[羽,(雪)+(鳥) for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'[羽,(雪)+(鳥) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪)+(鳥) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-18-single",
+      "source": "try: compile('[羽,(雪)+(鳥) for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'[羽,(雪)+(鳥) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪)+(鳥) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-19-exec",
+      "source": "try: compile('{羽,(雪)+(鳥) for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'{羽,(雪)+(鳥) for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,(雪)+(鳥) for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-19-eval",
+      "source": "try: compile('{羽,(雪)+(鳥) for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'{羽,(雪)+(鳥) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪)+(鳥) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-19-single",
+      "source": "try: compile('{羽,(雪)+(鳥) for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'{羽,(雪)+(鳥) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪)+(鳥) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-20-exec",
+      "source": "try: compile('{1:2,(雪)+(鳥)}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 12 1 0\n'{1:2,(雪)+(鳥)}\\n' 2 6\nTrue True True\n0 0 '{1:2,(雪)+(鳥)}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-20-eval",
+      "source": "try: compile('{1:2,(雪)+(鳥)}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 12 1 0\n'{1:2,(雪)+(鳥)}' 2 6\nTrue True True\n0 0 '{1:2,(雪)+(鳥)}'\n"
+    },
+    {
+      "id": "nested-expression-range-20-single",
+      "source": "try: compile('{1:2,(雪)+(鳥)}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 12 1 0\n'{1:2,(雪)+(鳥)}' 2 6\nTrue True True\n0 0 '{1:2,(雪)+(鳥)}'\n"
+    },
+    {
+      "id": "nested-expression-range-21-exec",
+      "source": "try: compile('[羽,(雪) and ((鳥)) for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 17\n'[羽,(雪) and ((鳥)) for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,(雪) and ((鳥)) for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-21-eval",
+      "source": "try: compile('[羽,(雪) and ((鳥)) for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 17\n'[羽,(雪) and ((鳥)) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪) and ((鳥)) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-21-single",
+      "source": "try: compile('[羽,(雪) and ((鳥)) for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 17\n'[羽,(雪) and ((鳥)) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪) and ((鳥)) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-22-exec",
+      "source": "try: compile('{羽,(雪) and ((鳥)) for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 17\n'{羽,(雪) and ((鳥)) for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,(雪) and ((鳥)) for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-22-eval",
+      "source": "try: compile('{羽,(雪) and ((鳥)) for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 17\n'{羽,(雪) and ((鳥)) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪) and ((鳥)) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-22-single",
+      "source": "try: compile('{羽,(雪) and ((鳥)) for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 17\n'{羽,(雪) and ((鳥)) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪) and ((鳥)) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-23-exec",
+      "source": "try: compile('{1:2,(雪) and ((鳥))}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 18 1 0\n'{1:2,(雪) and ((鳥))}\\n' 2 6\nTrue True True\n0 0 '{1:2,(雪) and ((鳥))}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-23-eval",
+      "source": "try: compile('{1:2,(雪) and ((鳥))}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 18 1 0\n'{1:2,(雪) and ((鳥))}' 2 6\nTrue True True\n0 0 '{1:2,(雪) and ((鳥))}'\n"
+    },
+    {
+      "id": "nested-expression-range-23-single",
+      "source": "try: compile('{1:2,(雪) and ((鳥))}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 18 1 0\n'{1:2,(雪) and ((鳥))}' 2 6\nTrue True True\n0 0 '{1:2,(雪) and ((鳥))}'\n"
+    },
+    {
+      "id": "nested-expression-range-24-exec",
+      "source": "try: compile('[羽,(雪)<(鳥) for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'[羽,(雪)<(鳥) for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,(雪)<(鳥) for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-24-eval",
+      "source": "try: compile('[羽,(雪)<(鳥) for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'[羽,(雪)<(鳥) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪)<(鳥) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-24-single",
+      "source": "try: compile('[羽,(雪)<(鳥) for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'[羽,(雪)<(鳥) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪)<(鳥) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-25-exec",
+      "source": "try: compile('{羽,(雪)<(鳥) for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'{羽,(雪)<(鳥) for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,(雪)<(鳥) for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-25-eval",
+      "source": "try: compile('{羽,(雪)<(鳥) for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'{羽,(雪)<(鳥) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪)<(鳥) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-25-single",
+      "source": "try: compile('{羽,(雪)<(鳥) for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'{羽,(雪)<(鳥) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪)<(鳥) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-26-exec",
+      "source": "try: compile('{1:2,(雪)<(鳥)}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 12 1 0\n'{1:2,(雪)<(鳥)}\\n' 2 6\nTrue True True\n0 0 '{1:2,(雪)<(鳥)}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-26-eval",
+      "source": "try: compile('{1:2,(雪)<(鳥)}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 12 1 0\n'{1:2,(雪)<(鳥)}' 2 6\nTrue True True\n0 0 '{1:2,(雪)<(鳥)}'\n"
+    },
+    {
+      "id": "nested-expression-range-26-single",
+      "source": "try: compile('{1:2,(雪)<(鳥)}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 12 1 0\n'{1:2,(雪)<(鳥)}' 2 6\nTrue True True\n0 0 '{1:2,(雪)<(鳥)}'\n"
+    },
+    {
+      "id": "nested-expression-range-27-exec",
+      "source": "try: compile('[羽,(雪) if (鳥) else (羽) for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 23\n'[羽,(雪) if (鳥) else (羽) for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,(雪) if (鳥) else (羽) for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-27-eval",
+      "source": "try: compile('[羽,(雪) if (鳥) else (羽) for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 23\n'[羽,(雪) if (鳥) else (羽) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪) if (鳥) else (羽) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-27-single",
+      "source": "try: compile('[羽,(雪) if (鳥) else (羽) for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 23\n'[羽,(雪) if (鳥) else (羽) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪) if (鳥) else (羽) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-28-exec",
+      "source": "try: compile('{羽,(雪) if (鳥) else (羽) for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 23\n'{羽,(雪) if (鳥) else (羽) for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,(雪) if (鳥) else (羽) for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-28-eval",
+      "source": "try: compile('{羽,(雪) if (鳥) else (羽) for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 23\n'{羽,(雪) if (鳥) else (羽) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪) if (鳥) else (羽) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-28-single",
+      "source": "try: compile('{羽,(雪) if (鳥) else (羽) for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 23\n'{羽,(雪) if (鳥) else (羽) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪) if (鳥) else (羽) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-29-exec",
+      "source": "try: compile('{1:2,(雪) if (鳥) else (羽)}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 24 1 0\n'{1:2,(雪) if (鳥) else (羽)}\\n' 2 6\nTrue True True\n0 0 '{1:2,(雪) if (鳥) else (羽)}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-29-eval",
+      "source": "try: compile('{1:2,(雪) if (鳥) else (羽)}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 24 1 0\n'{1:2,(雪) if (鳥) else (羽)}' 2 6\nTrue True True\n0 0 '{1:2,(雪) if (鳥) else (羽)}'\n"
+    },
+    {
+      "id": "nested-expression-range-29-single",
+      "source": "try: compile('{1:2,(雪) if (鳥) else (羽)}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 24 1 0\n'{1:2,(雪) if (鳥) else (羽)}' 2 6\nTrue True True\n0 0 '{1:2,(雪) if (鳥) else (羽)}'\n"
+    },
+    {
+      "id": "nested-expression-range-30-exec",
+      "source": "try: compile('[羽,lambda x:(雪) for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 16\n'[羽,lambda x:(雪) for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,lambda x:(雪) for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-30-eval",
+      "source": "try: compile('[羽,lambda x:(雪) for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 16\n'[羽,lambda x:(雪) for x in y]' 2 6\nTrue True True\n0 0 '[羽,lambda x:(雪) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-30-single",
+      "source": "try: compile('[羽,lambda x:(雪) for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 16\n'[羽,lambda x:(雪) for x in y]' 2 6\nTrue True True\n0 0 '[羽,lambda x:(雪) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-31-exec",
+      "source": "try: compile('{羽,lambda x:(雪) for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 16\n'{羽,lambda x:(雪) for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,lambda x:(雪) for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-31-eval",
+      "source": "try: compile('{羽,lambda x:(雪) for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 16\n'{羽,lambda x:(雪) for x in y}' 2 6\nTrue True True\n0 0 '{羽,lambda x:(雪) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-31-single",
+      "source": "try: compile('{羽,lambda x:(雪) for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 16\n'{羽,lambda x:(雪) for x in y}' 2 6\nTrue True True\n0 0 '{羽,lambda x:(雪) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-32-exec",
+      "source": "try: compile('{1:2,lambda x:(雪)}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 17 1 0\n'{1:2,lambda x:(雪)}\\n' 2 6\nTrue True True\n0 0 '{1:2,lambda x:(雪)}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-32-eval",
+      "source": "try: compile('{1:2,lambda x:(雪)}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 17 1 0\n'{1:2,lambda x:(雪)}' 2 6\nTrue True True\n0 0 '{1:2,lambda x:(雪)}'\n"
+    },
+    {
+      "id": "nested-expression-range-32-single",
+      "source": "try: compile('{1:2,lambda x:(雪)}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 17 1 0\n'{1:2,lambda x:(雪)}' 2 6\nTrue True True\n0 0 '{1:2,lambda x:(雪)}'\n"
+    },
+    {
+      "id": "nested-expression-range-33-exec",
+      "source": "try: compile('[羽,(雪:=(鳥)) for x in y]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'[羽,(雪:=(鳥)) for x in y]\\n' 2 6\nTrue True True\n0 0 '[羽,(雪:=(鳥)) for x in y]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-33-eval",
+      "source": "try: compile('[羽,(雪:=(鳥)) for x in y]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'[羽,(雪:=(鳥)) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪:=(鳥)) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-33-single",
+      "source": "try: compile('[羽,(雪:=(鳥)) for x in y]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'[羽,(雪:=(鳥)) for x in y]' 2 6\nTrue True True\n0 0 '[羽,(雪:=(鳥)) for x in y]'\n"
+    },
+    {
+      "id": "nested-expression-range-34-exec",
+      "source": "try: compile('{羽,(雪:=(鳥)) for x in y}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'{羽,(雪:=(鳥)) for x in y}\\n' 2 6\nTrue True True\n0 0 '{羽,(雪:=(鳥)) for x in y}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-34-eval",
+      "source": "try: compile('{羽,(雪:=(鳥)) for x in y}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'{羽,(雪:=(鳥)) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪:=(鳥)) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-34-single",
+      "source": "try: compile('{羽,(雪:=(鳥)) for x in y}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 1 2 1 11\n'{羽,(雪:=(鳥)) for x in y}' 2 6\nTrue True True\n0 0 '{羽,(雪:=(鳥)) for x in y}'\n"
+    },
+    {
+      "id": "nested-expression-range-35-exec",
+      "source": "try: compile('{1:2,(雪:=(鳥))}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 12 1 0\n'{1:2,(雪:=(鳥))}\\n' 2 6\nTrue True True\n0 0 '{1:2,(雪:=(鳥))}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-35-eval",
+      "source": "try: compile('{1:2,(雪:=(鳥))}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 12 1 0\n'{1:2,(雪:=(鳥))}' 2 6\nTrue True True\n0 0 '{1:2,(雪:=(鳥))}'\n"
+    },
+    {
+      "id": "nested-expression-range-35-single",
+      "source": "try: compile('{1:2,(雪:=(鳥))}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 1 12 1 0\n'{1:2,(雪:=(鳥))}' 2 6\nTrue True True\n0 0 '{1:2,(雪:=(鳥))}'\n"
+    },
+    {
+      "id": "nested-expression-range-36-exec",
+      "source": "try: compile('[\\n羽,\\n[雪 for 雪 in 鳥]\\nfor x in y\\n]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 2 1 3 3\n'羽,' 2 6\nTrue True True\n0 0 '[\\n羽,\\n[雪 for 雪 in 鳥]\\nfor x in y\\n]\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-36-eval",
+      "source": "try: compile('[\\n羽,\\n[雪 for 雪 in 鳥]\\nfor x in y\\n]',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 2 1 3 3\n'羽,' 2 6\nTrue True True\n0 0 '[\\n羽,\\n[雪 for 雪 in 鳥]\\nfor x in y\\n]'\n"
+    },
+    {
+      "id": "nested-expression-range-36-single",
+      "source": "try: compile('[\\n羽,\\n[雪 for 雪 in 鳥]\\nfor x in y\\n]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 2 1 3 3\n'羽,' 2 6\nTrue True True\n0 0 '[\\n羽,\\n[雪 for 雪 in 鳥]\\nfor x in y\\n]'\n"
+    },
+    {
+      "id": "nested-expression-range-37-exec",
+      "source": "try: compile('{\\n羽,\\n{雪:鳥 for 雪 in 空},\\nfor x in y\\n}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 2 1 3 3\n'羽,' 2 6\nTrue True True\n0 0 '{\\n羽,\\n{雪:鳥 for 雪 in 空},\\nfor x in y\\n}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-37-eval",
+      "source": "try: compile('{\\n羽,\\n{雪:鳥 for 雪 in 空},\\nfor x in y\\n}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 2 1 3 3\n'羽,' 2 6\nTrue True True\n0 0 '{\\n羽,\\n{雪:鳥 for 雪 in 空},\\nfor x in y\\n}'\n"
+    },
+    {
+      "id": "nested-expression-range-37-single",
+      "source": "try: compile('{\\n羽,\\n{雪:鳥 for 雪 in 空},\\nfor x in y\\n}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "did you forget parentheses around the comprehension target?\nselected/雪.py 2 1 3 3\n'羽,' 2 6\nTrue True True\n0 0 '{\\n羽,\\n{雪:鳥 for 雪 in 空},\\nfor x in y\\n}'\n"
+    },
+    {
+      "id": "nested-expression-range-38-exec",
+      "source": "try: compile('{1:2,(\\n雪+[鳥 for 鳥 in 空]\\n)}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 2 16 2 0\n'雪+[鳥 for 鳥 in 空]' 2 6\nTrue True True\n0 0 '{1:2,(\\n雪+[鳥 for 鳥 in 空]\\n)}\\n'\n"
+    },
+    {
+      "id": "nested-expression-range-38-eval",
+      "source": "try: compile('{1:2,(\\n雪+[鳥 for 鳥 in 空]\\n)}',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 2 16 2 0\n'雪+[鳥 for 鳥 in 空]' 2 6\nTrue True True\n0 0 '{1:2,(\\n雪+[鳥 for 鳥 in 空]\\n)}'\n"
+    },
+    {
+      "id": "nested-expression-range-38-single",
+      "source": "try: compile('{1:2,(\\n雪+[鳥 for 鳥 in 空]\\n)}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stage": "LA105A",
+      "stdout": "':' expected after dictionary key\nselected/雪.py 2 16 2 0\n'雪+[鳥 for 鳥 in 空]' 2 6\nTrue True True\n0 0 '{1:2,(\\n雪+[鳥 for 鳥 in 空]\\n)}'\n"
     }
   ]
 }
