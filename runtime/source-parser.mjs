@@ -47,6 +47,20 @@ class Parser {
     syntax.metadataQualified = !this.completedCompound;
     return syntax;
   }
+  tokenDiagnostic(message, token = this.peek()) {
+    const syntax = this.diagnostic(message, token.span);
+    if (["newline", "eof"].includes(token.kind)) {
+      const source = this.lexed.source, line = source.split("\n")[token.span[0] - 1] ?? "";
+      const implicit = this.options.mode && this.options.mode !== "exec" && source[token.start] !== "\n";
+      const lineStart = source.lastIndexOf("\n", token.start - 1) + 1;
+      const comment = source.indexOf("#", this.previous.end);
+      syntax.offset = implicit ? 0 : comment >= lineStart && comment < token.start ?
+        Array.from(source.slice(lineStart, comment)).length + 1 : syntax.offset;
+      syntax.end_lineno = syntax.lineno;
+      syntax.end_offset = implicit ? 0 : Array.from(line).length + 2;
+    }
+    return syntax;
+  }
   unsupported(message, token) { this.fail(message, token, "UNSUPPORTED"); }
   defer(message, node) { this.refusal ??= {message, node}; return node; }
   charge() {
@@ -610,6 +624,8 @@ class Parser {
     let test = null, target = null, iterable = null;
     if (kind === "For") {
       target = this.expressionList(false, true); this.target(target, false, false, "loop");
+      if (!this.at("in")) this.fail("Expected 'in' after for-loop variables.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic("invalid syntax"));
       this.expect("in"); iterable = this.expressionList();
     } else test = this.namedExpression();
     this.loopDepth++; let body;
