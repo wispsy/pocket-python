@@ -55,7 +55,7 @@ fresh source and original dynamic frames, stops a retained-payload loop and
 generator cleanup, restarts with fresh state and applies a reduced-profile
 update that retains the core dynamic-compilation boundary.
 
-Primary references: the pinned [diagnostic payload](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen_errors.c), [parser metadata](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen.c) and [statement registration](https://github.com/python/cpython/blob/v3.14.7/Parser/action_helpers.c).
+Primary references: the pinned [grammar](https://github.com/python/cpython/blob/v3.14.7/Grammar/python.gram), [diagnostic payload](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen_errors.c), [parser metadata](https://github.com/python/cpython/blob/v3.14.7/Parser/pegen.c) and [statement registration](https://github.com/python/cpython/blob/v3.14.7/Parser/action_helpers.c).
 
 LA-67 adds qualified unexpected indentation, missing suites for adopted statement headers, inconsistent tabs/spaces and unmatched dedentation. Native IndentationError/TabError ancestry, descriptors, args independence and EOF/text/end-position differences in exec and single modes have source comparisons. Indentation repairs share the lexical validation gate, preserving earlier-error and unsupported-repair boundaries. Prior compound-statement metadata keeps its independent LA-66A boundary.
 
@@ -311,8 +311,45 @@ and skip nonmatching exceptions normally; redundant grouping around an empty
 tuple import alias keeps the innermost tuple's native range. This prevents a
 host failure while constructing a handler diagnostic.
 
-The current fixed generated-syntax corpus contains 1,434 cases: 1,342 supported
-semantic/error comparisons and 92 explicit native-field refusals. The ordinary
+LA-100 qualifies multiple and trailing-comma elements in list/set comprehensions.
+Adopted clauses are parsed before the specialized message is selected. Grouping,
+starred operands, character ranges and multiline first-line conversion follow the
+pinned grammar; malformed clauses and prior-compound metadata retain boundaries.
+
+LA-101 qualifies starred list/set/generator comprehension elements and mapping
+unpacking in dict comprehensions. Iterable errors retain the complete starred
+operand range; dictionary errors select the double-star token. Adopted clauses
+must parse before fields are published. Invalid operands/tails remain bounded.
+
+LA-102 composes comprehension payloads through modules, nested exec, chained
+errors and notes. Independent argument snapshots, cyclic filename owners and
+suspended flags/cleanup retain their fields through parked collection,
+cancellation/close and shared limits. Offline acceptance includes original
+dynamic frames and retained-field/cleanup Stop/Restart paths.
+
+LA-103 qualifies missing colons after subsequent dictionary keys and missing
+expressions after colons. Missing-key locations select the final character of
+the key with a zero native end offset; missing values select the colon token.
+Grouping, multiline/Unicode text and parser modes retain independent cases.
+Malformed/unadopted keys and prior-compound metadata keep their boundaries.
+
+LA-104 qualifies starred dictionary values whose adopted operand reaches a
+comma or closing brace. The range starts at the star and reaches the separator,
+including intervening spaces and physical lines. Failed operands and boolean,
+conditional or comprehension tails retain explicit native-field refusals.
+
+LA-105 composes dictionary payloads through modules, nested exec, chained errors
+and notes. Native fields and argument snapshots survive cyclic owners,
+suspended flags/cleanup, parked collection and cancellation/close. The example
+and offline console preserve original dynamic frames and Stop/Restart behavior.
+
+LA-105A retains native expression ranges independently of execution spans.
+Nested comprehension delimiters and operand grouping contribute to the new
+comprehension-element and missing-dictionary-key diagnostics without changing
+the host locations used by valid execution.
+
+The current fixed generated-syntax corpus contains 1,968 cases: 1,854 supported
+semantic/error comparisons and 114 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
