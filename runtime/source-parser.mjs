@@ -726,7 +726,20 @@ class Parser {
       if (this.at("lambda")) return this.lambda();
       const body = this.disjunction();
       if (!this.eat("if")) return body;
-      const test = this.disjunction(); this.expect("else"); const otherwise = this.expression();
+      const test = this.disjunction();
+      if (!this.at("else")) {
+        const first = this.nativeRanges.get(body) ?? body.span, last = this.nativeRanges.get(test) ?? test.span;
+        const syntax = this.comprehensionClauseFields && !this.at(":") ? this.diagnostic("expected 'else' after 'if' expression",
+          [first[0], first[1], last[2], last[3]]) : undefined;
+        if (syntax && this.peek().span[0] !== first[0]) syntax.text = syntax.text.replace(/\n$/, "");
+        if (syntax && first[0] !== last[2]) {
+          syntax.text = syntax.text.replace(/\n$/, "");
+          const bytes = new TextEncoder().encode(syntax.text + "\0");
+          syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, last[3]))).length;
+        }
+        this.fail("Expected 'else' after 'if' expression.", this.peek(), "SYNTAX", undefined, syntax);
+      }
+      this.expect("else"); const otherwise = this.expression();
       return this.node("Conditional", body, {body, test, otherwise}, otherwise);
     });
   }
