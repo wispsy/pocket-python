@@ -165,8 +165,8 @@ shared limits and original dynamic frames cover those graphs. The example
 and installed offline console exercise new source, retained-field and cleanup
 Stop/Restart paths, plus the existing reduced-profile boundary.
 
-At LA-81, the fixed generated-syntax corpus contains 2,743 cases: 2,525 supported
-semantic/error comparisons and 218 explicit native-field refusals, with no scored
+At LA-81, the fixed generated-syntax corpus contains 4,570 cases: 4,251 supported
+semantic/error comparisons and 319 explicit native-field refusals, with no scored
 divergences or untested cases. The separate ordinary exception corpus retains
 2,443 cases (2,388 supported / 55 refused) and seven host/crash/cache qualifications.
 These finite observations do not measure overall Python compatibility. #600/A2,
@@ -461,8 +461,48 @@ conversion and cleanup survive collection, cancellation/close and shared
 allocation limits. The example and installed offline console cover original
 frames, multiline source text and Stop/Restart paths.
 
-The current fixed generated-syntax corpus contains 3,612 cases: 3,365 supported
-semantic/error comparisons and 247 explicit native-field refusals. The ordinary
+LA-124 qualifies missing operands after logical negation, unary plus/minus and
+invert. Delimiters, reserved keywords, nested expressions, Unicode and compile-mode
+newlines retain native fields. Deletion/loop targets and unqualified surrounding
+comprehensions keep explicit boundaries because target diagnostics can win.
+
+LA-125 qualifies missing right operands after and/or through nested Boolean
+expressions and adopted comprehension filters. Native token fields retain Unicode,
+multiline input, comments and every compile mode. Malformed operands, target
+contexts and unqualified surrounding comprehensions keep separate boundaries.
+
+LA-126 composes both operand diagnostics through modules, nested exec, chaining/notes
+and independent fields/arguments. Cyclic filenames and suspended conversion/cleanup
+survive collection, cancellation/close and shared allocation limits. The example
+and installed offline console cover original frames and Stop/Restart paths.
+
+LA-127 qualifies absent right operands for arithmetic, matrix, power, shift
+and bitwise operators. Native ranges preserve delimiters, Unicode and newlines;
+valid unary continuations retain their precedence. Target diagnostics, malformed
+operands and unqualified surrounding comprehensions keep explicit boundaries.
+
+LA-128 qualifies missing comparison operands, including chained comparisons,
+is/is not and in/not in. Native token ranges, Unicode and multiline/newline modes
+are preserved. Incomplete not-in grammar, invalid target and unqualified
+comprehension contexts retain explicit native-field boundaries.
+
+LA-128A retains explicit native-field boundaries for statement/conditional
+combinations in compound headers. The pinned reference can select a specialized
+message before if. Plain pass/break/continue starts keep their adopted token
+fields; escaped physical lines and compile modes are covered independently.
+
+LA-129 composes both operand diagnostics through modules, nested exec, chaining/notes
+and independent fields/arguments. Cyclic filenames and suspended conversion/cleanup
+survive collection, cancellation/close and shared allocation limits. The example
+and installed offline console cover original frames and Stop/Restart paths.
+
+LA-129A preserves call-order and malformed dictionary diagnostic priority
+when an operand is missing. Four older refusals retain explicit boundaries.
+Six older header, lambda and conditional-alternative cases are now qualified,
+with their original assertions retained and complete native-field checks added.
+
+The current fixed generated-syntax corpus contains 4,570 cases: 4,251 supported
+semantic/error comparisons and 319 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

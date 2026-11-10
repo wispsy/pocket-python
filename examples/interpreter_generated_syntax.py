@@ -25,7 +25,8 @@ for source in ["雪=", "record=[", "value='unfinished", "if True:\nvalue=7",
                "[first for last items]", "{first:last for item in items if}",
                "{first,**last}", "{first:1,last:2 for item in items}",
                "for first items: pass", "for first in : pass", "if : pass",
-               "first if last", "first if last else", "if else: pass", "雪 if else 鳥", "lambda 雪: else", "lambda 雪 鳥: 1"]:
+               "first if last", "first if last else", "if else: pass", "雪 if else 鳥", "lambda 雪: else", "lambda 雪 鳥: 1",
+               "~else", "雪 and else", "雪 + else", "雪 is not else"]:
     error = validate(source, "records/input.py")
     original = error.args
     error.args = ()
