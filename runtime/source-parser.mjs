@@ -29,6 +29,7 @@ class Parser {
     this.refusal = null; this.typeExpression = false; this.grouped = new WeakSet();
     this.nativeRanges = new WeakMap(); this.groupRanges = new WeakMap();
     this.completedCompound = false;
+    this.comprehensionClauseFields = true;
     this.controlError = null;
     this.keywordErrors = [];
     this.handlerErrors = [];
@@ -825,12 +826,12 @@ class Parser {
       if (this.at("for")) {
         if (args.length === argumentCount) {
           const token = this.peek(), element = keywords.at(-1).value;
-          this.comprehension(element, "generator", element);
+          this.comprehension(element, "generator", element, null, false);
           const syntax = this.at(")") || this.at(",") ? this.delimitedDiagnostic(keywordSite ?
             "invalid syntax. Maybe you meant '==' or ':=' instead of '='?" : "invalid syntax", keywordSite ?? token, ")", true) : undefined;
           this.fail("A generator clause follows a keyword argument.", token, "SYNTAX", undefined, syntax);
         }
-        const token = this.peek(), element = args.at(-1), generator = this.comprehension(element, "generator", element);
+        const token = this.peek(), element = args.at(-1), generator = this.comprehension(element, "generator", element, null, !classBases);
         if (classBases && args.length === 1 && !keywords.length &&
             (this.at(")") || element.kind === "StarredArgument" && this.at(",")))
           this.fail("A class generator base requires parentheses.", token, "SYNTAX", undefined,
@@ -881,12 +882,36 @@ class Parser {
     const step = this.eat(":") ? [",", "]"].some(value => this.at(value)) ? null : this.expression() : null;
     return this.node("Slice", start, {start: index, stop, step});
   }
-  comprehension(start, form, element, key = null) {
+  comprehension(start, form, element, key = null, clauseFields = true) {
+    const before = this.comprehensionClauseFields;
+    this.comprehensionClauseFields = before && clauseFields && !["Starred", "StarredArgument"].includes(element.kind);
+    try { return this.comprehensionClauses(start, form, element, key); }
+    finally { this.comprehensionClauseFields = before; }
+  }
+  comprehensionOperand() {
+    if ([",", ")", "]", "}"].some(value => this.at(value)))
+      this.fail("Expected a comprehension expression.", this.peek(), "SYNTAX", undefined,
+        this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
+    return this.disjunction();
+  }
+  comprehensionEnd(end) {
+    if (this.at(",")) this.fail("Expected '" + end + "'.", this.peek(), "SYNTAX", undefined,
+      this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
+    return this.expect(end);
+  }
+  comprehensionClauses(start, form, element, key = null) {
     const clauses = [];
     while (this.eat("for")) {
-      const target = this.expressionList(false, true); this.target(target, false, false, "loop"); this.expect("in");
-      const iterable = this.disjunction(), filters = [];
-      while (this.eat("if")) filters.push(this.disjunction());
+      const target = this.expressionList(false, true);
+      if (!this.at("in")) {
+        const targets = target.kind === "Tuple" && !this.grouped.has(target) ? target.items : [target];
+        const qualified = targets.every(value => value.kind !== "Starred");
+        this.fail("Expected 'in' after comprehension variables.", this.peek(), "SYNTAX", undefined,
+          qualified ? this.diagnostic("'in' expected after for-loop variables", this.peek().span) : undefined);
+      }
+      this.target(target, false, false, "loop"); this.expect("in");
+      const iterable = this.comprehensionOperand(), filters = [];
+      while (this.eat("if")) filters.push(this.comprehensionOperand());
       clauses.push({target, iterable, filters});
     }
     if (this.at("async")) this.unsupported("Async comprehensions require a separate stage.");
@@ -900,7 +925,7 @@ class Parser {
   comprehensionElements(start, form, items, comma, end) {
     const first = items[0], last = items.length === 1 ? comma : items.at(-1);
     const begin = this.nativeRanges.get(first) ?? first.span, finish = this.nativeRanges.get(last) ?? last.span;
-    this.comprehension(start, form, first.kind === "Starred" ? first.value : first);
+    this.comprehension(start, form, first.kind === "Starred" ? first.value : first, null, false);
     const span = [begin[0], begin[1], finish[2], finish[3]];
     const syntax = this.at(end) ? this.delimitedDiagnostic(
       "did you forget parentheses around the comprehension target?", {span}, end, true) : undefined;
@@ -937,7 +962,8 @@ class Parser {
         if (value.kind === "Tuple" && !this.grouped.has(value)) this.fail("A comprehension element cannot be an unparenthesized tuple.", value);
         value = this.comprehension(start, "generator", value);
       }
-      this.expect(")");
+      if (value.kind === "Comprehension" && !this.grouped.has(value)) this.comprehensionEnd(")");
+      else this.expect(")");
       if (value.kind === "Tuple" && !this.grouped.has(value)) value = this.node("Tuple", start, {items: value.items});
       if (value.kind === "Comprehension" && value.form === "generator" && !this.grouped.has(value)) this.closeComprehension(value);
       this.groupRanges.set(value, [start.span[0], start.span[1], this.previous.span[2], this.previous.span[3]]);
@@ -950,7 +976,7 @@ class Parser {
         items.push(this.starredExpression(true));
         if (this.at("for")) {
           if (items.length !== 1) this.comprehensionElements(start, "list", items, comma, "]");
-          const result = this.comprehension(start, "list", items[0]); this.expect("]"); return this.closeComprehension(result);
+          const result = this.comprehension(start, "list", items[0]); this.comprehensionEnd("]"); return this.closeComprehension(result);
         }
         if (!(comma = this.eat(","))) break;
       }
@@ -960,11 +986,16 @@ class Parser {
       const entries = [], items = []; let form = null, comma = null, unpacking = null;
       while (!this.at("}")) {
         if (form === "set" && comma && this.at("for")) this.comprehensionElements(start, "set", items, comma, "}");
+        if (form === "dict" && comma && this.at("for"))
+          this.fail("A dictionary comprehension cannot follow an entry comma.", this.peek(), "SYNTAX", undefined,
+            this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
         if (this.at("*")) {
-          if (form === "dict") this.fail("A dictionary display cannot contain a starred set element.");
+          if (form === "dict") this.fail("A dictionary display cannot contain a starred set element.", this.peek(), "SYNTAX", undefined,
+            this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
           form = "set"; items.push(this.starredExpression(true));
         } else if (this.eat("**")) {
-          if (form === "set") this.fail("A set display cannot contain a dictionary unpacking.");
+          if (form === "set") this.fail("A set display cannot contain a dictionary unpacking.", this.peek(), "SYNTAX", undefined,
+            this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.previous.span) : undefined);
           if (!entries.length) unpacking = this.previous;
           form = "dict"; entries.push([null, this.bitwiseOr()]);
         }
@@ -972,7 +1003,8 @@ class Parser {
           const key = this.namedExpression();
           if (this.eat(":")) {
             if (key.kind === "NamedExpression" && !this.grouped.has(key)) this.fail("A dictionary-key assignment expression requires parentheses.", key);
-            if (form === "set") this.fail("Mixed set and dictionary display.");
+            if (form === "set") this.fail("Mixed set and dictionary display.", this.peek(), "SYNTAX", undefined,
+              this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.previous.span) : undefined);
             const colon = this.previous;
             if (this.at("}") || this.at(",")) this.fail("A dictionary value requires an expression.", colon, "SYNTAX", undefined,
               this.delimitedDiagnostic("expression expected after dictionary key and ':'", colon, "}", true));
@@ -1000,13 +1032,15 @@ class Parser {
         if (this.at("for")) {
           if (form === "set" && items.length !== 1) this.comprehensionElements(start, "set", items, comma, "}");
           if (entries.length === 1 && entries[0][0] === null) {
-            this.comprehension(start, "dict", entries[0][1]);
+            this.comprehension(start, "dict", entries[0][1], null, false);
             this.fail("A dictionary comprehension cannot unpack its element.", unpacking, "SYNTAX", undefined,
               this.at("}") ? this.delimitedDiagnostic("dict unpacking cannot be used in dict comprehension", unpacking, "}", true) : undefined);
           }
-          if (items.length + entries.length !== 1 || entries[0]?.[0] === null) this.fail("A comprehension requires one element or pair.");
+          if (items.length + entries.length !== 1 || entries[0]?.[0] === null)
+            this.fail("A comprehension requires one element or pair.", this.peek(), "SYNTAX", undefined,
+              this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
           const result = this.comprehension(start, form, form === "set" ? items[0] : entries[0][1], form === "dict" ? entries[0][0] : null);
-          this.expect("}"); return this.closeComprehension(result);
+          this.comprehensionEnd("}"); return this.closeComprehension(result);
         }
         if (!(comma = this.eat(","))) break;
       }

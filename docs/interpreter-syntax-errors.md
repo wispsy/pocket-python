@@ -348,8 +348,48 @@ Nested comprehension delimiters and operand grouping contribute to the new
 comprehension-element and missing-dictionary-key diagnostics without changing
 the host locations used by valid execution.
 
-The current fixed generated-syntax corpus contains 1,968 cases: 1,854 supported
-semantic/error comparisons and 114 explicit native-field refusals. The ordinary
+LA-106 qualifies missing `in` after adopted comprehension targets in list, set,
+dictionary and generator forms, including call and class-header contexts.
+The diagnostic precedes target validation and selects the next token with
+character offsets and physical source-line newlines. Ungrouped starred targets,
+unadopted operands and prior-compound metadata keep explicit field boundaries.
+
+LA-107 qualifies absent iterable/filter operands at comma and closing-delimiter
+boundaries, plus comma tails in list/set/dictionary and parenthesized generator
+comprehensions. Native fields select the unexpected token and preserve physical
+source-line newlines. Keyword-valued and unparenthesized class generators keep
+their incomplete-clause field boundary, including nested clause failures.
+
+LA-108 composes both clause layouts through modules, nested exec, chaining/notes
+and independent fields/arguments. Cyclic filename owners and suspended flags or
+cleanup survive parked collection, cancellation/close and shared limits. The
+example and installed offline console retain original frames and Stop/Restart.
+
+LA-108A preserves incomplete-clause field boundaries inside already invalid
+multiple-element, starred and dictionary-unpacking comprehensions. Nested clause
+failures share their surrounding diagnostic context, retaining the pinned
+parser priority instead of exposing a later operand location.
+
+LA-109 qualifies mixed dictionary/set displays at the offending star,
+double-star or colon token. Malformed following operands retain the earlier
+display error; Unicode, multiline text and all three modes have independent
+observations. Surrounding unqualified comprehension contexts keep their field
+boundary instead of exposing a later nested display location.
+
+LA-110 qualifies dictionary entry lists followed by comprehension clauses.
+Multiple pairs, unpacking entries and a trailing entry comma select the `for`
+token before parsing the malformed clause. Grouped values, Unicode, multiline
+text and all compile modes retain independent reference observations.
+Unadopted entries and unqualified outer comprehensions keep field boundaries.
+
+LA-111 composes both display layouts through modules, nested exec, chaining/notes
+and independent fields/arguments. Cyclic filename owners, suspended conversion
+and cleanup survive parked collection, cancellation/close and shared limits.
+The runnable example and installed offline console retain original dynamic
+frames, retained-field/cleanup Stop/Restart paths and reduced-profile updates.
+
+The current fixed generated-syntax corpus contains 2,362 cases: 2,197 supported
+semantic/error comparisons and 165 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
