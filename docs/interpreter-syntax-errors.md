@@ -224,6 +224,15 @@ tests, assignment values and loop iterables before their targets. Parked
 collection, cancellation/close, shared limits and installed offline
 Stop/Restart/reduced-profile acceptance exercise both layouts.
 
+LA-91 shares the adopted argument-list parser between calls and class headers.
+Class positional/keyword and iterable/mapping ordering, generator parentheses
+and keyword-generator failures retain their exact messages and character
+ranges. Sole generator bases require parentheses; class header diagnostics
+precede body grammar failures. Multiline unpacking converts its end column
+against the starting source line, including Unicode. Valid expanded bases,
+metaclass keywords, parenthesized generator bases and named-expression bases
+have separate controls; class keyword and shared parser budgets remain bounded.
+
 The current fixed generated-syntax corpus contains 881 cases: 845 supported
 semantic/error comparisons and 36 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
