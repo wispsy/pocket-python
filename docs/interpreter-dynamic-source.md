@@ -29,7 +29,8 @@ supported grammar. Unsupported AST objects, future statements, async and other
 unadopted syntax cannot create executable code. Invalid syntax produces
 catchable SyntaxError/IndentationError/TabError families. Their native directory
 entries extend the existing O78 table. The [generated syntax payload contract](interpreter-syntax-errors.md)
-qualifies selected parser, indentation, control-flow and binding messages, native
+qualifies selected parser, indentation, control-flow, binding, try/handler and
+import grammar messages, native
 fields and argument layouts; broader exception payloads remain #124.
 
 Dynamic code retains the original logical filename, spans, source text,

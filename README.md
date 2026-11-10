@@ -278,7 +278,8 @@ their gates.
 The [generated syntax error profile](docs/interpreter-syntax-errors.md) exposes
 qualified parser, indentation, control-flow, scope-declaration, duplicate-argument,
 missing-colon, nested/starred-target, parameter default/separator, mixed call-order,
-keyword-generator, class-argument, repeated call/class keyword and interactive-input
+keyword-generator, class-argument, repeated call/class keyword, try/handler,
+import-list/alias and interactive-input
 payloads from dynamic compilation. Native fields,
 argument snapshots and original filenames retain their independent identity.
 Run `examples/interpreter_generated_syntax.py` for source validation and cleanup.

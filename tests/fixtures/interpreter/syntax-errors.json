@@ -40,7 +40,8 @@
     "LA95",
     "LA96",
     "LA97",
-    "LA98"
+    "LA98",
+    "LA99"
   ],
   "cases": [
     {
@@ -8692,6 +8693,126 @@
       "stage": "LA98",
       "source": "try: compile('from m import (\\n a as (b\\n .c),\\n)','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
       "stdout": "cannot use attribute as import target\nselected/雪.py 2 8 3 4\n' a as (b' 2 6\nTrue True True\nTrue False\n"
+    },
+    {
+      "id": "generated-importgrammar-owner-cycle",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('from 雪 import 鳥,',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue trailing comma not allowed without surrounding parentheses 17 False False\n"
+    },
+    {
+      "id": "generated-importgrammar-chaining",
+      "stage": "LA99",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('from 雪 import 鳥,',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 17\n"
+    },
+    {
+      "id": "generated-importgrammar-cleanup",
+      "stage": "LA99",
+      "source": "def work():\n try: compile('from 雪 import 鳥,',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py trailing comma not allowed without surrounding parentheses False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-importgrammar-original-dynamic-failure",
+      "stage": "LA99",
+      "source": "exec(compile('def fail():\\n try: compile(\\'from 雪 import 鳥,\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','importgrammar-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-importgrammar-nested-exec",
+      "stage": "LA99",
+      "source": "scope={}\nexec('try: compile(\\'from 雪 import 鳥,\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py trailing comma not allowed without surrounding parentheses 17 False\n"
+    },
+    {
+      "id": "generated-importgrammar-field-independence",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('from 雪 import 鳥,',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'from 雪 import 鳥,\\n' True True 77 17\n"
+    },
+    {
+      "id": "generated-importgrammar-module",
+      "stage": "LA99",
+      "source": "import helper\ne=helper.validate('from 雪 import 鳥,')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py trailing comma not allowed without surrounding parentheses 17 module input\n"
+    },
+    {
+      "id": "generated-importgrammar-flags-owner-cycle",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('from 雪 import 鳥,',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True trailing comma not allowed without surrounding parentheses 17\n"
+    },
+    {
+      "id": "generated-importalias-owner-cycle",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('import 雪 as 鳥.羽',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue cannot use attribute as import target 13 False False\n"
+    },
+    {
+      "id": "generated-importalias-chaining",
+      "stage": "LA99",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('import 雪 as 鳥.羽',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 13\n"
+    },
+    {
+      "id": "generated-importalias-cleanup",
+      "stage": "LA99",
+      "source": "def work():\n try: compile('import 雪 as 鳥.羽',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py cannot use attribute as import target False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-importalias-original-dynamic-failure",
+      "stage": "LA99",
+      "source": "exec(compile('def fail():\\n try: compile(\\'import 雪 as 鳥.羽\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','importalias-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-importalias-nested-exec",
+      "stage": "LA99",
+      "source": "scope={}\nexec('try: compile(\\'import 雪 as 鳥.羽\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py cannot use attribute as import target 13 False\n"
+    },
+    {
+      "id": "generated-importalias-field-independence",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('import 雪 as 鳥.羽',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'import 雪 as 鳥.羽\\n' True True 77 13\n"
+    },
+    {
+      "id": "generated-importalias-module",
+      "stage": "LA99",
+      "source": "import helper\ne=helper.validate('import 雪 as 鳥.羽')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py cannot use attribute as import target 13 module input\n"
+    },
+    {
+      "id": "generated-importalias-flags-owner-cycle",
+      "stage": "LA99",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('import 雪 as 鳥.羽',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True cannot use attribute as import target 13\n"
     }
   ]
 }

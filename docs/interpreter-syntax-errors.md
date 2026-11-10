@@ -300,8 +300,14 @@ successfully parsed source-only alias replacement, charged to the caller's
 compilation budget. Multiple invalid aliases, failed repairs and unadopted
 expressions keep their field boundaries.
 
-The LA-93 fixed generated-syntax corpus contains 1,133 cases: 1,077 supported
-semantic/error comparisons and 56 explicit native-field refusals. The ordinary
+LA-99 composes import grammar and alias payloads through modules, nested dynamic
+source, chaining/notes and independent fields/arguments. Parked collection,
+cancellation/close and shared limits cover cyclic filenames and suspended
+conversion/cleanup. The example and installed offline console exercise original
+dynamic frames, retained-field/cleanup Stop/Restart and reduced-profile updates.
+
+The current fixed generated-syntax corpus contains 1,415 cases: 1,323 supported
+semantic/error comparisons and 92 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
