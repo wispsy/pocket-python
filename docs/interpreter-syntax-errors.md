@@ -750,7 +750,13 @@ text and Unicode token ranges match the pinned parser; surrounding starred-call
 and comprehension priority retain explicit field boundaries. A prior initial
 slash refusal is adopted with its original assertion and complete payload checks.
 
-The current fixed generated-syntax corpus contains 7,422 cases: 6,903 supported
+LA-168 composes function/lambda slash payloads through modules, nested source,
+notes/causes and independent native fields/arguments. Cyclic filename owners and
+suspended conversion/cleanup survive collection, cancellation/close and shared
+limits. Original dynamic frames and installed offline Stop/Restart cover both
+families while retaining the reduced-profile dynamic-compilation boundary.
+
+The current fixed generated-syntax corpus contains 7,438 cases: 6,919 supported
 semantic/error comparisons and 519 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
