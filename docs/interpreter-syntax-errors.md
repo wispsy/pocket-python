@@ -713,8 +713,14 @@ suspended conversion/cleanup, collection, cancellation/close and shared limits
 retain their ownership contracts. Original dynamic frames and installed offline
 Stop/Restart preserve fresh source and reduced-profile boundaries.
 
-The current fixed generated-syntax corpus contains 6,876 cases: 6,400 supported
-semantic/error comparisons and 476 explicit native-field refusals. The ordinary
+LA-163 qualifies missing initial function parameter default operands. Empty
+defaults before commas/closing parentheses retain the native expected-default
+message at the equals sign; invalid keyword/star starts retain token ranges.
+Continued-line text, specialized signature errors and annotation admission keep
+their priority. Statement-conditional combinations retain explicit boundaries.
+
+The current fixed generated-syntax corpus contains 6,998 cases: 6,517 supported
+semantic/error comparisons and 481 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
