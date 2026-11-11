@@ -571,8 +571,13 @@ fields preserve Unicode, physical/implicit line endings and compound suites;
 legal tuple tests and assertion arguments retain their existing behavior.
 Statement/conditional combinations keep explicit native-field boundaries.
 
-The current fixed generated-syntax corpus contains 5,444 cases: 5,031 supported
-semantic/error comparisons and 413 explicit native-field refusals. The ordinary
+LA-140 qualifies required raise expressions and explicit causes after from.
+Bare raise remains legal; adopted token fields preserve Unicode, physical and
+implicit line endings and compound suites. Statement/conditional combinations
+retain explicit native-field boundaries.
+
+The current fixed generated-syntax corpus contains 5,507 cases: 5,092 supported
+semantic/error comparisons and 415 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

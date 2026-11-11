@@ -329,8 +329,8 @@ class Parser {
       return node;
     }
     if (this.eat("raise")) {
-      const value = this.ending() ? null : this.expression();
-      const cause = this.eat("from") ? this.expression() : null;
+      const value = this.ending() ? null : this.valueOperand(() => this.expression());
+      const cause = this.eat("from") ? this.valueOperand(() => this.expression()) : null;
       return this.node("Raise", start, {value, cause});
     }
     if (this.eat("del")) {
