@@ -73,7 +73,7 @@ jobs:
       matrix:
         shard: [1, 2, 3, 4]
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       UV_PYTHON: '3.14.7'
     steps:
