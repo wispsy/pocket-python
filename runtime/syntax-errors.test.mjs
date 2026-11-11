@@ -77,6 +77,7 @@ for (const [source, mode] of [
   ['def 雪(鳥 羽): pass', 'exec'], ['def 雪(*else): pass', 'exec'],
   ['def 雪() pass', 'exec'], ['class 雪 pass', 'exec'],
   ['lambda **+: 1', 'eval'], ['lambda *else: 1', 'exec'],
+  ['def 雪(鳥=else): pass', 'exec'], ['lambda 雪=else: 1', 'eval'],
 ]) test('retained ' + JSON.stringify(source) + ' payloads share allocation limits', async () => {
   const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile(' + JSON.stringify(source) + ',"selected.py",' + JSON.stringify(mode) + ')\n except SyntaxError as e: held.append(e)\n')],
     compileOptions: {languageProfile: corpus.profile}, memoryLimits: {maxBytes: 100000}, options: {maxSteps: 50000, maxWork: 20000000}});
@@ -140,7 +141,9 @@ for (const [id, filename] of [['generated-syntax-original-dynamic-failure', 'syn
   ['generated-functioncolon-original-dynamic-failure', 'functioncolon-payload-original.py'],
   ['generated-classcolon-original-dynamic-failure', 'classcolon-payload-original.py'],
   ['generated-lambdaparameter-original-dynamic-failure', 'lambdaparameter-payload-original.py'],
-  ['generated-lambdastar-original-dynamic-failure', 'lambdastar-payload-original.py']])
+  ['generated-lambdastar-original-dynamic-failure', 'lambdastar-payload-original.py'],
+  ['generated-functiondefault-original-dynamic-failure', 'functiondefault-payload-original.py'],
+  ['generated-lambdadefault-original-dynamic-failure', 'lambdadefault-payload-original.py']])
 test(id + ' keeps the original dynamic call frames', async () => {
   const item = corpus.cases.find(item => item.id === id);
   const result = await runSourceRequest({modules: [unit(item.source)], compileOptions: {languageProfile: corpus.profile}});

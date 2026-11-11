@@ -716,6 +716,8 @@ Stop/Restart preserve fresh source and reduced-profile boundaries.
 LA-163 qualifies missing initial function parameter default operands. Empty
 defaults before commas/closing parentheses retain the native expected-default
 message at the equals sign; invalid keyword/star starts retain token ranges.
+An earlier missing-default refusal is adopted with its original assertion and
+complete native field/argument checks.
 Continued-line text, specialized signature errors and annotation admission keep
 their priority. Statement-conditional combinations retain explicit boundaries.
 
@@ -730,8 +732,14 @@ lambda parameter/star/default starts. Generic token fields honor the existing
 operand-field boundary, while qualified parenthesized/default/separator messages
 retain their exact fields. The independent context probe records each refusal.
 
-The current fixed generated-syntax corpus contains 7,206 cases: 6,690 supported
-semantic/error comparisons and 516 explicit native-field refusals. The ordinary
+LA-165 composes function/lambda default payloads through modules, nested source,
+notes/causes and independent native fields/arguments. Cyclic filenames and
+suspended conversion/cleanup survive collection, cancellation/close and shared
+limits. Original dynamic frames and installed offline Stop/Restart retain fresh
+source and reduced-profile boundaries.
+
+The current fixed generated-syntax corpus contains 7,222 cases: 6,707 supported
+semantic/error comparisons and 515 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
