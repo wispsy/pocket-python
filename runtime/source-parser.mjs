@@ -312,7 +312,8 @@ class Parser {
       return this.node("Declaration", start, {declaration, names});
     }
     if (this.eat("assert")) {
-      const test = this.expression(), message = this.eat(",") ? this.expression() : null;
+      const test = this.valueOperand(() => this.expression());
+      const message = this.eat(",") ? this.valueOperand(() => this.expression()) : null;
       return this.node("Assert", start, {test, message});
     }
     if (this.eat("pass")) return this.node("Pass", start);
