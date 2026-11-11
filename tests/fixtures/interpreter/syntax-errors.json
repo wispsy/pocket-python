@@ -8003,9 +8003,9 @@
     },
     {
       "id": "importgrammar-tail-boundary-0",
-      "stage": "Future",
-      "source": "try: compile('from x import a,;','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
-      "stdout": "invalid syntax\nselected/雪.py 1 17 1 18\n'from x import a,;\\n' 2 6\nTrue True True\nTrue False\n"
+      "stage": "LA188",
+      "source": "try: compile('from x import a,;','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[1][1],e.args[1][2],e.args[1][4],e.args[1][5])\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 17 1 18\n'from x import a,;\\n' 2 6\nTrue True True\nTrue False\n0 0 'from x import a,;\\n'\n1 17 1 18\n"
     },
     {
       "id": "importgrammar-tail-boundary-1",
@@ -8021,9 +8021,9 @@
     },
     {
       "id": "importgrammar-tail-boundary-3",
-      "stage": "Future",
-      "source": "try: compile('from x import a,,','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
-      "stdout": "invalid syntax\nselected/雪.py 1 17 1 18\n'from x import a,,\\n' 2 6\nTrue True True\nTrue False\n"
+      "stage": "LA188",
+      "source": "try: compile('from x import a,,','selected/雪.py','exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n print(e.args[1][1],e.args[1][2],e.args[1][4],e.args[1][5])\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 17 1 18\n'from x import a,,\\n' 2 6\nTrue True True\nTrue False\n0 0 'from x import a,,\\n'\n1 17 1 18\n"
     },
     {
       "id": "importgrammar-tail-boundary-4",

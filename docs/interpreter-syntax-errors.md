@@ -888,7 +888,8 @@ admission and unqualified surrounding grammar keep their independent boundaries.
 LA-188 qualifies missing and invalid imported names, including the native
 expected-names message for an empty import list. Comments, physical/implicit
 newlines, Unicode and parenthesized imports preserve their exact token fields.
-Alias-name starts, unqualified continued EOF and wildcard/source admission retain
+Two prior import-tail refusals retain their original assertions and gain complete
+metadata/argument checks. Alias-name starts, unqualified continued EOF and wildcard/source admission retain
 explicit boundaries; existing alias-tail and trailing-comma diagnostics persist.
 
 LA-189 composes module-path and imported-name diagnostics through modules,
@@ -902,8 +903,8 @@ statement starts and adjacent expression tails select their distinct physical
 newline behavior. Punctuation tails retain the newline; assignment-expression
 grammar keeps its native-field boundary rather than publishing a generic range.
 
-The current fixed generated-syntax corpus contains 9,379 cases: 8,722 supported
-semantic/error comparisons and 657 explicit native-field refusals. The ordinary
+The current fixed generated-syntax corpus contains 9,379 cases: 8,724 supported
+semantic/error comparisons and 655 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
