@@ -707,7 +707,13 @@ their native ranges; malformed repeated stars select the separator before later
 parameter syntax. Valid variadic/keyword-only binding and specialized bare-star,
 slash and arguments-after-keyword diagnostics retain their existing priority.
 
-The current fixed generated-syntax corpus contains 6,860 cases: 6,384 supported
+LA-162 composes lambda parameter/star payloads through modules, nested source,
+notes/causes and independent argument/field snapshots. Cyclic filename owners,
+suspended conversion/cleanup, collection, cancellation/close and shared limits
+retain their ownership contracts. Original dynamic frames and installed offline
+Stop/Restart preserve fresh source and reduced-profile boundaries.
+
+The current fixed generated-syntax corpus contains 6,876 cases: 6,400 supported
 semantic/error comparisons and 476 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
