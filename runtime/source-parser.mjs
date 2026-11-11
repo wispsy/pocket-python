@@ -525,12 +525,18 @@ class Parser {
           statement && this.peek(1).value === "if" ? undefined : this.tokenDiagnostic("invalid syntax"));
       }
       decorators.push(this.expression());
-      this.expectKind("newline", "Expected a newline after the decorator expression.");
+      if (!this.kind("newline")) {
+        const syntax = this.at("=") ? undefined : this.tokenDiagnostic("invalid syntax");
+        if (syntax?.text.endsWith("\\\n")) syntax.text = syntax.text.slice(0, -1);
+        this.fail("Expected a newline after the decorator expression.", this.peek(), "SYNTAX", undefined, syntax);
+      }
+      this.take();
     }
     if (this.at("def")) return this.definition(decorators);
     if (this.at("class")) return this.classDefinition(decorators);
     if (this.at("async")) this.unsupported("Async definitions require a later stage.");
-    this.fail("Decorators require a function or class definition.");
+    this.fail("Decorators require a function or class definition.", this.peek(), "SYNTAX", undefined,
+      ["eof", "dedent"].includes(this.peek().kind) ? undefined : this.tokenDiagnostic("invalid syntax"));
   }
   definition(decorators = []) {
     const start = this.expect("def"), name = this.definitionName().value;

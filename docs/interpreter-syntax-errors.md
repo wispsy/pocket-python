@@ -868,8 +868,14 @@ newlines and Unicode source text. Conditional statement operands, grouped
 expression grammar and the distinct augmented-assignment token retain explicit
 native-field boundaries.
 
-The current fixed generated-syntax corpus contains 9,021 cases: 8,410 supported
-semantic/error comparisons and 611 explicit native-field refusals. The ordinary
+LA-185 qualifies malformed decorator expression separators and invalid decorated
+function/class targets. Generic token diagnostics preserve Unicode and physical
+line text, including continued lines. Valid decorator ordering is unchanged;
+assignment hints, EOF targets, async definitions and unfinished interactive
+definitions retain explicit native-field or source-admission boundaries.
+
+The current fixed generated-syntax corpus contains 9,101 cases: 8,476 supported
+semantic/error comparisons and 625 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
