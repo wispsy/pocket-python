@@ -802,8 +802,15 @@ and cyclic filenames. Suspended conversion/cleanup, collection, cancellation,
 shared limits, original dynamic frames and installed offline Stop/Restart retain
 their ownership and reduced-profile boundaries.
 
-The current fixed generated-syntax corpus contains 7,966 cases: 7,425 supported
-semantic/error comparisons and 541 explicit native-field refusals. The ordinary
+LA-175 qualifies malformed repeated-star parameter tails in functions and lambdas. Generic
+diagnostics select the repeated star when its following token cannot form a
+name/comma production, including malformed named repeats; complete named repeats
+retain their specialized message. Bare-star priority, Unicode, physical lines and
+compile modes remain explicit. Annotated repeated function stars retain a field
+boundary until their annotation grammar is qualified.
+
+The current fixed generated-syntax corpus contains 8,130 cases: 7,584 supported
+semantic/error comparisons and 546 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

@@ -617,9 +617,16 @@ class Parser {
         slash = true; posonly = positional; positional = [];
       } else if (this.eat("*")) {
         const separator = this.previous;
-        if (star) this.fail("Duplicate keyword-only separator.", separator, "SYNTAX", undefined,
-          this.kind("name") || this.at(",") ? this.delimitedDiagnostic("* argument may appear only once", separator, end) :
-            end === ":" && this.comprehensionClauseFields && this.operandFields ? this.diagnostic("invalid syntax", separator.span) : undefined);
+        if (star) {
+          const named = this.kind("name"), next = this.peek(named ? 1 : 0);
+          const repeated = this.at(",") || named && [",", end].includes(next.value);
+          let syntax = end !== ":" && named && next.value === ":" ? undefined :
+            repeated ? this.delimitedDiagnostic("* argument may appear only once", separator, end) :
+              end !== ":" || this.comprehensionClauseFields && this.operandFields ?
+                this.diagnostic("invalid syntax", separator.span) : undefined;
+          if (syntax && next.span[0] !== separator.span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+          this.fail("Duplicate keyword-only separator.", separator, "SYNTAX", undefined, syntax);
+        }
         if (this.kind("name")) {
           const token = this.take();
           vararg.push({name: token.value, value: null, span: token.span});
