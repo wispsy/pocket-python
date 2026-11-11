@@ -702,8 +702,13 @@ diagnostic. Signature position controls that message; multiline Unicode spans
 retain the pinned parser's native end-column conversion. Existing valid binding
 and unqualified surrounding-expression metadata keep their ownership paths.
 
-The current fixed generated-syntax corpus contains 6,741 cases: 6,267 supported
-semantic/error comparisons and 474 explicit native-field refusals. The ordinary
+LA-161 qualifies malformed lambda star-parameter starts. Invalid tokens retain
+their native ranges; malformed repeated stars select the separator before later
+parameter syntax. Valid variadic/keyword-only binding and specialized bare-star,
+slash and arguments-after-keyword diagnostics retain their existing priority.
+
+The current fixed generated-syntax corpus contains 6,860 cases: 6,384 supported
+semantic/error comparisons and 476 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

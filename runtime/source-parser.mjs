@@ -617,7 +617,8 @@ class Parser {
       } else if (this.eat("*")) {
         const separator = this.previous;
         if (star) this.fail("Duplicate keyword-only separator.", separator, "SYNTAX", undefined,
-          this.kind("name") || this.at(",") ? this.delimitedDiagnostic("* argument may appear only once", separator, end) : undefined);
+          this.kind("name") || this.at(",") ? this.delimitedDiagnostic("* argument may appear only once", separator, end) :
+            end === ":" && this.comprehensionClauseFields ? this.diagnostic("invalid syntax", separator.span) : undefined);
         if (this.kind("name")) {
           const token = this.take();
           vararg.push({name: token.value, value: null, span: token.span});
@@ -625,9 +626,9 @@ class Parser {
           if (this.at("=")) this.fail("A variadic positional parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
             this.diagnostic("var-positional argument cannot have default value", this.peek().span));
         } else {
-          if (end !== ":" && !this.at(",") && !this.at(end))
+          if (!this.at(",") && !this.at(end))
             this.fail("Expected a variadic parameter name or comma.", this.peek(), "SYNTAX", undefined,
-              this.tokenDiagnostic("invalid syntax"));
+              end === ":" ? incomplete() : this.tokenDiagnostic("invalid syntax"));
           bareStar = separator; separatorFields = false;
         }
         star = true;
