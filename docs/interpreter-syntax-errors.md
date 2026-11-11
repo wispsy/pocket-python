@@ -856,7 +856,13 @@ return annotations. A pass, break or continue followed by if retains its
 independent native-field boundary instead of inheriting a generic initial-
 annotation payload. Plain invalid starts keep their qualified fields.
 
-The current fixed generated-syntax corpus contains 8,917 cases: 8,317 supported
+LA-183 composes malformed parameter and return annotations through modules,
+nested source, native fields and argument snapshots, notes/causes and cyclic
+filename owners. Suspension, collection, interruption, shared limits, original
+dynamic frames and installed offline Stop/Restart preserve ownership and fresh
+source. Valid annotations remain outside the adopted execution profile.
+
+The current fixed generated-syntax corpus contains 8,933 cases: 8,333 supported
 semantic/error comparisons and 600 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;

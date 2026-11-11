@@ -289,8 +289,8 @@ names, function/class definition names, function parameter openers/names,
 parameter separators/star starts, function/class header tails, malformed lambda
 signatures, positional-only separator tails, absent/adjacent parameter defaults,
 parenthesized function parameters, malformed required-parameter tails,
-repeated-star and variadic-keyword parameter tails, malformed default separators
-and adjacent negations
+repeated-star and variadic-keyword parameter tails, malformed default separators,
+adjacent negations and malformed parameter/return annotation starts
 and interactive-input payloads from dynamic compilation. Native fields,
 argument snapshots and original filenames retain their independent identity.
 Run `examples/interpreter_generated_syntax.py` for source validation and cleanup.
