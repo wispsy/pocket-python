@@ -756,8 +756,16 @@ suspended conversion/cleanup survive collection, cancellation/close and shared
 limits. Original dynamic frames and installed offline Stop/Restart cover both
 families while retaining the reduced-profile dynamic-compilation boundary.
 
-The current fixed generated-syntax corpus contains 7,438 cases: 6,919 supported
-semantic/error comparisons and 519 explicit native-field refusals. The ordinary
+LA-169 qualifies adjacent function parameter default expressions, including
+the missing-comma hint and its expression range. Unicode, continued-line text,
+soft keywords and invalid string prefixes retain the pinned parser's distinct
+fields. Source-only repair validation shares compilation budgets and preserves
+unqualified surrounding grammar, legacy statements and nested expression tails
+behind explicit field boundaries. A prior default-tail refusal is adopted with
+its original assertion and complete payload checks.
+
+The current fixed generated-syntax corpus contains 7,524 cases: 6,999 supported
+semantic/error comparisons and 525 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
