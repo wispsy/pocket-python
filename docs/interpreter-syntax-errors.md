@@ -802,8 +802,8 @@ and cyclic filenames. Suspended conversion/cleanup, collection, cancellation,
 shared limits, original dynamic frames and installed offline Stop/Restart retain
 their ownership and reduced-profile boundaries.
 
-LA-175 qualifies malformed repeated-star parameter tails in functions and lambdas. Generic
-diagnostics select the repeated star when its following token cannot form a
+LA-175 qualifies malformed repeated-star parameter tails in functions and
+lambdas. Generic diagnostics select the repeated star when its following token cannot form a
 name/comma production, including malformed named repeats; complete named repeats
 retain their specialized message. Bare-star priority, Unicode, physical lines and
 compile modes remain explicit. Annotated repeated function stars retain a field
@@ -815,7 +815,13 @@ specialized ordering diagnostic; other tokens keep the generic location and
 physical source text. Annotation and surrounding-grammar boundaries remain
 explicit. Earlier retained cases keep their original assertions when adopted.
 
-The current fixed generated-syntax corpus contains 8,350 cases: 7,803 supported
+LA-177 composes repeated-star and variadic-keyword tails through modules,
+nested compilation, independent native fields/arguments, notes/causes and cyclic
+filename owners. Suspended conversion/cleanup, collection, interruption, shared
+limits, original frames and installed offline Stop/Restart preserve fresh source
+and the classes-source/1 dynamic-compilation boundary.
+
+The current fixed generated-syntax corpus contains 8,366 cases: 7,819 supported
 semantic/error comparisons and 547 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
