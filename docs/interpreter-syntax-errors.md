@@ -598,7 +598,13 @@ comma-separated targets, Unicode, compile modes and continued lines. Existing
 target validation and valid trailing commas retain their behavior; malformed
 target interiors and statement/conditional combinations keep explicit boundaries.
 
-The current fixed generated-syntax corpus contains 5,675 cases: 5,252 supported
+LA-144 composes return and deletion payloads through modules, nested dynamic
+source, notes/causes and independent fields/args. Cyclic filename owners and
+suspended conversion/cleanup retain their fields through collection,
+cancellation/close and shared limits. Original dynamic frames and the installed
+offline console preserve fresh Stop/Restart behavior.
+
+The current fixed generated-syntax corpus contains 5,691 cases: 5,268 supported
 semantic/error comparisons and 423 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
