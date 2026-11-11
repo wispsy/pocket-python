@@ -821,8 +821,14 @@ filename owners. Suspended conversion/cleanup, collection, interruption, shared
 limits, original frames and installed offline Stop/Restart preserve fresh source
 and the classes-source/1 dynamic-compilation boundary.
 
-The current fixed generated-syntax corpus contains 8,366 cases: 7,819 supported
-semantic/error comparisons and 547 explicit native-field refusals. The ordinary
+LA-178 qualifies malformed separators after complete function parameter
+defaults. Generic token fields retain physical source text, Unicode and exec/
+single mode ranges. Adjacent-expression hints, required-default order, valid
+binding, surrounding annotations and prior-compound metadata retain their
+independent behavior and boundaries.
+
+The current fixed generated-syntax corpus contains 8,435 cases: 7,885 supported
+semantic/error comparisons and 550 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

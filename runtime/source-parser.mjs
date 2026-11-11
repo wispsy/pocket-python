@@ -658,7 +658,7 @@ class Parser {
       if (this.at(end)) break;
       if (end === ":" && !this.at(",")) this.fail("Expected a lambda parameter separator.", this.peek(), "SYNTAX", undefined,
         incomplete(this.previous.value === "/" && this.at("*") ? "expected comma between / and *" : "invalid syntax"));
-      if (end !== ":" && separatorFields && !this.at(","))
+      if (end !== ":" && (separatorFields || this.comprehensionClauseFields && this.operandFields) && !this.at(","))
         this.fail("Expected a function parameter separator.", this.peek(), "SYNTAX", undefined,
           this.tokenDiagnostic(this.previous.value === "/" && this.at("*") ? "expected comma between / and *" : "invalid syntax"));
       this.expect(",");
