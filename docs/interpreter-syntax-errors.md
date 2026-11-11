@@ -587,8 +587,46 @@ suspended conversion/cleanup and original dynamic frames survive collection,
 cancellation/close and shared allocation limits. The example and installed
 offline console preserve Stop/Restart and reduced-profile boundaries.
 
-The current fixed generated-syntax corpus contains 5,552 cases: 5,137 supported
-semantic/error comparisons and 415 explicit native-field refusals. The ordinary
+LA-142 qualifies missing initial return-expression operands, including Unicode,
+compile modes, compound suites and continued lines. Bare returns, tuple results
+and existing outside-function diagnostics retain their behavior. Unqualified
+tuple tails, statement/conditional forms and continued-comment indentation keep
+explicit native-field boundaries.
+
+LA-143 qualifies absent deletion targets and malformed target starts, including
+comma-separated targets, Unicode, compile modes and continued lines. Existing
+target validation and valid trailing commas retain their behavior; malformed
+target interiors and statement/conditional combinations keep explicit boundaries.
+
+LA-144 composes return and deletion payloads through modules, nested dynamic
+source, notes/causes and independent fields/args. Cyclic filename owners and
+suspended conversion/cleanup retain their fields through collection,
+cancellation/close and shared limits. Original dynamic frames and the installed
+offline console preserve fresh Stop/Restart behavior.
+
+LA-145 qualifies absent or invalid names in global declarations and their comma
+lists. Token fields preserve Unicode, compile modes, line endings and compound
+suites. Legal declarations and existing binding diagnostics retain their
+behavior; unqualified adjacent-name/attribute grammar keeps explicit boundaries.
+
+LA-146 qualifies the corresponding absent or invalid names in nonlocal
+declarations. Syntax failures retain priority over enclosing-scope checks;
+legal captured-name mutation and existing no-binding diagnostics are unchanged.
+Unicode, comma lists, line endings and compound suites have independent cases.
+
+LA-147 composes both declaration payloads through modules, nested dynamic
+source, notes/causes and independent fields/args. Cyclic filename owners and
+suspended conversion/cleanup survive collection, cancellation/close and shared
+limits. Original frames and installed offline Stop/Restart retain their paths.
+Statement syntax in eval mode keeps its explicit native-field boundary.
+
+LA-143A preserves earlier invalid deletion targets before a later missing
+operand. Source-only repair validation keeps unqualified surrounding grammar
+behind explicit field boundaries. Continued target lines retain the pinned
+parser's newline-free diagnostic text, including indented suites and Unicode.
+
+The current fixed generated-syntax corpus contains 5,911 cases: 5,464 supported
+semantic/error comparisons and 447 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

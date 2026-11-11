@@ -146,6 +146,7 @@ class Parser {
       }
       if (first && last) {
         syntax = this.diagnostic(message, [value.span[0], value.span[1], last.span[2], last.span[3]]);
+        if (action === "delete" && syntax.text.endsWith("\\\n")) syntax.text = syntax.text.slice(0, -1);
         syntax.repair = this.lexed.source.slice(0, first.start) + "__target" + this.lexed.source.slice(last.end);
       }
     }
@@ -307,8 +308,14 @@ class Parser {
   small() {
     const start = this.peek();
     if (this.at("global") || this.at("nonlocal")) {
-      const declaration = this.take().value, names = [this.name().value];
-      while (this.eat(",")) names.push(this.name().value);
+      const declaration = this.take().value;
+      const name = () => {
+        if (!this.kind("name")) this.fail("Expected an identifier.", this.peek(), "SYNTAX", undefined,
+          this.tokenDiagnostic("invalid syntax"));
+        return this.name().value;
+      };
+      const names = [name()];
+      while (this.eat(",")) names.push(name());
       return this.node("Declaration", start, {declaration, names});
     }
     if (this.eat("assert")) {
@@ -324,7 +331,7 @@ class Parser {
       return node;
     }
     if (this.eat("return")) {
-      const node = this.node("Return", start, {value: this.ending() ? null : this.expressionList()});
+      const node = this.node("Return", start, {value: this.ending() ? null : this.valueOperand(() => this.expressionList())});
       if (!this.functionDepth) this.controlError ??= {kind: "return", token: start, node};
       return node;
     }
@@ -334,8 +341,13 @@ class Parser {
       return this.node("Raise", start, {value, cause});
     }
     if (this.eat("del")) {
-      const targets = [this.withoutOperandFields(() => this.expression())];
-      while (this.eat(",")) { if (this.ending()) break; targets.push(this.withoutOperandFields(() => this.expression())); }
+      const target = () => this.valueOperand(() => this.withoutOperandFields(() => this.expression()));
+      const targets = [target()];
+      while (this.eat(",")) {
+        if (this.ending()) break;
+        if (this.expressionBoundary()) targets.forEach(value => this.target(value, true));
+        targets.push(target());
+      }
       targets.forEach(value => this.target(value, true)); return this.node("Delete", start, {targets});
     }
     if (this.at("import") || this.at("from")) return this.imports();

@@ -137,7 +137,7 @@ PyScript remain optional profiles with separate compatibility/test gates.
 
 See [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md),
 [release notes](docs/release-0.2.0.md), and the
-[GitHub Project](https://github.com/orgs/wispsy/projects/13).
+[GitHub Project](https://github.com/orgs/wispsy/projects/8).
 Runtime and dependency licenses remain applicable; preserve and review their
 upstream notices before distributing generated applications.
 
@@ -284,7 +284,8 @@ displays, dictionary comprehension entries, incomplete loop/condition headers,
 conditional expressions, missing expression starts, incomplete lambdas,
 unary/Boolean/arithmetic/comparison operands, attribute identifiers, subscription
 operands, iterable/mapping unpacking operands, assignment/named keyword values,
-assert/raise operands and interactive-input payloads from
+assert/raise/return operands, deletion target starts, global/nonlocal declaration
+names and interactive-input payloads from
 dynamic compilation. Native fields,
 argument snapshots and original filenames retain their independent identity.
 Run `examples/interpreter_generated_syntax.py` for source validation and cleanup.
