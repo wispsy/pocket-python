@@ -40,7 +40,8 @@ for source in ["雪=", "record=[", "value='unfinished", "if True:\nvalue=7",
                "def record(*items,*else): pass", "def record(**options,1): pass",
                "def record(value=1;): pass", "def record(value=1 not other): pass",
                "def record(value:else): pass", "def record()->else: pass",
-               "@else\ndef record(): pass", "@decorate\npass"]:
+               "@else\ndef record(): pass", "@decorate\npass",
+               "from records.else import value", "import records.else"]:
     error = validate(source, "records/input.py")
     original = error.args
     error.args = ()

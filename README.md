@@ -291,7 +291,8 @@ signatures, positional-only separator tails, absent/adjacent parameter defaults,
 parenthesized function parameters, malformed required-parameter tails,
 repeated-star and variadic-keyword parameter tails, malformed default separators,
 adjacent negations, malformed parameter/return annotation starts, decorator
-operands/separators/definition targets and interactive-input payloads from dynamic compilation. Native fields,
+operands/separators/definition targets, import module/name starts and
+interactive-input payloads from dynamic compilation. Native fields,
 argument snapshots and original filenames retain their independent identity.
 Run `examples/interpreter_generated_syntax.py` for source validation and cleanup.
 Unqualified diagnostics retain explicit field-read boundaries.

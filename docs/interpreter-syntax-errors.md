@@ -891,7 +891,13 @@ newlines, Unicode and parenthesized imports preserve their exact token fields.
 Alias-name starts, unqualified continued EOF and wildcard/source admission retain
 explicit boundaries; existing alias-tail and trailing-comma diagnostics persist.
 
-The current fixed generated-syntax corpus contains 9,239 cases: 8,598 supported
+LA-189 composes module-path and imported-name diagnostics through modules,
+nested compilation, independent fields and argument snapshots, notes/causes and
+cyclic filename owners. Suspended conversion/cleanup, collection, interruption,
+shared limits, original frames and installed offline Stop/Restart preserve fresh
+source and the classes-source/1 dynamic-compilation boundary.
+
+The current fixed generated-syntax corpus contains 9,255 cases: 8,614 supported
 semantic/error comparisons and 641 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
