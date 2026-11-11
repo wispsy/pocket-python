@@ -287,7 +287,9 @@ operands, iterable/mapping unpacking operands, assignment/named keyword values,
 assert/raise/return operands, deletion target starts, global/nonlocal declaration
 names, function/class definition names, function parameter openers/names,
 parameter separators/star starts, function/class header tails, malformed lambda
-signatures, positional-only separator tails, absent/adjacent parameter defaults
+signatures, positional-only separator tails, absent/adjacent parameter defaults,
+parenthesized function parameters, malformed required-parameter tails,
+repeated-star and variadic-keyword parameter tails
 and interactive-input payloads from dynamic compilation. Native fields,
 argument snapshots and original filenames retain their independent identity.
 Run `examples/interpreter_generated_syntax.py` for source validation and cleanup.

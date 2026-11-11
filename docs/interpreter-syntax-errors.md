@@ -783,8 +783,46 @@ the pinned parser's newline-free text after reading a later physical line;
 ungrouped lambdas stop at their own logical newline. Complex soft-keyword
 expressions and unqualified later signature grammar keep explicit boundaries.
 
-The current fixed generated-syntax corpus contains 7,717 cases: 7,185 supported
-semantic/error comparisons and 532 explicit native-field refusals. The ordinary
+LA-172 qualifies parenthesized function parameters, selecting the complete plain
+name/tuple range and the distinct function message. Unicode, comments, continued
+lines, nested suites and decorators retain exact native fields. Defaults and
+slash/star separators preserve generic-token priority; invalid tuple shapes and
+lambda diagnostics retain their existing paths.
+
+LA-173 qualifies malformed required-parameter tails after positional defaults.
+Generic token fields take priority over required-after-default errors when a
+name has an invalid continuation; well-formed missing defaults retain their
+specialized diagnostic. Function/lambda modes, Unicode and continued source
+retain exact fields. One prior refusal keeps its original assertions and gains
+complete argument/source-metadata checks.
+
+LA-174 composes parenthesized function parameters and required-parameter tails
+through modules, nested compilation, independent fields/arguments, notes/causes
+and cyclic filenames. Suspended conversion/cleanup, collection, cancellation,
+shared limits, original dynamic frames and installed offline Stop/Restart retain
+their ownership and reduced-profile boundaries.
+
+LA-175 qualifies malformed repeated-star parameter tails in functions and
+lambdas. Generic diagnostics select the repeated star when its following token cannot form a
+name/comma production, including malformed named repeats; complete named repeats
+retain their specialized message. Bare-star priority, Unicode, physical lines and
+compile modes remain explicit. Annotated repeated function stars retain a field
+boundary until their annotation grammar is qualified.
+
+LA-176 qualifies invalid token starts after variadic-keyword parameters in
+function/lambda signatures. Names and slash/star separators retain their
+specialized ordering diagnostic; other tokens keep the generic location and
+physical source text. Annotation and surrounding-grammar boundaries remain
+explicit. Earlier retained cases keep their original assertions when adopted.
+
+LA-177 composes repeated-star and variadic-keyword tails through modules,
+nested compilation, independent native fields/arguments, notes/causes and cyclic
+filename owners. Suspended conversion/cleanup, collection, interruption, shared
+limits, original frames and installed offline Stop/Restart preserve fresh source
+and the classes-source/1 dynamic-compilation boundary.
+
+The current fixed generated-syntax corpus contains 8,366 cases: 7,819 supported
+semantic/error comparisons and 547 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
