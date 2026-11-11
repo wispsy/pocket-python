@@ -94,7 +94,8 @@
     "LA141",
     "LA142",
     "LA143",
-    "LA144"
+    "LA144",
+    "LA145"
   ],
   "cases": [
     {
@@ -35659,6 +35660,486 @@
       "stage": "LA144",
       "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('del else',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
       "stdout": "entered\n7 True invalid syntax 5\n"
+    },
+    {
+      "id": "global-name-0-exec",
+      "stage": "LA145",
+      "source": "try: compile('global',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'global\\n' 2 6\nTrue True True\n0 0 'global\\n'\n"
+    },
+    {
+      "id": "global-name-0-single",
+      "stage": "LA145",
+      "source": "try: compile('global',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'global' 2 6\nTrue True True\n0 0 'global'\n"
+    },
+    {
+      "id": "global-name-1-exec",
+      "stage": "LA145",
+      "source": "try: compile('global\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'global\\n' 2 6\nTrue True True\n0 0 'global\\n'\n"
+    },
+    {
+      "id": "global-name-1-single",
+      "stage": "LA145",
+      "source": "try: compile('global\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'global\\n' 2 6\nTrue True True\n0 0 'global\\n'\n"
+    },
+    {
+      "id": "global-name-2-exec",
+      "stage": "LA145",
+      "source": "try: compile('global # supplied',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 19\n'global # supplied\\n' 2 6\nTrue True True\n0 0 'global # supplied\\n'\n"
+    },
+    {
+      "id": "global-name-2-single",
+      "stage": "LA145",
+      "source": "try: compile('global # supplied',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'global # supplied' 2 6\nTrue True True\n0 0 'global # supplied'\n"
+    },
+    {
+      "id": "global-name-3-exec",
+      "stage": "LA145",
+      "source": "try: compile('global ;',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global ;\\n' 2 6\nTrue True True\n0 0 'global ;\\n'\n"
+    },
+    {
+      "id": "global-name-3-single",
+      "stage": "LA145",
+      "source": "try: compile('global ;',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global ;' 2 6\nTrue True True\n0 0 'global ;'\n"
+    },
+    {
+      "id": "global-name-4-exec",
+      "stage": "LA145",
+      "source": "try: compile('global ,',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global ,\\n' 2 6\nTrue True True\n0 0 'global ,\\n'\n"
+    },
+    {
+      "id": "global-name-4-single",
+      "stage": "LA145",
+      "source": "try: compile('global ,',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global ,' 2 6\nTrue True True\n0 0 'global ,'\n"
+    },
+    {
+      "id": "global-name-5-exec",
+      "stage": "LA145",
+      "source": "try: compile('global :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global :\\n' 2 6\nTrue True True\n0 0 'global :\\n'\n"
+    },
+    {
+      "id": "global-name-5-single",
+      "stage": "LA145",
+      "source": "try: compile('global :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global :' 2 6\nTrue True True\n0 0 'global :'\n"
+    },
+    {
+      "id": "global-name-6-exec",
+      "stage": "LA145",
+      "source": "try: compile('global else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 12\n'global else\\n' 2 6\nTrue True True\n0 0 'global else\\n'\n"
+    },
+    {
+      "id": "global-name-6-single",
+      "stage": "LA145",
+      "source": "try: compile('global else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 12\n'global else' 2 6\nTrue True True\n0 0 'global else'\n"
+    },
+    {
+      "id": "global-name-7-exec",
+      "stage": "LA145",
+      "source": "try: compile('global if',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 10\n'global if\\n' 2 6\nTrue True True\n0 0 'global if\\n'\n"
+    },
+    {
+      "id": "global-name-7-single",
+      "stage": "LA145",
+      "source": "try: compile('global if',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 10\n'global if' 2 6\nTrue True True\n0 0 'global if'\n"
+    },
+    {
+      "id": "global-name-8-exec",
+      "stage": "LA145",
+      "source": "try: compile('global for',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 11\n'global for\\n' 2 6\nTrue True True\n0 0 'global for\\n'\n"
+    },
+    {
+      "id": "global-name-8-single",
+      "stage": "LA145",
+      "source": "try: compile('global for',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 11\n'global for' 2 6\nTrue True True\n0 0 'global for'\n"
+    },
+    {
+      "id": "global-name-9-exec",
+      "stage": "LA145",
+      "source": "try: compile('global in',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 10\n'global in\\n' 2 6\nTrue True True\n0 0 'global in\\n'\n"
+    },
+    {
+      "id": "global-name-9-single",
+      "stage": "LA145",
+      "source": "try: compile('global in',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 10\n'global in' 2 6\nTrue True True\n0 0 'global in'\n"
+    },
+    {
+      "id": "global-name-10-exec",
+      "stage": "LA145",
+      "source": "try: compile('global and',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 11\n'global and\\n' 2 6\nTrue True True\n0 0 'global and\\n'\n"
+    },
+    {
+      "id": "global-name-10-single",
+      "stage": "LA145",
+      "source": "try: compile('global and',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 11\n'global and' 2 6\nTrue True True\n0 0 'global and'\n"
+    },
+    {
+      "id": "global-name-11-exec",
+      "stage": "LA145",
+      "source": "try: compile('global or',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 10\n'global or\\n' 2 6\nTrue True True\n0 0 'global or\\n'\n"
+    },
+    {
+      "id": "global-name-11-single",
+      "stage": "LA145",
+      "source": "try: compile('global or',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 10\n'global or' 2 6\nTrue True True\n0 0 'global or'\n"
+    },
+    {
+      "id": "global-name-12-exec",
+      "stage": "LA145",
+      "source": "try: compile('global from',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 12\n'global from\\n' 2 6\nTrue True True\n0 0 'global from\\n'\n"
+    },
+    {
+      "id": "global-name-12-single",
+      "stage": "LA145",
+      "source": "try: compile('global from',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 12\n'global from' 2 6\nTrue True True\n0 0 'global from'\n"
+    },
+    {
+      "id": "global-name-13-exec",
+      "stage": "LA145",
+      "source": "try: compile('global as',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 10\n'global as\\n' 2 6\nTrue True True\n0 0 'global as\\n'\n"
+    },
+    {
+      "id": "global-name-13-single",
+      "stage": "LA145",
+      "source": "try: compile('global as',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 10\n'global as' 2 6\nTrue True True\n0 0 'global as'\n"
+    },
+    {
+      "id": "global-name-14-exec",
+      "stage": "LA145",
+      "source": "try: compile('global pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 12\n'global pass\\n' 2 6\nTrue True True\n0 0 'global pass\\n'\n"
+    },
+    {
+      "id": "global-name-14-single",
+      "stage": "LA145",
+      "source": "try: compile('global pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 12\n'global pass' 2 6\nTrue True True\n0 0 'global pass'\n"
+    },
+    {
+      "id": "global-name-15-exec",
+      "stage": "LA145",
+      "source": "try: compile('global break',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 13\n'global break\\n' 2 6\nTrue True True\n0 0 'global break\\n'\n"
+    },
+    {
+      "id": "global-name-15-single",
+      "stage": "LA145",
+      "source": "try: compile('global break',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 13\n'global break' 2 6\nTrue True True\n0 0 'global break'\n"
+    },
+    {
+      "id": "global-name-16-exec",
+      "stage": "LA145",
+      "source": "try: compile('global continue',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 16\n'global continue\\n' 2 6\nTrue True True\n0 0 'global continue\\n'\n"
+    },
+    {
+      "id": "global-name-16-single",
+      "stage": "LA145",
+      "source": "try: compile('global continue',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 16\n'global continue' 2 6\nTrue True True\n0 0 'global continue'\n"
+    },
+    {
+      "id": "global-name-17-exec",
+      "stage": "LA145",
+      "source": "try: compile('global return',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 14\n'global return\\n' 2 6\nTrue True True\n0 0 'global return\\n'\n"
+    },
+    {
+      "id": "global-name-17-single",
+      "stage": "LA145",
+      "source": "try: compile('global return',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 14\n'global return' 2 6\nTrue True True\n0 0 'global return'\n"
+    },
+    {
+      "id": "global-name-18-exec",
+      "stage": "LA145",
+      "source": "try: compile('global assert',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 14\n'global assert\\n' 2 6\nTrue True True\n0 0 'global assert\\n'\n"
+    },
+    {
+      "id": "global-name-18-single",
+      "stage": "LA145",
+      "source": "try: compile('global assert',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 14\n'global assert' 2 6\nTrue True True\n0 0 'global assert'\n"
+    },
+    {
+      "id": "global-name-19-exec",
+      "stage": "LA145",
+      "source": "try: compile('global 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global 1\\n' 2 6\nTrue True True\n0 0 'global 1\\n'\n"
+    },
+    {
+      "id": "global-name-19-single",
+      "stage": "LA145",
+      "source": "try: compile('global 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global 1' 2 6\nTrue True True\n0 0 'global 1'\n"
+    },
+    {
+      "id": "global-name-20-exec",
+      "stage": "LA145",
+      "source": "try: compile('global \"雪\"',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 11\n'global \"雪\"\\n' 2 6\nTrue True True\n0 0 'global \"雪\"\\n'\n"
+    },
+    {
+      "id": "global-name-20-single",
+      "stage": "LA145",
+      "source": "try: compile('global \"雪\"',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 11\n'global \"雪\"' 2 6\nTrue True True\n0 0 'global \"雪\"'\n"
+    },
+    {
+      "id": "global-name-21-exec",
+      "stage": "LA145",
+      "source": "try: compile('global None',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 12\n'global None\\n' 2 6\nTrue True True\n0 0 'global None\\n'\n"
+    },
+    {
+      "id": "global-name-21-single",
+      "stage": "LA145",
+      "source": "try: compile('global None',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 12\n'global None' 2 6\nTrue True True\n0 0 'global None'\n"
+    },
+    {
+      "id": "global-name-22-exec",
+      "stage": "LA145",
+      "source": "try: compile('global True',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 12\n'global True\\n' 2 6\nTrue True True\n0 0 'global True\\n'\n"
+    },
+    {
+      "id": "global-name-22-single",
+      "stage": "LA145",
+      "source": "try: compile('global True',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 12\n'global True' 2 6\nTrue True True\n0 0 'global True'\n"
+    },
+    {
+      "id": "global-name-23-exec",
+      "stage": "LA145",
+      "source": "try: compile('global (雪)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global (雪)\\n' 2 6\nTrue True True\n0 0 'global (雪)\\n'\n"
+    },
+    {
+      "id": "global-name-23-single",
+      "stage": "LA145",
+      "source": "try: compile('global (雪)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global (雪)' 2 6\nTrue True True\n0 0 'global (雪)'\n"
+    },
+    {
+      "id": "global-name-24-exec",
+      "stage": "LA145",
+      "source": "try: compile('global [雪]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global [雪]\\n' 2 6\nTrue True True\n0 0 'global [雪]\\n'\n"
+    },
+    {
+      "id": "global-name-24-single",
+      "stage": "LA145",
+      "source": "try: compile('global [雪]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global [雪]' 2 6\nTrue True True\n0 0 'global [雪]'\n"
+    },
+    {
+      "id": "global-name-25-exec",
+      "stage": "LA145",
+      "source": "try: compile('global {雪}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global {雪}\\n' 2 6\nTrue True True\n0 0 'global {雪}\\n'\n"
+    },
+    {
+      "id": "global-name-25-single",
+      "stage": "LA145",
+      "source": "try: compile('global {雪}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global {雪}' 2 6\nTrue True True\n0 0 'global {雪}'\n"
+    },
+    {
+      "id": "global-name-26-exec",
+      "stage": "LA145",
+      "source": "try: compile('global *雪',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global *雪\\n' 2 6\nTrue True True\n0 0 'global *雪\\n'\n"
+    },
+    {
+      "id": "global-name-26-single",
+      "stage": "LA145",
+      "source": "try: compile('global *雪',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'global *雪' 2 6\nTrue True True\n0 0 'global *雪'\n"
+    },
+    {
+      "id": "global-name-27-exec",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'global 雪,\\n' 2 6\nTrue True True\n0 0 'global 雪,\\n'\n"
+    },
+    {
+      "id": "global-name-27-single",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'global 雪,' 2 6\nTrue True True\n0 0 'global 雪,'\n"
+    },
+    {
+      "id": "global-name-28-exec",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'global 雪,else\\n' 2 6\nTrue True True\n0 0 'global 雪,else\\n'\n"
+    },
+    {
+      "id": "global-name-28-single",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'global 雪,else' 2 6\nTrue True True\n0 0 'global 雪,else'\n"
+    },
+    {
+      "id": "global-name-29-exec",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'global 雪,1\\n' 2 6\nTrue True True\n0 0 'global 雪,1\\n'\n"
+    },
+    {
+      "id": "global-name-29-single",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'global 雪,1' 2 6\nTrue True True\n0 0 'global 雪,1'\n"
+    },
+    {
+      "id": "global-name-30-exec",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,,',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'global 雪,,\\n' 2 6\nTrue True True\n0 0 'global 雪,,\\n'\n"
+    },
+    {
+      "id": "global-name-30-single",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,,',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'global 雪,,' 2 6\nTrue True True\n0 0 'global 雪,,'\n"
+    },
+    {
+      "id": "global-name-31-exec",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,:',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'global 雪,:\\n' 2 6\nTrue True True\n0 0 'global 雪,:\\n'\n"
+    },
+    {
+      "id": "global-name-31-single",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,:',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'global 雪,:' 2 6\nTrue True True\n0 0 'global 雪,:'\n"
+    },
+    {
+      "id": "global-name-32-exec",
+      "stage": "LA145",
+      "source": "try: compile('global 雪, # supplied',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 22\n'global 雪, # supplied\\n' 2 6\nTrue True True\n0 0 'global 雪, # supplied\\n'\n"
+    },
+    {
+      "id": "global-name-32-single",
+      "stage": "LA145",
+      "source": "try: compile('global 雪, # supplied',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'global 雪, # supplied' 2 6\nTrue True True\n0 0 'global 雪, # supplied'\n"
+    },
+    {
+      "id": "global-name-33-exec",
+      "stage": "LA145",
+      "source": "try: compile('global \\\\\\n else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else\\n' 2 6\nTrue True True\n0 0 'global \\\\\\n else\\n'\n"
+    },
+    {
+      "id": "global-name-33-single",
+      "stage": "LA145",
+      "source": "try: compile('global \\\\\\n else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else' 2 6\nTrue True True\n0 0 'global \\\\\\n else'\n"
+    },
+    {
+      "id": "global-name-34-exec",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,\\\\\\n else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else\\n' 2 6\nTrue True True\n0 0 'global 雪,\\\\\\n else\\n'\n"
+    },
+    {
+      "id": "global-name-34-single",
+      "stage": "LA145",
+      "source": "try: compile('global 雪,\\\\\\n else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else' 2 6\nTrue True True\n0 0 'global 雪,\\\\\\n else'\n"
+    },
+    {
+      "id": "global-name-35-exec",
+      "stage": "LA145",
+      "source": "try: compile('def f():\\n global else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 13\n' global else\\n' 2 6\nTrue True True\n0 0 'def f():\\n global else\\n'\n"
+    },
+    {
+      "id": "global-name-35-single",
+      "stage": "LA145",
+      "source": "try: compile('def f():\\n global else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 13\n' global else' 2 6\nTrue True True\n0 0 'def f():\\n global else'\n"
+    },
+    {
+      "id": "global-name-36-exec",
+      "stage": "LA145",
+      "source": "try: compile('if True: global 雪,else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 19 1 23\n'if True: global 雪,else\\n' 2 6\nTrue True True\n0 0 'if True: global 雪,else\\n'\n"
+    },
+    {
+      "id": "global-name-36-single",
+      "stage": "LA145",
+      "source": "try: compile('if True: global 雪,else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 19 1 23\n'if True: global 雪,else' 2 6\nTrue True True\n0 0 'if True: global 雪,else'\n"
+    },
+    {
+      "id": "global-name-37-exec",
+      "stage": "LA145",
+      "source": "try: compile('雪=1; global else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 13 1 17\n'雪=1; global else\\n' 2 6\nTrue True True\n0 0 '雪=1; global else\\n'\n"
+    },
+    {
+      "id": "global-name-37-single",
+      "stage": "LA145",
+      "source": "try: compile('雪=1; global else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 13 1 17\n'雪=1; global else' 2 6\nTrue True True\n0 0 '雪=1; global else'\n"
+    },
+    {
+      "id": "global-name-valid",
+      "stage": "LA145",
+      "source": "雪=1\n鳥=2\ndef change():\n global 雪,鳥\n 雪=3\n 鳥=4\nchange()\nprint(雪,鳥)\n",
+      "stdout": "3 4\n"
+    },
+    {
+      "id": "global-name-unqualified-0",
+      "stage": "Future",
+      "source": "try: compile('global 雪.鳥',\"selected.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Surrounding statement, target or declaration grammar retains an explicit native-field boundary.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "global-name-unqualified-1",
+      "stage": "Future",
+      "source": "try: compile('global 雪 鳥',\"selected.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Surrounding statement, target or declaration grammar retains an explicit native-field boundary.",
+      "stdout": "selected.py\n"
     }
   ]
 }

@@ -604,8 +604,13 @@ suspended conversion/cleanup retain their fields through collection,
 cancellation/close and shared limits. Original dynamic frames and the installed
 offline console preserve fresh Stop/Restart behavior.
 
-The current fixed generated-syntax corpus contains 5,691 cases: 5,268 supported
-semantic/error comparisons and 423 explicit native-field refusals. The ordinary
+LA-145 qualifies absent or invalid names in global declarations and their comma
+lists. Token fields preserve Unicode, compile modes, line endings and compound
+suites. Legal declarations and existing binding diagnostics retain their
+behavior; unqualified adjacent-name/attribute grammar keeps explicit boundaries.
+
+The current fixed generated-syntax corpus contains 5,770 cases: 5,345 supported
+semantic/error comparisons and 425 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

@@ -307,8 +307,14 @@ class Parser {
   small() {
     const start = this.peek();
     if (this.at("global") || this.at("nonlocal")) {
-      const declaration = this.take().value, names = [this.name().value];
-      while (this.eat(",")) names.push(this.name().value);
+      const declaration = this.take().value;
+      const name = () => {
+        if (declaration === "global" && !this.kind("name")) this.fail("Expected an identifier.", this.peek(), "SYNTAX", undefined,
+          this.tokenDiagnostic("invalid syntax"));
+        return this.name().value;
+      };
+      const names = [name()];
+      while (this.eat(",")) names.push(name());
       return this.node("Declaration", start, {declaration, names});
     }
     if (this.eat("assert")) {
