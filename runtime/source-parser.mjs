@@ -640,7 +640,8 @@ class Parser {
         if (value !== null) separatorFields = false;
         if (!star && defaultSeen && value === null) {
           const syntax = this.at(end) || this.at(",") ?
-            this.delimitedDiagnostic("parameter without a default follows parameter with a default", token, end, true) : incomplete();
+            this.delimitedDiagnostic("parameter without a default follows parameter with a default", token, end, true) :
+            end === ":" ? incomplete() : this.tokenDiagnostic("invalid syntax");
           this.fail("A required positional parameter follows a default.", token, "SYNTAX", undefined, syntax);
         }
         if (!star && value !== null) defaultSeen = true;

@@ -789,8 +789,15 @@ lines, nested suites and decorators retain exact native fields. Defaults and
 slash/star separators preserve generic-token priority; invalid tuple shapes and
 lambda diagnostics retain their existing paths.
 
-The current fixed generated-syntax corpus contains 7,794 cases: 7,255 supported
-semantic/error comparisons and 539 explicit native-field refusals. The ordinary
+LA-173 qualifies malformed required-parameter tails after positional defaults.
+Generic token fields take priority over required-after-default errors when a
+name has an invalid continuation; well-formed missing defaults retain their
+specialized diagnostic. Function/lambda modes, Unicode and continued source
+retain exact fields. One prior refusal keeps its original assertions and gains
+complete argument/source-metadata checks.
+
+The current fixed generated-syntax corpus contains 7,950 cases: 7,409 supported
+semantic/error comparisons and 541 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
