@@ -549,8 +549,13 @@ suspended conversion/cleanup survive collection, cancellation/close and shared
 limits. The example and installed offline console retain original frames, fresh
 Stop/Restart behavior and reduced-profile dynamic-compilation boundaries.
 
-The current fixed generated-syntax corpus contains 5,199 cases: 4,793 supported
-semantic/error comparisons and 406 explicit native-field refusals. The ordinary
+LA-136 qualifies missing assignment values after ordinary, chained and augmented
+assignment operators. Token fields preserve Unicode, physical and implicit line
+endings and compound suites. Invalid targets keep their existing priority;
+statement/conditional combinations retain explicit native-field boundaries.
+
+The current fixed generated-syntax corpus contains 5,288 cases: 4,880 supported
+semantic/error comparisons and 408 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

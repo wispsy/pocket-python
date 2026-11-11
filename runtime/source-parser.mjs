@@ -344,7 +344,7 @@ class Parser {
     if (this.eat("=")) {
       const targets = [value]; this.target(value);
       for (;;) {
-        value = this.expressionList();
+        value = this.valueOperand(() => this.expressionList());
         if (!this.eat("=")) break;
         this.target(value, false, false, "chain"); targets.push(value);
       }
@@ -355,7 +355,7 @@ class Parser {
       this.target(value);
       const token = this.take(), operator = BINARY.get(token.value.slice(0, -1));
       if (!operator) this.unsupported("Augmented operator is not adopted.", token);
-      return this.node("Augment", start, {target: value, operator, value: this.expressionList()});
+      return this.node("Augment", start, {target: value, operator, value: this.valueOperand(() => this.expressionList())});
     }
     if (this.at(":=")) this.fail("Assignment expressions require a permitted expression context.");
     return this.node("Expr", start, {value});
@@ -661,6 +661,11 @@ class Parser {
     // A partial conditional test can select an earlier expected-else range.
     const before = this.operandFields; this.operandFields &&= !this.conditionalTest;
     try { this.requiredOperand(); return body(); } finally { this.operandFields = before; }
+  }
+  valueOperand(body) {
+    const operand = () => this.rightOperand(body);
+    return ["pass", "break", "continue"].some(value => this.at(value)) && this.peek(1).value === "if" ?
+      this.withoutOperandFields(operand) : operand();
   }
   withoutOperandFields(body) {
     // Surrounding grammar can select a diagnostic before the missing operand.
