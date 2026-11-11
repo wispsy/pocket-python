@@ -559,13 +559,33 @@ class Parser {
   parameters(end) {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
     let bareStar = null;
-    const incomplete = () => end === ":" && this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined;
-    const parameterName = () => {
+    const incomplete = () => end === ":" && this.comprehensionClauseFields && this.operandFields ? this.tokenDiagnostic("invalid syntax") : undefined;
+    const parameterName = (parenthesized = false) => {
       if (end !== ":" && !this.kind("name"))
         this.fail("Expected a function parameter.", this.peek(), "SYNTAX", undefined,
           this.tokenDiagnostic("invalid syntax"));
-      if (end === ":" && (this.expressionBoundary() || this.kind("number") || this.kind("string")))
-        this.fail("Expected a lambda parameter.", this.peek(), "SYNTAX", undefined, incomplete());
+      if (end === ":" && !this.kind("name")) {
+        let syntax = incomplete();
+        if (parenthesized && this.at("(")) {
+          let ahead = 1;
+          while (this.peek(ahead).kind === "name") {
+            this.charge(); ahead++;
+            if (this.peek(ahead).value !== ",") break;
+            ahead++;
+          }
+          if (ahead > 1 && this.peek(ahead).value === ")") {
+            const first = this.peek(), last = this.peek(ahead);
+            syntax = this.comprehensionClauseFields ? this.diagnostic("Lambda expression parameters cannot be parenthesized",
+              [first.span[0], first.span[1], last.span[2], last.span[3]]) : undefined;
+            if (syntax && first.span[0] !== last.span[2]) {
+              syntax.text = syntax.text.replace(/\n$/, "");
+              const bytes = new TextEncoder().encode(syntax.text + "\0");
+              syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, last.span[3]))).length;
+            }
+          }
+        }
+        this.fail("Expected a lambda parameter.", this.peek(), "SYNTAX", undefined, syntax);
+      }
       return this.name();
     };
     while (!this.at(end)) {
@@ -597,7 +617,8 @@ class Parser {
       } else if (this.eat("*")) {
         const separator = this.previous;
         if (star) this.fail("Duplicate keyword-only separator.", separator, "SYNTAX", undefined,
-          this.kind("name") || this.at(",") ? this.delimitedDiagnostic("* argument may appear only once", separator, end) : undefined);
+          this.kind("name") || this.at(",") ? this.delimitedDiagnostic("* argument may appear only once", separator, end) :
+            end === ":" && this.comprehensionClauseFields && this.operandFields ? this.diagnostic("invalid syntax", separator.span) : undefined);
         if (this.kind("name")) {
           const token = this.take();
           vararg.push({name: token.value, value: null, span: token.span});
@@ -605,16 +626,16 @@ class Parser {
           if (this.at("=")) this.fail("A variadic positional parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
             this.diagnostic("var-positional argument cannot have default value", this.peek().span));
         } else {
-          if (end !== ":" && !this.at(",") && !this.at(end))
+          if (!this.at(",") && !this.at(end))
             this.fail("Expected a variadic parameter name or comma.", this.peek(), "SYNTAX", undefined,
-              this.tokenDiagnostic("invalid syntax"));
+              end === ":" ? incomplete() : this.tokenDiagnostic("invalid syntax"));
           bareStar = separator; separatorFields = false;
         }
         star = true;
       } else {
-        const token = parameterName();
+        const token = parameterName(!star && !slash && !defaultSeen);
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
-        const value = this.eat("=") ? this.expression() : null;
+        const value = this.eat("=") ? this.parameterDefault() : null;
         if (value !== null) separatorFields = false;
         if (end === ":" && value !== null && ["name", "number", "string"].includes(this.peek().kind))
           this.fail("Expected a lambda parameter separator.");
@@ -639,6 +660,19 @@ class Parser {
         this.delimitedDiagnostic("named arguments must follow bare *", token, end, true));
     }
     return {posonly, positional, kwonly, ...(vararg.length ? {vararg} : {}), ...(kwarg.length ? {kwarg} : {})};
+  }
+  parameterDefault() {
+    if (this.expressionBoundary() || ["*", "**", "="].some(value => this.at(value))) {
+      const statement = ["pass", "break", "continue"].some(value => this.at(value));
+      const missing = [",", ")"].some(value => this.at(value));
+      let syntax = missing ? this.diagnostic("expected default value expression", this.previous.span) :
+        statement && this.peek(1).value === "if" ? undefined : this.tokenDiagnostic("invalid syntax");
+      if (syntax && missing && this.previous.span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+      if (syntax && statement && this.peek(1).span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+      this.fail("Expected a parameter default value.", this.peek(), "SYNTAX", undefined,
+        this.comprehensionClauseFields && (missing || this.operandFields) ? syntax : undefined);
+    }
+    return this.expression();
   }
   lambda() {
     const start = this.expect("lambda"), params = this.parameters(":"); this.expect(":");
