@@ -521,6 +521,8 @@ class Parser {
   definition(decorators = []) {
     const start = this.expect("def"), name = this.definitionName().value;
     if (this.at("[")) this.unsupported("Generic functions are not adopted.");
+    if (!this.at("(")) this.fail("Expected '('.", this.peek(), "SYNTAX", undefined,
+      this.tokenDiagnostic("expected '('"));
     this.expect("(");
     const params = this.parameters(")"); this.expect(")");
     if (this.at("->")) this.unsupported("Return annotations are not adopted.");

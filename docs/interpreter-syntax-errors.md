@@ -640,7 +640,12 @@ Collection, cancellation/close, shared limits and original dynamic frames retain
 their existing ownership paths. Installed offline Stop/Restart and reduced-profile
 acceptance include the new families; eval-mode statements keep explicit boundaries.
 
-The current fixed generated-syntax corpus contains 6,063 cases: 5,614 supported
+LA-151 qualifies the expected '(' diagnostic after function names. Unicode,
+comments, explicit continuations, decorators and nested suites preserve exact
+token fields and compile-mode source text. Generic-function admission and
+earlier lexical failures retain their own boundaries.
+
+The current fixed generated-syntax corpus contains 6,135 cases: 5,686 supported
 semantic/error comparisons and 449 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
