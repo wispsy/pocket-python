@@ -560,7 +560,13 @@ expected argument value expression message. Other adopted boundaries use their
 token fields. Multiline ranges retain the pinned parser's first-line column
 conversion; earlier invalid argument groups keep independent boundaries.
 
-The current fixed generated-syntax corpus contains 5,359 cases: 4,948 supported
+LA-138 composes assignment and keyword-value fields through registry modules,
+nested dynamic source, chaining/notes and independent argument snapshots. Cyclic
+filename owners and suspended conversion/cleanup retain their fields through
+collection, cancellation/close and shared limits. The example and installed
+offline console preserve original dynamic frames and fresh Stop/Restart paths.
+
+The current fixed generated-syntax corpus contains 5,375 cases: 4,964 supported
 semantic/error comparisons and 411 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
