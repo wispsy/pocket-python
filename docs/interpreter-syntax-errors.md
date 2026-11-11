@@ -650,8 +650,14 @@ function definitions, including comma-separated, positional-only and
 keyword-only positions. Specialized signature errors, valid parameter binding
 and unqualified bare-star grammar retain their existing paths.
 
-The current fixed generated-syntax corpus contains 6,194 cases: 5,745 supported
-semantic/error comparisons and 449 explicit native-field refusals. The ordinary
+LA-153 composes function-opener and parameter-name payloads through modules,
+nested dynamic source, notes/causes and independent field/argument snapshots.
+Cyclic filenames, suspended conversion/cleanup, collection, cancellation/close,
+shared limits and original frames retain their ownership contracts. Installed
+offline acceptance covers fresh Stop/Restart and reduced-profile boundaries.
+
+The current fixed generated-syntax corpus contains 6,212 cases: 5,761 supported
+semantic/error comparisons and 451 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

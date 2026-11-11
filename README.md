@@ -285,7 +285,8 @@ conditional expressions, missing expression starts, incomplete lambdas,
 unary/Boolean/arithmetic/comparison operands, attribute identifiers, subscription
 operands, iterable/mapping unpacking operands, assignment/named keyword values,
 assert/raise/return operands, deletion target starts, global/nonlocal declaration
-names and interactive-input payloads from
+names, function/class definition names, function parameter openers/names and
+interactive-input payloads from
 dynamic compilation. Native fields,
 argument snapshots and original filenames retain their independent identity.
 Run `examples/interpreter_generated_syntax.py` for source validation and cleanup.

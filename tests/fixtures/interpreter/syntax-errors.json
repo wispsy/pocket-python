@@ -103,7 +103,8 @@
     "LA149",
     "LA150",
     "LA151",
-    "LA152"
+    "LA152",
+    "LA153"
   ],
   "cases": [
     {
@@ -673,8 +674,8 @@
     {
       "id": "generated-syntax-example",
       "stage": "LA66",
-      "source": "\"\"\"Inspect generated syntax failures without losing their original source.\"\"\"\n\n\ndef validate(source, filename):\n    try:\n        compile(source, filename, \"exec\")\n    except SyntaxError as error:\n        error.add_note(\"supplied record\")\n        return error\n    return None\n\n\nfor source in [\"雪=\", \"record=[\", \"value='unfinished\", \"if True:\\nvalue=7\",\n               \"return 雪\", \"if record\", \"del record()\", \"[record,1]=value\",\n               \"del [*record]\", \"[雪,*first,*last]=value\",\n               \"def record(value=1,required): pass\", \"lambda *,**options: 1\",\n               \"record(value=1,2)\", \"record(x for x in values,1)\",\n               \"record(value=1,value=2)\", \"record(value=1,2,**options,*items)\",\n               \"record(value=item for item in items)\", \"class Record(value=1,Base): pass\",\n               \"class Record(value=1,value=2): pass\", \"try: pass\",\n               \"try: pass\\nexcept: pass\\nexcept ValueError: pass\",\n               \"from records import value,\", \"import records as value.field\",\n               \"[first,last for item in items]\", \"{**item for item in items}\",\n               \"{first:1,last}\", \"{first:*last}\",\n               \"[first for last items]\", \"{first:last for item in items if}\",\n               \"{first,**last}\", \"{first:1,last:2 for item in items}\",\n               \"for first items: pass\", \"for first in : pass\", \"if : pass\",\n               \"first if last\", \"first if last else\", \"if else: pass\", \"雪 if else 鳥\", \"lambda 雪: else\", \"lambda 雪 鳥: 1\",\n               \"~else\", \"雪 and else\", \"雪 + else\", \"雪 is not else\",\n               \"雪.else\", \"雪[]\", \"record(*else)\", \"record(**else)\",\n               \"雪=else\", \"record(雪=else)\", \"assert 雪,else\", \"raise 雪 from else\",\n               \"return else\", \"del else\", \"global 雪,else\", \"nonlocal 雪,else\",\n               \"def else(): pass\", \"class else: pass\"]:\n    error = validate(source, \"records/input.py\")\n    original = error.args\n    error.args = ()\n    print(error.msg, error.filename, error.lineno, error.offset)\n    print(repr(error.text), original[1][0], error.__notes__[0])\n\nfor source in [\"nonlocal missing\", \"def record(value,value): pass\"]:\n    error = validate(source, \"records/bindings.py\")\n    original = error.args\n    error.args = ()\n    print(error.msg, error.filename, error.lineno, error.offset)\n    print(len(original), original[0] is error.msg, error._metadata is None)\n\ntry:\n    compile(\"record=1\\nrecord=2\", \"records/interactive.py\", \"single\")\nexcept SyntaxError as error:\n    original = error.args\n    error.args = ()\n    print(error.msg, error.filename, error.lineno, error.offset)\n    print(repr(error.text), original[1][0], error._metadata is None)\n\n\ndef pending(source):\n    error = validate(source, \"pending.py\")\n    try:\n        yield error\n    finally:\n        print(\"cleanup\", error.filename, error.msg)\n\n\nwork = pending(\"item=(\")\nsaved = next(work)\nsaved.args = ()\nwork.close()\nprint(saved.filename, saved.end_offset)\n",
-      "stdout": "invalid syntax records/input.py 1 3\n'雪=\\n' records/input.py supplied record\n'[' was never closed records/input.py 1 8\n'record=[\\n' records/input.py supplied record\nunterminated string literal (detected at line 1) records/input.py 1 7\n\"value='unfinished\" records/input.py supplied record\nexpected an indented block after 'if' statement on line 1 records/input.py 2 1\n'value=7\\n' records/input.py supplied record\n'return' outside function records/input.py 1 1\nNone records/input.py supplied record\nexpected ':' records/input.py 1 10\n'if record\\n' records/input.py supplied record\ncannot delete function call records/input.py 1 5\n'del record()\\n' records/input.py supplied record\ncannot assign to literal records/input.py 1 9\n'[record,1]=value\\n' records/input.py supplied record\ncannot delete starred records/input.py 1 6\n'del [*record]\\n' records/input.py supplied record\nmultiple starred expressions in assignment records/input.py 1 1\nNone records/input.py supplied record\nparameter without a default follows parameter with a default records/input.py 1 20\n'def record(value=1,required): pass\\n' records/input.py supplied record\nnamed arguments must follow bare * records/input.py 1 10\n'lambda *,**options: 1\\n' records/input.py supplied record\npositional argument follows keyword argument records/input.py 1 17\n'record(value=1,2)\\n' records/input.py supplied record\nGenerator expression must be parenthesized records/input.py 1 8\n'record(x for x in values,1)\\n' records/input.py supplied record\nkeyword argument repeated: value records/input.py 1 16\nNone records/input.py supplied record\npositional argument follows keyword argument records/input.py 1 28\n'record(value=1,2,**options,*items)\\n' records/input.py supplied record\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? records/input.py 1 8\n'record(value=item for item in items)\\n' records/input.py supplied record\npositional argument follows keyword argument records/input.py 1 26\n'class Record(value=1,Base): pass\\n' records/input.py supplied record\nkeyword argument repeated: value records/input.py 1 22\nNone records/input.py supplied record\nexpected 'except' or 'finally' block records/input.py 1 10\n'try: pass\\n' records/input.py supplied record\ndefault 'except:' must be last records/input.py 2 1\nNone records/input.py supplied record\ntrailing comma not allowed without surrounding parentheses records/input.py 1 27\n'from records import value,\\n' records/input.py supplied record\ncannot use attribute as import target records/input.py 1 19\n'import records as value.field\\n' records/input.py supplied record\ndid you forget parentheses around the comprehension target? records/input.py 1 2\n'[first,last for item in items]\\n' records/input.py supplied record\ndict unpacking cannot be used in dict comprehension records/input.py 1 2\n'{**item for item in items}\\n' records/input.py supplied record\n':' expected after dictionary key records/input.py 1 13\n'{first:1,last}\\n' records/input.py supplied record\ncannot use a starred expression in a dictionary value records/input.py 1 8\n'{first:*last}\\n' records/input.py supplied record\n'in' expected after for-loop variables records/input.py 1 17\n'[first for last items]\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 33\n'{first:last for item in items if}\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 8\n'{first,**last}\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 17\n'{first:1,last:2 for item in items}\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 11\n'for first items: pass\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 14\n'for first in : pass\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 4\n'if : pass\\n' records/input.py supplied record\nexpected 'else' after 'if' expression records/input.py 1 1\n'first if last\\n' records/input.py supplied record\nexpected expression after 'else', but statement is given records/input.py 1 19\n'first if last else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 4\n'if else: pass\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 6\n'雪 if else 鳥\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 11\n'lambda 雪: else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'lambda 雪 鳥: 1\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 2\n'~else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 7\n'雪 and else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 5\n'雪 + else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'雪 is not else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 3\n'雪.else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 3\n'雪[]\\n' records/input.py supplied record\nInvalid star expression records/input.py 1 9\n'record(*else)\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'record(**else)\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 3\n'雪=else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'record(雪=else)\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'assert 雪,else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 14\n'raise 雪 from else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 8\n'return else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 5\n'del else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'global 雪,else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 12\n'nonlocal 雪,else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 5\n'def else(): pass\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 7\n'class else: pass\\n' records/input.py supplied record\nnonlocal declaration not allowed at module level records/bindings.py 1 1\n1 True True\nduplicate argument 'value' in function definition records/bindings.py 1 18\n1 True True\nmultiple statements found while compiling a single statement records/interactive.py 1 9\n'record=1\\n' records/interactive.py True\ncleanup pending.py '(' was never closed\npending.py 0\n"
+      "source": "\"\"\"Inspect generated syntax failures without losing their original source.\"\"\"\n\n\ndef validate(source, filename):\n    try:\n        compile(source, filename, \"exec\")\n    except SyntaxError as error:\n        error.add_note(\"supplied record\")\n        return error\n    return None\n\n\nfor source in [\"雪=\", \"record=[\", \"value='unfinished\", \"if True:\\nvalue=7\",\n               \"return 雪\", \"if record\", \"del record()\", \"[record,1]=value\",\n               \"del [*record]\", \"[雪,*first,*last]=value\",\n               \"def record(value=1,required): pass\", \"lambda *,**options: 1\",\n               \"record(value=1,2)\", \"record(x for x in values,1)\",\n               \"record(value=1,value=2)\", \"record(value=1,2,**options,*items)\",\n               \"record(value=item for item in items)\", \"class Record(value=1,Base): pass\",\n               \"class Record(value=1,value=2): pass\", \"try: pass\",\n               \"try: pass\\nexcept: pass\\nexcept ValueError: pass\",\n               \"from records import value,\", \"import records as value.field\",\n               \"[first,last for item in items]\", \"{**item for item in items}\",\n               \"{first:1,last}\", \"{first:*last}\",\n               \"[first for last items]\", \"{first:last for item in items if}\",\n               \"{first,**last}\", \"{first:1,last:2 for item in items}\",\n               \"for first items: pass\", \"for first in : pass\", \"if : pass\",\n               \"first if last\", \"first if last else\", \"if else: pass\", \"雪 if else 鳥\", \"lambda 雪: else\", \"lambda 雪 鳥: 1\",\n               \"~else\", \"雪 and else\", \"雪 + else\", \"雪 is not else\",\n               \"雪.else\", \"雪[]\", \"record(*else)\", \"record(**else)\",\n               \"雪=else\", \"record(雪=else)\", \"assert 雪,else\", \"raise 雪 from else\",\n               \"return else\", \"del else\", \"global 雪,else\", \"nonlocal 雪,else\",\n               \"def else(): pass\", \"class else: pass\", \"def record: pass\",\n               \"def record(else): pass\"]:\n    error = validate(source, \"records/input.py\")\n    original = error.args\n    error.args = ()\n    print(error.msg, error.filename, error.lineno, error.offset)\n    print(repr(error.text), original[1][0], error.__notes__[0])\n\nfor source in [\"nonlocal missing\", \"def record(value,value): pass\"]:\n    error = validate(source, \"records/bindings.py\")\n    original = error.args\n    error.args = ()\n    print(error.msg, error.filename, error.lineno, error.offset)\n    print(len(original), original[0] is error.msg, error._metadata is None)\n\ntry:\n    compile(\"record=1\\nrecord=2\", \"records/interactive.py\", \"single\")\nexcept SyntaxError as error:\n    original = error.args\n    error.args = ()\n    print(error.msg, error.filename, error.lineno, error.offset)\n    print(repr(error.text), original[1][0], error._metadata is None)\n\n\ndef pending(source):\n    error = validate(source, \"pending.py\")\n    try:\n        yield error\n    finally:\n        print(\"cleanup\", error.filename, error.msg)\n\n\nwork = pending(\"item=(\")\nsaved = next(work)\nsaved.args = ()\nwork.close()\nprint(saved.filename, saved.end_offset)\n",
+      "stdout": "invalid syntax records/input.py 1 3\n'雪=\\n' records/input.py supplied record\n'[' was never closed records/input.py 1 8\n'record=[\\n' records/input.py supplied record\nunterminated string literal (detected at line 1) records/input.py 1 7\n\"value='unfinished\" records/input.py supplied record\nexpected an indented block after 'if' statement on line 1 records/input.py 2 1\n'value=7\\n' records/input.py supplied record\n'return' outside function records/input.py 1 1\nNone records/input.py supplied record\nexpected ':' records/input.py 1 10\n'if record\\n' records/input.py supplied record\ncannot delete function call records/input.py 1 5\n'del record()\\n' records/input.py supplied record\ncannot assign to literal records/input.py 1 9\n'[record,1]=value\\n' records/input.py supplied record\ncannot delete starred records/input.py 1 6\n'del [*record]\\n' records/input.py supplied record\nmultiple starred expressions in assignment records/input.py 1 1\nNone records/input.py supplied record\nparameter without a default follows parameter with a default records/input.py 1 20\n'def record(value=1,required): pass\\n' records/input.py supplied record\nnamed arguments must follow bare * records/input.py 1 10\n'lambda *,**options: 1\\n' records/input.py supplied record\npositional argument follows keyword argument records/input.py 1 17\n'record(value=1,2)\\n' records/input.py supplied record\nGenerator expression must be parenthesized records/input.py 1 8\n'record(x for x in values,1)\\n' records/input.py supplied record\nkeyword argument repeated: value records/input.py 1 16\nNone records/input.py supplied record\npositional argument follows keyword argument records/input.py 1 28\n'record(value=1,2,**options,*items)\\n' records/input.py supplied record\ninvalid syntax. Maybe you meant '==' or ':=' instead of '='? records/input.py 1 8\n'record(value=item for item in items)\\n' records/input.py supplied record\npositional argument follows keyword argument records/input.py 1 26\n'class Record(value=1,Base): pass\\n' records/input.py supplied record\nkeyword argument repeated: value records/input.py 1 22\nNone records/input.py supplied record\nexpected 'except' or 'finally' block records/input.py 1 10\n'try: pass\\n' records/input.py supplied record\ndefault 'except:' must be last records/input.py 2 1\nNone records/input.py supplied record\ntrailing comma not allowed without surrounding parentheses records/input.py 1 27\n'from records import value,\\n' records/input.py supplied record\ncannot use attribute as import target records/input.py 1 19\n'import records as value.field\\n' records/input.py supplied record\ndid you forget parentheses around the comprehension target? records/input.py 1 2\n'[first,last for item in items]\\n' records/input.py supplied record\ndict unpacking cannot be used in dict comprehension records/input.py 1 2\n'{**item for item in items}\\n' records/input.py supplied record\n':' expected after dictionary key records/input.py 1 13\n'{first:1,last}\\n' records/input.py supplied record\ncannot use a starred expression in a dictionary value records/input.py 1 8\n'{first:*last}\\n' records/input.py supplied record\n'in' expected after for-loop variables records/input.py 1 17\n'[first for last items]\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 33\n'{first:last for item in items if}\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 8\n'{first,**last}\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 17\n'{first:1,last:2 for item in items}\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 11\n'for first items: pass\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 14\n'for first in : pass\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 4\n'if : pass\\n' records/input.py supplied record\nexpected 'else' after 'if' expression records/input.py 1 1\n'first if last\\n' records/input.py supplied record\nexpected expression after 'else', but statement is given records/input.py 1 19\n'first if last else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 4\n'if else: pass\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 6\n'雪 if else 鳥\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 11\n'lambda 雪: else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'lambda 雪 鳥: 1\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 2\n'~else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 7\n'雪 and else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 5\n'雪 + else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'雪 is not else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 3\n'雪.else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 3\n'雪[]\\n' records/input.py supplied record\nInvalid star expression records/input.py 1 9\n'record(*else)\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'record(**else)\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 3\n'雪=else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'record(雪=else)\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'assert 雪,else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 14\n'raise 雪 from else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 8\n'return else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 5\n'del else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 10\n'global 雪,else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 12\n'nonlocal 雪,else\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 5\n'def else(): pass\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 7\n'class else: pass\\n' records/input.py supplied record\nexpected '(' records/input.py 1 11\n'def record: pass\\n' records/input.py supplied record\ninvalid syntax records/input.py 1 12\n'def record(else): pass\\n' records/input.py supplied record\nnonlocal declaration not allowed at module level records/bindings.py 1 1\n1 True True\nduplicate argument 'value' in function definition records/bindings.py 1 18\n1 True True\nmultiple statements found while compiling a single statement records/interactive.py 1 9\n'record=1\\n' records/interactive.py True\ncleanup pending.py '(' was never closed\npending.py 0\n"
     },
     {
       "id": "generated-syntax-module",
@@ -38812,6 +38813,144 @@
       "stage": "LA152",
       "source": "def f(雪,/,鳥=2,*items,羽=3,**options): return 雪+鳥+len(items)+羽+len(options)\nprint(f(1,4,5,6,羽=7,extra=8))\n",
       "stdout": "15\n"
+    },
+    {
+      "id": "generated-functionopener-owner-cycle",
+      "stage": "LA153",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('def 雪: pass',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue expected '(' 6 False False\n"
+    },
+    {
+      "id": "generated-functionopener-chaining",
+      "stage": "LA153",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('def 雪: pass',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 6\n"
+    },
+    {
+      "id": "generated-functionopener-cleanup",
+      "stage": "LA153",
+      "source": "def work():\n try: compile('def 雪: pass',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py expected '(' False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-functionopener-original-dynamic-failure",
+      "stage": "LA153",
+      "source": "exec(compile('def fail():\\n try: compile(\\'def 雪: pass\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','functionopener-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-functionopener-nested-exec",
+      "stage": "LA153",
+      "source": "scope={}\nexec('try: compile(\\'def 雪: pass\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py expected '(' 6 False\n"
+    },
+    {
+      "id": "generated-functionopener-field-independence",
+      "stage": "LA153",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('def 雪: pass',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'def 雪: pass\\n' True True 77 6\n"
+    },
+    {
+      "id": "generated-functionopener-module",
+      "stage": "LA153",
+      "source": "import helper\ne=helper.validate('def 雪: pass')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py expected '(' 6 module input\n"
+    },
+    {
+      "id": "generated-functionopener-flags-owner-cycle",
+      "stage": "LA153",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('def 雪: pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True expected '(' 6\n"
+    },
+    {
+      "id": "functionopener-eval-boundary",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Statement syntax in eval mode retains its explicit native-field boundary.",
+      "source": "try: compile('def 雪: pass',\"selected.py\",\"eval\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "generated-parametername-owner-cycle",
+      "stage": "LA153",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('def 雪(else): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue invalid syntax 7 False False\n"
+    },
+    {
+      "id": "generated-parametername-chaining",
+      "stage": "LA153",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('def 雪(else): pass',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 7\n"
+    },
+    {
+      "id": "generated-parametername-cleanup",
+      "stage": "LA153",
+      "source": "def work():\n try: compile('def 雪(else): pass',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py invalid syntax False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-parametername-original-dynamic-failure",
+      "stage": "LA153",
+      "source": "exec(compile('def fail():\\n try: compile(\\'def 雪(else): pass\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','parametername-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-parametername-nested-exec",
+      "stage": "LA153",
+      "source": "scope={}\nexec('try: compile(\\'def 雪(else): pass\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py invalid syntax 7 False\n"
+    },
+    {
+      "id": "generated-parametername-field-independence",
+      "stage": "LA153",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('def 雪(else): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'def 雪(else): pass\\n' True True 77 7\n"
+    },
+    {
+      "id": "generated-parametername-module",
+      "stage": "LA153",
+      "source": "import helper\ne=helper.validate('def 雪(else): pass')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py invalid syntax 7 module input\n"
+    },
+    {
+      "id": "generated-parametername-flags-owner-cycle",
+      "stage": "LA153",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('def 雪(else): pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True invalid syntax 7\n"
+    },
+    {
+      "id": "parametername-eval-boundary",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Statement syntax in eval mode retains its explicit native-field boundary.",
+      "source": "try: compile('def 雪(else): pass',\"selected.py\",\"eval\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n"
     }
   ]
 }
