@@ -809,8 +809,14 @@ retain their specialized message. Bare-star priority, Unicode, physical lines an
 compile modes remain explicit. Annotated repeated function stars retain a field
 boundary until their annotation grammar is qualified.
 
-The current fixed generated-syntax corpus contains 8,130 cases: 7,584 supported
-semantic/error comparisons and 546 explicit native-field refusals. The ordinary
+LA-176 qualifies invalid token starts after variadic-keyword parameters in
+function/lambda signatures. Names and slash/star separators retain their
+specialized ordering diagnostic; other tokens keep the generic location and
+physical source text. Annotation and surrounding-grammar boundaries remain
+explicit. Earlier retained cases keep their original assertions when adopted.
+
+The current fixed generated-syntax corpus contains 8,350 cases: 7,803 supported
+semantic/error comparisons and 547 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

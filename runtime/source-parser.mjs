@@ -588,9 +588,10 @@ class Parser {
     while (!this.at(end)) {
       let separatorFields = true;
       if (kwarg.length) this.fail("No parameter may follow a variadic keyword parameter.", this.peek(), "SYNTAX", undefined,
-        this.kind("name") && !(end !== ":" && this.peek(1).value === ":") || ["*", "**", "/"].includes(this.peek().value) ?
+        this.kind("name") && end !== ":" && this.peek(1).value === ":" ? undefined :
+        this.kind("name") || ["*", "**", "/"].includes(this.peek().value) ?
           this.delimitedDiagnostic("arguments cannot follow var-keyword argument", this.peek(), end, this.kind("name")) :
-          this.expressionBoundary() ? incomplete() : undefined);
+          end === ":" ? incomplete() : this.tokenDiagnostic("invalid syntax"));
       if (bareStar && !kwonly.length && this.at("**")) {
         const token = end === ":" ? this.peek() : bareStar;
         this.fail("A named keyword-only parameter must follow '*'.", token, "SYNTAX", undefined,
