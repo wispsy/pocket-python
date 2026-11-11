@@ -1210,7 +1210,8 @@
         "tests/fixtures/interpreter/syntax-errors.json:parameterseparator-default-boundary",
         "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-00-exec",
         "tests/fixtures/interpreter/syntax-errors.json:lambda-separator-unqualified-5",
-        "tests/fixtures/interpreter/syntax-errors.json:generated-functiondefaulttail-owner-cycle"
+        "tests/fixtures/interpreter/syntax-errors.json:generated-functiondefaulttail-owner-cycle",
+        "tests/fixtures/interpreter/syntax-errors.json:continued-default-text-00-exec"
       ],
       "boundary_evidence": [
         "tests/fixtures/interpreter/syntax-errors.json:return-operand-lexical-boundary",
@@ -1324,7 +1325,11 @@
         "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-starred-call-boundary",
         "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-legacy-boundary",
         "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-conditional-boundary",
-        "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-lambda-body-boundary"
+        "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-lambda-body-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:continued-default-text-required-tail-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:continued-default-text-compound-metadata-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:continued-default-text-function-softword-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:continued-default-text-lambda-softword-boundary"
       ]
     },
     {

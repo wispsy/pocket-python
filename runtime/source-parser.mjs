@@ -685,7 +685,8 @@ class Parser {
     const token = this.peek(), first = this.tokens[start];
     const fail = syntax => this.fail("Expected a parameter default separator.", token, "SYNTAX", undefined, syntax);
     if (!this.comprehensionClauseFields || !this.operandFields || ["Conditional", "Lambda", "Yield"].includes(value.kind) ||
-        first.kind === "name" && ["print", "exec"].includes(first.value)) fail();
+        first.kind === "name" && (["print", "exec"].includes(first.value) ||
+          ["_", "match", "case", "type"].includes(first.value) && value.kind !== "Name")) fail();
     let last;
     try { last = this.expression(); }
     catch (error) {
@@ -701,9 +702,10 @@ class Parser {
     }
     const generic = !depth || first.kind === "name" &&
       (this.tokens[start + 1].kind === "string" || ["_", "match", "case", "type"].includes(first.value));
-    const syntax = generic ? this.tokenDiagnostic("invalid syntax", token) : this.diagnostic(
+    const syntax = generic ? depth ? this.delimitedDiagnostic("invalid syntax", token, end, true) :
+      this.tokenDiagnostic("invalid syntax", token) : this.diagnostic(
       "invalid syntax. Perhaps you forgot a comma?", [left[0], left[1], right[2], right[3]]);
-    if (!generic && this.peek().span[0] !== left[0]) syntax.text = syntax.text.replace(/\n$/, "");
+    if (this.peek().span[0] !== syntax.lineno) syntax.text = syntax.text.replace(/\n$/, "");
     if (!generic && left[0] !== right[2]) {
       const bytes = new TextEncoder().encode(syntax.text + "\0");
       syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, right[3]))).length;
