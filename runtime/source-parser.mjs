@@ -324,7 +324,7 @@ class Parser {
       return node;
     }
     if (this.eat("return")) {
-      const node = this.node("Return", start, {value: this.ending() ? null : this.expressionList()});
+      const node = this.node("Return", start, {value: this.ending() ? null : this.valueOperand(() => this.expressionList())});
       if (!this.functionDepth) this.controlError ??= {kind: "return", token: start, node};
       return node;
     }

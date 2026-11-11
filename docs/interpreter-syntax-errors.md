@@ -587,8 +587,14 @@ suspended conversion/cleanup and original dynamic frames survive collection,
 cancellation/close and shared allocation limits. The example and installed
 offline console preserve Stop/Restart and reduced-profile boundaries.
 
-The current fixed generated-syntax corpus contains 5,552 cases: 5,137 supported
-semantic/error comparisons and 415 explicit native-field refusals. The ordinary
+LA-142 qualifies missing initial return-expression operands, including Unicode,
+compile modes, compound suites and continued lines. Bare returns, tuple results
+and existing outside-function diagnostics retain their behavior. Unqualified
+tuple tails, statement/conditional forms and continued-comment indentation keep
+explicit native-field boundaries.
+
+The current fixed generated-syntax corpus contains 5,614 cases: 5,195 supported
+semantic/error comparisons and 419 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
