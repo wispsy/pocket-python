@@ -576,7 +576,12 @@ Bare raise remains legal; adopted token fields preserve Unicode, physical and
 implicit line endings and compound suites. Statement/conditional combinations
 retain explicit native-field boundaries.
 
-The current fixed generated-syntax corpus contains 5,507 cases: 5,092 supported
+LA-137A preserves the source text for pass/break/continue keyword values whose
+next token is on another physical line. The pinned parser strips that text's
+newline while retaining the statement-token range and complete source metadata.
+Comments, split names/equals, class headers and compile modes are covered.
+
+The current fixed generated-syntax corpus contains 5,536 cases: 5,121 supported
 semantic/error comparisons and 415 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;

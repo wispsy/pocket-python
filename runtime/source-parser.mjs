@@ -957,6 +957,13 @@ class Parser {
           }
           this.fail("Expected a keyword argument value.", this.peek(), "SYNTAX", undefined, syntax);
         }
+        if (["pass", "break", "continue"].some(value => this.at(value)) && this.peek(1).value !== "if" &&
+            this.peek().span[0] !== this.peek(1).span[0]) {
+          const syntax = !positionalError && this.operandFields && this.comprehensionClauseFields && !this.conditionalTest ?
+            this.tokenDiagnostic("invalid syntax") : undefined;
+          if (syntax) syntax.text = syntax.text.replace(/\n$/, "");
+          this.fail("Expected a keyword argument value.", this.peek(), "SYNTAX", undefined, syntax);
+        }
         const argument = parseArgument(() => this.valueOperand(() => this.expression()));
         if (seen.has(token.value)) {
           const first = seen.get(token.value);
