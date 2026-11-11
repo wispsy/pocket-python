@@ -738,8 +738,14 @@ suspended conversion/cleanup survive collection, cancellation/close and shared
 limits. Original dynamic frames and installed offline Stop/Restart retain fresh
 source and reduced-profile boundaries.
 
-The current fixed generated-syntax corpus contains 7,222 cases: 6,707 supported
-semantic/error comparisons and 515 explicit native-field refusals. The ordinary
+LA-166 qualifies malformed initial function positional-only separator tails.
+The slash retains its native token range before invalid names, expressions or
+other separators; continued-line text preserves the pinned parser's physical
+newline behavior. Repeated/misordered separators and valid binding retain their
+existing diagnostics and execution paths.
+
+The current fixed generated-syntax corpus contains 7,299 cases: 6,782 supported
+semantic/error comparisons and 517 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

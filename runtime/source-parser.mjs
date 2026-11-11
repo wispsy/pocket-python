@@ -609,9 +609,13 @@ class Parser {
       if (this.eat("/")) {
         if (slash || star || !positional.length) {
           const message = star ? "/ must be ahead of *" : slash ? "/ may appear only once" :
-            this.at(",") ? "at least one argument must precede /" : this.at(end) ? "invalid syntax" : null;
+            this.at(",") ? "at least one argument must precede /" :
+              this.at(end) || end !== ":" ? "invalid syntax" : null;
+          const syntax = message ? this.delimitedDiagnostic(message, this.previous, end) : undefined;
+          if (syntax && !slash && !star && !positional.length && this.previous.span[0] !== this.peek().span[0])
+            syntax.text = syntax.text.replace(/\n$/, "");
           this.fail("Invalid positional-only separator.", this.previous, "SYNTAX", undefined,
-            message ? this.delimitedDiagnostic(message, this.previous, end) : undefined);
+            syntax);
         }
         slash = true; posonly = positional; positional = [];
       } else if (this.eat("*")) {
