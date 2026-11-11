@@ -552,6 +552,9 @@ class Parser {
     let bareStar = null;
     const incomplete = () => end === ":" && this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined;
     const parameterName = () => {
+      if (end !== ":" && !this.kind("name"))
+        this.fail("Expected a function parameter.", this.peek(), "SYNTAX", undefined,
+          this.tokenDiagnostic("invalid syntax"));
       if (end === ":" && (this.expressionBoundary() || this.kind("number") || this.kind("string")))
         this.fail("Expected a lambda parameter.", this.peek(), "SYNTAX", undefined, incomplete());
       return this.name();
