@@ -116,7 +116,8 @@
     "LA161",
     "LA162",
     "LA163",
-    "LA164"
+    "LA164",
+    "LA164A"
   ],
   "cases": [
     {
@@ -44845,6 +44846,357 @@
       "stage": "LA164",
       "source": "f=lambda 雪=(1,2),/,鳥=lambda:3,*,羽=4: len(雪)+鳥()+羽\nprint(f())\n",
       "stdout": "9\n"
+    },
+    {
+      "id": "starred-lambda-priority-00-exec",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda **+: 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-00-eval",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda **+: 1)',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-00-single",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda **+: 1)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-01-exec",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda *a,*else: 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-01-eval",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda *a,*else: 1)',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-01-single",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda *a,*else: 1)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-02-exec",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda *else: 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-02-eval",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda *else: 1)',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-02-single",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda *else: 1)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-03-exec",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda +: 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-03-eval",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda +: 1)',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-03-single",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda +: 1)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-04-exec",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda a,/,(b): 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-04-eval",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda a,/,(b): 1)',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-04-single",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda a,/,(b): 1)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-05-exec",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda a=1,(b): 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-05-eval",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda a=1,(b): 1)',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-05-single",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda a=1,(b): 1)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-06-exec",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=*y: 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-06-eval",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=*y: 1)',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-06-single",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=*y: 1)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-07-exec",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=: 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-07-eval",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=: 1)',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-07-single",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=: 1)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-08-exec",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=and: 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-08-eval",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=and: 1)',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-08-single",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=and: 1)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-09-exec",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=else: 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-09-eval",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=else: 1)',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-09-single",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=else: 1)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-10-exec",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=pass: 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-10-eval",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=pass: 1)',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-priority-10-single",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda x=pass: 1)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "starred-lambda-specialized-00-exec",
+      "stage": "LA164A",
+      "source": "try: compile('f(*lambda (雪): 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 11 1 14\n'f(*lambda (雪): 1)\\n' 2 6\nTrue True True\nFalse\n0 0 'f(*lambda (雪): 1)\\n'\n"
+    },
+    {
+      "id": "starred-lambda-specialized-00-eval",
+      "stage": "LA164A",
+      "source": "try: compile('f(*lambda (雪): 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 11 1 14\n'f(*lambda (雪): 1)' 2 6\nTrue True True\nFalse\n0 0 'f(*lambda (雪): 1)'\n"
+    },
+    {
+      "id": "starred-lambda-specialized-00-single",
+      "stage": "LA164A",
+      "source": "try: compile('f(*lambda (雪): 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 11 1 14\n'f(*lambda (雪): 1)' 2 6\nTrue True True\nFalse\n0 0 'f(*lambda (雪): 1)'\n"
+    },
+    {
+      "id": "starred-lambda-specialized-01-exec",
+      "stage": "LA164A",
+      "source": "try: compile('f(*lambda x=,y: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected default value expression\nselected/雪.py 1 12 1 13\n'f(*lambda x=,y: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 'f(*lambda x=,y: 1)\\n'\n"
+    },
+    {
+      "id": "starred-lambda-specialized-01-eval",
+      "stage": "LA164A",
+      "source": "try: compile('f(*lambda x=,y: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected default value expression\nselected/雪.py 1 12 1 13\n'f(*lambda x=,y: 1)' 2 6\nTrue True True\nFalse\n0 0 'f(*lambda x=,y: 1)'\n"
+    },
+    {
+      "id": "starred-lambda-specialized-01-single",
+      "stage": "LA164A",
+      "source": "try: compile('f(*lambda x=,y: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected default value expression\nselected/雪.py 1 12 1 13\n'f(*lambda x=,y: 1)' 2 6\nTrue True True\nFalse\n0 0 'f(*lambda x=,y: 1)'\n"
+    },
+    {
+      "id": "starred-lambda-specialized-02-exec",
+      "stage": "LA164A",
+      "source": "try: compile('f(*lambda *a,*b: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "* argument may appear only once\nselected/雪.py 1 14 1 15\n'f(*lambda *a,*b: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 'f(*lambda *a,*b: 1)\\n'\n"
+    },
+    {
+      "id": "starred-lambda-specialized-02-eval",
+      "stage": "LA164A",
+      "source": "try: compile('f(*lambda *a,*b: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "* argument may appear only once\nselected/雪.py 1 14 1 15\n'f(*lambda *a,*b: 1)' 2 6\nTrue True True\nFalse\n0 0 'f(*lambda *a,*b: 1)'\n"
+    },
+    {
+      "id": "starred-lambda-specialized-02-single",
+      "stage": "LA164A",
+      "source": "try: compile('f(*lambda *a,*b: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "* argument may appear only once\nselected/雪.py 1 14 1 15\n'f(*lambda *a,*b: 1)' 2 6\nTrue True True\nFalse\n0 0 'f(*lambda *a,*b: 1)'\n"
     }
   ]
 }

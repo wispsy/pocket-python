@@ -725,8 +725,13 @@ closing parentheses. Unicode, compile modes, continued lines and statement text
 retain exact fields. Two prior default-start refusals are adopted with their
 original assertions preserved and complete field/argument checks added.
 
-The current fixed generated-syntax corpus contains 7,164 cases: 6,681 supported
-semantic/error comparisons and 483 explicit native-field refusals. The ordinary
+LA-164A preserves the surrounding starred-call diagnostic priority for malformed
+lambda parameter/star/default starts. Generic token fields honor the existing
+operand-field boundary, while qualified parenthesized/default/separator messages
+retain their exact fields. The independent context probe records each refusal.
+
+The current fixed generated-syntax corpus contains 7,206 cases: 6,690 supported
+semantic/error comparisons and 516 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

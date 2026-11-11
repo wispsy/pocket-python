@@ -559,7 +559,7 @@ class Parser {
   parameters(end) {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
     let bareStar = null;
-    const incomplete = () => end === ":" && this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined;
+    const incomplete = () => end === ":" && this.comprehensionClauseFields && this.operandFields ? this.tokenDiagnostic("invalid syntax") : undefined;
     const parameterName = (parenthesized = false) => {
       if (end !== ":" && !this.kind("name"))
         this.fail("Expected a function parameter.", this.peek(), "SYNTAX", undefined,
@@ -618,7 +618,7 @@ class Parser {
         const separator = this.previous;
         if (star) this.fail("Duplicate keyword-only separator.", separator, "SYNTAX", undefined,
           this.kind("name") || this.at(",") ? this.delimitedDiagnostic("* argument may appear only once", separator, end) :
-            end === ":" && this.comprehensionClauseFields ? this.diagnostic("invalid syntax", separator.span) : undefined);
+            end === ":" && this.comprehensionClauseFields && this.operandFields ? this.diagnostic("invalid syntax", separator.span) : undefined);
         if (this.kind("name")) {
           const token = this.take();
           vararg.push({name: token.value, value: null, span: token.span});
@@ -670,7 +670,7 @@ class Parser {
       if (syntax && missing && this.previous.span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
       if (syntax && statement && this.peek(1).span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
       this.fail("Expected a parameter default value.", this.peek(), "SYNTAX", undefined,
-        this.comprehensionClauseFields ? syntax : undefined);
+        this.comprehensionClauseFields && (missing || this.operandFields) ? syntax : undefined);
     }
     return this.expression();
   }
