@@ -635,7 +635,7 @@ class Parser {
       } else {
         const token = parameterName(!star && !slash && !defaultSeen);
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
-        const value = this.eat("=") ? this.parameterDefault(end) : null;
+        const value = this.eat("=") ? this.parameterDefault() : null;
         if (value !== null) separatorFields = false;
         if (end === ":" && value !== null && ["name", "number", "string"].includes(this.peek().kind))
           this.fail("Expected a lambda parameter separator.");
@@ -661,15 +661,16 @@ class Parser {
     }
     return {posonly, positional, kwonly, ...(vararg.length ? {vararg} : {}), ...(kwarg.length ? {kwarg} : {})};
   }
-  parameterDefault(end) {
-    if (end !== ":" && (this.expressionBoundary() || ["*", "**", "="].some(value => this.at(value)))) {
+  parameterDefault() {
+    if (this.expressionBoundary() || ["*", "**", "="].some(value => this.at(value))) {
       const statement = ["pass", "break", "continue"].some(value => this.at(value));
       const missing = [",", ")"].some(value => this.at(value));
       let syntax = missing ? this.diagnostic("expected default value expression", this.previous.span) :
         statement && this.peek(1).value === "if" ? undefined : this.tokenDiagnostic("invalid syntax");
       if (syntax && missing && this.previous.span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
       if (syntax && statement && this.peek(1).span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
-      this.fail("Expected a parameter default value.", this.peek(), "SYNTAX", undefined, syntax);
+      this.fail("Expected a parameter default value.", this.peek(), "SYNTAX", undefined,
+        this.comprehensionClauseFields ? syntax : undefined);
     }
     return this.expression();
   }

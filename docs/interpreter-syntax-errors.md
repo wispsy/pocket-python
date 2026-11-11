@@ -719,8 +719,14 @@ message at the equals sign; invalid keyword/star starts retain token ranges.
 Continued-line text, specialized signature errors and annotation admission keep
 their priority. Statement-conditional combinations retain explicit boundaries.
 
-The current fixed generated-syntax corpus contains 6,998 cases: 6,517 supported
-semantic/error comparisons and 481 explicit native-field refusals. The ordinary
+LA-164 qualifies missing initial lambda default operands, including the distinct
+colon/EOF token diagnostics and equals-sign diagnostics before commas or grouped
+closing parentheses. Unicode, compile modes, continued lines and statement text
+retain exact fields. Two prior default-start refusals are adopted with their
+original assertions preserved and complete field/argument checks added.
+
+The current fixed generated-syntax corpus contains 7,164 cases: 6,681 supported
+semantic/error comparisons and 483 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
