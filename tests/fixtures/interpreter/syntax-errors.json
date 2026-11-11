@@ -144,7 +144,8 @@
     "LA186",
     "LA187",
     "LA188",
-    "LA189"
+    "LA189",
+    "LA185A"
   ],
   "cases": [
     {
@@ -58096,6 +58097,798 @@
       "stage": "LA189",
       "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('import 雪.else',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
       "stdout": "entered\n7 True invalid syntax 10\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-00-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-00-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-01-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 1\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 1\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 1\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-01-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 1\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 1\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 1\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-02-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 True\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 8\n'@飾 True\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 True\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-02-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 True\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 8\n'@飾 True\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 True\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-03-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 False\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 9\n'@飾 False\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 False\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-03-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 False\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 9\n'@飾 False\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 False\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-04-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 None\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 8\n'@飾 None\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 None\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-04-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 None\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 8\n'@飾 None\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 None\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-05-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 ...\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 7\n'@飾 ...\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 ...\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-05-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 ...\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 7\n'@飾 ...\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 ...\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-06-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 {鳥:羽}\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 {鳥:羽}\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 {鳥:羽}\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-06-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 {鳥:羽}\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 {鳥:羽}\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 {鳥:羽}\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-07-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 lambda:鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 10\n'@飾 lambda:鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 lambda:鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-07-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 lambda:鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 10\n'@飾 lambda:鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 lambda:鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-08-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 ~鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 ~鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 ~鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-08-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 ~鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 ~鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾 ~鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-09-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 :\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 :\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾 :\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-09-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 :\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 :\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾 :\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-10-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 ;\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 ;\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾 ;\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-10-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 ;\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'@飾 ;\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾 ;\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-11-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 else\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 8\n'@飾 else\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾 else\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-0-11-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾 else\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 8\n'@飾 else\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾 else\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-walrus-0-0-exec-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾 :=鳥\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-0-0-single-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾 :=鳥\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 0 2 0\n'def 雲(): pass' 2 6\nTrue True True\nFalse\n0 0 '@飾 :=鳥\\ndef 雲(): pass'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-0-1-exec-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾 :=鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-0-1-single-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾 :=鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 3 0 3 0\n'def 雲(): pass' 2 6\nTrue True True\nFalse\n0 0 '@飾 :=鳥\\\\\\n\\ndef 雲(): pass'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-continued-tail-1-00-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) 鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) 鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) 鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-00-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) 鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) 鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) 鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-01-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) 1\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) 1\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) 1\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-01-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) 1\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) 1\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) 1\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-02-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) True\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@(飾) True\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) True\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-02-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) True\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@(飾) True\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) True\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-03-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) False\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 11\n'@(飾) False\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) False\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-03-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) False\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 11\n'@(飾) False\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) False\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-04-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) None\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@(飾) None\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) None\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-04-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) None\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@(飾) None\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) None\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-05-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) ...\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 9\n'@(飾) ...\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) ...\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-05-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) ...\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 9\n'@(飾) ...\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) ...\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-06-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) {鳥:羽}\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) {鳥:羽}\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) {鳥:羽}\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-06-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) {鳥:羽}\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) {鳥:羽}\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) {鳥:羽}\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-07-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) lambda:鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 12\n'@(飾) lambda:鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) lambda:鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-07-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) lambda:鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 12\n'@(飾) lambda:鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) lambda:鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-08-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) ~鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) ~鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) ~鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-08-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) ~鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) ~鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) ~鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-09-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) :\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) :\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@(飾) :\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-09-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) :\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) :\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@(飾) :\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-10-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) ;\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) ;\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@(飾) ;\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-10-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) ;\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@(飾) ;\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@(飾) ;\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-11-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) else\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@(飾) else\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@(飾) else\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-1-11-single",
+      "stage": "LA185A",
+      "source": "try: compile('@(飾) else\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@(飾) else\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@(飾) else\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-walrus-1-0-exec-boundary",
+      "stage": "Future",
+      "source": "try: compile('@(飾) :=鳥\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with name\nselected/雪.py 1 3 1 4\n'@(飾) :=鳥\\n' 2 6\nTrue True True\nFalse\n0 0 '@(飾) :=鳥\\ndef 雲(): pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-1-0-single-boundary",
+      "stage": "Future",
+      "source": "try: compile('@(飾) :=鳥\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with name\nselected/雪.py 1 3 1 4\n'@(飾) :=鳥\\n' 2 6\nTrue True True\nFalse\n0 0 '@(飾) :=鳥\\ndef 雲(): pass'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-1-1-exec-boundary",
+      "stage": "Future",
+      "source": "try: compile('@(飾) :=鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with name\nselected/雪.py 1 3 1 4\n'@(飾) :=鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) :=鳥\\\\\\n\\ndef 雲(): pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-1-1-single-boundary",
+      "stage": "Future",
+      "source": "try: compile('@(飾) :=鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with name\nselected/雪.py 1 3 1 4\n'@(飾) :=鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@(飾) :=鳥\\\\\\n\\ndef 雲(): pass'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-continued-tail-2-00-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) 鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) 鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) 鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-00-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) 鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) 鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) 鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-01-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) 1\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) 1\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) 1\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-01-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) 1\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) 1\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) 1\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-02-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) True\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 11\n'@飾(雪) True\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) True\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-02-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) True\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 11\n'@飾(雪) True\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) True\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-03-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) False\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 12\n'@飾(雪) False\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) False\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-03-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) False\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 12\n'@飾(雪) False\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) False\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-04-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) None\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 11\n'@飾(雪) None\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) None\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-04-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) None\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 11\n'@飾(雪) None\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) None\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-05-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) ...\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 10\n'@飾(雪) ...\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) ...\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-05-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) ...\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 10\n'@飾(雪) ...\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) ...\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-06-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) {鳥:羽}\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) {鳥:羽}\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) {鳥:羽}\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-06-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) {鳥:羽}\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) {鳥:羽}\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) {鳥:羽}\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-07-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) lambda:鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 13\n'@飾(雪) lambda:鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) lambda:鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-07-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) lambda:鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 13\n'@飾(雪) lambda:鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) lambda:鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-08-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) ~鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) ~鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) ~鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-08-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) ~鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) ~鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) ~鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-09-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) :\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) :\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) :\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-09-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) :\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) :\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) :\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-10-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) ;\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) ;\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) ;\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-10-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) ;\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'@飾(雪) ;\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) ;\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-11-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) else\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 11\n'@飾(雪) else\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) else\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-2-11-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾(雪) else\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 11\n'@飾(雪) else\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) else\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-walrus-2-0-exec-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾(雪) :=鳥\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with function call\nselected/雪.py 1 2 1 6\n'@飾(雪) :=鳥\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) :=鳥\\ndef 雲(): pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-2-0-single-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾(雪) :=鳥\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with function call\nselected/雪.py 1 2 1 6\n'@飾(雪) :=鳥\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) :=鳥\\ndef 雲(): pass'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-2-1-exec-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾(雪) :=鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with function call\nselected/雪.py 1 2 1 6\n'@飾(雪) :=鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) :=鳥\\\\\\n\\ndef 雲(): pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-2-1-single-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾(雪) :=鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with function call\nselected/雪.py 1 2 1 6\n'@飾(雪) :=鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾(雪) :=鳥\\\\\\n\\ndef 雲(): pass'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-continued-tail-3-00-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-00-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-01-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 1\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 1\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 1\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-01-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 1\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 1\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 1\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-02-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 True\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@飾.雪 True\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 True\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-02-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 True\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@飾.雪 True\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 True\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-03-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 False\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 11\n'@飾.雪 False\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 False\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-03-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 False\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 11\n'@飾.雪 False\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 False\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-04-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 None\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@飾.雪 None\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 None\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-04-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 None\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@飾.雪 None\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 None\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-05-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 ...\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 9\n'@飾.雪 ...\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 ...\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-05-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 ...\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 9\n'@飾.雪 ...\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 ...\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-06-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 {鳥:羽}\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 {鳥:羽}\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 {鳥:羽}\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-06-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 {鳥:羽}\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 {鳥:羽}\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 {鳥:羽}\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-07-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 lambda:鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 12\n'@飾.雪 lambda:鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 lambda:鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-07-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 lambda:鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 12\n'@飾.雪 lambda:鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 lambda:鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-08-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 ~鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 ~鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 ~鳥\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-08-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 ~鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 ~鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 ~鳥\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-09-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 :\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 :\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 :\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-09-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 :\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 :\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 :\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-10-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 ;\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 ;\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 ;\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-10-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 ;\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 7\n'@飾.雪 ;\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 ;\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-11-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 else\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@飾.雪 else\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 else\\\\\\n\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-continued-tail-3-11-single",
+      "stage": "LA185A",
+      "source": "try: compile('@飾.雪 else\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 6 1 10\n'@飾.雪 else\\\\\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 else\\\\\\n\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-walrus-3-0-exec-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾.雪 :=鳥\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with attribute\nselected/雪.py 1 2 1 5\n'@飾.雪 :=鳥\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 :=鳥\\ndef 雲(): pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-3-0-single-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾.雪 :=鳥\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with attribute\nselected/雪.py 1 2 1 5\n'@飾.雪 :=鳥\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 :=鳥\\ndef 雲(): pass'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-3-1-exec-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾.雪 :=鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with attribute\nselected/雪.py 1 2 1 5\n'@飾.雪 :=鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 :=鳥\\\\\\n\\ndef 雲(): pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-walrus-3-1-single-boundary",
+      "stage": "Future",
+      "source": "try: compile('@飾.雪 :=鳥\\\\\\n\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot use assignment expressions with attribute\nselected/雪.py 1 2 1 5\n'@飾.雪 :=鳥\\\\' 2 6\nTrue True True\nFalse\n0 0 '@飾.雪 :=鳥\\\\\\n\\ndef 雲(): pass'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or native fields retain their explicit boundary."
+    },
+    {
+      "id": "decorator-statement-lines-0-0-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@pass\\\\\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 6\n'@pass\\\\' 2 6\nTrue True True\nFalse\n0 0 '@pass\\\\\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-statement-lines-0-0-single",
+      "stage": "LA185A",
+      "source": "try: compile('@pass\\\\\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 6\n'@pass\\\\' 2 6\nTrue True True\nFalse\n0 0 '@pass\\\\\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-statement-lines-0-1-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@pass\\\\\\nclass 雲: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 6\n'@pass\\\\' 2 6\nTrue True True\nFalse\n0 0 '@pass\\\\\\nclass 雲: pass\\n'\n"
+    },
+    {
+      "id": "decorator-statement-lines-0-1-single",
+      "stage": "LA185A",
+      "source": "try: compile('@pass\\\\\\nclass 雲: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 6\n'@pass\\\\' 2 6\nTrue True True\nFalse\n0 0 '@pass\\\\\\nclass 雲: pass'\n"
+    },
+    {
+      "id": "decorator-statement-lines-1-0-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@break\\\\\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 7\n'@break\\\\' 2 6\nTrue True True\nFalse\n0 0 '@break\\\\\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-statement-lines-1-0-single",
+      "stage": "LA185A",
+      "source": "try: compile('@break\\\\\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 7\n'@break\\\\' 2 6\nTrue True True\nFalse\n0 0 '@break\\\\\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-statement-lines-1-1-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@break\\\\\\nclass 雲: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 7\n'@break\\\\' 2 6\nTrue True True\nFalse\n0 0 '@break\\\\\\nclass 雲: pass\\n'\n"
+    },
+    {
+      "id": "decorator-statement-lines-1-1-single",
+      "stage": "LA185A",
+      "source": "try: compile('@break\\\\\\nclass 雲: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 7\n'@break\\\\' 2 6\nTrue True True\nFalse\n0 0 '@break\\\\\\nclass 雲: pass'\n"
+    },
+    {
+      "id": "decorator-statement-lines-2-0-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@continue\\\\\\ndef 雲(): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 10\n'@continue\\\\' 2 6\nTrue True True\nFalse\n0 0 '@continue\\\\\\ndef 雲(): pass\\n'\n"
+    },
+    {
+      "id": "decorator-statement-lines-2-0-single",
+      "stage": "LA185A",
+      "source": "try: compile('@continue\\\\\\ndef 雲(): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 10\n'@continue\\\\' 2 6\nTrue True True\nFalse\n0 0 '@continue\\\\\\ndef 雲(): pass'\n"
+    },
+    {
+      "id": "decorator-statement-lines-2-1-exec",
+      "stage": "LA185A",
+      "source": "try: compile('@continue\\\\\\nclass 雲: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 10\n'@continue\\\\' 2 6\nTrue True True\nFalse\n0 0 '@continue\\\\\\nclass 雲: pass\\n'\n"
+    },
+    {
+      "id": "decorator-statement-lines-2-1-single",
+      "stage": "LA185A",
+      "source": "try: compile('@continue\\\\\\nclass 雲: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 2 1 10\n'@continue\\\\' 2 6\nTrue True True\nFalse\n0 0 '@continue\\\\\\nclass 雲: pass'\n"
     }
   ]
 }

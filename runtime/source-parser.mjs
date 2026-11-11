@@ -539,13 +539,18 @@ class Parser {
       if (decorators.length >= PARSER_LIMITS.decorators) this.fail("Decorator count budget exceeded.", this.previous, "COMPILE_BUDGET");
       if (this.expressionBoundary() || ["=", "*", "**"].some(value => this.at(value))) {
         const statement = ["pass", "break", "continue"].some(value => this.at(value));
+        const syntax = statement && this.peek(1).value === "if" ? undefined : this.tokenDiagnostic("invalid syntax");
+        if (syntax && statement && this.peek(1).span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
         this.fail("Expected a decorator expression.", this.peek(), "SYNTAX", undefined,
-          statement && this.peek(1).value === "if" ? undefined : this.tokenDiagnostic("invalid syntax"));
+          syntax);
       }
       decorators.push(this.expression());
       if (!this.kind("newline")) {
-        const syntax = this.at("=") ? undefined : this.tokenDiagnostic("invalid syntax");
-        if (syntax?.text.endsWith("\\\n")) syntax.text = syntax.text.slice(0, -1);
+        const syntax = ["=", ":="].some(value => this.at(value)) ? undefined : this.tokenDiagnostic("invalid syntax");
+        const adjacent = ["name", "number", "string"].includes(this.peek().kind) ||
+          ["True", "False", "None", "...", "lambda", "{", "~"].some(value => this.at(value));
+        if (syntax?.text.endsWith("\\\n") && adjacent)
+          syntax.text = syntax.text.slice(0, -1);
         this.fail("Expected a newline after the decorator expression.", this.peek(), "SYNTAX", undefined, syntax);
       }
       this.take();

@@ -897,8 +897,13 @@ cyclic filename owners. Suspended conversion/cleanup, collection, interruption,
 shared limits, original frames and installed offline Stop/Restart preserve fresh
 source and the classes-source/1 dynamic-compilation boundary.
 
-The current fixed generated-syntax corpus contains 9,255 cases: 8,614 supported
-semantic/error comparisons and 641 explicit native-field refusals. The ordinary
+LA-185A preserves decorator diagnostic priority and continued-line text. Plain
+statement starts and adjacent expression tails select their distinct physical
+newline behavior. Punctuation tails retain the newline; assignment-expression
+grammar keeps its native-field boundary rather than publishing a generic range.
+
+The current fixed generated-syntax corpus contains 9,379 cases: 8,722 supported
+semantic/error comparisons and 657 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
