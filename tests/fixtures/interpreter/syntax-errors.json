@@ -135,7 +135,8 @@
     "LA178",
     "LA179",
     "LA180",
-    "LA181"
+    "LA181",
+    "LA182"
   ],
   "cases": [
     {
@@ -55182,6 +55183,510 @@
       "stage": "Future",
       "source": "try: compile('def 雲(雪:鳥,羽:else): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
       "stdout": "invalid syntax\nselected/雪.py 1 13 1 17\n'def 雲(雪:鳥,羽:else): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪:鳥,羽:else): pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "return-annotation-start-00-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-00-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->'\n"
+    },
+    {
+      "id": "return-annotation-start-01-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->:: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->:: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->:: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-01-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->:: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->:: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->:: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-02-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->,: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->,: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->,: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-02-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->,: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->,: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->,: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-03-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->=: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->=: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->=: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-03-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->=: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->=: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->=: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-04-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->*: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->*: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->*: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-04-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->*: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->*: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->*: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-05-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->**: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->**: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->**: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-05-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->**: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->**: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->**: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-06-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->else: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-06-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->else: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->else: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->else: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-07-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->pass: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->pass: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->pass: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-07-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->pass: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->pass: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->pass: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-08-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->return: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->return: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->return: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-08-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->return: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->return: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->return: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-09-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->if: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->if: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->if: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-09-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->if: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->if: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->if: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-10-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->for: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->for: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->for: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-10-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->for: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->for: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->for: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-11-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->and: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->and: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->and: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-11-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->and: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->and: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->and: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-12-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->or: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->or: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->or: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-12-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->or: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->or: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->or: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-13-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->in: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->in: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->in: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-13-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->in: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->in: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->in: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-14-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->is: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->is: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->is: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-14-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->is: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->is: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->is: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-15-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->while: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->while: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->while: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-15-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->while: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->while: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->while: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-16-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->as: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->as: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->as: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-16-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->as: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->as: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->as: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-17-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()-># note',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()-># note\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()-># note\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-17-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()-># note',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()-># note' 2 6\nTrue True True\nFalse\n0 0 'def 雲()-># note'\n"
+    },
+    {
+      "id": "return-annotation-start-18-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()-># note\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()-># note\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()-># note\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-18-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()-># note\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()-># note\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()-># note\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-19-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-19-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-20-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->\\\\\\nelse: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->\\\\\\nelse: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-20-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->\\\\\\nelse: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->\\\\\\nelse: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-21-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->\\\\\\n:: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->\\\\\\n:: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-21-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->\\\\\\n:: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->\\\\\\n:: pass'\n"
+    },
+    {
+      "id": "return-annotation-start-22-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->\\\\\\n# note',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->\\\\\\n# note\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-22-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->\\\\\\n# note',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->\\\\\\n# note'\n"
+    },
+    {
+      "id": "return-annotation-start-23-exec",
+      "stage": "Future",
+      "source": "try: compile('def 雲()->pass if 鳥 else 羽: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression before 'if', but statement is given\nselected/雪.py 1 10 1 14\n'def 雲()->pass if 鳥 else 羽: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->pass if 鳥 else 羽: pass\\n'\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Conditional statement operands retain their annotation native-field boundary."
+    },
+    {
+      "id": "return-annotation-start-23-single",
+      "stage": "Future",
+      "source": "try: compile('def 雲()->pass if 鳥 else 羽: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected expression before 'if', but statement is given\nselected/雪.py 1 10 1 14\n'def 雲()->pass if 鳥 else 羽: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->pass if 鳥 else 羽: pass'\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Conditional statement operands retain their annotation native-field boundary."
+    },
+    {
+      "id": "return-annotation-start-24-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->else\\n: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->else\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->else\\n: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-start-24-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->else\\n: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->else\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->else\\n: pass'\n"
+    },
+    {
+      "id": "return-annotation-context-00-exec",
+      "stage": "LA182",
+      "source": "try: compile('@飾\\ndef 雲()->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 8 2 10\n'def 雲()->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾\\ndef 雲()->else: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-context-00-single",
+      "stage": "LA182",
+      "source": "try: compile('@飾\\ndef 雲()->else: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 8 2 10\n'def 雲()->else: pass' 2 6\nTrue True True\nFalse\n0 0 '@飾\\ndef 雲()->else: pass'\n"
+    },
+    {
+      "id": "return-annotation-context-01-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 外():\\n def 雲()->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 9 2 11\n' def 雲()->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 外():\\n def 雲()->else: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-context-01-single",
+      "stage": "LA182",
+      "source": "try: compile('def 外():\\n def 雲()->else: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 9 2 11\n' def 雲()->else: pass' 2 6\nTrue True True\nFalse\n0 0 'def 外():\\n def 雲()->else: pass'\n"
+    },
+    {
+      "id": "return-annotation-context-02-exec",
+      "stage": "LA182",
+      "source": "try: compile('if True:\\n def 雲()->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 9 2 11\n' def 雲()->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n def 雲()->else: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-context-02-single",
+      "stage": "LA182",
+      "source": "try: compile('if True:\\n def 雲()->else: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 9 2 11\n' def 雲()->else: pass' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n def 雲()->else: pass'\n"
+    },
+    {
+      "id": "return-annotation-context-03-exec",
+      "stage": "LA182",
+      "source": "try: compile('class C:\\n def 雲()->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 9 2 11\n' def 雲()->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class C:\\n def 雲()->else: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-context-03-single",
+      "stage": "LA182",
+      "source": "try: compile('class C:\\n def 雲()->else: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 9 2 11\n' def 雲()->else: pass' 2 6\nTrue True True\nFalse\n0 0 'class C:\\n def 雲()->else: pass'\n"
+    },
+    {
+      "id": "return-annotation-context-04-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲(雪,雪)->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 11 1 13\n'def 雲(雪,雪)->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪,雪)->else: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-context-04-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲(雪,雪)->else: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 11 1 13\n'def 雲(雪,雪)->else: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪,雪)->else: pass'\n"
+    },
+    {
+      "id": "return-annotation-context-05-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲(雪=1,鳥)->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "parameter without a default follows parameter with a default\nselected/雪.py 1 11 1 12\n'def 雲(雪=1,鳥)->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1,鳥)->else: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-context-05-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲(雪=1,鳥)->else: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "parameter without a default follows parameter with a default\nselected/雪.py 1 11 1 12\n'def 雲(雪=1,鳥)->else: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1,鳥)->else: pass'\n"
+    },
+    {
+      "id": "return-annotation-context-06-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲(雪:else)->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'def 雲(雪:else)->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪:else)->else: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-context-06-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲(雪:else)->else: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'def 雲(雪:else)->else: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪:else)->else: pass'\n"
+    },
+    {
+      "id": "return-annotation-context-07-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲(*雪,*else)->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'def 雲(*雪,*else)->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(*雪,*else)->else: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-context-07-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲(*雪,*else)->else: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'def 雲(*雪,*else)->else: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(*雪,*else)->else: pass'\n"
+    },
+    {
+      "id": "return-annotation-context-08-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲(雪=1;)->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'def 雲(雪=1;)->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1;)->else: pass\\n'\n"
+    },
+    {
+      "id": "return-annotation-context-08-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲(雪=1;)->else: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'def 雲(雪=1;)->else: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1;)->else: pass'\n"
+    },
+    {
+      "id": "return-annotation-context-09-exec",
+      "stage": "Future",
+      "source": "try: compile('def 雲(雪=1 not 鳥)->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 16\n'def 雲(雪=1 not 鳥)->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥)->else: pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "return-annotation-context-09-single",
+      "stage": "Future",
+      "source": "try: compile('def 雲(雪=1 not 鳥)->else: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 16\n'def 雲(雪=1 not 鳥)->else: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥)->else: pass'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "return-annotation-context-10-exec",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->else: return else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->else: return else\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->else: return else\\n'\n"
+    },
+    {
+      "id": "return-annotation-context-10-single",
+      "stage": "LA182",
+      "source": "try: compile('def 雲()->else: return else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->else: return else' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->else: return else'\n"
+    },
+    {
+      "id": "return-annotation-prior-fields",
+      "stage": "LA182",
+      "source": "try: compile('if True: pass\\ndef 雲()->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "expected ':'\nselected/雪.py 2 8 2 10\n'def 雲()->else: pass\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "return-annotation-prior-metadata",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\ndef 雲()->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 8 2 10\n'def 雲()->else: pass\\n' 2 6\nTrue True True\nFalse\n1 0 'if True: pass\\ndef 雲()->else: pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Prior-compound parser metadata remains unqualified."
+    },
+    {
+      "id": "return-annotation-eval-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雲()->else: pass',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 1 1 4\n'def 雲()->else: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->else: pass'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "return-annotation-unqualified-0-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雲()->鳥: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "return-annotation-unqualified-1-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雲()->not: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->not: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->not: pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "return-annotation-unqualified-2-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雲()->lambda: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 8 1 10\n'def 雲()->lambda: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲()->lambda: pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "return-annotation-unqualified-3-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雲(雪:鳥)->else: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 11 1 13\n'def 雲(雪:鳥)->else: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪:鳥)->else: pass\\n'\n",
       "owner": "#124",
       "classification": "explicit-refusal",
       "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."

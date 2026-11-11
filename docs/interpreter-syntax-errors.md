@@ -845,8 +845,14 @@ and variadic parameters retain exact Unicode and physical-line fields. Valid
 annotation expressions, variadic annotation grammar and unqualified malformed
 expressions remain explicitly unsupported under #125.
 
-The current fixed generated-syntax corpus contains 8,818 cases: 8,246 supported
-semantic/error comparisons and 572 explicit native-field refusals. The ordinary
+LA-182 recognizes malformed initial return annotations. The native expected-
+colon diagnostic selects the arrow before the invalid annotation operand,
+preserving physical-line ranges and source text. Earlier parameter failures
+retain priority. Valid return annotations and unqualified annotation expressions
+remain explicitly unsupported under #125.
+
+The current fixed generated-syntax corpus contains 8,897 cases: 8,315 supported
+semantic/error comparisons and 582 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

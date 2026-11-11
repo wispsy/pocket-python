@@ -534,7 +534,16 @@ class Parser {
       this.tokenDiagnostic("expected '('"));
     this.expect("(");
     const params = this.parameters(")"); this.expect(")");
-    if (this.at("->")) this.unsupported("Return annotations are not adopted.");
+    if (this.eat("->")) {
+      const arrow = this.previous;
+      if (this.expressionBoundary() || ["=", "*", "**"].some(value => this.at(value))) {
+        const statement = ["pass", "break", "continue"].some(value => this.at(value));
+        const syntax = statement && this.peek(1).value === "if" ? undefined : this.diagnostic("expected ':'", arrow.span);
+        if (syntax && arrow.span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+        this.fail("Expected a return annotation.", arrow, "SYNTAX", undefined, syntax);
+      }
+      this.unsupported("Return annotations are not adopted.", arrow);
+    }
     const before = [this.functionDepth, this.loopDepth]; this.functionDepth++; this.loopDepth = 0;
     let body;
     try { body = this.suite(start); } finally { [this.functionDepth, this.loopDepth] = before; }
