@@ -29,7 +29,7 @@ for source in ["雪=", "record=[", "value='unfinished", "if True:\nvalue=7",
                "~else", "雪 and else", "雪 + else", "雪 is not else",
                "雪.else", "雪[]", "record(*else)", "record(**else)",
                "雪=else", "record(雪=else)", "assert 雪,else", "raise 雪 from else",
-               "return else", "del else"]:
+               "return else", "del else", "global 雪,else", "nonlocal 雪,else"]:
     error = validate(source, "records/input.py")
     original = error.args
     error.args = ()

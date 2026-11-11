@@ -96,7 +96,8 @@
     "LA143",
     "LA144",
     "LA145",
-    "LA146"
+    "LA146",
+    "LA147"
   ],
   "cases": [
     {
@@ -36601,8 +36602,8 @@
     {
       "id": "nonlocal-name-valid",
       "stage": "LA146",
-      "source": "def outer():\n 雪=1\n 鳥=2\n def change():\n  nonlocal 雪,鳥\n  雪=3\n  鳥=4\n change()\n return 雪,鳥\nprint(outer())\n",
-      "stdout": "(3, 4)\n"
+      "source": "def outer():\n 雪=1\n 鳥=2\n def change():\n  nonlocal 雪,鳥\n  雪=3\n  鳥=4\n change()\n return 雪,鳥\nsaved=outer()\nprint(saved[0],saved[1])\n",
+      "stdout": "3 4\n"
     },
     {
       "id": "nonlocal-name-unqualified-0",
@@ -36620,6 +36621,162 @@
       "classification": "explicit-refusal",
       "owner": "#124",
       "boundary": "Surrounding statement, target or declaration grammar retains an explicit native-field boundary.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "generated-globalname-owner-cycle",
+      "stage": "LA147",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('global 雪,else',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue invalid syntax 10 False False\n"
+    },
+    {
+      "id": "generated-globalname-chaining",
+      "stage": "LA147",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('global 雪,else',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 10\n"
+    },
+    {
+      "id": "generated-globalname-cleanup",
+      "stage": "LA147",
+      "source": "def work():\n try: compile('global 雪,else',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py invalid syntax False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-globalname-original-dynamic-failure",
+      "stage": "LA147",
+      "source": "exec(compile('def fail():\\n try: compile(\\'global 雪,else\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','globalname-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-globalname-nested-exec",
+      "stage": "LA147",
+      "source": "scope={}\nexec('try: compile(\\'global 雪,else\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py invalid syntax 10 False\n"
+    },
+    {
+      "id": "generated-globalname-field-independence",
+      "stage": "LA147",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('global 雪,else',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'global 雪,else\\n' True True 77 10\n"
+    },
+    {
+      "id": "generated-globalname-module",
+      "stage": "LA147",
+      "source": "import helper\ne=helper.validate('global 雪,else')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py invalid syntax 10 module input\n"
+    },
+    {
+      "id": "generated-globalname-flags-owner-cycle",
+      "stage": "LA147",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('global 雪,else',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True invalid syntax 10\n"
+    },
+    {
+      "id": "generated-nonlocalname-owner-cycle",
+      "stage": "LA147",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('nonlocal 雪,else',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue invalid syntax 12 False False\n"
+    },
+    {
+      "id": "generated-nonlocalname-chaining",
+      "stage": "LA147",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('nonlocal 雪,else',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 12\n"
+    },
+    {
+      "id": "generated-nonlocalname-cleanup",
+      "stage": "LA147",
+      "source": "def work():\n try: compile('nonlocal 雪,else',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py invalid syntax False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-nonlocalname-original-dynamic-failure",
+      "stage": "LA147",
+      "source": "exec(compile('def fail():\\n try: compile(\\'nonlocal 雪,else\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','nonlocalname-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-nonlocalname-nested-exec",
+      "stage": "LA147",
+      "source": "scope={}\nexec('try: compile(\\'nonlocal 雪,else\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py invalid syntax 12 False\n"
+    },
+    {
+      "id": "generated-nonlocalname-field-independence",
+      "stage": "LA147",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('nonlocal 雪,else',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'nonlocal 雪,else\\n' True True 77 12\n"
+    },
+    {
+      "id": "generated-nonlocalname-module",
+      "stage": "LA147",
+      "source": "import helper\ne=helper.validate('nonlocal 雪,else')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py invalid syntax 12 module input\n"
+    },
+    {
+      "id": "generated-nonlocalname-flags-owner-cycle",
+      "stage": "LA147",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('nonlocal 雪,else',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True invalid syntax 12\n"
+    },
+    {
+      "id": "return-operand-eval-boundary",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Statement syntax in eval mode retains its explicit native-field boundary.",
+      "source": "try: compile('return else',\"selected.py\",\"eval\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "delete-target-eval-boundary",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Statement syntax in eval mode retains its explicit native-field boundary.",
+      "source": "try: compile('del else',\"selected.py\",\"eval\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "global-name-eval-boundary",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Statement syntax in eval mode retains its explicit native-field boundary.",
+      "source": "try: compile('global else',\"selected.py\",\"eval\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "nonlocal-name-eval-boundary",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Statement syntax in eval mode retains its explicit native-field boundary.",
+      "source": "try: compile('nonlocal else',\"selected.py\",\"eval\")\nexcept SyntaxError as e: print(e.filename)\n",
       "stdout": "selected.py\n"
     }
   ]
