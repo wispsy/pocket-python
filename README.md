@@ -283,8 +283,8 @@ import-list/alias, comprehension element/unpacking/clause, mixed dictionary/set
 displays, dictionary comprehension entries, incomplete loop/condition headers,
 conditional expressions, missing expression starts, incomplete lambdas,
 unary/Boolean/arithmetic/comparison operands, attribute identifiers, subscription
-iterable/mapping unpacking operands, assignment/named keyword values and
-interactive-input payloads from
+operands, iterable/mapping unpacking operands, assignment/named keyword values,
+assert/raise operands and interactive-input payloads from
 dynamic compilation. Native fields,
 argument snapshots and original filenames retain their independent identity.
 Run `examples/interpreter_generated_syntax.py` for source validation and cleanup.

@@ -90,7 +90,8 @@
     "LA138",
     "LA139",
     "LA140",
-    "LA137A"
+    "LA137A",
+    "LA141"
   ],
   "cases": [
     {
@@ -34652,6 +34653,126 @@
       "stage": "LA137A",
       "source": "try: compile('f(雪=return\\n)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
       "stdout": "invalid syntax\nselected/雪.py 1 5 1 11\n'f(雪=return\\n' 2 6\nTrue True True\n0 0 'f(雪=return\\n)'\n"
+    },
+    {
+      "id": "generated-assertoperand-owner-cycle",
+      "stage": "LA141",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('assert 雪,else',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue invalid syntax 10 False False\n"
+    },
+    {
+      "id": "generated-assertoperand-chaining",
+      "stage": "LA141",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('assert 雪,else',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 10\n"
+    },
+    {
+      "id": "generated-assertoperand-cleanup",
+      "stage": "LA141",
+      "source": "def work():\n try: compile('assert 雪,else',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py invalid syntax False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-assertoperand-original-dynamic-failure",
+      "stage": "LA141",
+      "source": "exec(compile('def fail():\\n try: compile(\\'assert 雪,else\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','assertoperand-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-assertoperand-nested-exec",
+      "stage": "LA141",
+      "source": "scope={}\nexec('try: compile(\\'assert 雪,else\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py invalid syntax 10 False\n"
+    },
+    {
+      "id": "generated-assertoperand-field-independence",
+      "stage": "LA141",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('assert 雪,else',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'assert 雪,else\\n' True True 77 10\n"
+    },
+    {
+      "id": "generated-assertoperand-module",
+      "stage": "LA141",
+      "source": "import helper\ne=helper.validate('assert 雪,else')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py invalid syntax 10 module input\n"
+    },
+    {
+      "id": "generated-assertoperand-flags-owner-cycle",
+      "stage": "LA141",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('assert 雪,else',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True invalid syntax 10\n"
+    },
+    {
+      "id": "generated-raiseoperand-owner-cycle",
+      "stage": "LA141",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('raise 雪 from else',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue invalid syntax 14 False False\n"
+    },
+    {
+      "id": "generated-raiseoperand-chaining",
+      "stage": "LA141",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('raise 雪 from else',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 14\n"
+    },
+    {
+      "id": "generated-raiseoperand-cleanup",
+      "stage": "LA141",
+      "source": "def work():\n try: compile('raise 雪 from else',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py invalid syntax False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-raiseoperand-original-dynamic-failure",
+      "stage": "LA141",
+      "source": "exec(compile('def fail():\\n try: compile(\\'raise 雪 from else\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','raiseoperand-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-raiseoperand-nested-exec",
+      "stage": "LA141",
+      "source": "scope={}\nexec('try: compile(\\'raise 雪 from else\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py invalid syntax 14 False\n"
+    },
+    {
+      "id": "generated-raiseoperand-field-independence",
+      "stage": "LA141",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('raise 雪 from else',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'raise 雪 from else\\n' True True 77 14\n"
+    },
+    {
+      "id": "generated-raiseoperand-module",
+      "stage": "LA141",
+      "source": "import helper\ne=helper.validate('raise 雪 from else')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py invalid syntax 14 module input\n"
+    },
+    {
+      "id": "generated-raiseoperand-flags-owner-cycle",
+      "stage": "LA141",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('raise 雪 from else',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True invalid syntax 14\n"
     }
   ]
 }

@@ -65,7 +65,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     ready()
                     for case in corpus['cases']:
                         if (case.get('modules') or
-                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93', 'LA96', 'LA99', 'LA99A', 'LA102', 'LA105', 'LA108', 'LA111', 'LA114', 'LA117', 'LA120', 'LA123', 'LA126', 'LA129', 'LA132', 'LA135', 'LA138'} or
+                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93', 'LA96', 'LA99', 'LA99A', 'LA102', 'LA105', 'LA108', 'LA111', 'LA114', 'LA117', 'LA120', 'LA123', 'LA126', 'LA129', 'LA132', 'LA135', 'LA138', 'LA141'} or
                             containers and case['stage'] not in {'LA-7', 'LA-6A'} or
                             exceptions and case['stage'] not in {'LA13', 'LA16', 'LA19', 'LA22', 'LA25', 'LA28', 'LA31', 'LA34', 'LA37', 'LA40', 'LA43', 'LA46', 'LA49', 'LA52', 'LA55', 'LA58', 'LA61', 'LA62C'}):
                             continue
@@ -138,7 +138,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                                           'generated-arithmeticoperand-original-dynamic-failure', 'generated-comparisonoperand-original-dynamic-failure',
                                           'generated-attributeidentifier-original-dynamic-failure', 'generated-subscriptionoperand-original-dynamic-failure',
                                           'generated-iterableoperand-original-dynamic-failure', 'generated-mappingoperand-original-dynamic-failure',
-                                          'generated-assignmentvalue-original-dynamic-failure', 'generated-keywordvalue-original-dynamic-failure'}:
+                                          'generated-assignmentvalue-original-dynamic-failure', 'generated-keywordvalue-original-dynamic-failure',
+                                          'generated-assertoperand-original-dynamic-failure', 'generated-raiseoperand-original-dynamic-failure'}:
                             name = case['id'].split('-')[1]
                             assert f'fail at {name}-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         if case['id'] == 'generated-callgrammar-original-dynamic-failure':
@@ -319,6 +320,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                         busy_sources += [
                             'try: compile("雪=else","assignment.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e.filename\n',
                             'def work():\n try: compile("f(雪=else)","keyword-value.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
+                            'try: compile("assert 雪,else","assert.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e.filename\n',
+                            'def work():\n try: compile("raise 雪 from else","raise.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
                         ]
                     for source in busy_sources:
                         page.fill('#input', source)
@@ -421,6 +424,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
     if syntax_errors:
         checks = ['fresh-offline-generated-syntax-source', 'original-dynamic-diagnostics', 'runnable-example',
                   'stop-during-assignment-value-retention', 'stop-during-keyword-value-cleanup',
+                  'stop-during-assert-operand-retention', 'stop-during-raise-operand-cleanup',
                   'stop-during-iterable-operand-retention', 'stop-during-mapping-operand-cleanup',
                   'stop-during-attribute-identifier-retention', 'stop-during-subscription-operand-cleanup',
                   'stop-during-arithmetic-operand-retention', 'stop-during-comparison-operand-cleanup',

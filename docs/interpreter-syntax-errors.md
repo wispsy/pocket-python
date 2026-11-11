@@ -581,7 +581,13 @@ next token is on another physical line. The pinned parser strips that text's
 newline while retaining the statement-token range and complete source metadata.
 Comments, split names/equals, class headers and compile modes are covered.
 
-The current fixed generated-syntax corpus contains 5,536 cases: 5,121 supported
+LA-141 composes assert and raise operand fields through modules, nested dynamic
+source, notes/causes and independent fields/args. Cyclic filename owners,
+suspended conversion/cleanup and original dynamic frames survive collection,
+cancellation/close and shared allocation limits. The example and installed
+offline console preserve Stop/Restart and reduced-profile boundaries.
+
+The current fixed generated-syntax corpus contains 5,552 cases: 5,137 supported
 semantic/error comparisons and 415 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
