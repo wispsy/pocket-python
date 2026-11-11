@@ -885,8 +885,14 @@ components and missing import keywords. Relative module prefixes, Unicode,
 physical newlines and exec/single modes retain exact token fields. Valid import
 admission and unqualified surrounding grammar keep their independent boundaries.
 
-The current fixed generated-syntax corpus contains 9,169 cases: 8,539 supported
-semantic/error comparisons and 630 explicit native-field refusals. The ordinary
+LA-188 qualifies missing and invalid imported names, including the native
+expected-names message for an empty import list. Comments, physical/implicit
+newlines, Unicode and parenthesized imports preserve their exact token fields.
+Alias-name starts, unqualified continued EOF and wildcard/source admission retain
+explicit boundaries; existing alias-tail and trailing-comma diagnostics persist.
+
+The current fixed generated-syntax corpus contains 9,239 cases: 8,598 supported
+semantic/error comparisons and 641 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

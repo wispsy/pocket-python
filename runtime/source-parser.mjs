@@ -440,8 +440,19 @@ class Parser {
     }
     for (;;) {
       if (this.at("*")) {
-        if (specifier === null) this.fail("Invalid import target.");
+        if (specifier === null) this.fail("Invalid import target.", this.peek(), "SYNTAX", undefined,
+          this.tokenDiagnostic("invalid syntax"));
         this.unsupported("Wildcard imports are not adopted.");
+      }
+      if (!this.kind("name")) {
+        const missing = !aliases.length && !parenthesized && this.kind("newline");
+        const syntax = this.tokenDiagnostic(missing ? "Expected one or more names after 'import'" : "invalid syntax");
+        if (missing) {
+          const token = this.peek(), source = this.lexed.source;
+          const implicit = this.options.mode === "single" && source[token.start] !== "\n";
+          syntax.end_offset = Array.from(source.split("\n")[token.span[0] - 1] ?? "").length + (implicit ? 0 : 1);
+        }
+        this.fail("Expected an imported name.", this.peek(), "SYNTAX", undefined, syntax);
       }
       const name = specifier === null ? this.qualified() : this.name().value;
       const asname = this.eat("as") ? this.importAlias() : null;
