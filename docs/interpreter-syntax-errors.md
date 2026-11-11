@@ -851,8 +851,13 @@ preserving physical-line ranges and source text. Earlier parameter failures
 retain priority. Valid return annotations and unqualified annotation expressions
 remain explicitly unsupported under #125.
 
-The current fixed generated-syntax corpus contains 8,897 cases: 8,315 supported
-semantic/error comparisons and 582 explicit native-field refusals. The ordinary
+LA-181A preserves conditional-statement diagnostic priority in parameter and
+return annotations. A pass, break or continue followed by if retains its
+independent native-field boundary instead of inheriting a generic initial-
+annotation payload. Plain invalid starts keep their qualified fields.
+
+The current fixed generated-syntax corpus contains 8,917 cases: 8,317 supported
+semantic/error comparisons and 600 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

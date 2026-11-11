@@ -568,9 +568,11 @@ class Parser {
   parameterAnnotation() {
     const colon = this.eat(":");
     if (!colon) return;
-    if (this.expressionBoundary() || this.at("=") || this.at("**"))
+    if (this.expressionBoundary() || this.at("=") || this.at("**")) {
+      const statement = ["pass", "break", "continue"].some(value => this.at(value));
       this.fail("Expected a parameter annotation.", this.peek(), "SYNTAX", undefined,
-        this.tokenDiagnostic("invalid syntax"));
+        statement && this.peek(1).value === "if" ? undefined : this.tokenDiagnostic("invalid syntax"));
+    }
     this.unsupported("Parameter annotations are not adopted.", colon);
   }
   parameters(end) {
