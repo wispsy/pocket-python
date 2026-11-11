@@ -796,7 +796,13 @@ specialized diagnostic. Function/lambda modes, Unicode and continued source
 retain exact fields. One prior refusal keeps its original assertions and gains
 complete argument/source-metadata checks.
 
-The current fixed generated-syntax corpus contains 7,950 cases: 7,409 supported
+LA-174 composes parenthesized function parameters and required-parameter tails
+through modules, nested compilation, independent fields/arguments, notes/causes
+and cyclic filenames. Suspended conversion/cleanup, collection, cancellation,
+shared limits, original dynamic frames and installed offline Stop/Restart retain
+their ownership and reduced-profile boundaries.
+
+The current fixed generated-syntax corpus contains 7,966 cases: 7,425 supported
 semantic/error comparisons and 541 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;

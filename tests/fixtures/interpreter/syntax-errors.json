@@ -127,7 +127,8 @@
     "LA171",
     "LA170A",
     "LA172",
-    "LA173"
+    "LA173",
+    "LA174"
   ],
   "cases": [
     {
@@ -49810,6 +49811,126 @@
       "stage": "LA173",
       "source": "def f(a=1,*,b,**rest): return a,b,rest[\"c\"]\na,b,c=f(b=2,c=3)\nprint(a,b,c)\n",
       "stdout": "1 2 3\n"
+    },
+    {
+      "id": "generated-functionparen-owner-cycle",
+      "stage": "LA174",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('def 雪((鳥,羽)): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue Function parameters cannot be parenthesized 7 False False\n"
+    },
+    {
+      "id": "generated-functionparen-chaining",
+      "stage": "LA174",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('def 雪((鳥,羽)): pass',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 7\n"
+    },
+    {
+      "id": "generated-functionparen-cleanup",
+      "stage": "LA174",
+      "source": "def work():\n try: compile('def 雪((鳥,羽)): pass',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print(\"entered\")\n   print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "entered\ncleanup cleanup-input.py Function parameters cannot be parenthesized False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-functionparen-original-dynamic-failure",
+      "stage": "LA174",
+      "source": "exec(compile('def fail():\\n try: compile(\\'def 雪((鳥,羽)): pass\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','functionparen-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-functionparen-nested-exec",
+      "stage": "LA174",
+      "source": "scope={}\nexec('try: compile(\\'def 雪((鳥,羽)): pass\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py Function parameters cannot be parenthesized 7 False\n"
+    },
+    {
+      "id": "generated-functionparen-field-independence",
+      "stage": "LA174",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('def 雪((鳥,羽)): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'def 雪((鳥,羽)): pass\\n' True True 77 7\n"
+    },
+    {
+      "id": "generated-functionparen-module",
+      "stage": "LA174",
+      "source": "import helper\ne=helper.validate('def 雪((鳥,羽)): pass')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "stdout": "module-input.py Function parameters cannot be parenthesized 7 module input\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ]
+    },
+    {
+      "id": "generated-functionparen-flags-owner-cycle",
+      "stage": "LA174",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('def 雪((鳥,羽)): pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True Function parameters cannot be parenthesized 7\n"
+    },
+    {
+      "id": "generated-requiredtail-owner-cycle",
+      "stage": "LA174",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('def 雪(鳥=1,羽+空): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue invalid syntax 12 False False\n"
+    },
+    {
+      "id": "generated-requiredtail-chaining",
+      "stage": "LA174",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('def 雪(鳥=1,羽+空): pass',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 12\n"
+    },
+    {
+      "id": "generated-requiredtail-cleanup",
+      "stage": "LA174",
+      "source": "def work():\n try: compile('def 雪(鳥=1,羽+空): pass',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print(\"entered\")\n   print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "entered\ncleanup cleanup-input.py invalid syntax False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-requiredtail-original-dynamic-failure",
+      "stage": "LA174",
+      "source": "exec(compile('def fail():\\n try: compile(\\'def 雪(鳥=1,羽+空): pass\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','requiredtail-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-requiredtail-nested-exec",
+      "stage": "LA174",
+      "source": "scope={}\nexec('try: compile(\\'def 雪(鳥=1,羽+空): pass\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py invalid syntax 12 False\n"
+    },
+    {
+      "id": "generated-requiredtail-field-independence",
+      "stage": "LA174",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('def 雪(鳥=1,羽+空): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'def 雪(鳥=1,羽+空): pass\\n' True True 77 12\n"
+    },
+    {
+      "id": "generated-requiredtail-module",
+      "stage": "LA174",
+      "source": "import helper\ne=helper.validate('def 雪(鳥=1,羽+空): pass')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "stdout": "module-input.py invalid syntax 12 module input\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ]
+    },
+    {
+      "id": "generated-requiredtail-flags-owner-cycle",
+      "stage": "LA174",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('def 雪(鳥=1,羽+空): pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True invalid syntax 12\n"
     }
   ]
 }
