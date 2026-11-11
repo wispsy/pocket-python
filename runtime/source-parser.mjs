@@ -632,7 +632,7 @@ class Parser {
     return this.node("Lambda", start, {name: "<lambda>", params, body: [this.node("Return", value, {value}, value)]}, value);
   }
   classDefinition(decorators = []) {
-    const start = this.expect("class"), name = this.name().value, bases = [];
+    const start = this.expect("class"), name = this.definitionName().value, bases = [];
     let metaclass = null, repeated = null;
     const keywords = [];
     if (this.at("[")) this.unsupported("Generic classes are not adopted.");

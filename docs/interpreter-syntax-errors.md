@@ -630,7 +630,11 @@ Unicode, continued lines, decorators, nested suites and exec/single modes retain
 the pinned parser's native fields and source metadata. Valid definitions and
 existing lexical or interactive statement priority keep their behavior.
 
-The current fixed generated-syntax corpus contains 5,978 cases: 5,531 supported
+LA-149 applies the same token diagnostics to missing or invalid class names,
+including base-list delimiters, Unicode, decorators and continued source.
+Legal class construction and lexical failures retain their existing paths.
+
+The current fixed generated-syntax corpus contains 6,045 cases: 5,598 supported
 semantic/error comparisons and 447 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
