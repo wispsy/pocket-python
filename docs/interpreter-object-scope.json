@@ -1154,6 +1154,12 @@
       "site": "if (![\"SYNTAX\", \"UNSUPPORTED\"].includes(repairError.code)) hard(repairError.code, repairError.name, repairError.message);",
       "owner": "#124",
       "boundary": "Lexical syntax payloads require a compilable diagnostic repair; unqualified source retains native-field boundaries."
+    },
+    {
+      "path": "runtime/source-parser.mjs",
+      "site": "if (!(error instanceof SourceError) || ![\"SYNTAX\", \"UNSUPPORTED\"].includes(error.code)) throw error;",
+      "owner": "#124",
+      "boundary": "Adjacent-default payloads require independently parseable expressions and a compilable source-only repair; syntax or unsupported speculative expressions retain the native-field boundary, while budgets and cancellation propagate."
     }
   ],
   "native_tables": {

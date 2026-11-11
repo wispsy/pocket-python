@@ -123,7 +123,8 @@
     "LA167",
     "LA168",
     "LA169",
-    "LA170"
+    "LA170",
+    "LA171"
   ],
   "cases": [
     {
@@ -47982,6 +47983,126 @@
       "stage": "LA170",
       "source": "f=lambda 雪=1+2,/,鳥=(3,4),*,羽=lambda:5: 雪+len(鳥)+羽()\nprint(f())\n",
       "stdout": "10\n"
+    },
+    {
+      "id": "generated-functiondefaulttail-owner-cycle",
+      "stage": "LA171",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('def 雪(鳥=1 羽): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue invalid syntax. Perhaps you forgot a comma? 9 False False\n"
+    },
+    {
+      "id": "generated-functiondefaulttail-chaining",
+      "stage": "LA171",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('def 雪(鳥=1 羽): pass',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 9\n"
+    },
+    {
+      "id": "generated-functiondefaulttail-cleanup",
+      "stage": "LA171",
+      "source": "def work():\n try: compile('def 雪(鳥=1 羽): pass',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py invalid syntax. Perhaps you forgot a comma? False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-functiondefaulttail-original-dynamic-failure",
+      "stage": "LA171",
+      "source": "exec(compile('def fail():\\n try: compile(\\'def 雪(鳥=1 羽): pass\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','functiondefaulttail-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-functiondefaulttail-nested-exec",
+      "stage": "LA171",
+      "source": "scope={}\nexec('try: compile(\\'def 雪(鳥=1 羽): pass\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py invalid syntax. Perhaps you forgot a comma? 9 False\n"
+    },
+    {
+      "id": "generated-functiondefaulttail-field-independence",
+      "stage": "LA171",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('def 雪(鳥=1 羽): pass',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'def 雪(鳥=1 羽): pass\\n' True True 77 9\n"
+    },
+    {
+      "id": "generated-functiondefaulttail-module",
+      "stage": "LA171",
+      "source": "import helper\ne=helper.validate('def 雪(鳥=1 羽): pass')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py invalid syntax. Perhaps you forgot a comma? 9 module input\n"
+    },
+    {
+      "id": "generated-functiondefaulttail-flags-owner-cycle",
+      "stage": "LA171",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('def 雪(鳥=1 羽): pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True invalid syntax. Perhaps you forgot a comma? 9\n"
+    },
+    {
+      "id": "generated-lambdadefaulttail-owner-cycle",
+      "stage": "LA171",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('lambda 雪=1 鳥: 1',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue invalid syntax 12 False False\n"
+    },
+    {
+      "id": "generated-lambdadefaulttail-chaining",
+      "stage": "LA171",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('lambda 雪=1 鳥: 1',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 12\n"
+    },
+    {
+      "id": "generated-lambdadefaulttail-cleanup",
+      "stage": "LA171",
+      "source": "def work():\n try: compile('lambda 雪=1 鳥: 1',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py invalid syntax False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-lambdadefaulttail-original-dynamic-failure",
+      "stage": "LA171",
+      "source": "exec(compile('def fail():\\n try: compile(\\'lambda 雪=1 鳥: 1\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','lambdadefaulttail-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-lambdadefaulttail-nested-exec",
+      "stage": "LA171",
+      "source": "scope={}\nexec('try: compile(\\'lambda 雪=1 鳥: 1\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py invalid syntax 12 False\n"
+    },
+    {
+      "id": "generated-lambdadefaulttail-field-independence",
+      "stage": "LA171",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('lambda 雪=1 鳥: 1',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'lambda 雪=1 鳥: 1\\n' True True 77 12\n"
+    },
+    {
+      "id": "generated-lambdadefaulttail-module",
+      "stage": "LA171",
+      "source": "import helper\ne=helper.validate('lambda 雪=1 鳥: 1')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py invalid syntax 12 module input\n"
+    },
+    {
+      "id": "generated-lambdadefaulttail-flags-owner-cycle",
+      "stage": "LA171",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('lambda 雪=1 鳥: 1',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True invalid syntax 12\n"
     }
   ]
 }

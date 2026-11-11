@@ -771,7 +771,13 @@ fields. Source-only repairs preserve surrounding grammar/operand boundaries.
 Four prior refusals are adopted with their original assertions and full payload
 checks; legacy and nested expression-tail diagnostics remain explicitly bounded.
 
-The current fixed generated-syntax corpus contains 7,655 cases: 7,127 supported
+LA-171 composes function/lambda default-tail fields through modules, nested
+source, notes/causes and independent native fields/argument snapshots. Cyclic
+filenames, suspended conversion/cleanup, collection, cancellation/close and shared
+limits retain their ownership paths. Original dynamic frames and installed
+offline Stop/Restart exercise fresh source and reduced-profile boundaries.
+
+The current fixed generated-syntax corpus contains 7,671 cases: 7,143 supported
 semantic/error comparisons and 528 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
