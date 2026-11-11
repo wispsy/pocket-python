@@ -119,7 +119,8 @@
     "LA164",
     "LA164A",
     "LA165",
-    "LA166"
+    "LA166",
+    "LA167"
   ],
   "cases": [
     {
@@ -21799,15 +21800,6 @@
       "stage": "LA122",
       "source": "try: compile('lambda 雪=1, 鳥\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e.print_file_and_line is None,e._metadata is None)\n",
       "stdout": "invalid syntax\nselected/雪.py 1 14 1 15\n'lambda 雪=1, 鳥\\n' 2 6\nTrue True True\nTrue False\n"
-    },
-    {
-      "id": "lambda-separator-unqualified-1",
-      "stage": "Future",
-      "source": "try: compile('lambda /',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
-      "boundary": "The surrounding grammar or malformed operand retains an explicit native-field boundary.",
-      "classification": "explicit-refusal",
-      "owner": "#124",
-      "stdout": "selected.py\n"
     },
     {
       "id": "lambda-separator-unqualified-3",
@@ -45784,6 +45776,759 @@
       "id": "function-slash-tail-valid",
       "stage": "LA166",
       "source": "def f(雪,/,鳥=2,*items,羽=3,**options): return 雪+鳥+len(items)+羽+len(options)\nprint(f(1,4,5,6,羽=7,extra=8))\n",
+      "stdout": "15\n"
+    },
+    {
+      "id": "lambda-slash-tail-00-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-00-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-00-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-01-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /else: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /else: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /else: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-01-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /else: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /else: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /else: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-01-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /else: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /else: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /else: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-02-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /1: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /1: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /1: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-02-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /1: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /1: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /1: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-02-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /1: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /1: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /1: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-03-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /\"雪\": 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /\"雪\": 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /\"雪\": 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-03-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /\"雪\": 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /\"雪\": 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /\"雪\": 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-03-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /\"雪\": 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /\"雪\": 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /\"雪\": 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-04-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /(雪): 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /(雪): 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /(雪): 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-04-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /(雪): 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /(雪): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /(雪): 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-04-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /(雪): 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /(雪): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /(雪): 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-05-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /[雪]: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /[雪]: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /[雪]: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-05-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /[雪]: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /[雪]: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /[雪]: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-05-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /[雪]: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /[雪]: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /[雪]: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-06-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /{雪}: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /{雪}: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /{雪}: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-06-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /{雪}: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /{雪}: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /{雪}: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-06-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /{雪}: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /{雪}: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /{雪}: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-07-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /*雪: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /*雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /*雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-07-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /*雪: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /*雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /*雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-07-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /*雪: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /*雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /*雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-08-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /**雪: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /**雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /**雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-08-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /**雪: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /**雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /**雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-08-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /**雪: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /**雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /**雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-09-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /+雪: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /+雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /+雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-09-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /+雪: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /+雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /+雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-09-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /+雪: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /+雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /+雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-10-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /-雪: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /-雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /-雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-10-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /-雪: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /-雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /-雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-10-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /-雪: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /-雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /-雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-11-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /~雪: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /~雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /~雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-11-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /~雪: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /~雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /~雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-11-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /~雪: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /~雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /~雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-12-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /;: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /;: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /;: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-12-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /;: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /;: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /;: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-12-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /;: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /;: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /;: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-13-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /:: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /:: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /:: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-13-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /:: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /:: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /:: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-13-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /:: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /:: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /:: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-14-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /=: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 10\n'lambda /=: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /=: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-14-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /=: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 10\n'lambda /=: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /=: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-14-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /=: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 10\n'lambda /=: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /=: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-15-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪,鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪,鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪,鳥: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-15-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪,鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪,鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪,鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-15-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪,鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪,鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪,鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-16-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪=1: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪=1: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪=1: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-16-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪=1: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪=1: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪=1: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-16-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪=1: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪=1: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪=1: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-17-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪,/,鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪,/,鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪,/,鳥: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-17-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪,/,鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪,/,鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪,/,鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-17-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪,/,鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪,/,鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪,/,鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-18-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /,雪: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "at least one argument must precede /\nselected/雪.py 1 8 1 9\n'lambda /,雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /,雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-18-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /,雪: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "at least one argument must precede /\nselected/雪.py 1 8 1 9\n'lambda /,雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /,雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-18-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /,雪: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "at least one argument must precede /\nselected/雪.py 1 8 1 9\n'lambda /,雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /,雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-19-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-19-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-19-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda /: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-20-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/,/鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "/ may appear only once\nselected/雪.py 1 12 1 13\n'lambda 雪,/,/鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/,/鳥: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-20-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/,/鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "/ may appear only once\nselected/雪.py 1 12 1 13\n'lambda 雪,/,/鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/,/鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-20-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/,/鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "/ may appear only once\nselected/雪.py 1 12 1 13\n'lambda 雪,/,/鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/,/鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-21-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda *雪,/鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "/ must be ahead of *\nselected/雪.py 1 11 1 12\n'lambda *雪,/鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda *雪,/鳥: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-21-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda *雪,/鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "/ must be ahead of *\nselected/雪.py 1 11 1 12\n'lambda *雪,/鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda *雪,/鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-21-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda *雪,/鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "/ must be ahead of *\nselected/雪.py 1 11 1 12\n'lambda *雪,/鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda *雪,/鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-22-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda *,鳥,/羽: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "/ must be ahead of *\nselected/雪.py 1 12 1 13\n'lambda *,鳥,/羽: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda *,鳥,/羽: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-22-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda *,鳥,/羽: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "/ must be ahead of *\nselected/雪.py 1 12 1 13\n'lambda *,鳥,/羽: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda *,鳥,/羽: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-22-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda *,鳥,/羽: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "/ must be ahead of *\nselected/雪.py 1 12 1 13\n'lambda *,鳥,/羽: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda *,鳥,/羽: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-23-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/*鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected comma between / and *\nselected/雪.py 1 11 1 12\n'lambda 雪,/*鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/*鳥: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-23-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/*鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected comma between / and *\nselected/雪.py 1 11 1 12\n'lambda 雪,/*鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/*鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-23-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/*鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected comma between / and *\nselected/雪.py 1 11 1 12\n'lambda 雪,/*鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/*鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-24-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/**鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 13\n'lambda 雪,/**鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/**鳥: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-24-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/**鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 13\n'lambda 雪,/**鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/**鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-24-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/**鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 13\n'lambda 雪,/**鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/**鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-25-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-25-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-25-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-26-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1\\r\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-26-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1\\r\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-26-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1\\r\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-27-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1\\r',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-27-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1\\r',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-27-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /雪: 1\\r',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-28-exec",
+      "stage": "LA167",
+      "source": "try: compile('\\x0clambda /雪: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'\\x0clambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 '\\x0clambda /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-28-eval",
+      "stage": "LA167",
+      "source": "try: compile('\\x0clambda /雪: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'\\x0clambda /雪: 1' 2 6\nTrue True True\nFalse\n0 0 '\\x0clambda /雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-28-single",
+      "stage": "LA167",
+      "source": "try: compile('\\x0clambda /雪: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'\\x0clambda /雪: 1' 2 6\nTrue True True\nFalse\n0 0 '\\x0clambda /雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-29-exec",
+      "stage": "LA167",
+      "source": "try: compile('雪=1\\nlambda /鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 8 2 9\n'lambda /鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 '雪=1\\nlambda /鳥: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-29-single",
+      "stage": "LA167",
+      "source": "try: compile('雪=1\\nlambda /鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "multiple statements found while compiling a single statement\nselected/雪.py 1 4 1 5\n'雪=1\\n' 2 6\nTrue True True\nTrue\n"
+    },
+    {
+      "id": "lambda-slash-tail-30-exec",
+      "stage": "LA167",
+      "source": "try: compile('if True:\\n lambda /鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 10\n' lambda /鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n lambda /鳥: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-30-single",
+      "stage": "LA167",
+      "source": "try: compile('if True:\\n lambda /鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 10\n' lambda /鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n lambda /鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-31-exec",
+      "stage": "LA167",
+      "source": "try: compile('def outer():\\n lambda /鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 10\n' lambda /鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'def outer():\\n lambda /鳥: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-31-single",
+      "stage": "LA167",
+      "source": "try: compile('def outer():\\n lambda /鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 10\n' lambda /鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'def outer():\\n lambda /鳥: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-32-exec",
+      "stage": "LA167",
+      "source": "try: compile('class 鳥:\\n lambda /羽: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 10\n' lambda /羽: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'class 鳥:\\n lambda /羽: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-32-single",
+      "stage": "LA167",
+      "source": "try: compile('class 鳥:\\n lambda /羽: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 10\n' lambda /羽: 1' 2 6\nTrue True True\nFalse\n0 0 'class 鳥:\\n lambda /羽: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-33-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-33-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /' 2 6\nTrue True True\nFalse\n0 0 'lambda /'\n"
+    },
+    {
+      "id": "lambda-slash-tail-33-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /' 2 6\nTrue True True\nFalse\n0 0 'lambda /'\n"
+    },
+    {
+      "id": "lambda-slash-tail-34-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda /\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-34-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda /\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-34-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda /\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda /\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda /\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-35-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda / # supplied',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda / # supplied\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda / # supplied\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-35-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda / # supplied',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda / # supplied' 2 6\nTrue True True\nFalse\n0 0 'lambda / # supplied'\n"
+    },
+    {
+      "id": "lambda-slash-tail-35-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda / # supplied',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 8 1 9\n'lambda / # supplied' 2 6\nTrue True True\nFalse\n0 0 'lambda / # supplied'\n"
+    },
+    {
+      "id": "lambda-slash-tail-36-exec",
+      "stage": "LA167",
+      "source": "try: compile('(lambda /\\n 雪: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'(lambda /' 2 6\nTrue True True\nFalse\n0 0 '(lambda /\\n 雪: 1)\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-36-eval",
+      "stage": "LA167",
+      "source": "try: compile('(lambda /\\n 雪: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'(lambda /' 2 6\nTrue True True\nFalse\n0 0 '(lambda /\\n 雪: 1)'\n"
+    },
+    {
+      "id": "lambda-slash-tail-36-single",
+      "stage": "LA167",
+      "source": "try: compile('(lambda /\\n 雪: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'(lambda /' 2 6\nTrue True True\nFalse\n0 0 '(lambda /\\n 雪: 1)'\n"
+    },
+    {
+      "id": "lambda-slash-tail-37-exec",
+      "stage": "LA167",
+      "source": "try: compile('(\\nlambda /雪: 1\\n)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 8 2 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 '(\\nlambda /雪: 1\\n)\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-37-eval",
+      "stage": "LA167",
+      "source": "try: compile('(\\nlambda /雪: 1\\n)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 8 2 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 '(\\nlambda /雪: 1\\n)'\n"
+    },
+    {
+      "id": "lambda-slash-tail-37-single",
+      "stage": "LA167",
+      "source": "try: compile('(\\nlambda /雪: 1\\n)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 8 2 9\n'lambda /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 '(\\nlambda /雪: 1\\n)'\n"
+    },
+    {
+      "id": "lambda-slash-tail-38-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda \\\\\\n /雪: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 3\n' /雪: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda \\\\\\n /雪: 1\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-38-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda \\\\\\n /雪: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 3\n' /雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda \\\\\\n /雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-38-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda \\\\\\n /雪: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 3\n' /雪: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda \\\\\\n /雪: 1'\n"
+    },
+    {
+      "id": "lambda-slash-tail-39-exec",
+      "stage": "LA167",
+      "source": "try: compile('(lambda 雪,/\\n *鳥: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected comma between / and *\nselected/雪.py 2 2 2 3\n' *鳥: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪,/\\n *鳥: 1)\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-39-eval",
+      "stage": "LA167",
+      "source": "try: compile('(lambda 雪,/\\n *鳥: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected comma between / and *\nselected/雪.py 2 2 2 3\n' *鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪,/\\n *鳥: 1)'\n"
+    },
+    {
+      "id": "lambda-slash-tail-39-single",
+      "stage": "LA167",
+      "source": "try: compile('(lambda 雪,/\\n *鳥: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected comma between / and *\nselected/雪.py 2 2 2 3\n' *鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪,/\\n *鳥: 1)'\n"
+    },
+    {
+      "id": "lambda-slash-tail-40-exec",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/ # supplied\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 23\n'lambda 雪,/ # supplied\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/ # supplied\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-40-eval",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/ # supplied\\n',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 23\n'lambda 雪,/ # supplied\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/ # supplied\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-40-single",
+      "stage": "LA167",
+      "source": "try: compile('lambda 雪,/ # supplied\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 23\n'lambda 雪,/ # supplied\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪,/ # supplied\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-compound-metadata-boundary",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\nlambda /雪: 1',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(1, 0, 'if True: pass\\nlambda /雪: 1\\n')\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "lambda-slash-tail-comprehension-boundary",
+      "stage": "Future",
+      "source": "try: compile('[x for x in xs if lambda /雪: 1]',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "lambda-slash-tail-starred-call-boundary",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda /雪: 1)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "lambda-separator-unqualified-1",
+      "stage": "LA167",
+      "source": "try: compile('lambda /',\"selected.py\",'exec')\nexcept SyntaxError as e:\n print(e.filename)\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "selected.py\ninvalid syntax 1 8 1 9\n'lambda /\\n' True True True\n0 0 'lambda /\\n'\n"
+    },
+    {
+      "id": "lambda-slash-tail-valid",
+      "stage": "LA167",
+      "source": "f=lambda 雪,/,鳥=2,*items,羽=3,**options: 雪+鳥+len(items)+羽+len(options)\nprint(f(1,4,5,6,羽=7,extra=8))\n",
       "stdout": "15\n"
     }
   ]

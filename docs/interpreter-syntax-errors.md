@@ -744,8 +744,14 @@ other separators; continued-line text preserves the pinned parser's physical
 newline behavior. Repeated/misordered separators and valid binding retain their
 existing diagnostics and execution paths.
 
-The current fixed generated-syntax corpus contains 7,299 cases: 6,782 supported
-semantic/error comparisons and 517 explicit native-field refusals. The ordinary
+LA-167 qualifies malformed initial lambda positional-only separator tails and
+the expected-comma diagnostic between slash and star. Continued-line source
+text and Unicode token ranges match the pinned parser; surrounding starred-call
+and comprehension priority retain explicit field boundaries. A prior initial
+slash refusal is adopted with its original assertion and complete payload checks.
+
+The current fixed generated-syntax corpus contains 7,422 cases: 6,903 supported
+semantic/error comparisons and 519 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

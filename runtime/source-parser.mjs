@@ -559,7 +559,7 @@ class Parser {
   parameters(end) {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
     let bareStar = null;
-    const incomplete = () => end === ":" && this.comprehensionClauseFields && this.operandFields ? this.tokenDiagnostic("invalid syntax") : undefined;
+    const incomplete = (message = "invalid syntax") => end === ":" && this.comprehensionClauseFields && this.operandFields ? this.tokenDiagnostic(message) : undefined;
     const parameterName = (parenthesized = false) => {
       if (end !== ":" && !this.kind("name"))
         this.fail("Expected a function parameter.", this.peek(), "SYNTAX", undefined,
@@ -609,9 +609,9 @@ class Parser {
       if (this.eat("/")) {
         if (slash || star || !positional.length) {
           const message = star ? "/ must be ahead of *" : slash ? "/ may appear only once" :
-            this.at(",") ? "at least one argument must precede /" :
-              this.at(end) || end !== ":" ? "invalid syntax" : null;
-          const syntax = message ? this.delimitedDiagnostic(message, this.previous, end) : undefined;
+            this.at(",") ? "at least one argument must precede /" : "invalid syntax";
+          const syntax = end !== ":" || slash || star || this.comprehensionClauseFields && this.operandFields ?
+            this.delimitedDiagnostic(message, this.previous, end) : undefined;
           if (syntax && !slash && !star && !positional.length && this.previous.span[0] !== this.peek().span[0])
             syntax.text = syntax.text.replace(/\n$/, "");
           this.fail("Invalid positional-only separator.", this.previous, "SYNTAX", undefined,
@@ -652,7 +652,8 @@ class Parser {
         (star ? kwonly : positional).push({name: token.value, value, span: token.span});
       }
       if (this.at(end)) break;
-      if (end === ":" && !this.at(",")) this.fail("Expected a lambda parameter separator.", this.peek(), "SYNTAX", undefined, incomplete());
+      if (end === ":" && !this.at(",")) this.fail("Expected a lambda parameter separator.", this.peek(), "SYNTAX", undefined,
+        incomplete(this.previous.value === "/" && this.at("*") ? "expected comma between / and *" : "invalid syntax"));
       if (end !== ":" && separatorFields && !this.at(","))
         this.fail("Expected a function parameter separator.", this.peek(), "SYNTAX", undefined,
           this.tokenDiagnostic(this.previous.value === "/" && this.at("*") ? "expected comma between / and *" : "invalid syntax"));
