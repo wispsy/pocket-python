@@ -728,10 +728,35 @@ class Parser {
   }
   starredExpression(named = false, target = false) {
     if (this.eat("*")) {
-      const start = this.previous, value = this.bitwiseOr();
+      const start = this.previous, value = this.starredOperand(() => this.bitwiseOr());
       return this.node("Starred", start, {value});
     }
     return target ? this.bitwiseOr() : named ? this.namedExpression() : this.expression();
+  }
+  starredOperand(body, argument = false) {
+    if (this.expressionBoundary()) {
+      let syntax;
+      const statement = ["pass", "break", "continue"].some(value => this.at(value));
+      if (this.operandFields && this.comprehensionClauseFields && !this.conditionalTest && !statement) {
+        let depth = 0;
+        for (const token of this.tokens.slice(0, this.index - 1)) {
+          this.charge();
+          if (["(", "[", "{"].includes(token.value)) depth++;
+          if ([")", "]", "}"].includes(token.value)) depth--;
+        }
+        const first = ["(", "[", "{"].includes(this.tokens[this.index - 2]?.value);
+        syntax = this.tokenDiagnostic(argument || first ? "Invalid star expression" : "invalid syntax",
+          !depth && this.options.mode === "eval" ? this.previous : this.peek());
+      }
+      this.fail("Expected an iterable unpacking expression.", this.peek(), "SYNTAX", undefined, syntax);
+    }
+    // Malformed operands can select a different star or surrounding-call range.
+    return this.withoutOperandFields(body);
+  }
+  mappingOperand(body) {
+    const operand = () => this.rightOperand(body);
+    return ["pass", "break", "continue"].some(value => this.at(value)) && this.peek(1).value === "if" ?
+      this.withoutOperandFields(operand) : operand();
   }
   expressionList(named = false, target = false) {
     const expression = () => this.starredExpression(named, target);
@@ -885,7 +910,7 @@ class Parser {
       const separator = this.previous, argumentCount = args.length;
       let keywordSite = null;
       if (this.eat("**")) {
-        keywords.push({name: null, value: parseArgument(() => this.expression())});
+        keywords.push({name: null, value: parseArgument(() => this.mappingOperand(() => this.expression()))});
         if (positionalError) followingMapping = true;
       }
       else if (this.eat("*")) {
@@ -896,9 +921,9 @@ class Parser {
             this.diagnostic(positionalError, this.previous.span));
         if (keywords.some(keyword => keyword.name === null) && !positionalError) {
           const start = this.previous;
-          parseArgument(() => this.expression());
+          parseArgument(() => this.starredOperand(() => this.expression(), true));
           let comma = this.eat(",");
-          while (comma && this.eat("*")) { parseArgument(() => this.expression()); comma = this.eat(","); }
+          while (comma && this.eat("*")) { parseArgument(() => this.starredOperand(() => this.expression(), true)); comma = this.eat(","); }
           const end = this.peek();
           const syntax = this.at(")") || comma && this.kind("name") ? this.diagnostic(
             "iterable argument unpacking follows keyword argument unpacking",
@@ -910,7 +935,7 @@ class Parser {
           }
           this.fail("Iterable unpacking follows keyword unpacking.", start, "SYNTAX", undefined, syntax);
         }
-        const start = this.previous; args.push(this.node("StarredArgument", start, {value: parseArgument(() => this.expression())}));
+        const start = this.previous; args.push(this.node("StarredArgument", start, {value: parseArgument(() => this.starredOperand(() => this.expression(), true))}));
       } else
       if (this.kind("name") && this.peek(1).value === "=") {
         const token = this.take(), equal = this.expect("=");
@@ -965,7 +990,11 @@ class Parser {
   primary() {
     let value = this.atom();
     for (;;) {
-      if (this.eat(".")) { const attr = this.name(); value = this.node("Attribute", value, {value, name: attr.value}, attr); }
+      if (this.eat(".")) {
+        if (!this.kind("name")) this.fail("Expected an attribute identifier.", this.peek(), "SYNTAX", undefined,
+          this.operandFields && this.comprehensionClauseFields && !this.conditionalTest ? this.tokenDiagnostic("invalid syntax") : undefined);
+        const attr = this.name(); value = this.node("Attribute", value, {value, name: attr.value}, attr);
+      }
       else if (this.eat("(")) {
         const {args, keywords, repeated} = this.arguments();
         this.expect(")"); value = this.node("Call", value, {callable: value, args, keywords});
@@ -980,12 +1009,29 @@ class Parser {
     return value;
   }
   subscript() {
-    const start = this.peek(); let index = this.at(":") ? null : this.namedExpression();
+    const start = this.peek(); let index = this.at(":") ? null : this.subscriptionOperand(() => this.namedExpression());
     if (!this.eat(":")) return index;
     if (index?.kind === "NamedExpression" && !this.grouped.has(index)) this.fail("A slice-bound assignment expression requires parentheses.", index);
-    const stop = [":", ",", "]"].some(value => this.at(value)) ? null : this.expression();
-    const step = this.eat(":") ? [",", "]"].some(value => this.at(value)) ? null : this.expression() : null;
+    const stop = [":", ",", "]"].some(value => this.at(value)) ? null : this.subscriptionOperand(() => this.expression());
+    const step = this.eat(":") ? [",", "]"].some(value => this.at(value)) ? null : this.subscriptionOperand(() => this.expression()) : null;
     return this.node("Slice", start, {start: index, stop, step});
+  }
+  subscriptionOperand(body) {
+    // A surrounding display can reinterpret an empty subscript as an adjacent
+    // empty list, or select an earlier comprehension/statement diagnostic.
+    let qualified = !(this.at("for") && this.previous.value === ",") &&
+      !(["pass", "break", "continue"].some(value => this.at(value)) && this.peek(1).value === "if");
+    if (this.at("]") && this.previous.value === "[") {
+      let depth = 0;
+      for (const token of this.tokens.slice(0, this.index - 1)) {
+        this.charge();
+        if (["(", "[", "{"].includes(token.value)) depth++;
+        if ([")", "]", "}"].includes(token.value)) depth--;
+      }
+      qualified &&= depth === 0;
+    }
+    const operand = () => this.rightOperand(body);
+    return qualified ? operand() : this.withoutOperandFields(operand);
   }
   comprehension(start, form, element, key = null, clauseFields = true) {
     const before = this.comprehensionClauseFields;
@@ -1096,20 +1142,20 @@ class Parser {
             this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
         if (this.at("*")) {
           if (form === "dict") this.fail("A dictionary display cannot contain a starred set element.", this.peek(), "SYNTAX", undefined,
-            this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
+            this.operandFields && this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.peek().span) : undefined);
           form = "set"; items.push(this.starredExpression(true));
         } else if (this.eat("**")) {
           if (form === "set") this.fail("A set display cannot contain a dictionary unpacking.", this.peek(), "SYNTAX", undefined,
-            this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.previous.span) : undefined);
+            this.operandFields && this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.previous.span) : undefined);
           if (!entries.length) unpacking = this.previous;
-          form = "dict"; entries.push([null, this.bitwiseOr()]);
+          form = "dict"; entries.push([null, this.mappingOperand(() => this.bitwiseOr())]);
         }
         else {
           const key = form === "dict" ? this.withoutOperandFields(() => this.namedExpression()) : this.namedExpression();
           if (this.eat(":")) {
             if (key.kind === "NamedExpression" && !this.grouped.has(key)) this.fail("A dictionary-key assignment expression requires parentheses.", key);
             if (form === "set") this.fail("Mixed set and dictionary display.", this.peek(), "SYNTAX", undefined,
-              this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.previous.span) : undefined);
+              this.operandFields && this.comprehensionClauseFields ? this.diagnostic("invalid syntax", this.previous.span) : undefined);
             const colon = this.previous;
             if (this.at("}") || this.at(",")) this.fail("A dictionary value requires an expression.", colon, "SYNTAX", undefined,
               this.delimitedDiagnostic("expression expected after dictionary key and ':'", colon, "}", true));
@@ -1125,10 +1171,17 @@ class Parser {
           } else {
             if (form === "dict") {
               const range = this.nativeRanges.get(key) ?? key.span;
-              const span = [range[2], range[3], range[2], range[3]];
+              const span = [range[0], range[3], range[2], range[3]];
               const syntax = key.kind === "NamedExpression" && !this.grouped.has(key) ? undefined :
                 this.delimitedDiagnostic("':' expected after dictionary key", {span}, "}", true);
-              if (syntax) { syntax.offset--; syntax.end_offset = 0; }
+              if (syntax) {
+                syntax.offset--;
+                if (range[0] !== range[2]) {
+                  const bytes = new TextEncoder().encode(syntax.text + "\0");
+                  syntax.offset = Array.from(new TextDecoder().decode(bytes.subarray(0, range[3] - 1))).length;
+                }
+                syntax.end_offset = 0;
+              }
               this.fail("A dictionary element requires a value.", key, "SYNTAX", undefined, syntax);
             }
             form = "set"; items.push(key);
