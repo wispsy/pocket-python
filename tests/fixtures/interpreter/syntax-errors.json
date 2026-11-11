@@ -104,7 +104,8 @@
     "LA150",
     "LA151",
     "LA152",
-    "LA153"
+    "LA153",
+    "LA153A"
   ],
   "cases": [
     {
@@ -38951,6 +38952,384 @@
       "boundary": "Statement syntax in eval mode retains its explicit native-field boundary.",
       "source": "try: compile('def 雪(else): pass',\"selected.py\",\"eval\")\nexcept SyntaxError as e: print(e.filename)\n",
       "stdout": "selected.py\n"
+    },
+    {
+      "id": "interactive-definition-priority-0-exec",
+      "stage": "LA153A",
+      "source": "try: compile('def f(): pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-0-single",
+      "stage": "LA153A",
+      "source": "try: compile('def f(): pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-0",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('def f(): pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "1\n"
+    },
+    {
+      "id": "interactive-definition-priority-1-exec",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪(鳥,鳥): pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-priority-1-single",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪(鳥,鳥): pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-1",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('def 雪(鳥,鳥): pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "1\n"
+    },
+    {
+      "id": "interactive-definition-priority-2-exec",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪: pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-2-single",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪: pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-2",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('class 雪: pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "1\n"
+    },
+    {
+      "id": "interactive-definition-priority-3-exec",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪(鳥=1,鳥=2): pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-priority-3-single",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪(鳥=1,鳥=2): pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-3",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('class 雪(鳥=1,鳥=2): pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "1\n"
+    },
+    {
+      "id": "interactive-definition-priority-4-exec",
+      "stage": "LA153A",
+      "source": "try: compile('@decorate\\ndef 雪(): pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-4-single",
+      "stage": "LA153A",
+      "source": "try: compile('@decorate\\ndef 雪(): pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-4",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('@decorate\\ndef 雪(): pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "2\n"
+    },
+    {
+      "id": "interactive-definition-priority-5-exec",
+      "stage": "LA153A",
+      "source": "try: compile('@decorate\\nclass 雪: pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-5-single",
+      "stage": "LA153A",
+      "source": "try: compile('@decorate\\nclass 雪: pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-5",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('@decorate\\nclass 雪: pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "2\n"
+    },
+    {
+      "id": "interactive-definition-priority-6-exec",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪(\\n 鳥\\n): pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-6-single",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪(\\n 鳥\\n): pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-6",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('def 雪(\\n 鳥\\n): pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "3\n"
+    },
+    {
+      "id": "interactive-definition-priority-7-exec",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪(\\n 鳥\\n): pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-7-single",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪(\\n 鳥\\n): pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-7",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('class 雪(\\n 鳥\\n): pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "3\n"
+    },
+    {
+      "id": "interactive-definition-priority-8-exec",
+      "stage": "LA153A",
+      "source": "try: compile('def f(): pass # supplied',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-8-single",
+      "stage": "LA153A",
+      "source": "try: compile('def f(): pass # supplied',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-8",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('def f(): pass # supplied',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "1\n"
+    },
+    {
+      "id": "interactive-definition-priority-9-exec",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪: pass\\t',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-9-single",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪: pass\\t',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-9",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('class 雪: pass\\t',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "1\n"
+    },
+    {
+      "id": "interactive-definition-priority-10-exec",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪(\\n): pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-10-single",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪(\\n): pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-10",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('def 雪(\\n): pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "2\n"
+    },
+    {
+      "id": "interactive-definition-priority-11-exec",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪(\\n): pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-11-single",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪(\\n): pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-11",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('class 雪(\\n): pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "2\n"
+    },
+    {
+      "id": "interactive-definition-priority-12-exec",
+      "stage": "LA153A",
+      "source": "try: compile('def f(): pass; pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-12-single",
+      "stage": "LA153A",
+      "source": "try: compile('def f(): pass; pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-12",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('def f(): pass; pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "1\n"
+    },
+    {
+      "id": "interactive-definition-priority-13-exec",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪: value=1; pass',\"interactive.py\",'exec')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-priority-13-single",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪: value=1; pass',\"interactive.py\",'single')\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "rejected\n"
+    },
+    {
+      "id": "interactive-definition-fields-13",
+      "stage": "Future",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Interactive inline-definition EOF native fields retain their explicit boundary, ahead of binding diagnostics.",
+      "source": "try: compile('class 雪: value=1; pass',\"interactive.py\",\"single\")\nexcept SyntaxError as e: print(e.lineno)\n",
+      "stdout": "1\n"
+    },
+    {
+      "id": "interactive-definition-complete-0",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪(): pass\\n',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-1",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪: pass\\r',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-2",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪(): pass\\r\\n',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-3",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪: pass\\n# supplied',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-4",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪():\\n pass',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-5",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪:\\n pass',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-6",
+      "stage": "LA153A",
+      "source": "try: compile('@decorate\\ndef 雪():\\n pass',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-7",
+      "stage": "LA153A",
+      "source": "try: compile('@decorate\\nclass 雪:\\n pass',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-8",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪(\\n 鳥\\n):\\n pass',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-9",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪(\\n 鳥\\n):\\n pass',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-10",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪(): pass\\n# supplied',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-11",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪: pass\\n# supplied\\n',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-12",
+      "stage": "LA153A",
+      "source": "try: compile('def 雪():\\n if True: return 1',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
+    },
+    {
+      "id": "interactive-definition-complete-13",
+      "stage": "LA153A",
+      "source": "try: compile('class 雪:\\n def 鳥(): pass',\"interactive.py\",\"single\")\nexcept SyntaxError: print(\"rejected\")\nelse: print(\"compiled\")\n",
+      "stdout": "compiled\n"
     }
   ]
 }

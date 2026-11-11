@@ -218,6 +218,12 @@ class Parser {
       syntax.offset = syntax.end_offset = 0;
       this.fail("invalid syntax", this.peek(), "SYNTAX", undefined, syntax);
     }
+    if (mode === "single" && ["Class", "Function"].includes(body[0]?.kind) &&
+        !this.tokens.some(token => token.kind === "indent")) {
+      const last = this.tokens.filter(token => !["newline", "eof"].includes(token.kind)).at(-1);
+      if (!this.lexed.source.slice(last.end).includes("\n"))
+        this.fail("Interactive definitions require a terminating newline.");
+    }
     if (mode === "single" && !this.lexed.source.endsWith("\n") &&
         (this.handlerErrors.length || this.keywordErrors.length &&
           ["If", "While", "For", "Try", "Class", "Function"].includes(body[0]?.kind) && !this.tokens.some(token => token.kind === "indent")))

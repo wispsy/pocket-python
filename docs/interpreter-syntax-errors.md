@@ -656,8 +656,14 @@ Cyclic filenames, suspended conversion/cleanup, collection, cancellation/close,
 shared limits and original frames retain their ownership contracts. Installed
 offline acceptance covers fresh Stop/Restart and reduced-profile boundaries.
 
-The current fixed generated-syntax corpus contains 6,212 cases: 5,761 supported
-semantic/error comparisons and 451 explicit native-field refusals. The ordinary
+LA-153A rejects inline interactive function/class definitions without their
+required physical newline, before duplicate-parameter or class-keyword binding.
+Decorators, continued headers, normalized line endings and final comment lines
+retain their termination behavior; indented suites remain valid without a final
+newline. Native EOF fields retain explicit refusal boundaries.
+
+The current fixed generated-syntax corpus contains 6,268 cases: 5,803 supported
+semantic/error comparisons and 465 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

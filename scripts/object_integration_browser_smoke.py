@@ -65,7 +65,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     ready()
                     for case in corpus['cases']:
                         if (case.get('modules') or
-                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93', 'LA96', 'LA99', 'LA99A', 'LA102', 'LA105', 'LA108', 'LA111', 'LA114', 'LA117', 'LA120', 'LA123', 'LA126', 'LA129', 'LA132', 'LA135', 'LA138', 'LA141', 'LA144', 'LA147', 'LA143A', 'LA150', 'LA153'} or
+                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93', 'LA96', 'LA99', 'LA99A', 'LA102', 'LA105', 'LA108', 'LA111', 'LA114', 'LA117', 'LA120', 'LA123', 'LA126', 'LA129', 'LA132', 'LA135', 'LA138', 'LA141', 'LA144', 'LA147', 'LA143A', 'LA150', 'LA153', 'LA153A'} or
                             containers and case['stage'] not in {'LA-7', 'LA-6A'} or
                             exceptions and case['stage'] not in {'LA13', 'LA16', 'LA19', 'LA22', 'LA25', 'LA28', 'LA31', 'LA34', 'LA37', 'LA40', 'LA43', 'LA46', 'LA49', 'LA52', 'LA55', 'LA58', 'LA61', 'LA62C'}):
                             continue
