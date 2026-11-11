@@ -132,7 +132,8 @@
     "LA175",
     "LA176",
     "LA177",
-    "LA178"
+    "LA178",
+    "LA179"
   ],
   "cases": [
     {
@@ -47093,12 +47094,9 @@
     },
     {
       "id": "function-default-tail-not-tail-boundary",
-      "stage": "Future",
-      "source": "try: compile('def f(雪=1 not 鳥): pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
-      "stdout": "selected.py\n",
-      "classification": "explicit-refusal",
-      "owner": "#124",
-      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+      "stage": "LA179",
+      "source": "try: compile('def f(雪=1 not 鳥): pass',\"selected.py\",'exec')\nexcept SyntaxError as e:\n print(e.filename)\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args[1]),e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "selected.py\ninvalid syntax. Perhaps you forgot a comma? 1 9 1 16\n'def f(雪=1 not 鳥): pass\\n' 6 True\n0 0 'def f(雪=1 not 鳥): pass\\n'\n"
     },
     {
       "id": "function-default-tail-eval-boundary",
@@ -47906,12 +47904,9 @@
     },
     {
       "id": "lambda-default-tail-not-tail-boundary",
-      "stage": "Future",
-      "source": "try: compile('lambda 雪=1 not 鳥: 1',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
-      "stdout": "selected.py\n",
-      "classification": "explicit-refusal",
-      "owner": "#124",
-      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥: 1',\"selected.py\",'exec')\nexcept SyntaxError as e:\n print(e.filename)\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args[1]),e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "selected.py\ninvalid syntax 1 16 1 17\n'lambda 雪=1 not 鳥: 1\\n' 6 True\n0 0 'lambda 雪=1 not 鳥: 1\\n'\n"
     },
     {
       "id": "lambda-default-tail-comprehension-boundary",
@@ -52794,6 +52789,1074 @@
       "stage": "LA178",
       "source": "def f(a=1,/,b=2,*,c=3): return a+b+c\nprint(f(),f(2,c=4))\n",
       "stdout": "6 8\n"
+    },
+    {
+      "id": "default-negation-00-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 16\n'def 雲(雪=1 not 鳥): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-00-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 16\n'def 雲(雪=1 not 鳥): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-00-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-00-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-00-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-00-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 18\n'(lambda 雪=1 not 鳥: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-00-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 18\n'(lambda 雪=1 not 鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-00-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 18\n'(lambda 雪=1 not 鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-01-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not (鳥)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 18\n'def 雲(雪=1 not (鳥)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not (鳥)): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-01-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not (鳥)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 18\n'def 雲(雪=1 not (鳥)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not (鳥)): pass'\n"
+    },
+    {
+      "id": "default-negation-01-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not (鳥): 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not (鳥): 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not (鳥): 1\\n'\n"
+    },
+    {
+      "id": "default-negation-01-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not (鳥): 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not (鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not (鳥): 1'\n"
+    },
+    {
+      "id": "default-negation-01-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not (鳥): 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not (鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not (鳥): 1'\n"
+    },
+    {
+      "id": "default-negation-01-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not (鳥): 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 20\n'(lambda 雪=1 not (鳥): 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not (鳥): 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-01-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not (鳥): 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 20\n'(lambda 雪=1 not (鳥): 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not (鳥): 1)'\n"
+    },
+    {
+      "id": "default-negation-01-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not (鳥): 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 20\n'(lambda 雪=1 not (鳥): 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not (鳥): 1)'\n"
+    },
+    {
+      "id": "default-negation-02-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 20\n'def 雲(雪=1 not not 鳥): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not not 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-02-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not not 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 20\n'def 雲(雪=1 not not 鳥): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not not 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-02-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not not 鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 19\n'lambda 雪=1 not not 鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not not 鳥: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-02-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not not 鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 19\n'lambda 雪=1 not not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-02-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not not 鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 19\n'lambda 雪=1 not not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-02-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not not 鳥: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 22\n'(lambda 雪=1 not not 鳥: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not not 鳥: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-02-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not not 鳥: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 22\n'(lambda 雪=1 not not 鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-02-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not not 鳥: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 22\n'(lambda 雪=1 not not 鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-03-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥 and 羽): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 22\n'def 雲(雪=1 not 鳥 and 羽): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥 and 羽): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-03-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥 and 羽): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 22\n'def 雲(雪=1 not 鳥 and 羽): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥 and 羽): pass'\n"
+    },
+    {
+      "id": "default-negation-03-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥 and 羽: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥 and 羽: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥 and 羽: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-03-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥 and 羽: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥 and 羽: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥 and 羽: 1'\n"
+    },
+    {
+      "id": "default-negation-03-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥 and 羽: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥 and 羽: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥 and 羽: 1'\n"
+    },
+    {
+      "id": "default-negation-03-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥 and 羽: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 24\n'(lambda 雪=1 not 鳥 and 羽: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥 and 羽: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-03-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥 and 羽: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 24\n'(lambda 雪=1 not 鳥 and 羽: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥 and 羽: 1)'\n"
+    },
+    {
+      "id": "default-negation-03-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥 and 羽: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 24\n'(lambda 雪=1 not 鳥 and 羽: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥 and 羽: 1)'\n"
+    },
+    {
+      "id": "default-negation-04-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥 if 羽 else 空): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 28\n'def 雲(雪=1 not 鳥 if 羽 else 空): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥 if 羽 else 空): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-04-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥 if 羽 else 空): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 28\n'def 雲(雪=1 not 鳥 if 羽 else 空): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥 if 羽 else 空): pass'\n"
+    },
+    {
+      "id": "default-negation-04-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥 if 羽 else 空: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥 if 羽 else 空: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥 if 羽 else 空: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-04-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥 if 羽 else 空: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥 if 羽 else 空: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥 if 羽 else 空: 1'\n"
+    },
+    {
+      "id": "default-negation-04-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥 if 羽 else 空: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥 if 羽 else 空: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥 if 羽 else 空: 1'\n"
+    },
+    {
+      "id": "default-negation-04-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥 if 羽 else 空: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 30\n'(lambda 雪=1 not 鳥 if 羽 else 空: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥 if 羽 else 空: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-04-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥 if 羽 else 空: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 30\n'(lambda 雪=1 not 鳥 if 羽 else 空: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥 if 羽 else 空: 1)'\n"
+    },
+    {
+      "id": "default-negation-04-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥 if 羽 else 空: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 30\n'(lambda 雪=1 not 鳥 if 羽 else 空: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥 if 羽 else 空: 1)'\n"
+    },
+    {
+      "id": "default-negation-05-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥,羽=2): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 16\n'def 雲(雪=1 not 鳥,羽=2): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥,羽=2): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-05-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥,羽=2): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 16\n'def 雲(雪=1 not 鳥,羽=2): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥,羽=2): pass'\n"
+    },
+    {
+      "id": "default-negation-05-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥,羽=2: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥,羽=2: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥,羽=2: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-05-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥,羽=2: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥,羽=2: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥,羽=2: 1'\n"
+    },
+    {
+      "id": "default-negation-05-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥,羽=2: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥,羽=2: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥,羽=2: 1'\n"
+    },
+    {
+      "id": "default-negation-05-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥,羽=2: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 18\n'(lambda 雪=1 not 鳥,羽=2: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥,羽=2: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-05-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥,羽=2: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 18\n'(lambda 雪=1 not 鳥,羽=2: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥,羽=2: 1)'\n"
+    },
+    {
+      "id": "default-negation-05-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥,羽=2: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 18\n'(lambda 雪=1 not 鳥,羽=2: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥,羽=2: 1)'\n"
+    },
+    {
+      "id": "default-negation-06-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1\\\\\\n not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 2 7\n'def 雲(雪=1\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1\\\\\\n not 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-06-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1\\\\\\n not 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 2 7\n'def 雲(雪=1\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1\\\\\\n not 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-06-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1\\\\\\n not 鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 6 2 7\n' not 鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1\\\\\\n not 鳥: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-06-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1\\\\\\n not 鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 6 2 7\n' not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1\\\\\\n not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-06-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1\\\\\\n not 鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 6 2 7\n' not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1\\\\\\n not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-06-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1\\\\\\n not 鳥: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 9\n'(lambda 雪=1\\\\' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1\\\\\\n not 鳥: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-06-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1\\\\\\n not 鳥: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 9\n'(lambda 雪=1\\\\' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1\\\\\\n not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-06-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1\\\\\\n not 鳥: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 9\n'(lambda 雪=1\\\\' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1\\\\\\n not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-07-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not\\\\\\n 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 2 5\n'def 雲(雪=1 not\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not\\\\\\n 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-07-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not\\\\\\n 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 2 5\n'def 雲(雪=1 not\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not\\\\\\n 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-07-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not\\\\\\n 鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 3\n' 鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not\\\\\\n 鳥: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-07-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not\\\\\\n 鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 3\n' 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not\\\\\\n 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-07-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not\\\\\\n 鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 3\n' 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not\\\\\\n 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-07-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not\\\\\\n 鳥: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 5\n'(lambda 雪=1 not\\\\' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not\\\\\\n 鳥: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-07-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not\\\\\\n 鳥: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 5\n'(lambda 雪=1 not\\\\' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not\\\\\\n 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-07-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not\\\\\\n 鳥: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 5\n'(lambda 雪=1 not\\\\' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not\\\\\\n 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-08-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not\\n 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 2 5\n'def 雲(雪=1 not' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not\\n 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-08-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not\\n 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 2 5\n'def 雲(雪=1 not' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not\\n 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-08-lambda-exec",
+      "stage": "Future",
+      "source": "try: compile('lambda 雪=1 not\\n 鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 15 1 16\n'lambda 雪=1 not\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not\\n 鳥: 1\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-08-lambda-eval",
+      "stage": "Future",
+      "source": "try: compile('lambda 雪=1 not\\n 鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 15 1 16\n'lambda 雪=1 not\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not\\n 鳥: 1'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-08-lambda-single",
+      "stage": "Future",
+      "source": "try: compile('lambda 雪=1 not\\n 鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 15 1 16\n'lambda 雪=1 not\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not\\n 鳥: 1'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-08-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not\\n 鳥: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 5\n'(lambda 雪=1 not' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not\\n 鳥: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-08-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not\\n 鳥: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 5\n'(lambda 雪=1 not' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not\\n 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-08-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not\\n 鳥: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 5\n'(lambda 雪=1 not' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not\\n 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-09-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not # note\\n 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 2 5\n'def 雲(雪=1 not # note' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not # note\\n 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-09-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not # note\\n 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 2 5\n'def 雲(雪=1 not # note' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not # note\\n 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-09-lambda-exec",
+      "stage": "Future",
+      "source": "try: compile('lambda 雪=1 not # note\\n 鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 23\n'lambda 雪=1 not # note\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not # note\\n 鳥: 1\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-09-lambda-eval",
+      "stage": "Future",
+      "source": "try: compile('lambda 雪=1 not # note\\n 鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 23\n'lambda 雪=1 not # note\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not # note\\n 鳥: 1'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-09-lambda-single",
+      "stage": "Future",
+      "source": "try: compile('lambda 雪=1 not # note\\n 鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 23\n'lambda 雪=1 not # note\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not # note\\n 鳥: 1'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-09-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not # note\\n 鳥: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 5\n'(lambda 雪=1 not # note' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not # note\\n 鳥: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-09-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not # note\\n 鳥: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 5\n'(lambda 雪=1 not # note' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not # note\\n 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-09-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not # note\\n 鳥: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 2 5\n'(lambda 雪=1 not # note' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not # note\\n 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-10-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=None not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 19\n'def 雲(雪=None not 鳥): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=None not 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-10-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=None not 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 19\n'def 雲(雪=None not 鳥): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=None not 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-10-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=None not 鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 19 1 20\n'lambda 雪=None not 鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=None not 鳥: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-10-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=None not 鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 19 1 20\n'lambda 雪=None not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=None not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-10-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=None not 鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 19 1 20\n'lambda 雪=None not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=None not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-10-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=None not 鳥: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 21\n'(lambda 雪=None not 鳥: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=None not 鳥: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-10-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=None not 鳥: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 21\n'(lambda 雪=None not 鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=None not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-10-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=None not 鳥: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 21\n'(lambda 雪=None not 鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=None not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-11-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=[] not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 17\n'def 雲(雪=[] not 鳥): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=[] not 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-11-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=[] not 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 17\n'def 雲(雪=[] not 鳥): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=[] not 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-11-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=[] not 鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 17 1 18\n'lambda 雪=[] not 鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=[] not 鳥: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-11-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=[] not 鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 17 1 18\n'lambda 雪=[] not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=[] not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-11-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=[] not 鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 17 1 18\n'lambda 雪=[] not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=[] not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-11-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=[] not 鳥: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 19\n'(lambda 雪=[] not 鳥: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=[] not 鳥: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-11-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=[] not 鳥: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 19\n'(lambda 雪=[] not 鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=[] not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-11-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=[] not 鳥: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 19\n'(lambda 雪=[] not 鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=[] not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-12-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=f() not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 18\n'def 雲(雪=f() not 鳥): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=f() not 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-12-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=f() not 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 18\n'def 雲(雪=f() not 鳥): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=f() not 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-12-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=f() not 鳥: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 19\n'lambda 雪=f() not 鳥: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=f() not 鳥: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-12-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=f() not 鳥: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 19\n'lambda 雪=f() not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=f() not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-12-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=f() not 鳥: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 19\n'lambda 雪=f() not 鳥: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=f() not 鳥: 1'\n"
+    },
+    {
+      "id": "default-negation-12-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=f() not 鳥: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 20\n'(lambda 雪=f() not 鳥: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=f() not 鳥: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-12-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=f() not 鳥: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 20\n'(lambda 雪=f() not 鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=f() not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-12-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=f() not 鳥: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 20\n'(lambda 雪=f() not 鳥: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=f() not 鳥: 1)'\n"
+    },
+    {
+      "id": "default-negation-13-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1,*,鳥=2 not 羽): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 15 1 22\n'def 雲(雪=1,*,鳥=2 not 羽): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1,*,鳥=2 not 羽): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-13-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1,*,鳥=2 not 羽): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 15 1 22\n'def 雲(雪=1,*,鳥=2 not 羽): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1,*,鳥=2 not 羽): pass'\n"
+    },
+    {
+      "id": "default-negation-13-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1,*,鳥=2 not 羽: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 22 1 23\n'lambda 雪=1,*,鳥=2 not 羽: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1,*,鳥=2 not 羽: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-13-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1,*,鳥=2 not 羽: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 22 1 23\n'lambda 雪=1,*,鳥=2 not 羽: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1,*,鳥=2 not 羽: 1'\n"
+    },
+    {
+      "id": "default-negation-13-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1,*,鳥=2 not 羽: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 22 1 23\n'lambda 雪=1,*,鳥=2 not 羽: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1,*,鳥=2 not 羽: 1'\n"
+    },
+    {
+      "id": "default-negation-13-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1,*,鳥=2 not 羽: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 17 1 24\n'(lambda 雪=1,*,鳥=2 not 羽: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1,*,鳥=2 not 羽: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-13-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1,*,鳥=2 not 羽: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 17 1 24\n'(lambda 雪=1,*,鳥=2 not 羽: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1,*,鳥=2 not 羽: 1)'\n"
+    },
+    {
+      "id": "default-negation-13-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1,*,鳥=2 not 羽: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 17 1 24\n'(lambda 雪=1,*,鳥=2 not 羽: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1,*,鳥=2 not 羽: 1)'\n"
+    },
+    {
+      "id": "default-negation-14-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1,/,鳥=2 not 羽): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 15 1 22\n'def 雲(雪=1,/,鳥=2 not 羽): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1,/,鳥=2 not 羽): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-14-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1,/,鳥=2 not 羽): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 15 1 22\n'def 雲(雪=1,/,鳥=2 not 羽): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1,/,鳥=2 not 羽): pass'\n"
+    },
+    {
+      "id": "default-negation-14-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1,/,鳥=2 not 羽: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 22 1 23\n'lambda 雪=1,/,鳥=2 not 羽: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1,/,鳥=2 not 羽: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-14-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1,/,鳥=2 not 羽: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 22 1 23\n'lambda 雪=1,/,鳥=2 not 羽: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1,/,鳥=2 not 羽: 1'\n"
+    },
+    {
+      "id": "default-negation-14-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1,/,鳥=2 not 羽: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 22 1 23\n'lambda 雪=1,/,鳥=2 not 羽: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1,/,鳥=2 not 羽: 1'\n"
+    },
+    {
+      "id": "default-negation-14-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1,/,鳥=2 not 羽: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 17 1 24\n'(lambda 雪=1,/,鳥=2 not 羽: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1,/,鳥=2 not 羽: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-14-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1,/,鳥=2 not 羽: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 17 1 24\n'(lambda 雪=1,/,鳥=2 not 羽: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1,/,鳥=2 not 羽: 1)'\n"
+    },
+    {
+      "id": "default-negation-14-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1,/,鳥=2 not 羽: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 17 1 24\n'(lambda 雪=1,/,鳥=2 not 羽: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1,/,鳥=2 not 羽: 1)'\n"
+    },
+    {
+      "id": "default-negation-15-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not (鳥+羽)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 20\n'def 雲(雪=1 not (鳥+羽)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not (鳥+羽)): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-15-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not (鳥+羽)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 20\n'def 雲(雪=1 not (鳥+羽)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not (鳥+羽)): pass'\n"
+    },
+    {
+      "id": "default-negation-15-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not (鳥+羽): 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not (鳥+羽): 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not (鳥+羽): 1\\n'\n"
+    },
+    {
+      "id": "default-negation-15-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not (鳥+羽): 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not (鳥+羽): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not (鳥+羽): 1'\n"
+    },
+    {
+      "id": "default-negation-15-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not (鳥+羽): 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not (鳥+羽): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not (鳥+羽): 1'\n"
+    },
+    {
+      "id": "default-negation-15-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not (鳥+羽): 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 22\n'(lambda 雪=1 not (鳥+羽): 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not (鳥+羽): 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-15-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not (鳥+羽): 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 22\n'(lambda 雪=1 not (鳥+羽): 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not (鳥+羽): 1)'\n"
+    },
+    {
+      "id": "default-negation-15-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not (鳥+羽): 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 22\n'(lambda 雪=1 not (鳥+羽): 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not (鳥+羽): 1)'\n"
+    },
+    {
+      "id": "default-negation-16-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥.羽): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 18\n'def 雲(雪=1 not 鳥.羽): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥.羽): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-16-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥.羽): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 18\n'def 雲(雪=1 not 鳥.羽): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥.羽): pass'\n"
+    },
+    {
+      "id": "default-negation-16-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥.羽: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥.羽: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥.羽: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-16-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥.羽: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥.羽: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥.羽: 1'\n"
+    },
+    {
+      "id": "default-negation-16-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥.羽: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥.羽: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥.羽: 1'\n"
+    },
+    {
+      "id": "default-negation-16-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥.羽: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 20\n'(lambda 雪=1 not 鳥.羽: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥.羽: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-16-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥.羽: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 20\n'(lambda 雪=1 not 鳥.羽: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥.羽: 1)'\n"
+    },
+    {
+      "id": "default-negation-16-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥.羽: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 20\n'(lambda 雪=1 not 鳥.羽: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥.羽: 1)'\n"
+    },
+    {
+      "id": "default-negation-17-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥[羽]): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 19\n'def 雲(雪=1 not 鳥[羽]): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥[羽]): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-17-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥[羽]): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 19\n'def 雲(雪=1 not 鳥[羽]): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥[羽]): pass'\n"
+    },
+    {
+      "id": "default-negation-17-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥[羽]: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥[羽]: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥[羽]: 1\\n'\n"
+    },
+    {
+      "id": "default-negation-17-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥[羽]: 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥[羽]: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥[羽]: 1'\n"
+    },
+    {
+      "id": "default-negation-17-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥[羽]: 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥[羽]: 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥[羽]: 1'\n"
+    },
+    {
+      "id": "default-negation-17-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥[羽]: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 21\n'(lambda 雪=1 not 鳥[羽]: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥[羽]: 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-17-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥[羽]: 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 21\n'(lambda 雪=1 not 鳥[羽]: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥[羽]: 1)'\n"
+    },
+    {
+      "id": "default-negation-17-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥[羽]: 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 21\n'(lambda 雪=1 not 鳥[羽]: 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥[羽]: 1)'\n"
+    },
+    {
+      "id": "default-negation-18-function-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥(羽)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 19\n'def 雲(雪=1 not 鳥(羽)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥(羽)): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-18-function-single",
+      "stage": "LA179",
+      "source": "try: compile('def 雲(雪=1 not 鳥(羽)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 19\n'def 雲(雪=1 not 鳥(羽)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥(羽)): pass'\n"
+    },
+    {
+      "id": "default-negation-18-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥(羽): 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥(羽): 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥(羽): 1\\n'\n"
+    },
+    {
+      "id": "default-negation-18-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥(羽): 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥(羽): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥(羽): 1'\n"
+    },
+    {
+      "id": "default-negation-18-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('lambda 雪=1 not 鳥(羽): 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 17\n'lambda 雪=1 not 鳥(羽): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not 鳥(羽): 1'\n"
+    },
+    {
+      "id": "default-negation-18-grouped-lambda-exec",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥(羽): 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 21\n'(lambda 雪=1 not 鳥(羽): 1)\\n' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥(羽): 1)\\n'\n"
+    },
+    {
+      "id": "default-negation-18-grouped-lambda-eval",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥(羽): 1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 21\n'(lambda 雪=1 not 鳥(羽): 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥(羽): 1)'\n"
+    },
+    {
+      "id": "default-negation-18-grouped-lambda-single",
+      "stage": "LA179",
+      "source": "try: compile('(lambda 雪=1 not 鳥(羽): 1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 11 1 21\n'(lambda 雪=1 not 鳥(羽): 1)' 2 6\nTrue True True\nFalse\n0 0 '(lambda 雪=1 not 鳥(羽): 1)'\n"
+    },
+    {
+      "id": "default-negation-context-00-exec",
+      "stage": "LA179",
+      "source": "try: compile('@飾\\ndef 雲(雪=1 not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 2 9 2 16\n'def 雲(雪=1 not 鳥): pass\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾\\ndef 雲(雪=1 not 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-context-00-single",
+      "stage": "LA179",
+      "source": "try: compile('@飾\\ndef 雲(雪=1 not 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 2 9 2 16\n'def 雲(雪=1 not 鳥): pass' 2 6\nTrue True True\nFalse\n0 0 '@飾\\ndef 雲(雪=1 not 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-context-01-exec",
+      "stage": "LA179",
+      "source": "try: compile('def 外():\\n def 雲(雪=1 not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 2 10 2 17\n' def 雲(雪=1 not 鳥): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 外():\\n def 雲(雪=1 not 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-context-01-single",
+      "stage": "LA179",
+      "source": "try: compile('def 外():\\n def 雲(雪=1 not 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 2 10 2 17\n' def 雲(雪=1 not 鳥): pass' 2 6\nTrue True True\nFalse\n0 0 'def 外():\\n def 雲(雪=1 not 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-context-02-exec",
+      "stage": "LA179",
+      "source": "try: compile('if True:\\n def 雲(雪=1 not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 2 10 2 17\n' def 雲(雪=1 not 鳥): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n def 雲(雪=1 not 鳥): pass\\n'\n"
+    },
+    {
+      "id": "default-negation-context-02-single",
+      "stage": "LA179",
+      "source": "try: compile('if True:\\n def 雲(雪=1 not 鳥): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 2 10 2 17\n' def 雲(雪=1 not 鳥): pass' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n def 雲(雪=1 not 鳥): pass'\n"
+    },
+    {
+      "id": "default-negation-context-03-exec",
+      "stage": "Future",
+      "source": "try: compile('def 雲(雪=1 not 鳥): return else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 16\n'def 雲(雪=1 not 鳥): return else\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥): return else\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "The repaired default retains a later malformed-body native-field boundary."
+    },
+    {
+      "id": "default-negation-context-03-single",
+      "stage": "Future",
+      "source": "try: compile('def 雲(雪=1 not 鳥): return else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 9 1 16\n'def 雲(雪=1 not 鳥): return else' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥): return else'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "The repaired default retains a later malformed-body native-field boundary."
+    },
+    {
+      "id": "default-negation-incomplete-0-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雲(雪=1 not): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 14 1 15\n'def 雲(雪=1 not): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not): pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-incomplete-1-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雲(雪=1 not else): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 15 1 19\n'def 雲(雪=1 not else): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not else): pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-incomplete-2-boundary",
+      "stage": "Future",
+      "source": "try: compile('lambda 雪=1 not: 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 15 1 16\n'lambda 雪=1 not: 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 雪=1 not: 1\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-incomplete-3-boundary",
+      "stage": "Future",
+      "source": "try: compile('f(*lambda 雪=1 not 鳥: 1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 1 13 1 20\n'f(*lambda 雪=1 not 鳥: 1)\\n' 2 6\nTrue True True\nFalse\n0 0 'f(*lambda 雪=1 not 鳥: 1)\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-incomplete-4-boundary",
+      "stage": "Future",
+      "source": "try: compile('[x for x in xs if lambda 雪=1 not 鳥: 1]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 19 1 25\n'[x for x in xs if lambda 雪=1 not 鳥: 1]\\n' 2 6\nTrue True True\nFalse\n0 0 '[x for x in xs if lambda 雪=1 not 鳥: 1]\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-incomplete-5-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雲(雪=print not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Missing parentheses in call to 'print'. Did you mean print(...)?\nselected/雪.py 1 9 1 20\n'def 雲(雪=print not 鳥): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=print not 鳥): pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-prior-fields",
+      "stage": "LA179",
+      "source": "try: compile('if True: pass\\ndef 雲(雪=1 not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 2 9 2 16\n'def 雲(雪=1 not 鳥): pass\\n' 2 6\nTrue True True\n"
+    },
+    {
+      "id": "default-negation-prior-metadata",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\ndef 雲(雪=1 not 鳥): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax. Perhaps you forgot a comma?\nselected/雪.py 2 9 2 16\n'def 雲(雪=1 not 鳥): pass\\n' 2 6\nTrue True True\nFalse\n1 0 'if True: pass\\ndef 雲(雪=1 not 鳥): pass\\n'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Prior-compound parser metadata remains unqualified."
+    },
+    {
+      "id": "default-negation-eval-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雲(雪=1 not 鳥): pass',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 1 1 4\n'def 雲(雪=1 not 鳥): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雲(雪=1 not 鳥): pass'\n",
+      "owner": "#124",
+      "classification": "explicit-refusal",
+      "boundary": "Unqualified surrounding grammar or valid annotation execution retains its explicit boundary."
+    },
+    {
+      "id": "default-negation-valid-comparisons",
+      "stage": "LA179",
+      "source": "def f(a=1 not in [2],b=not 1 in [2]): return a,b\npair=f()\nprint(pair[0],pair[1])\nprint((lambda a=1 not in [1]: a)())\n",
+      "stdout": "True True\nFalse\n"
     }
   ]
 }

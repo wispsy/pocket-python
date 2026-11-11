@@ -827,8 +827,14 @@ single mode ranges. Adjacent-expression hints, required-default order, valid
 binding, surrounding annotations and prior-compound metadata retain their
 independent behavior and boundaries.
 
-The current fixed generated-syntax corpus contains 8,435 cases: 7,885 supported
-semantic/error comparisons and 550 explicit native-field refusals. The ordinary
+LA-179 qualifies complete adjacent negation expressions in parameter defaults
+when not lacks in. Function and grouped-lambda diagnostics select the joined
+missing-comma range; ungrouped lambdas select the generic token. Valid not-in
+comparisons keep their execution behavior. Incomplete operands and unqualified
+surrounding grammar retain explicit native-field boundaries.
+
+The current fixed generated-syntax corpus contains 8,605 cases: 8,041 supported
+semantic/error comparisons and 564 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
