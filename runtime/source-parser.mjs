@@ -561,11 +561,8 @@ class Parser {
     let bareStar = null;
     const incomplete = (message = "invalid syntax") => end === ":" && this.comprehensionClauseFields && this.operandFields ? this.tokenDiagnostic(message) : undefined;
     const parameterName = (parenthesized = false) => {
-      if (end !== ":" && !this.kind("name"))
-        this.fail("Expected a function parameter.", this.peek(), "SYNTAX", undefined,
-          this.tokenDiagnostic("invalid syntax"));
-      if (end === ":" && !this.kind("name")) {
-        let syntax = incomplete();
+      if (!this.kind("name")) {
+        let syntax = end === ":" ? incomplete() : this.tokenDiagnostic("invalid syntax");
         if (parenthesized && this.at("(")) {
           let ahead = 1;
           while (this.peek(ahead).kind === "name") {
@@ -575,7 +572,7 @@ class Parser {
           }
           if (ahead > 1 && this.peek(ahead).value === ")") {
             const first = this.peek(), last = this.peek(ahead);
-            syntax = this.comprehensionClauseFields ? this.diagnostic("Lambda expression parameters cannot be parenthesized",
+            syntax = this.comprehensionClauseFields ? this.diagnostic((end === ":" ? "Lambda expression" : "Function") + " parameters cannot be parenthesized",
               [first.span[0], first.span[1], last.span[2], last.span[3]]) : undefined;
             if (syntax && first.span[0] !== last.span[2]) {
               syntax.text = syntax.text.replace(/\n$/, "");
@@ -584,7 +581,7 @@ class Parser {
             }
           }
         }
-        this.fail("Expected a lambda parameter.", this.peek(), "SYNTAX", undefined, syntax);
+        this.fail(end === ":" ? "Expected a lambda parameter." : "Expected a function parameter.", this.peek(), "SYNTAX", undefined, syntax);
       }
       return this.name();
     };

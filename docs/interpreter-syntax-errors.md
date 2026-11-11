@@ -783,8 +783,14 @@ the pinned parser's newline-free text after reading a later physical line;
 ungrouped lambdas stop at their own logical newline. Complex soft-keyword
 expressions and unqualified later signature grammar keep explicit boundaries.
 
-The current fixed generated-syntax corpus contains 7,717 cases: 7,185 supported
-semantic/error comparisons and 532 explicit native-field refusals. The ordinary
+LA-172 qualifies parenthesized function parameters, selecting the complete plain
+name/tuple range and the distinct function message. Unicode, comments, continued
+lines, nested suites and decorators retain exact native fields. Defaults and
+slash/star separators preserve generic-token priority; invalid tuple shapes and
+lambda diagnostics retain their existing paths.
+
+The current fixed generated-syntax corpus contains 7,794 cases: 7,255 supported
+semantic/error comparisons and 539 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

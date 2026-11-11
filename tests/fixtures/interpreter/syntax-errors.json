@@ -125,7 +125,8 @@
     "LA169",
     "LA170",
     "LA171",
-    "LA170A"
+    "LA170A",
+    "LA172"
   ],
   "cases": [
     {
@@ -48392,6 +48393,482 @@
       "classification": "explicit-refusal",
       "owner": "#124",
       "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "function-parenthesized-00-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 10\n'def 雪((鳥)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-00-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 10\n'def 雪((鳥)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-01-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 11\n'def 雪((鳥,)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-01-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 11\n'def 雪((鳥,)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-02-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,羽)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 12\n'def 雪((鳥,羽)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,羽)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-02-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,羽)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 12\n'def 雪((鳥,羽)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,羽)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-03-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,\\n羽)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 2 5\n'def 雪((鳥,' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,\\n羽)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-03-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,\\n羽)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 2 5\n'def 雪((鳥,' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,\\n羽)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-04-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((\\n鳥\\n)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 3 2\n'def 雪((' 2 6\nTrue True True\nFalse\n0 0 'def 雪((\\n鳥\\n)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-04-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((\\n鳥\\n)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 3 2\n'def 雪((' 2 6\nTrue True True\nFalse\n0 0 'def 雪((\\n鳥\\n)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-05-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((__debug__)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 18\n'def 雪((__debug__)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪((__debug__)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-05-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((__debug__)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 18\n'def 雪((__debug__)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪((__debug__)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-06-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((match)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 14\n'def 雪((match)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪((match)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-06-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((match)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 14\n'def 雪((match)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪((match)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-07-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((K,K)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 12\n'def 雪((K,K)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪((K,K)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-07-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((K,K)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 12\n'def 雪((K,K)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪((K,K)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-08-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(空,(鳥)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 9 1 12\n'def 雪(空,(鳥)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(空,(鳥)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-08-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(空,(鳥)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 9 1 12\n'def 雪(空,(鳥)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪(空,(鳥)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-09-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(空,(鳥,羽)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 9 1 14\n'def 雪(空,(鳥,羽)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(空,(鳥,羽)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-09-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(空,(鳥,羽)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 9 1 14\n'def 雪(空,(鳥,羽)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪(空,(鳥,羽)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-10-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(空,/, (鳥)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'def 雪(空,/, (鳥)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(空,/, (鳥)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-10-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(空,/, (鳥)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'def 雪(空,/, (鳥)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪(空,/, (鳥)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-11-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(空=1,(鳥)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'def 雪(空=1,(鳥)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(空=1,(鳥)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-11-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(空=1,(鳥)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'def 雪(空=1,(鳥)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪(空=1,(鳥)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-12-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(*空,(鳥)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'def 雪(*空,(鳥)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(*空,(鳥)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-12-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(*空,(鳥)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'def 雪(*空,(鳥)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪(*空,(鳥)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-13-exec",
+      "stage": "Future",
+      "source": "try: compile('def 雪(**空,(鳥)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'def 雪(**空,(鳥)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(**空,(鳥)): pass\\n'\n",
+      "owner": "#124",
+      "boundary": "Invalid variadic-keyword parameter tails retain their native-field boundary until LA-176."
+    },
+    {
+      "id": "function-parenthesized-13-single",
+      "stage": "Future",
+      "source": "try: compile('def 雪(**空,(鳥)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'def 雪(**空,(鳥)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪(**空,(鳥)): pass'\n",
+      "owner": "#124",
+      "boundary": "Invalid variadic-keyword parameter tails retain their native-field boundary until LA-176."
+    },
+    {
+      "id": "function-parenthesized-14-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(()): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'def 雪(()): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(()): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-14-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(()): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'def 雪(()): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪(()): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-15-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(((鳥))): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'def 雪(((鳥))): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(((鳥))): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-15-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪(((鳥))): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'def 雪(((鳥))): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪(((鳥))): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-16-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥+羽)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'def 雪((鳥+羽)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥+羽)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-16-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥+羽)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'def 雪((鳥+羽)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥+羽)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-17-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,else)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'def 雪((鳥,else)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,else)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-17-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,else)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'def 雪((鳥,else)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,else)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-18-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥=1)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'def 雪((鳥=1)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥=1)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-18-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥=1)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'def 雪((鳥=1)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥=1)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-context-00-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,\\n羽)):\\n pass\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 2 5\n'def 雪((鳥,' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,\\n羽)):\\n pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-context-00-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,\\n羽)):\\n pass\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 2 5\n'def 雪((鳥,' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,\\n羽)):\\n pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-context-01-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥, # 羽\\n空)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 2 5\n'def 雪((鳥, # 羽' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥, # 羽\\n空)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-context-01-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥, # 羽\\n空)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 2 5\n'def 雪((鳥, # 羽' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥, # 羽\\n空)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-context-02-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,\\\\\\n羽)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 2 5\n'def 雪((鳥,\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,\\\\\\n羽)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-context-02-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,\\\\\\n羽)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 2 5\n'def 雪((鳥,\\\\' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,\\\\\\n羽)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-context-03-exec",
+      "stage": "LA172",
+      "source": "try: compile('@飾\\ndef 雪((鳥,羽)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 2 7 2 12\n'def 雪((鳥,羽)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 '@飾\\ndef 雪((鳥,羽)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-context-03-single",
+      "stage": "LA172",
+      "source": "try: compile('@飾\\ndef 雪((鳥,羽)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 2 7 2 12\n'def 雪((鳥,羽)): pass' 2 6\nTrue True True\nFalse\n0 0 '@飾\\ndef 雪((鳥,羽)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-context-04-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 外():\\n def 雪((鳥,羽)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 2 8 2 13\n' def 雪((鳥,羽)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 外():\\n def 雪((鳥,羽)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-context-04-single",
+      "stage": "LA172",
+      "source": "try: compile('def 外():\\n def 雪((鳥,羽)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 2 8 2 13\n' def 雪((鳥,羽)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 外():\\n def 雪((鳥,羽)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-context-05-exec",
+      "stage": "LA172",
+      "source": "try: compile('if True:\\n def 雪((鳥)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 2 8 2 11\n' def 雪((鳥)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n def 雪((鳥)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-context-05-single",
+      "stage": "LA172",
+      "source": "try: compile('if True:\\n def 雪((鳥)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 2 8 2 11\n' def 雪((鳥)): pass' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n def 雪((鳥)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-context-06-exec",
+      "stage": "LA172",
+      "source": "try: compile('class 雲:\\n def 雪((鳥,羽)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 2 8 2 13\n' def 雪((鳥,羽)): pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雲:\\n def 雪((鳥,羽)): pass\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-context-06-single",
+      "stage": "LA172",
+      "source": "try: compile('class 雲:\\n def 雪((鳥,羽)): pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 2 8 2 13\n' def 雪((鳥,羽)): pass' 2 6\nTrue True True\nFalse\n0 0 'class 雲:\\n def 雪((鳥,羽)): pass'\n"
+    },
+    {
+      "id": "function-parenthesized-context-07-exec",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,羽)): return else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 12\n'def 雪((鳥,羽)): return else\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,羽)): return else\\n'\n"
+    },
+    {
+      "id": "function-parenthesized-context-07-single",
+      "stage": "LA172",
+      "source": "try: compile('def 雪((鳥,羽)): return else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 1 7 1 12\n'def 雪((鳥,羽)): return else' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥,羽)): return else'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-00-exec",
+      "stage": "LA172",
+      "source": "try: compile('lambda (鳥): 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 8 1 11\n'lambda (鳥): 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda (鳥): 1\\n'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-00-eval",
+      "stage": "LA172",
+      "source": "try: compile('lambda (鳥): 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 8 1 11\n'lambda (鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda (鳥): 1'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-00-single",
+      "stage": "LA172",
+      "source": "try: compile('lambda (鳥): 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 8 1 11\n'lambda (鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda (鳥): 1'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-01-exec",
+      "stage": "LA172",
+      "source": "try: compile('lambda 空,(鳥,羽): 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 10 1 15\n'lambda 空,(鳥,羽): 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 空,(鳥,羽): 1\\n'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-01-eval",
+      "stage": "LA172",
+      "source": "try: compile('lambda 空,(鳥,羽): 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 10 1 15\n'lambda 空,(鳥,羽): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 空,(鳥,羽): 1'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-01-single",
+      "stage": "LA172",
+      "source": "try: compile('lambda 空,(鳥,羽): 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 10 1 15\n'lambda 空,(鳥,羽): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 空,(鳥,羽): 1'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-02-exec",
+      "stage": "LA172",
+      "source": "try: compile('lambda 空=1,(鳥): 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'lambda 空=1,(鳥): 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 空=1,(鳥): 1\\n'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-02-eval",
+      "stage": "LA172",
+      "source": "try: compile('lambda 空=1,(鳥): 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'lambda 空=1,(鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 空=1,(鳥): 1'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-02-single",
+      "stage": "LA172",
+      "source": "try: compile('lambda 空=1,(鳥): 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'lambda 空=1,(鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 空=1,(鳥): 1'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-03-exec",
+      "stage": "LA172",
+      "source": "try: compile('lambda 空,/, (鳥): 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 13 1 14\n'lambda 空,/, (鳥): 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda 空,/, (鳥): 1\\n'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-03-eval",
+      "stage": "LA172",
+      "source": "try: compile('lambda 空,/, (鳥): 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 13 1 14\n'lambda 空,/, (鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 空,/, (鳥): 1'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-03-single",
+      "stage": "LA172",
+      "source": "try: compile('lambda 空,/, (鳥): 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 13 1 14\n'lambda 空,/, (鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda 空,/, (鳥): 1'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-04-exec",
+      "stage": "LA172",
+      "source": "try: compile('(lambda (鳥,\\n羽):1)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 9 2 5\n'(lambda (鳥,' 2 6\nTrue True True\nFalse\n0 0 '(lambda (鳥,\\n羽):1)\\n'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-04-eval",
+      "stage": "LA172",
+      "source": "try: compile('(lambda (鳥,\\n羽):1)',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 9 2 5\n'(lambda (鳥,' 2 6\nTrue True True\nFalse\n0 0 '(lambda (鳥,\\n羽):1)'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-04-single",
+      "stage": "LA172",
+      "source": "try: compile('(lambda (鳥,\\n羽):1)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Lambda expression parameters cannot be parenthesized\nselected/雪.py 1 9 2 5\n'(lambda (鳥,' 2 6\nTrue True True\nFalse\n0 0 '(lambda (鳥,\\n羽):1)'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-05-exec",
+      "stage": "LA172",
+      "source": "try: compile('lambda *空,(鳥): 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'lambda *空,(鳥): 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda *空,(鳥): 1\\n'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-05-eval",
+      "stage": "LA172",
+      "source": "try: compile('lambda *空,(鳥): 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'lambda *空,(鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda *空,(鳥): 1'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-05-single",
+      "stage": "LA172",
+      "source": "try: compile('lambda *空,(鳥): 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 12\n'lambda *空,(鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda *空,(鳥): 1'\n"
+    },
+    {
+      "id": "parenthesized-lambda-regression-06-exec",
+      "stage": "Future",
+      "source": "try: compile('lambda **空,(鳥): 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'lambda **空,(鳥): 1\\n' 2 6\nTrue True True\nFalse\n0 0 'lambda **空,(鳥): 1\\n'\n",
+      "owner": "#124",
+      "boundary": "Invalid variadic-keyword parameter tails retain their native-field boundary until LA-176."
+    },
+    {
+      "id": "parenthesized-lambda-regression-06-eval",
+      "stage": "Future",
+      "source": "try: compile('lambda **空,(鳥): 1',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'lambda **空,(鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda **空,(鳥): 1'\n",
+      "owner": "#124",
+      "boundary": "Invalid variadic-keyword parameter tails retain their native-field boundary until LA-176."
+    },
+    {
+      "id": "parenthesized-lambda-regression-06-single",
+      "stage": "Future",
+      "source": "try: compile('lambda **空,(鳥): 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'lambda **空,(鳥): 1' 2 6\nTrue True True\nFalse\n0 0 'lambda **空,(鳥): 1'\n",
+      "owner": "#124",
+      "boundary": "Invalid variadic-keyword parameter tails retain their native-field boundary until LA-176."
+    },
+    {
+      "id": "function-parenthesized-eval-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雪((鳥)): pass',\"selected/雪.py\",'eval')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 1 1 4\n'def 雪((鳥)): pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪((鳥)): pass'\n",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar or native-field metadata remains explicit."
+    },
+    {
+      "id": "function-parenthesized-compound-metadata-boundary",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\ndef 雪((鳥)): pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "Function parameters cannot be parenthesized\nselected/雪.py 2 7 2 10\n'def 雪((鳥)): pass\\n' 2 6\nTrue True True\nFalse\n1 0 'if True: pass\\ndef 雪((鳥)): pass\\n'\n",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar or native-field metadata remains explicit."
     }
   ]
 }
