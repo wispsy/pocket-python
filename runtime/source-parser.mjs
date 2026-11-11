@@ -277,6 +277,9 @@ class Parser {
       syntax.end_lineno = syntax.lineno;
       this.fail("Expected ':'.", token, "SYNTAX", undefined, syntax);
     }
+    if (header && ["def", "class"].includes(header.value) && !this.at(":"))
+      this.fail("Expected ':'.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic(header.value === "def" ? "expected ':'" : "invalid syntax"));
     this.expect(":");
     if (!this.kind("newline")) return this.simpleLine();
     this.take();
@@ -566,6 +569,7 @@ class Parser {
       return this.name();
     };
     while (!this.at(end)) {
+      let separatorFields = true;
       if (kwarg.length) this.fail("No parameter may follow a variadic keyword parameter.", this.peek(), "SYNTAX", undefined,
         this.kind("name") && !(end !== ":" && this.peek(1).value === ":") || ["*", "**", "/"].includes(this.peek().value) ?
           this.delimitedDiagnostic("arguments cannot follow var-keyword argument", this.peek(), end, this.kind("name")) :
@@ -600,12 +604,18 @@ class Parser {
           if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
           if (this.at("=")) this.fail("A variadic positional parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
             this.diagnostic("var-positional argument cannot have default value", this.peek().span));
-        } else bareStar = separator;
+        } else {
+          if (end !== ":" && !this.at(",") && !this.at(end))
+            this.fail("Expected a variadic parameter name or comma.", this.peek(), "SYNTAX", undefined,
+              this.tokenDiagnostic("invalid syntax"));
+          bareStar = separator; separatorFields = false;
+        }
         star = true;
       } else {
         const token = parameterName();
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         const value = this.eat("=") ? this.expression() : null;
+        if (value !== null) separatorFields = false;
         if (end === ":" && value !== null && ["name", "number", "string"].includes(this.peek().kind))
           this.fail("Expected a lambda parameter separator.");
         if (!star && defaultSeen && value === null) {
@@ -618,6 +628,9 @@ class Parser {
       }
       if (this.at(end)) break;
       if (end === ":" && !this.at(",")) this.fail("Expected a lambda parameter separator.", this.peek(), "SYNTAX", undefined, incomplete());
+      if (end !== ":" && separatorFields && !this.at(","))
+        this.fail("Expected a function parameter separator.", this.peek(), "SYNTAX", undefined,
+          this.tokenDiagnostic(this.previous.value === "/" && this.at("*") ? "expected comma between / and *" : "invalid syntax"));
       this.expect(",");
     }
     if (bareStar && !kwonly.length) {

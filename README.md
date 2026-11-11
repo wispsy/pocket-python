@@ -285,7 +285,8 @@ conditional expressions, missing expression starts, incomplete lambdas,
 unary/Boolean/arithmetic/comparison operands, attribute identifiers, subscription
 operands, iterable/mapping unpacking operands, assignment/named keyword values,
 assert/raise/return operands, deletion target starts, global/nonlocal declaration
-names, function/class definition names, function parameter openers/names and
+names, function/class definition names, function parameter openers/names,
+parameter separators/star starts, function/class header tails and
 interactive-input payloads from
 dynamic compilation. Native fields,
 argument snapshots and original filenames retain their independent identity.
