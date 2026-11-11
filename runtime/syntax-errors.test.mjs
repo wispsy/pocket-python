@@ -52,7 +52,7 @@ test('dynamic syntax fields retain cyclic filename owners through collection and
 for (const item of corpus.cases.filter(item => item.id.endsWith('owner-cycle')))
   test(item.id + ' survives collection, cancellation and close', async () => lifetime(item.source, item.stdout));
 
-for (const item of corpus.cases.filter(item => ['LA174', 'LA177'].includes(item.stage) && item.id.endsWith('-cleanup')))
+for (const item of corpus.cases.filter(item => ['LA174', 'LA177', 'LA180'].includes(item.stage) && item.id.endsWith('-cleanup')))
   test(item.id + ' survives suspended cleanup and interruption', async () => lifetime(item.source, item.stdout));
 
 for (const [source, mode] of [
@@ -85,6 +85,7 @@ for (const [source, mode] of [
   ['def 雪(鳥=1 羽): pass', 'exec'], ['lambda 雪=1 鳥: 1', 'eval'],
   ['def 雪((鳥,羽)): pass', 'exec'], ['def 雪(鳥=1,羽+空): pass', 'exec'],
   ['def 雪(*鳥,*else): pass', 'exec'], ['def 雪(**鳥,1): pass', 'exec'],
+  ['def 雪(鳥=1;): pass', 'exec'], ['def 雪(鳥=1 not 羽): pass', 'exec'],
 ]) test('retained ' + JSON.stringify(source) + ' payloads share allocation limits', async () => {
   const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile(' + JSON.stringify(source) + ',"selected.py",' + JSON.stringify(mode) + ')\n except SyntaxError as e: held.append(e)\n')],
     compileOptions: {languageProfile: corpus.profile}, memoryLimits: {maxBytes: 100000}, options: {maxSteps: 50000, maxWork: 20000000}});
@@ -158,7 +159,9 @@ for (const [id, filename] of [['generated-syntax-original-dynamic-failure', 'syn
   ['generated-functionparen-original-dynamic-failure', 'functionparen-payload-original.py'],
   ['generated-requiredtail-original-dynamic-failure', 'requiredtail-payload-original.py'],
   ['generated-repeatedstar-original-dynamic-failure', 'repeatedstar-payload-original.py'],
-  ['generated-keywordtail-original-dynamic-failure', 'keywordtail-payload-original.py']])
+  ['generated-keywordtail-original-dynamic-failure', 'keywordtail-payload-original.py'],
+  ['generated-defaultseparator-original-dynamic-failure', 'defaultseparator-payload-original.py'],
+  ['generated-defaultnegation-original-dynamic-failure', 'defaultnegation-payload-original.py']])
 test(id + ' keeps the original dynamic call frames', async () => {
   const item = corpus.cases.find(item => item.id === id);
   const result = await runSourceRequest({modules: [unit(item.source)], compileOptions: {languageProfile: corpus.profile}});

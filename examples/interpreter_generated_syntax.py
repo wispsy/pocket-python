@@ -37,7 +37,8 @@ for source in ["雪=", "record=[", "value='unfinished", "if True:\nvalue=7",
                "def record(/value): pass", "lambda value,/*items: 1",
                "def record(value=1 other): pass", "lambda value=1 other: 1",
                "def record((first,last)): pass", "def record(value=1,required+other): pass",
-               "def record(*items,*else): pass", "def record(**options,1): pass"]:
+               "def record(*items,*else): pass", "def record(**options,1): pass",
+               "def record(value=1;): pass", "def record(value=1 not other): pass"]:
     error = validate(source, "records/input.py")
     original = error.args
     error.args = ()

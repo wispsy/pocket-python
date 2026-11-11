@@ -833,7 +833,13 @@ missing-comma range; ungrouped lambdas select the generic token. Valid not-in
 comparisons keep their execution behavior. Incomplete operands and unqualified
 surrounding grammar retain explicit native-field boundaries.
 
-The current fixed generated-syntax corpus contains 8,605 cases: 8,041 supported
+LA-180 composes default separators and adjacent negations through modules,
+nested compilation, independent native fields/arguments, notes/causes and cyclic
+filename owners. Suspended conversion and cleanup, collection, interruption,
+shared limits, original frames and installed offline Stop/Restart retain their
+classes-source/1 dynamic-compilation boundary.
+
+The current fixed generated-syntax corpus contains 8,621 cases: 8,057 supported
 semantic/error comparisons and 564 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
