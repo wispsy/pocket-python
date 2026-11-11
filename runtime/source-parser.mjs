@@ -108,6 +108,11 @@ class Parser {
   expect(value) { if (!this.at(value)) this.fail("Expected '" + value + "'."); return this.take(); }
   expectKind(kind, message = "Expected " + kind + ".") { if (!this.kind(kind)) this.fail(message); return this.take(); }
   name() { return this.expectKind("name", "Expected an identifier."); }
+  definitionName() {
+    if (!this.kind("name")) this.fail("Expected a definition name.", this.peek(), "SYNTAX", undefined,
+      this.tokenDiagnostic("invalid syntax"));
+    return this.name();
+  }
   ending() { return ["newline", "dedent", "eof"].includes(this.peek().kind) || this.at(";"); }
   invalidTarget(value, action, nested = false) {
     let label = {Call: "function call", Binary: "expression", Unary: "expression", Boolean: "expression",
@@ -514,7 +519,7 @@ class Parser {
     this.fail("Decorators require a function or class definition.");
   }
   definition(decorators = []) {
-    const start = this.expect("def"), name = this.name().value;
+    const start = this.expect("def"), name = this.definitionName().value;
     if (this.at("[")) this.unsupported("Generic functions are not adopted.");
     this.expect("(");
     const params = this.parameters(")"); this.expect(")");

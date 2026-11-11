@@ -625,7 +625,12 @@ operand. Source-only repair validation keeps unqualified surrounding grammar
 behind explicit field boundaries. Continued target lines retain the pinned
 parser's newline-free diagnostic text, including indented suites and Unicode.
 
-The current fixed generated-syntax corpus contains 5,911 cases: 5,464 supported
+LA-148 qualifies missing or invalid function definition names. Token ranges,
+Unicode, continued lines, decorators, nested suites and exec/single modes retain
+the pinned parser's native fields and source metadata. Valid definitions and
+existing lexical or interactive statement priority keep their behavior.
+
+The current fixed generated-syntax corpus contains 5,978 cases: 5,531 supported
 semantic/error comparisons and 447 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
