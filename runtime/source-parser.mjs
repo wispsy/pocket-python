@@ -556,6 +556,14 @@ class Parser {
     }
     return syntax;
   }
+  parameterAnnotation() {
+    const colon = this.eat(":");
+    if (!colon) return;
+    if (this.expressionBoundary() || this.at("=") || this.at("**"))
+      this.fail("Expected a parameter annotation.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic("invalid syntax"));
+    this.unsupported("Parameter annotations are not adopted.", colon);
+  }
   parameters(end) {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
     let bareStar = null;
@@ -600,7 +608,7 @@ class Parser {
       if (this.eat("**")) {
         const token = parameterName();
         kwarg.push({name: token.value, value: null, span: token.span});
-        if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
+        if (end !== ":") this.parameterAnnotation();
         if (this.at("=")) this.fail("A variadic keyword parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
           this.diagnostic("var-keyword argument cannot have default value", this.peek().span));
       } else
@@ -631,7 +639,7 @@ class Parser {
         if (this.kind("name")) {
           const token = this.take();
           vararg.push({name: token.value, value: null, span: token.span});
-          if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
+          if (end !== ":") this.parameterAnnotation();
           if (this.at("=")) this.fail("A variadic positional parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
             this.diagnostic("var-positional argument cannot have default value", this.peek().span));
         } else {
@@ -643,7 +651,7 @@ class Parser {
         star = true;
       } else {
         const token = parameterName(!star && !slash && !defaultSeen);
-        if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
+        if (end !== ":") this.parameterAnnotation();
         const value = this.eat("=") ? this.parameterDefault(end, token) : null;
         if (value !== null) separatorFields = false;
         if (!star && defaultSeen && value === null) {

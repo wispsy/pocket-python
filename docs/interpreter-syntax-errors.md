@@ -839,8 +839,14 @@ filename owners. Suspended conversion and cleanup, collection, interruption,
 shared limits, original frames and installed offline Stop/Restart retain their
 classes-source/1 dynamic-compilation boundary.
 
-The current fixed generated-syntax corpus contains 8,621 cases: 8,057 supported
-semantic/error comparisons and 564 explicit native-field refusals. The ordinary
+LA-181 recognizes malformed initial parameter annotations and qualifies native
+SyntaxError payloads for the finite invalid-token starts. Positional, keyword-only
+and variadic parameters retain exact Unicode and physical-line fields. Valid
+annotation expressions, variadic annotation grammar and unqualified malformed
+expressions remain explicitly unsupported under #125.
+
+The current fixed generated-syntax corpus contains 8,818 cases: 8,246 supported
+semantic/error comparisons and 572 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
