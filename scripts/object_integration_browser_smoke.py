@@ -65,7 +65,7 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                     ready()
                     for case in corpus['cases']:
                         if (case.get('modules') or
-                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93', 'LA96', 'LA99', 'LA99A', 'LA102', 'LA105', 'LA108', 'LA111', 'LA114', 'LA117', 'LA120', 'LA123', 'LA126', 'LA129', 'LA132', 'LA135', 'LA138', 'LA141', 'LA144', 'LA147', 'LA143A', 'LA150', 'LA153', 'LA153A', 'LA156'} or
+                            syntax_errors and case['stage'] not in {'LA66', 'LA69', 'LA72', 'LA75', 'LA75A', 'LA78', 'LA81', 'LA84', 'LA87', 'LA90', 'LA93', 'LA96', 'LA99', 'LA99A', 'LA102', 'LA105', 'LA108', 'LA111', 'LA114', 'LA117', 'LA120', 'LA123', 'LA126', 'LA129', 'LA132', 'LA135', 'LA138', 'LA141', 'LA144', 'LA147', 'LA143A', 'LA150', 'LA153', 'LA153A', 'LA156', 'LA159'} or
                             containers and case['stage'] not in {'LA-7', 'LA-6A'} or
                             exceptions and case['stage'] not in {'LA13', 'LA16', 'LA19', 'LA22', 'LA25', 'LA28', 'LA31', 'LA34', 'LA37', 'LA40', 'LA43', 'LA46', 'LA49', 'LA52', 'LA55', 'LA58', 'LA61', 'LA62C'}):
                             continue
@@ -144,7 +144,8 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                                           'generated-globalname-original-dynamic-failure', 'generated-nonlocalname-original-dynamic-failure',
                                           'generated-functionname-original-dynamic-failure', 'generated-classname-original-dynamic-failure',
                                           'generated-functionopener-original-dynamic-failure', 'generated-parametername-original-dynamic-failure',
-                                          'generated-parameterseparator-original-dynamic-failure', 'generated-starparameter-original-dynamic-failure'}:
+                                          'generated-parameterseparator-original-dynamic-failure', 'generated-starparameter-original-dynamic-failure',
+                                          'generated-functioncolon-original-dynamic-failure', 'generated-classcolon-original-dynamic-failure'}:
                             name = case['id'].split('-')[1]
                             assert f'fail at {name}-payload-original.py:2' in page.locator('#diagnostic').inner_text()
                         if case['id'] == 'generated-callgrammar-original-dynamic-failure':
@@ -349,6 +350,11 @@ def smoke(require_installed=False, containers=False, exceptions=False, syntax_er
                         busy_sources += [
                             'try: compile("def 雪(鳥 羽): pass","parameter-separator.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e.filename\n',
                             'def work():\n try: compile("def 雪(*else): pass","star-parameter.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
+                        ]
+                    if syntax_errors:
+                        busy_sources += [
+                            'try: compile("def 雪() pass","function-colon.py","exec")\nexcept SyntaxError as e:\n e.args=()\n print("entered")\n while True: e.filename\n',
+                            'def work():\n try: compile("class 雪 pass","class-colon.py","exec")\n except SyntaxError as e:\n  try: yield e\n  finally:\n   print("entered")\n   while True: e.offset\ng=work()\ne=next(g)\ne.args=()\ng.close()\n',
                         ]
                     for source in busy_sources:
                         page.fill('#input', source)

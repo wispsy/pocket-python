@@ -286,7 +286,7 @@ unary/Boolean/arithmetic/comparison operands, attribute identifiers, subscriptio
 operands, iterable/mapping unpacking operands, assignment/named keyword values,
 assert/raise/return operands, deletion target starts, global/nonlocal declaration
 names, function/class definition names, function parameter openers/names,
-parameter separators/star starts and
+parameter separators/star starts, function/class header tails and
 interactive-input payloads from
 dynamic compilation. Native fields,
 argument snapshots and original filenames retain their independent identity.

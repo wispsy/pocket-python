@@ -110,7 +110,8 @@
     "LA155",
     "LA156",
     "LA157",
-    "LA158"
+    "LA158",
+    "LA159"
   ],
   "cases": [
     {
@@ -3869,11 +3870,10 @@
     },
     {
       "id": "parameter-separator-unqualified-1",
-      "stage": "FutureBinding",
+      "stage": "LA154",
       "owner": "#124",
-      "boundary": "Malformed separator tails retain their independent parser native-field boundary.",
-      "source": "try: compile('def f(a, / b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n",
-      "stdout": "invalid syntax 1 12 1 13\n'def f(a, / b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n"
+      "source": "try: compile('def f(a, / b): pass',\"parameters/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),e._metadata is None,len(e.args))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename)\n args=e.args\n e.args=()\n print(e.filename,args[0] is e.msg)\n print(len(args[1]),args[1][3] is e.text,args[1][1],args[1][2],args[1][4],args[1][5])\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax 1 12 1 13\n'def f(a, / b): pass\\n' False 2\nTrue True\nparameters/雪.py True\n6 True 1 12 1 13\n0 0 'def f(a, / b): pass\\n'\n"
     },
     {
       "id": "parameter-bare-star-0",
@@ -41162,6 +41162,144 @@
       "stage": "LA158",
       "source": "def decorate(value): return value\n@decorate\ndef 雪(鳥=2):\n return 鳥+1\n@decorate\nclass 羽:\n value=雪(4)\nprint(羽.value)\n",
       "stdout": "5\n"
+    },
+    {
+      "id": "generated-functioncolon-owner-cycle",
+      "stage": "LA159",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('def 雪() pass',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue expected ':' 9 False False\n"
+    },
+    {
+      "id": "generated-functioncolon-chaining",
+      "stage": "LA159",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('def 雪() pass',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 9\n"
+    },
+    {
+      "id": "generated-functioncolon-cleanup",
+      "stage": "LA159",
+      "source": "def work():\n try: compile('def 雪() pass',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py expected ':' False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-functioncolon-original-dynamic-failure",
+      "stage": "LA159",
+      "source": "exec(compile('def fail():\\n try: compile(\\'def 雪() pass\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','functioncolon-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-functioncolon-nested-exec",
+      "stage": "LA159",
+      "source": "scope={}\nexec('try: compile(\\'def 雪() pass\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py expected ':' 9 False\n"
+    },
+    {
+      "id": "generated-functioncolon-field-independence",
+      "stage": "LA159",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('def 雪() pass',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'def 雪() pass\\n' True True 77 9\n"
+    },
+    {
+      "id": "generated-functioncolon-module",
+      "stage": "LA159",
+      "source": "import helper\ne=helper.validate('def 雪() pass')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py expected ':' 9 module input\n"
+    },
+    {
+      "id": "generated-functioncolon-flags-owner-cycle",
+      "stage": "LA159",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('def 雪() pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True expected ':' 9\n"
+    },
+    {
+      "id": "functioncolon-eval-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雪() pass',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "generated-classcolon-owner-cycle",
+      "stage": "LA159",
+      "source": "class Name(str): pass\nfilename=Name(\"owned-input.py\")\ntry: compile('class 雪 pass',filename,'exec')\nexcept SyntaxError as error: e=error\nfilename.error=e\ne.args=()\nfilename=None\nprint(\"entered\")\nprint(e.filename.error is e,e.msg,e.offset,e.text is None,e._metadata is None)\n",
+      "stdout": "entered\nTrue invalid syntax 9 False False\n"
+    },
+    {
+      "id": "generated-classcolon-chaining",
+      "stage": "LA159",
+      "source": "outer=ValueError(\"outer\")\ntry:\n try: raise outer\n except ValueError: compile('class 雪 pass',\"chained-input.py\",'exec')\nexcept SyntaxError as e:\n e.add_note(\"supplied input\")\n print(e.__context__ is outer,e.filename,e.text is None,e._metadata is None,len(e.args))\n try: raise LookupError(\"report\") from e\n except LookupError as report: print(report.__cause__ is e,report.__cause__.__notes__[0],report.__cause__.offset)\n",
+      "stdout": "True chained-input.py False False 2\nTrue supplied input 9\n"
+    },
+    {
+      "id": "generated-classcolon-cleanup",
+      "stage": "LA159",
+      "source": "def work():\n try: compile('class 雪 pass',\"cleanup-input.py\",'exec')\n except SyntaxError as e:\n  try: yield e\n  finally: print(\"cleanup\",e.filename,e.msg,e.text is None,len(e.args))\ng=work()\ne=next(g)\ne.args=()\ng.close()\nprint(e.filename,e._metadata is None)\n",
+      "stdout": "cleanup cleanup-input.py invalid syntax False 0\ncleanup-input.py False\n"
+    },
+    {
+      "id": "generated-classcolon-original-dynamic-failure",
+      "stage": "LA159",
+      "source": "exec(compile('def fail():\\n try: compile(\\'class 雪 pass\\',\"dynamic-input.py\",\\'exec\\')\\n except SyntaxError as e:\\n  print(e.filename,e.text is None,len(e.args))\\n  raise\\nfail()\\n','classcolon-payload-original.py',\"exec\"))\n",
+      "stdout": "dynamic-input.py False 2\n",
+      "error_type": "SyntaxError"
+    },
+    {
+      "id": "generated-classcolon-nested-exec",
+      "stage": "LA159",
+      "source": "scope={}\nexec('try: compile(\\'class 雪 pass\\',\"nested-input.py\",\\'exec\\')\\nexcept SyntaxError as error: saved=error\\n',scope)\ne=scope[\"saved\"]\ne.args=()\nprint(e.filename,e.msg,e.offset,e._metadata is None)\n",
+      "stdout": "nested-input.py invalid syntax 9 False\n"
+    },
+    {
+      "id": "generated-classcolon-field-independence",
+      "stage": "LA159",
+      "source": "class Name(str): pass\nfilename=Name(\"independent-input.py\")\ntry: compile('class 雪 pass',filename,'exec')\nexcept SyntaxError as error: e=error\nargs=e.args\nmetadata=e._metadata\ne.args=()\nprint(e.filename is filename,args[0] is e.msg,args[1][0] is filename,e._metadata is metadata)\ne.filename=None\ne.text=None\ne.offset=77\nprint(repr(args[1][3]),args[1][0] is filename,e.filename is None,e.offset,args[1][2])\n",
+      "stdout": "True True True True\n'class 雪 pass\\n' True True 77 9\n"
+    },
+    {
+      "id": "generated-classcolon-module",
+      "stage": "LA159",
+      "source": "import helper\ne=helper.validate('class 雪 pass')\ne.args=()\nprint(e.filename,e.msg,e.offset,e.__notes__[0])\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def validate(source):\n try: compile(source,\"module-input.py\",'exec')\n except SyntaxError as e:\n  e.add_note(\"module input\")\n  return e\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module-input.py invalid syntax 9 module input\n"
+    },
+    {
+      "id": "generated-classcolon-flags-owner-cycle",
+      "stage": "LA159",
+      "source": "class Name(str): pass\nfilename=Name(\"converted-input.py\")\nfilename.token=[7]\nclass Flags:\n def __index__(self):\n  global filename\n  filename=None\n  print(\"entered\")\n  return 0\ntry: compile('class 雪 pass',filename,'exec',Flags())\nexcept SyntaxError as e:\n e.filename.error=e\n e.args=()\n print(e.filename.token[0],e.filename.error is e,e.msg,e.offset)\n",
+      "stdout": "entered\n7 True invalid syntax 9\n"
+    },
+    {
+      "id": "classcolon-eval-boundary",
+      "stage": "Future",
+      "source": "try: compile('class 雪 pass',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
     }
   ]
 }

@@ -677,6 +677,8 @@ source, notes/causes and independent argument snapshots. Cyclic filename owners,
 suspended conversion/cleanup, collection, cancellation/close and shared limits
 retain their ownership paths. Original dynamic frames and installed offline
 Stop/Restart cover both families; eval-mode statements keep explicit boundaries.
+The prior positional-only separator-tail refusal is adopted with its original
+assertions preserved and complete metadata/argument field checks added.
 
 LA-157 qualifies missing function-suite colons before non-newline tokens.
 Unicode, continued lines, decorators, nested suites and compile modes retain
@@ -688,8 +690,14 @@ The pinned parser selects invalid-syntax wording independently of function
 headers. Repeated keyword binding remains later than grammar errors; existing
 newline, generic-class and argument grammar boundaries retain their owners.
 
-The current fixed generated-syntax corpus contains 6,565 cases: 6,093 supported
-semantic/error comparisons and 472 explicit native-field refusals. The ordinary
+LA-159 composes function/class header payloads through modules, nested source,
+notes/causes and independent field/argument snapshots. Cyclic filenames and
+suspended conversion/cleanup retain native fields through collection,
+cancellation/close and shared limits. Original dynamic frames and installed
+offline Stop/Restart preserve fresh source and reduced-profile boundaries.
+
+The current fixed generated-syntax corpus contains 6,583 cases: 6,110 supported
+semantic/error comparisons and 473 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
