@@ -667,7 +667,12 @@ function parameters. Unicode, continued lines, decorators, nested suites and
 compile modes retain exact token fields. Adjacent default expressions and
 specialized signature failures keep their existing diagnostic boundaries.
 
-The current fixed generated-syntax corpus contains 6,334 cases: 5,868 supported
+LA-155 qualifies invalid tokens following a function parameter star. Literal,
+keyword and delimiter starts retain native token fields while valid variadic
+and keyword-only names keep their existing binding. Specialized bare-star,
+repeated-star and required-after-default failures preserve diagnostic priority.
+
+The current fixed generated-syntax corpus contains 6,403 cases: 5,937 supported
 semantic/error comparisons and 466 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;

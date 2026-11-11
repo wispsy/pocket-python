@@ -1184,7 +1184,8 @@
         "tests/fixtures/interpreter/syntax-errors.json:generated-functionopener-owner-cycle",
         "tests/fixtures/interpreter/syntax-errors.json:generated-parametername-cleanup",
         "tests/fixtures/interpreter/syntax-errors.json:interactive-definition-priority-1-single",
-        "tests/fixtures/interpreter/syntax-errors.json:function-parameter-separator-00-exec"
+        "tests/fixtures/interpreter/syntax-errors.json:function-parameter-separator-00-exec",
+        "tests/fixtures/interpreter/syntax-errors.json:function-star-parameter-00-exec"
       ],
       "boundary_evidence": [
         "tests/fixtures/interpreter/syntax-errors.json:return-operand-lexical-boundary",
