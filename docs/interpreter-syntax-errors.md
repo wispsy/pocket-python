@@ -662,8 +662,13 @@ Decorators, continued headers, normalized line endings and final comment lines
 retain their termination behavior; indented suites remain valid without a final
 newline. Native EOF fields retain explicit refusal boundaries.
 
-The current fixed generated-syntax corpus contains 6,268 cases: 5,803 supported
-semantic/error comparisons and 465 explicit native-field refusals. The ordinary
+LA-154 qualifies missing commas after ordinary, positional-only and variadic
+function parameters. Unicode, continued lines, decorators, nested suites and
+compile modes retain exact token fields. Adjacent default expressions and
+specialized signature failures keep their existing diagnostic boundaries.
+
+The current fixed generated-syntax corpus contains 6,334 cases: 5,868 supported
+semantic/error comparisons and 466 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
