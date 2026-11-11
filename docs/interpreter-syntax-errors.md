@@ -874,7 +874,13 @@ line text, including continued lines. Valid decorator ordering is unchanged;
 assignment hints, EOF targets, async definitions and unfinished interactive
 definitions retain explicit native-field or source-admission boundaries.
 
-The current fixed generated-syntax corpus contains 9,101 cases: 8,476 supported
+LA-186 composes decorator-start and decorator-target diagnostics through modules,
+nested source, independent fields and argument snapshots, notes/causes and cyclic
+filename owners. Suspended conversion/cleanup, collection, interruption, shared
+limits, original dynamic frames and installed offline Stop/Restart retain fresh
+source and the classes-source/1 dynamic-compilation boundary.
+
+The current fixed generated-syntax corpus contains 9,117 cases: 8,492 supported
 semantic/error comparisons and 625 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
