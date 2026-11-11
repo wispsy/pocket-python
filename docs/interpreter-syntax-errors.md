@@ -738,8 +738,53 @@ suspended conversion/cleanup survive collection, cancellation/close and shared
 limits. Original dynamic frames and installed offline Stop/Restart retain fresh
 source and reduced-profile boundaries.
 
-The current fixed generated-syntax corpus contains 7,222 cases: 6,707 supported
-semantic/error comparisons and 515 explicit native-field refusals. The ordinary
+LA-166 qualifies malformed initial function positional-only separator tails.
+The slash retains its native token range before invalid names, expressions or
+other separators; continued-line text preserves the pinned parser's physical
+newline behavior. Repeated/misordered separators and valid binding retain their
+existing diagnostics and execution paths.
+
+LA-167 qualifies malformed initial lambda positional-only separator tails and
+the expected-comma diagnostic between slash and star. Continued-line source
+text and Unicode token ranges match the pinned parser; surrounding starred-call
+and comprehension priority retain explicit field boundaries. A prior initial
+slash refusal is adopted with its original assertion and complete payload checks.
+
+LA-168 composes function/lambda slash payloads through modules, nested source,
+notes/causes and independent native fields/arguments. Cyclic filename owners and
+suspended conversion/cleanup survive collection, cancellation/close and shared
+limits. Original dynamic frames and installed offline Stop/Restart cover both
+families while retaining the reduced-profile dynamic-compilation boundary.
+
+LA-169 qualifies adjacent function parameter default expressions, including
+the missing-comma hint and its expression range. Unicode, continued-line text,
+soft keywords and invalid string prefixes retain the pinned parser's distinct
+fields. Source-only repair validation shares compilation budgets and preserves
+unqualified surrounding grammar, legacy statements and nested expression tails
+behind explicit field boundaries. A prior default-tail refusal is adopted with
+its original assertion and complete payload checks.
+
+LA-170 qualifies adjacent lambda default expressions. Ungrouped lambdas retain
+the generic token diagnostic; grouping selects the missing-comma hint and joined
+expression range. Unicode, continued lines and compile modes retain exact source
+fields. Source-only repairs preserve surrounding grammar/operand boundaries.
+Four prior refusals are adopted with their original assertions and full payload
+checks; legacy and nested expression-tail diagnostics remain explicitly bounded.
+
+LA-171 composes function/lambda default-tail fields through modules, nested
+source, notes/causes and independent native fields/argument snapshots. Cyclic
+filenames, suspended conversion/cleanup, collection, cancellation/close and shared
+limits retain their ownership paths. Original dynamic frames and installed
+offline Stop/Restart exercise fresh source and reduced-profile boundaries.
+
+LA-170A preserves generic default-tail source text across continued strings,
+concatenated literals and soft keywords. Function/grouped-lambda headers retain
+the pinned parser's newline-free text after reading a later physical line;
+ungrouped lambdas stop at their own logical newline. Complex soft-keyword
+expressions and unqualified later signature grammar keep explicit boundaries.
+
+The current fixed generated-syntax corpus contains 7,717 cases: 7,185 supported
+semantic/error comparisons and 532 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

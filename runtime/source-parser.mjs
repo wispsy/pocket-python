@@ -559,7 +559,7 @@ class Parser {
   parameters(end) {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
     let bareStar = null;
-    const incomplete = () => end === ":" && this.comprehensionClauseFields && this.operandFields ? this.tokenDiagnostic("invalid syntax") : undefined;
+    const incomplete = (message = "invalid syntax") => end === ":" && this.comprehensionClauseFields && this.operandFields ? this.tokenDiagnostic(message) : undefined;
     const parameterName = (parenthesized = false) => {
       if (end !== ":" && !this.kind("name"))
         this.fail("Expected a function parameter.", this.peek(), "SYNTAX", undefined,
@@ -609,9 +609,13 @@ class Parser {
       if (this.eat("/")) {
         if (slash || star || !positional.length) {
           const message = star ? "/ must be ahead of *" : slash ? "/ may appear only once" :
-            this.at(",") ? "at least one argument must precede /" : this.at(end) ? "invalid syntax" : null;
+            this.at(",") ? "at least one argument must precede /" : "invalid syntax";
+          const syntax = end !== ":" || slash || star || this.comprehensionClauseFields && this.operandFields ?
+            this.delimitedDiagnostic(message, this.previous, end) : undefined;
+          if (syntax && !slash && !star && !positional.length && this.previous.span[0] !== this.peek().span[0])
+            syntax.text = syntax.text.replace(/\n$/, "");
           this.fail("Invalid positional-only separator.", this.previous, "SYNTAX", undefined,
-            message ? this.delimitedDiagnostic(message, this.previous, end) : undefined);
+            syntax);
         }
         slash = true; posonly = positional; positional = [];
       } else if (this.eat("*")) {
@@ -635,10 +639,8 @@ class Parser {
       } else {
         const token = parameterName(!star && !slash && !defaultSeen);
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
-        const value = this.eat("=") ? this.parameterDefault() : null;
+        const value = this.eat("=") ? this.parameterDefault(end, token) : null;
         if (value !== null) separatorFields = false;
-        if (end === ":" && value !== null && ["name", "number", "string"].includes(this.peek().kind))
-          this.fail("Expected a lambda parameter separator.");
         if (!star && defaultSeen && value === null) {
           const syntax = this.at(end) || this.at(",") ?
             this.delimitedDiagnostic("parameter without a default follows parameter with a default", token, end, true) : incomplete();
@@ -648,7 +650,8 @@ class Parser {
         (star ? kwonly : positional).push({name: token.value, value, span: token.span});
       }
       if (this.at(end)) break;
-      if (end === ":" && !this.at(",")) this.fail("Expected a lambda parameter separator.", this.peek(), "SYNTAX", undefined, incomplete());
+      if (end === ":" && !this.at(",")) this.fail("Expected a lambda parameter separator.", this.peek(), "SYNTAX", undefined,
+        incomplete(this.previous.value === "/" && this.at("*") ? "expected comma between / and *" : "invalid syntax"));
       if (end !== ":" && separatorFields && !this.at(","))
         this.fail("Expected a function parameter separator.", this.peek(), "SYNTAX", undefined,
           this.tokenDiagnostic(this.previous.value === "/" && this.at("*") ? "expected comma between / and *" : "invalid syntax"));
@@ -661,7 +664,7 @@ class Parser {
     }
     return {posonly, positional, kwonly, ...(vararg.length ? {vararg} : {}), ...(kwarg.length ? {kwarg} : {})};
   }
-  parameterDefault() {
+  parameterDefault(end, parameter) {
     if (this.expressionBoundary() || ["*", "**", "="].some(value => this.at(value))) {
       const statement = ["pass", "break", "continue"].some(value => this.at(value));
       const missing = [",", ")"].some(value => this.at(value));
@@ -672,7 +675,53 @@ class Parser {
       this.fail("Expected a parameter default value.", this.peek(), "SYNTAX", undefined,
         this.comprehensionClauseFields && (missing || this.operandFields) ? syntax : undefined);
     }
-    return this.expression();
+    const start = this.index, value = this.expression();
+    if (["name", "number", "string"].includes(this.peek().kind) ||
+        ["True", "False", "None", "lambda", "{", "~"].some(token => this.at(token)))
+      this.adjacentDefault(value, start, parameter, end);
+    return value;
+  }
+  adjacentDefault(value, start, parameter, end) {
+    const token = this.peek(), first = this.tokens[start];
+    const fail = syntax => this.fail("Expected a parameter default separator.", token, "SYNTAX", undefined, syntax);
+    if (!this.comprehensionClauseFields || !this.operandFields || ["Conditional", "Lambda", "Yield"].includes(value.kind) ||
+        first.kind === "name" && (["print", "exec"].includes(first.value) ||
+          ["_", "match", "case", "type"].includes(first.value) && value.kind !== "Name")) fail();
+    let last;
+    try { last = this.expression(); }
+    catch (error) {
+      if (!(error instanceof SourceError) || !["SYNTAX", "UNSUPPORTED"].includes(error.code)) throw error;
+      fail();
+    }
+    const left = this.nativeRanges.get(value) ?? value.span, right = this.nativeRanges.get(last) ?? last.span;
+    let depth = 0;
+    for (const previous of this.tokens.slice(0, start)) {
+      this.charge();
+      if (["(", "[", "{"].includes(previous.value)) depth++;
+      if ([")", "]", "}"].includes(previous.value)) depth--;
+    }
+    const generic = !depth || first.kind === "name" &&
+      (this.tokens[start + 1].kind === "string" || ["_", "match", "case", "type"].includes(first.value));
+    const syntax = generic ? depth ? this.delimitedDiagnostic("invalid syntax", token, end, true) :
+      this.tokenDiagnostic("invalid syntax", token) : this.diagnostic(
+      "invalid syntax. Perhaps you forgot a comma?", [left[0], left[1], right[2], right[3]]);
+    if (this.peek().span[0] !== syntax.lineno) syntax.text = syntax.text.replace(/\n$/, "");
+    if (!generic && left[0] !== right[2]) {
+      const bytes = new TextEncoder().encode(syntax.text + "\0");
+      syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, right[3]))).length;
+    }
+    if (this.eat("=")) {
+      try { this.expression(); }
+      catch (error) {
+        if (!(error instanceof SourceError) || !["SYNTAX", "UNSUPPORTED"].includes(error.code)) throw error;
+        fail();
+      }
+    }
+    const body = end === ":" && (["newline", "eof"].includes(this.peek().kind) ||
+      [")", "]", "}"].some(token => this.at(token))) ? ":None" : "";
+    syntax.repair = this.lexed.source.slice(0, parameter.start) + "__default=None" + body + this.lexed.source.slice(this.previous.end);
+    if (this.options.mode === "single" && !syntax.repair.endsWith("\n")) syntax.repair += "\n";
+    fail(syntax);
   }
   lambda() {
     const start = this.expect("lambda"), params = this.parameters(":"); this.expect(":");
