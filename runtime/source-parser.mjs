@@ -334,8 +334,9 @@ class Parser {
       return this.node("Raise", start, {value, cause});
     }
     if (this.eat("del")) {
-      const targets = [this.withoutOperandFields(() => this.expression())];
-      while (this.eat(",")) { if (this.ending()) break; targets.push(this.withoutOperandFields(() => this.expression())); }
+      const target = () => this.valueOperand(() => this.withoutOperandFields(() => this.expression()));
+      const targets = [target()];
+      while (this.eat(",")) { if (this.ending()) break; targets.push(target()); }
       targets.forEach(value => this.target(value, true)); return this.node("Delete", start, {targets});
     }
     if (this.at("import") || this.at("from")) return this.imports();

@@ -92,7 +92,8 @@
     "LA140",
     "LA137A",
     "LA141",
-    "LA142"
+    "LA142",
+    "LA143"
   ],
   "cases": [
     {
@@ -35155,6 +35156,384 @@
       "id": "return-operand-unqualified-2",
       "stage": "Future",
       "source": "try: compile('return 雪,:',\"selected.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Surrounding statement, target or declaration grammar retains an explicit native-field boundary.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "delete-target-0-exec",
+      "stage": "LA143",
+      "source": "try: compile('del',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'del\\n' 2 6\nTrue True True\n0 0 'del\\n'\n"
+    },
+    {
+      "id": "delete-target-0-single",
+      "stage": "LA143",
+      "source": "try: compile('del',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'del' 2 6\nTrue True True\n0 0 'del'\n"
+    },
+    {
+      "id": "delete-target-1-exec",
+      "stage": "LA143",
+      "source": "try: compile('del\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'del\\n' 2 6\nTrue True True\n0 0 'del\\n'\n"
+    },
+    {
+      "id": "delete-target-1-single",
+      "stage": "LA143",
+      "source": "try: compile('del\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 4 1 5\n'del\\n' 2 6\nTrue True True\n0 0 'del\\n'\n"
+    },
+    {
+      "id": "delete-target-2-exec",
+      "stage": "LA143",
+      "source": "try: compile('del # supplied',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 16\n'del # supplied\\n' 2 6\nTrue True True\n0 0 'del # supplied\\n'\n"
+    },
+    {
+      "id": "delete-target-2-single",
+      "stage": "LA143",
+      "source": "try: compile('del # supplied',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'del # supplied' 2 6\nTrue True True\n0 0 'del # supplied'\n"
+    },
+    {
+      "id": "delete-target-3-exec",
+      "stage": "LA143",
+      "source": "try: compile('del ;',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'del ;\\n' 2 6\nTrue True True\n0 0 'del ;\\n'\n"
+    },
+    {
+      "id": "delete-target-3-single",
+      "stage": "LA143",
+      "source": "try: compile('del ;',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'del ;' 2 6\nTrue True True\n0 0 'del ;'\n"
+    },
+    {
+      "id": "delete-target-4-exec",
+      "stage": "LA143",
+      "source": "try: compile('del ,',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'del ,\\n' 2 6\nTrue True True\n0 0 'del ,\\n'\n"
+    },
+    {
+      "id": "delete-target-4-single",
+      "stage": "LA143",
+      "source": "try: compile('del ,',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'del ,' 2 6\nTrue True True\n0 0 'del ,'\n"
+    },
+    {
+      "id": "delete-target-5-exec",
+      "stage": "LA143",
+      "source": "try: compile('del :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'del :\\n' 2 6\nTrue True True\n0 0 'del :\\n'\n"
+    },
+    {
+      "id": "delete-target-5-single",
+      "stage": "LA143",
+      "source": "try: compile('del :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 6\n'del :' 2 6\nTrue True True\n0 0 'del :'\n"
+    },
+    {
+      "id": "delete-target-6-exec",
+      "stage": "LA143",
+      "source": "try: compile('del else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'del else\\n' 2 6\nTrue True True\n0 0 'del else\\n'\n"
+    },
+    {
+      "id": "delete-target-6-single",
+      "stage": "LA143",
+      "source": "try: compile('del else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'del else' 2 6\nTrue True True\n0 0 'del else'\n"
+    },
+    {
+      "id": "delete-target-7-exec",
+      "stage": "LA143",
+      "source": "try: compile('del if',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 7\n'del if\\n' 2 6\nTrue True True\n0 0 'del if\\n'\n"
+    },
+    {
+      "id": "delete-target-7-single",
+      "stage": "LA143",
+      "source": "try: compile('del if',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 7\n'del if' 2 6\nTrue True True\n0 0 'del if'\n"
+    },
+    {
+      "id": "delete-target-8-exec",
+      "stage": "LA143",
+      "source": "try: compile('del for',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 8\n'del for\\n' 2 6\nTrue True True\n0 0 'del for\\n'\n"
+    },
+    {
+      "id": "delete-target-8-single",
+      "stage": "LA143",
+      "source": "try: compile('del for',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 8\n'del for' 2 6\nTrue True True\n0 0 'del for'\n"
+    },
+    {
+      "id": "delete-target-9-exec",
+      "stage": "LA143",
+      "source": "try: compile('del in',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 7\n'del in\\n' 2 6\nTrue True True\n0 0 'del in\\n'\n"
+    },
+    {
+      "id": "delete-target-9-single",
+      "stage": "LA143",
+      "source": "try: compile('del in',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 7\n'del in' 2 6\nTrue True True\n0 0 'del in'\n"
+    },
+    {
+      "id": "delete-target-10-exec",
+      "stage": "LA143",
+      "source": "try: compile('del and',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 8\n'del and\\n' 2 6\nTrue True True\n0 0 'del and\\n'\n"
+    },
+    {
+      "id": "delete-target-10-single",
+      "stage": "LA143",
+      "source": "try: compile('del and',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 8\n'del and' 2 6\nTrue True True\n0 0 'del and'\n"
+    },
+    {
+      "id": "delete-target-11-exec",
+      "stage": "LA143",
+      "source": "try: compile('del or',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 7\n'del or\\n' 2 6\nTrue True True\n0 0 'del or\\n'\n"
+    },
+    {
+      "id": "delete-target-11-single",
+      "stage": "LA143",
+      "source": "try: compile('del or',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 7\n'del or' 2 6\nTrue True True\n0 0 'del or'\n"
+    },
+    {
+      "id": "delete-target-12-exec",
+      "stage": "LA143",
+      "source": "try: compile('del from',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'del from\\n' 2 6\nTrue True True\n0 0 'del from\\n'\n"
+    },
+    {
+      "id": "delete-target-12-single",
+      "stage": "LA143",
+      "source": "try: compile('del from',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'del from' 2 6\nTrue True True\n0 0 'del from'\n"
+    },
+    {
+      "id": "delete-target-13-exec",
+      "stage": "LA143",
+      "source": "try: compile('del as',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 7\n'del as\\n' 2 6\nTrue True True\n0 0 'del as\\n'\n"
+    },
+    {
+      "id": "delete-target-13-single",
+      "stage": "LA143",
+      "source": "try: compile('del as',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 7\n'del as' 2 6\nTrue True True\n0 0 'del as'\n"
+    },
+    {
+      "id": "delete-target-14-exec",
+      "stage": "LA143",
+      "source": "try: compile('del pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'del pass\\n' 2 6\nTrue True True\n0 0 'del pass\\n'\n"
+    },
+    {
+      "id": "delete-target-14-single",
+      "stage": "LA143",
+      "source": "try: compile('del pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 9\n'del pass' 2 6\nTrue True True\n0 0 'del pass'\n"
+    },
+    {
+      "id": "delete-target-15-exec",
+      "stage": "LA143",
+      "source": "try: compile('del break',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 10\n'del break\\n' 2 6\nTrue True True\n0 0 'del break\\n'\n"
+    },
+    {
+      "id": "delete-target-15-single",
+      "stage": "LA143",
+      "source": "try: compile('del break',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 10\n'del break' 2 6\nTrue True True\n0 0 'del break'\n"
+    },
+    {
+      "id": "delete-target-16-exec",
+      "stage": "LA143",
+      "source": "try: compile('del continue',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 13\n'del continue\\n' 2 6\nTrue True True\n0 0 'del continue\\n'\n"
+    },
+    {
+      "id": "delete-target-16-single",
+      "stage": "LA143",
+      "source": "try: compile('del continue',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 13\n'del continue' 2 6\nTrue True True\n0 0 'del continue'\n"
+    },
+    {
+      "id": "delete-target-17-exec",
+      "stage": "LA143",
+      "source": "try: compile('del return',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 11\n'del return\\n' 2 6\nTrue True True\n0 0 'del return\\n'\n"
+    },
+    {
+      "id": "delete-target-17-single",
+      "stage": "LA143",
+      "source": "try: compile('del return',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 11\n'del return' 2 6\nTrue True True\n0 0 'del return'\n"
+    },
+    {
+      "id": "delete-target-18-exec",
+      "stage": "LA143",
+      "source": "try: compile('del assert',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 11\n'del assert\\n' 2 6\nTrue True True\n0 0 'del assert\\n'\n"
+    },
+    {
+      "id": "delete-target-18-single",
+      "stage": "LA143",
+      "source": "try: compile('del assert',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 5 1 11\n'del assert' 2 6\nTrue True True\n0 0 'del assert'\n"
+    },
+    {
+      "id": "delete-target-19-exec",
+      "stage": "LA143",
+      "source": "try: compile('del 雪,else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 11\n'del 雪,else\\n' 2 6\nTrue True True\n0 0 'del 雪,else\\n'\n"
+    },
+    {
+      "id": "delete-target-19-single",
+      "stage": "LA143",
+      "source": "try: compile('del 雪,else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 11\n'del 雪,else' 2 6\nTrue True True\n0 0 'del 雪,else'\n"
+    },
+    {
+      "id": "delete-target-20-exec",
+      "stage": "LA143",
+      "source": "try: compile('del 雪,if',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 9\n'del 雪,if\\n' 2 6\nTrue True True\n0 0 'del 雪,if\\n'\n"
+    },
+    {
+      "id": "delete-target-20-single",
+      "stage": "LA143",
+      "source": "try: compile('del 雪,if',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 9\n'del 雪,if' 2 6\nTrue True True\n0 0 'del 雪,if'\n"
+    },
+    {
+      "id": "delete-target-21-exec",
+      "stage": "LA143",
+      "source": "try: compile('del 雪,,',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'del 雪,,\\n' 2 6\nTrue True True\n0 0 'del 雪,,\\n'\n"
+    },
+    {
+      "id": "delete-target-21-single",
+      "stage": "LA143",
+      "source": "try: compile('del 雪,,',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'del 雪,,' 2 6\nTrue True True\n0 0 'del 雪,,'\n"
+    },
+    {
+      "id": "delete-target-22-exec",
+      "stage": "LA143",
+      "source": "try: compile('del 雪,:',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'del 雪,:\\n' 2 6\nTrue True True\n0 0 'del 雪,:\\n'\n"
+    },
+    {
+      "id": "delete-target-22-single",
+      "stage": "LA143",
+      "source": "try: compile('del 雪,:',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 7 1 8\n'del 雪,:' 2 6\nTrue True True\n0 0 'del 雪,:'\n"
+    },
+    {
+      "id": "delete-target-23-exec",
+      "stage": "LA143",
+      "source": "try: compile('del \\\\\\n else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else\\n' 2 6\nTrue True True\n0 0 'del \\\\\\n else\\n'\n"
+    },
+    {
+      "id": "delete-target-23-single",
+      "stage": "LA143",
+      "source": "try: compile('del \\\\\\n else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else' 2 6\nTrue True True\n0 0 'del \\\\\\n else'\n"
+    },
+    {
+      "id": "delete-target-24-exec",
+      "stage": "LA143",
+      "source": "try: compile('del 雪,\\\\\\n else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else\\n' 2 6\nTrue True True\n0 0 'del 雪,\\\\\\n else\\n'\n"
+    },
+    {
+      "id": "delete-target-24-single",
+      "stage": "LA143",
+      "source": "try: compile('del 雪,\\\\\\n else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else' 2 6\nTrue True True\n0 0 'del 雪,\\\\\\n else'\n"
+    },
+    {
+      "id": "delete-target-25-exec",
+      "stage": "LA143",
+      "source": "try: compile('def f():\\n del else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 6 2 10\n' del else\\n' 2 6\nTrue True True\n0 0 'def f():\\n del else\\n'\n"
+    },
+    {
+      "id": "delete-target-25-single",
+      "stage": "LA143",
+      "source": "try: compile('def f():\\n del else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 6 2 10\n' del else' 2 6\nTrue True True\n0 0 'def f():\\n del else'\n"
+    },
+    {
+      "id": "delete-target-26-exec",
+      "stage": "LA143",
+      "source": "try: compile('if True: del 雪,else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 20\n'if True: del 雪,else\\n' 2 6\nTrue True True\n0 0 'if True: del 雪,else\\n'\n"
+    },
+    {
+      "id": "delete-target-26-single",
+      "stage": "LA143",
+      "source": "try: compile('if True: del 雪,else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 16 1 20\n'if True: del 雪,else' 2 6\nTrue True True\n0 0 'if True: del 雪,else'\n"
+    },
+    {
+      "id": "delete-target-27-exec",
+      "stage": "LA143",
+      "source": "try: compile('雪=1; del else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'雪=1; del else\\n' 2 6\nTrue True True\n0 0 '雪=1; del else\\n'\n"
+    },
+    {
+      "id": "delete-target-27-single",
+      "stage": "LA143",
+      "source": "try: compile('雪=1; del else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'雪=1; del else' 2 6\nTrue True True\n0 0 '雪=1; del else'\n"
+    },
+    {
+      "id": "delete-target-valid",
+      "stage": "LA143",
+      "source": "雪=[1,2,3]\n鳥=7\ndel 雪[1],鳥,\nprint(len(雪),雪[1])\nclass C: pass\nc=C()\nc.value=3\ndel c.value\nprint(hasattr(c,\"value\"))\n",
+      "stdout": "2 3\nFalse\n"
+    },
+    {
+      "id": "delete-target-unqualified-0",
+      "stage": "Future",
+      "source": "try: compile('del pass if 鳥 else 羽',\"selected.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Surrounding statement, target or declaration grammar retains an explicit native-field boundary.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "delete-target-unqualified-1",
+      "stage": "Future",
+      "source": "try: compile('del 雪,continue if 鳥 else 羽',\"selected.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Surrounding statement, target or declaration grammar retains an explicit native-field boundary.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "delete-target-unqualified-2",
+      "stage": "Future",
+      "source": "try: compile('del 雪 + else',\"selected.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Surrounding statement, target or declaration grammar retains an explicit native-field boundary.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "delete-target-unqualified-3",
+      "stage": "Future",
+      "source": "try: compile('del 雪[]',\"selected.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
       "classification": "explicit-refusal",
       "owner": "#124",
       "boundary": "Surrounding statement, target or declaration grammar retains an explicit native-field boundary.",

@@ -593,8 +593,13 @@ and existing outside-function diagnostics retain their behavior. Unqualified
 tuple tails, statement/conditional forms and continued-comment indentation keep
 explicit native-field boundaries.
 
-The current fixed generated-syntax corpus contains 5,614 cases: 5,195 supported
-semantic/error comparisons and 419 explicit native-field refusals. The ordinary
+LA-143 qualifies absent deletion targets and malformed target starts, including
+comma-separated targets, Unicode, compile modes and continued lines. Existing
+target validation and valid trailing commas retain their behavior; malformed
+target interiors and statement/conditional combinations keep explicit boundaries.
+
+The current fixed generated-syntax corpus contains 5,675 cases: 5,252 supported
+semantic/error comparisons and 423 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
