@@ -945,8 +945,18 @@ class Parser {
       if (this.kind("name") && this.peek(1).value === "=") {
         const token = this.take(), equal = this.expect("=");
         if (classBases && keywords.length >= 128) this.fail("Class keyword budget exceeded.", this.peek(), "COMPILE_BUDGET");
-        const argument = parseArgument(() => this.expression());
         keywordSite = {span: [token.span[0], token.span[1], equal.span[2], equal.span[3]]};
+        if ([")", ","].some(value => this.at(value))) {
+          const syntax = !positionalError && this.operandFields && this.comprehensionClauseFields && !this.conditionalTest ?
+            this.diagnostic("expected argument value expression", keywordSite.span) : undefined;
+          if (syntax && this.peek().span[0] !== token.span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+          if (syntax && token.span[0] !== equal.span[2]) {
+            const bytes = new TextEncoder().encode(syntax.text + "\0");
+            syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, equal.span[3]))).length;
+          }
+          this.fail("Expected a keyword argument value.", this.peek(), "SYNTAX", undefined, syntax);
+        }
+        const argument = parseArgument(() => this.valueOperand(() => this.expression()));
         if (seen.has(token.value)) {
           const first = seen.get(token.value);
           if (!repeated || first < repeated.first) repeated = {first, name: token.value,

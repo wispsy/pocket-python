@@ -554,8 +554,14 @@ assignment operators. Token fields preserve Unicode, physical and implicit line
 endings and compound suites. Invalid targets keep their existing priority;
 statement/conditional combinations retain explicit native-field boundaries.
 
-The current fixed generated-syntax corpus contains 5,288 cases: 4,880 supported
-semantic/error comparisons and 408 explicit native-field refusals. The ordinary
+LA-137 qualifies missing named keyword values in calls and class headers. A
+closing parenthesis or comma selects the name-through-equals range and the
+expected argument value expression message. Other adopted boundaries use their
+token fields. Multiline ranges retain the pinned parser's first-line column
+conversion; earlier invalid argument groups keep independent boundaries.
+
+The current fixed generated-syntax corpus contains 5,359 cases: 4,948 supported
+semantic/error comparisons and 411 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
