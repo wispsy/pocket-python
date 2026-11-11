@@ -109,7 +109,8 @@
     "LA154",
     "LA155",
     "LA156",
-    "LA157"
+    "LA157",
+    "LA158"
   ],
   "cases": [
     {
@@ -40703,6 +40704,462 @@
     {
       "id": "function-header-colon-valid",
       "stage": "LA157",
+      "source": "def decorate(value): return value\n@decorate\ndef 雪(鳥=2):\n return 鳥+1\n@decorate\nclass 羽:\n value=雪(4)\nprint(羽.value)\n",
+      "stdout": "5\n"
+    },
+    {
+      "id": "class-header-colon-00-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-00-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 pass' 2 6\nTrue True True\nFalse\n0 0 'class 雪 pass'\n"
+    },
+    {
+      "id": "class-header-colon-01-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 else\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 else\\n'\n"
+    },
+    {
+      "id": "class-header-colon-01-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 else' 2 6\nTrue True True\nFalse\n0 0 'class 雪 else'\n"
+    },
+    {
+      "id": "class-header-colon-02-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 return',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 15\n'class 雪 return\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 return\\n'\n"
+    },
+    {
+      "id": "class-header-colon-02-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 return',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 15\n'class 雪 return' 2 6\nTrue True True\nFalse\n0 0 'class 雪 return'\n"
+    },
+    {
+      "id": "class-header-colon-03-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 True',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 True\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 True\\n'\n"
+    },
+    {
+      "id": "class-header-colon-03-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 True',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 True' 2 6\nTrue True True\nFalse\n0 0 'class 雪 True'\n"
+    },
+    {
+      "id": "class-header-colon-04-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 None',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 None\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 None\\n'\n"
+    },
+    {
+      "id": "class-header-colon-04-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 None',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 None' 2 6\nTrue True True\nFalse\n0 0 'class 雪 None'\n"
+    },
+    {
+      "id": "class-header-colon-05-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 1\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 1\\n'\n"
+    },
+    {
+      "id": "class-header-colon-05-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 1' 2 6\nTrue True True\nFalse\n0 0 'class 雪 1'\n"
+    },
+    {
+      "id": "class-header-colon-06-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 \"鳥\"',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 12\n'class 雪 \"鳥\"\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 \"鳥\"\\n'\n"
+    },
+    {
+      "id": "class-header-colon-06-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 \"鳥\"',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 12\n'class 雪 \"鳥\"' 2 6\nTrue True True\nFalse\n0 0 'class 雪 \"鳥\"'\n"
+    },
+    {
+      "id": "class-header-colon-07-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 ...',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 12\n'class 雪 ...\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 ...\\n'\n"
+    },
+    {
+      "id": "class-header-colon-07-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 ...',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 12\n'class 雪 ...' 2 6\nTrue True True\nFalse\n0 0 'class 雪 ...'\n"
+    },
+    {
+      "id": "class-header-colon-08-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 =',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 =\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 =\\n'\n"
+    },
+    {
+      "id": "class-header-colon-08-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 =',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 =' 2 6\nTrue True True\nFalse\n0 0 'class 雪 ='\n"
+    },
+    {
+      "id": "class-header-colon-09-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 ,',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 ,\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 ,\\n'\n"
+    },
+    {
+      "id": "class-header-colon-09-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 ,',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 ,' 2 6\nTrue True True\nFalse\n0 0 'class 雪 ,'\n"
+    },
+    {
+      "id": "class-header-colon-10-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 ;',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 ;\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 ;\\n'\n"
+    },
+    {
+      "id": "class-header-colon-10-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 ;',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 ;' 2 6\nTrue True True\nFalse\n0 0 'class 雪 ;'\n"
+    },
+    {
+      "id": "class-header-colon-11-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 +',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 +\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 +\\n'\n"
+    },
+    {
+      "id": "class-header-colon-11-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 +',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 +' 2 6\nTrue True True\nFalse\n0 0 'class 雪 +'\n"
+    },
+    {
+      "id": "class-header-colon-12-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 *',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 *\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 *\\n'\n"
+    },
+    {
+      "id": "class-header-colon-12-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 *',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 *' 2 6\nTrue True True\nFalse\n0 0 'class 雪 *'\n"
+    },
+    {
+      "id": "class-header-colon-13-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 **',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 11\n'class 雪 **\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 **\\n'\n"
+    },
+    {
+      "id": "class-header-colon-13-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 **',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 11\n'class 雪 **' 2 6\nTrue True True\nFalse\n0 0 'class 雪 **'\n"
+    },
+    {
+      "id": "class-header-colon-14-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 /',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 /\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 /\\n'\n"
+    },
+    {
+      "id": "class-header-colon-14-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 /',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 /' 2 6\nTrue True True\nFalse\n0 0 'class 雪 /'\n"
+    },
+    {
+      "id": "class-header-colon-15-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 and',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 12\n'class 雪 and\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 and\\n'\n"
+    },
+    {
+      "id": "class-header-colon-15-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 and',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 12\n'class 雪 and' 2 6\nTrue True True\nFalse\n0 0 'class 雪 and'\n"
+    },
+    {
+      "id": "class-header-colon-16-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 if',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 11\n'class 雪 if\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 if\\n'\n"
+    },
+    {
+      "id": "class-header-colon-16-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 if',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 11\n'class 雪 if' 2 6\nTrue True True\nFalse\n0 0 'class 雪 if'\n"
+    },
+    {
+      "id": "class-header-colon-17-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 鳥\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 鳥\\n'\n"
+    },
+    {
+      "id": "class-header-colon-17-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 鳥' 2 6\nTrue True True\nFalse\n0 0 'class 雪 鳥'\n"
+    },
+    {
+      "id": "class-header-colon-18-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 鳥: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 鳥: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 鳥: pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-18-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 鳥: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'class 雪 鳥: pass' 2 6\nTrue True True\nFalse\n0 0 'class 雪 鳥: pass'\n"
+    },
+    {
+      "id": "class-header-colon-19-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 16\n'class 雪(鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥) pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-19-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 16\n'class 雪(鳥) pass' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥) pass'\n"
+    },
+    {
+      "id": "class-header-colon-20-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥) else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 16\n'class 雪(鳥) else\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥) else\\n'\n"
+    },
+    {
+      "id": "class-header-colon-20-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥) else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 16\n'class 雪(鳥) else' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥) else'\n"
+    },
+    {
+      "id": "class-header-colon-21-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥) 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'class 雪(鳥) 1\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥) 1\\n'\n"
+    },
+    {
+      "id": "class-header-colon-21-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥) 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'class 雪(鳥) 1' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥) 1'\n"
+    },
+    {
+      "id": "class-header-colon-22-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥) 羽',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'class 雪(鳥) 羽\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥) 羽\\n'\n"
+    },
+    {
+      "id": "class-header-colon-22-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥) 羽',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'class 雪(鳥) 羽' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥) 羽'\n"
+    },
+    {
+      "id": "class-header-colon-23-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥) =',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'class 雪(鳥) =\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥) =\\n'\n"
+    },
+    {
+      "id": "class-header-colon-23-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥) =',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'class 雪(鳥) =' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥) ='\n"
+    },
+    {
+      "id": "class-header-colon-24-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 \\\\\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 \\\\\\n pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-24-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 \\\\\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' pass' 2 6\nTrue True True\nFalse\n0 0 'class 雪 \\\\\\n pass'\n"
+    },
+    {
+      "id": "class-header-colon-25-exec",
+      "stage": "LA158",
+      "source": "try: compile('@decorate\\nclass 雪 pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 13\n'class 雪 pass\\n' 2 6\nTrue True True\nFalse\n0 0 '@decorate\\nclass 雪 pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-25-single",
+      "stage": "LA158",
+      "source": "try: compile('@decorate\\nclass 雪 pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 13\n'class 雪 pass' 2 6\nTrue True True\nFalse\n0 0 '@decorate\\nclass 雪 pass'\n"
+    },
+    {
+      "id": "class-header-colon-26-exec",
+      "stage": "LA158",
+      "source": "try: compile('if True:\\n class 雪 pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 10 2 14\n' class 雪 pass\\n' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n class 雪 pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-26-single",
+      "stage": "LA158",
+      "source": "try: compile('if True:\\n class 雪 pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 10 2 14\n' class 雪 pass' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n class 雪 pass'\n"
+    },
+    {
+      "id": "class-header-colon-27-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 羽:\\n class 雪 pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 10 2 14\n' class 雪 pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 羽:\\n class 雪 pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-27-single",
+      "stage": "LA158",
+      "source": "try: compile('class 羽:\\n class 雪 pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 10 2 14\n' class 雪 pass' 2 6\nTrue True True\nFalse\n0 0 'class 羽:\\n class 雪 pass'\n"
+    },
+    {
+      "id": "class-header-colon-28-exec",
+      "stage": "LA158",
+      "source": "try: compile('def outer():\\n class 雪 pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 10 2 14\n' class 雪 pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def outer():\\n class 雪 pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-28-single",
+      "stage": "LA158",
+      "source": "try: compile('def outer():\\n class 雪 pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 10 2 14\n' class 雪 pass' 2 6\nTrue True True\nFalse\n0 0 'def outer():\\n class 雪 pass'\n"
+    },
+    {
+      "id": "class-header-colon-29-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 pass\\r\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-29-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 pass\\r\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-30-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 pass\\r',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-30-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪 pass\\r',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 13\n'class 雪 pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪 pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-31-exec",
+      "stage": "LA158",
+      "source": "try: compile('\\x0cclass 雪\\tpass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'\\x0cclass 雪\\tpass\\n' 2 6\nTrue True True\nFalse\n0 0 '\\x0cclass 雪\\tpass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-31-single",
+      "stage": "LA158",
+      "source": "try: compile('\\x0cclass 雪\\tpass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'\\x0cclass 雪\\tpass' 2 6\nTrue True True\nFalse\n0 0 '\\x0cclass 雪\\tpass'\n"
+    },
+    {
+      "id": "class-header-colon-32-exec",
+      "stage": "LA158",
+      "source": "try: compile('雪=1\\nclass 雪 pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 9 2 13\n'class 雪 pass\\n' 2 6\nTrue True True\nFalse\n0 0 '雪=1\\nclass 雪 pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-32-single",
+      "stage": "LA158",
+      "source": "try: compile('雪=1\\nclass 雪 pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "multiple statements found while compiling a single statement\nselected/雪.py 1 4 1 5\n'雪=1\\n' 2 6\nTrue True True\nTrue\n"
+    },
+    {
+      "id": "class-header-colon-33-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥=1,鳥=2) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 22\n'class 雪(鳥=1,鳥=2) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥=1,鳥=2) pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-33-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(鳥=1,鳥=2) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 18 1 22\n'class 雪(鳥=1,鳥=2) pass' 2 6\nTrue True True\nFalse\n0 0 'class 雪(鳥=1,鳥=2) pass'\n"
+    },
+    {
+      "id": "class-header-colon-34-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(*鳥,**羽) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 17 1 21\n'class 雪(*鳥,**羽) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪(*鳥,**羽) pass\\n'\n"
+    },
+    {
+      "id": "class-header-colon-34-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪(*鳥,**羽) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 17 1 21\n'class 雪(*鳥,**羽) pass' 2 6\nTrue True True\nFalse\n0 0 'class 雪(*鳥,**羽) pass'\n"
+    },
+    {
+      "id": "class-header-colon-35-exec",
+      "stage": "LA158",
+      "source": "try: compile('class 雪() pass if 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 15\n'class 雪() pass if 鳥\\n' 2 6\nTrue True True\nFalse\n0 0 'class 雪() pass if 鳥\\n'\n"
+    },
+    {
+      "id": "class-header-colon-35-single",
+      "stage": "LA158",
+      "source": "try: compile('class 雪() pass if 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 11 1 15\n'class 雪() pass if 鳥' 2 6\nTrue True True\nFalse\n0 0 'class 雪() pass if 鳥'\n"
+    },
+    {
+      "id": "class-header-colon-compound-metadata-boundary",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\nclass 雪 pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(1, 0, 'if True: pass\\nclass 雪 pass\\n')\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "class-header-colon-eval-boundary",
+      "stage": "Future",
+      "source": "try: compile('class 雪 pass',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "class-header-colon-valid",
+      "stage": "LA158",
       "source": "def decorate(value): return value\n@decorate\ndef 雪(鳥=2):\n return 鳥+1\n@decorate\nclass 羽:\n value=雪(4)\nprint(羽.value)\n",
       "stdout": "5\n"
     }

@@ -1189,7 +1189,8 @@
         "tests/fixtures/interpreter/syntax-errors.json:generated-parameterseparator-owner-cycle",
         "tests/fixtures/interpreter/syntax-errors.json:generated-starparameter-cleanup",
         "tests/fixtures/interpreter/syntax-errors.json:generated-parameterseparator-field-independence",
-        "tests/fixtures/interpreter/syntax-errors.json:function-header-colon-00-exec"
+        "tests/fixtures/interpreter/syntax-errors.json:function-header-colon-00-exec",
+        "tests/fixtures/interpreter/syntax-errors.json:class-header-colon-00-exec"
       ],
       "boundary_evidence": [
         "tests/fixtures/interpreter/syntax-errors.json:return-operand-lexical-boundary",
@@ -1236,7 +1237,9 @@
         "tests/fixtures/interpreter/syntax-errors.json:parameterseparator-eval-boundary",
         "tests/fixtures/interpreter/syntax-errors.json:starparameter-eval-boundary",
         "tests/fixtures/interpreter/syntax-errors.json:function-header-colon-compound-metadata-boundary",
-        "tests/fixtures/interpreter/syntax-errors.json:function-header-colon-eval-boundary"
+        "tests/fixtures/interpreter/syntax-errors.json:function-header-colon-eval-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:class-header-colon-compound-metadata-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:class-header-colon-eval-boundary"
       ]
     },
     {
