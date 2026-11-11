@@ -95,7 +95,8 @@
     "LA142",
     "LA143",
     "LA144",
-    "LA145"
+    "LA145",
+    "LA146"
   ],
   "cases": [
     {
@@ -36136,6 +36137,486 @@
       "id": "global-name-unqualified-1",
       "stage": "Future",
       "source": "try: compile('global 雪 鳥',\"selected.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Surrounding statement, target or declaration grammar retains an explicit native-field boundary.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "nonlocal-name-0-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'nonlocal\\n' 2 6\nTrue True True\n0 0 'nonlocal\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-0-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'nonlocal' 2 6\nTrue True True\n0 0 'nonlocal'\n"
+    },
+    {
+      "id": "nonlocal-name-1-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'nonlocal\\n' 2 6\nTrue True True\n0 0 'nonlocal\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-1-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 9 1 10\n'nonlocal\\n' 2 6\nTrue True True\n0 0 'nonlocal\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-2-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal # supplied',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 21\n'nonlocal # supplied\\n' 2 6\nTrue True True\n0 0 'nonlocal # supplied\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-2-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal # supplied',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'nonlocal # supplied' 2 6\nTrue True True\n0 0 'nonlocal # supplied'\n"
+    },
+    {
+      "id": "nonlocal-name-3-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal ;',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal ;\\n' 2 6\nTrue True True\n0 0 'nonlocal ;\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-3-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal ;',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal ;' 2 6\nTrue True True\n0 0 'nonlocal ;'\n"
+    },
+    {
+      "id": "nonlocal-name-4-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal ,',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal ,\\n' 2 6\nTrue True True\n0 0 'nonlocal ,\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-4-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal ,',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal ,' 2 6\nTrue True True\n0 0 'nonlocal ,'\n"
+    },
+    {
+      "id": "nonlocal-name-5-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal :',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal :\\n' 2 6\nTrue True True\n0 0 'nonlocal :\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-5-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal :',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal :' 2 6\nTrue True True\n0 0 'nonlocal :'\n"
+    },
+    {
+      "id": "nonlocal-name-6-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'nonlocal else\\n' 2 6\nTrue True True\n0 0 'nonlocal else\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-6-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'nonlocal else' 2 6\nTrue True True\n0 0 'nonlocal else'\n"
+    },
+    {
+      "id": "nonlocal-name-7-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal if',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 12\n'nonlocal if\\n' 2 6\nTrue True True\n0 0 'nonlocal if\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-7-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal if',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 12\n'nonlocal if' 2 6\nTrue True True\n0 0 'nonlocal if'\n"
+    },
+    {
+      "id": "nonlocal-name-8-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal for',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'nonlocal for\\n' 2 6\nTrue True True\n0 0 'nonlocal for\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-8-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal for',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'nonlocal for' 2 6\nTrue True True\n0 0 'nonlocal for'\n"
+    },
+    {
+      "id": "nonlocal-name-9-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal in',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 12\n'nonlocal in\\n' 2 6\nTrue True True\n0 0 'nonlocal in\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-9-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal in',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 12\n'nonlocal in' 2 6\nTrue True True\n0 0 'nonlocal in'\n"
+    },
+    {
+      "id": "nonlocal-name-10-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal and',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'nonlocal and\\n' 2 6\nTrue True True\n0 0 'nonlocal and\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-10-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal and',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'nonlocal and' 2 6\nTrue True True\n0 0 'nonlocal and'\n"
+    },
+    {
+      "id": "nonlocal-name-11-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal or',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 12\n'nonlocal or\\n' 2 6\nTrue True True\n0 0 'nonlocal or\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-11-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal or',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 12\n'nonlocal or' 2 6\nTrue True True\n0 0 'nonlocal or'\n"
+    },
+    {
+      "id": "nonlocal-name-12-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal from',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'nonlocal from\\n' 2 6\nTrue True True\n0 0 'nonlocal from\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-12-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal from',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'nonlocal from' 2 6\nTrue True True\n0 0 'nonlocal from'\n"
+    },
+    {
+      "id": "nonlocal-name-13-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal as',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 12\n'nonlocal as\\n' 2 6\nTrue True True\n0 0 'nonlocal as\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-13-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal as',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 12\n'nonlocal as' 2 6\nTrue True True\n0 0 'nonlocal as'\n"
+    },
+    {
+      "id": "nonlocal-name-14-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'nonlocal pass\\n' 2 6\nTrue True True\n0 0 'nonlocal pass\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-14-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'nonlocal pass' 2 6\nTrue True True\n0 0 'nonlocal pass'\n"
+    },
+    {
+      "id": "nonlocal-name-15-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal break',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 15\n'nonlocal break\\n' 2 6\nTrue True True\n0 0 'nonlocal break\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-15-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal break',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 15\n'nonlocal break' 2 6\nTrue True True\n0 0 'nonlocal break'\n"
+    },
+    {
+      "id": "nonlocal-name-16-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal continue',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 18\n'nonlocal continue\\n' 2 6\nTrue True True\n0 0 'nonlocal continue\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-16-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal continue',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 18\n'nonlocal continue' 2 6\nTrue True True\n0 0 'nonlocal continue'\n"
+    },
+    {
+      "id": "nonlocal-name-17-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal return',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 16\n'nonlocal return\\n' 2 6\nTrue True True\n0 0 'nonlocal return\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-17-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal return',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 16\n'nonlocal return' 2 6\nTrue True True\n0 0 'nonlocal return'\n"
+    },
+    {
+      "id": "nonlocal-name-18-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal assert',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 16\n'nonlocal assert\\n' 2 6\nTrue True True\n0 0 'nonlocal assert\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-18-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal assert',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 16\n'nonlocal assert' 2 6\nTrue True True\n0 0 'nonlocal assert'\n"
+    },
+    {
+      "id": "nonlocal-name-19-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal 1\\n' 2 6\nTrue True True\n0 0 'nonlocal 1\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-19-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal 1' 2 6\nTrue True True\n0 0 'nonlocal 1'\n"
+    },
+    {
+      "id": "nonlocal-name-20-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal \"雪\"',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'nonlocal \"雪\"\\n' 2 6\nTrue True True\n0 0 'nonlocal \"雪\"\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-20-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal \"雪\"',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 13\n'nonlocal \"雪\"' 2 6\nTrue True True\n0 0 'nonlocal \"雪\"'\n"
+    },
+    {
+      "id": "nonlocal-name-21-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal None',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'nonlocal None\\n' 2 6\nTrue True True\n0 0 'nonlocal None\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-21-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal None',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'nonlocal None' 2 6\nTrue True True\n0 0 'nonlocal None'\n"
+    },
+    {
+      "id": "nonlocal-name-22-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal True',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'nonlocal True\\n' 2 6\nTrue True True\n0 0 'nonlocal True\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-22-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal True',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 14\n'nonlocal True' 2 6\nTrue True True\n0 0 'nonlocal True'\n"
+    },
+    {
+      "id": "nonlocal-name-23-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal (雪)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal (雪)\\n' 2 6\nTrue True True\n0 0 'nonlocal (雪)\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-23-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal (雪)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal (雪)' 2 6\nTrue True True\n0 0 'nonlocal (雪)'\n"
+    },
+    {
+      "id": "nonlocal-name-24-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal [雪]',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal [雪]\\n' 2 6\nTrue True True\n0 0 'nonlocal [雪]\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-24-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal [雪]',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal [雪]' 2 6\nTrue True True\n0 0 'nonlocal [雪]'\n"
+    },
+    {
+      "id": "nonlocal-name-25-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal {雪}',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal {雪}\\n' 2 6\nTrue True True\n0 0 'nonlocal {雪}\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-25-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal {雪}',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal {雪}' 2 6\nTrue True True\n0 0 'nonlocal {雪}'\n"
+    },
+    {
+      "id": "nonlocal-name-26-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal *雪',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal *雪\\n' 2 6\nTrue True True\n0 0 'nonlocal *雪\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-26-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal *雪',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 10 1 11\n'nonlocal *雪' 2 6\nTrue True True\n0 0 'nonlocal *雪'\n"
+    },
+    {
+      "id": "nonlocal-name-27-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'nonlocal 雪,\\n' 2 6\nTrue True True\n0 0 'nonlocal 雪,\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-27-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'nonlocal 雪,' 2 6\nTrue True True\n0 0 'nonlocal 雪,'\n"
+    },
+    {
+      "id": "nonlocal-name-28-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 16\n'nonlocal 雪,else\\n' 2 6\nTrue True True\n0 0 'nonlocal 雪,else\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-28-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 16\n'nonlocal 雪,else' 2 6\nTrue True True\n0 0 'nonlocal 雪,else'\n"
+    },
+    {
+      "id": "nonlocal-name-29-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'nonlocal 雪,1\\n' 2 6\nTrue True True\n0 0 'nonlocal 雪,1\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-29-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'nonlocal 雪,1' 2 6\nTrue True True\n0 0 'nonlocal 雪,1'\n"
+    },
+    {
+      "id": "nonlocal-name-30-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,,',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'nonlocal 雪,,\\n' 2 6\nTrue True True\n0 0 'nonlocal 雪,,\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-30-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,,',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'nonlocal 雪,,' 2 6\nTrue True True\n0 0 'nonlocal 雪,,'\n"
+    },
+    {
+      "id": "nonlocal-name-31-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,:',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'nonlocal 雪,:\\n' 2 6\nTrue True True\n0 0 'nonlocal 雪,:\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-31-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,:',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 12 1 13\n'nonlocal 雪,:' 2 6\nTrue True True\n0 0 'nonlocal 雪,:'\n"
+    },
+    {
+      "id": "nonlocal-name-32-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪, # supplied',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 13 1 24\n'nonlocal 雪, # supplied\\n' 2 6\nTrue True True\n0 0 'nonlocal 雪, # supplied\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-32-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪, # supplied',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 0 1 0\n'nonlocal 雪, # supplied' 2 6\nTrue True True\n0 0 'nonlocal 雪, # supplied'\n"
+    },
+    {
+      "id": "nonlocal-name-33-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal \\\\\\n else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else\\n' 2 6\nTrue True True\n0 0 'nonlocal \\\\\\n else\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-33-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal \\\\\\n else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else' 2 6\nTrue True True\n0 0 'nonlocal \\\\\\n else'\n"
+    },
+    {
+      "id": "nonlocal-name-34-exec",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,\\\\\\n else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else\\n' 2 6\nTrue True True\n0 0 'nonlocal 雪,\\\\\\n else\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-34-single",
+      "stage": "LA146",
+      "source": "try: compile('nonlocal 雪,\\\\\\n else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 2 2 6\n' else' 2 6\nTrue True True\n0 0 'nonlocal 雪,\\\\\\n else'\n"
+    },
+    {
+      "id": "nonlocal-name-35-exec",
+      "stage": "LA146",
+      "source": "try: compile('def f():\\n nonlocal else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 11 2 15\n' nonlocal else\\n' 2 6\nTrue True True\n0 0 'def f():\\n nonlocal else\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-35-single",
+      "stage": "LA146",
+      "source": "try: compile('def f():\\n nonlocal else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 2 11 2 15\n' nonlocal else' 2 6\nTrue True True\n0 0 'def f():\\n nonlocal else'\n"
+    },
+    {
+      "id": "nonlocal-name-36-exec",
+      "stage": "LA146",
+      "source": "try: compile('if True: nonlocal 雪,else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 21 1 25\n'if True: nonlocal 雪,else\\n' 2 6\nTrue True True\n0 0 'if True: nonlocal 雪,else\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-36-single",
+      "stage": "LA146",
+      "source": "try: compile('if True: nonlocal 雪,else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 21 1 25\n'if True: nonlocal 雪,else' 2 6\nTrue True True\n0 0 'if True: nonlocal 雪,else'\n"
+    },
+    {
+      "id": "nonlocal-name-37-exec",
+      "stage": "LA146",
+      "source": "try: compile('雪=1; nonlocal else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 15 1 19\n'雪=1; nonlocal else\\n' 2 6\nTrue True True\n0 0 '雪=1; nonlocal else\\n'\n"
+    },
+    {
+      "id": "nonlocal-name-37-single",
+      "stage": "LA146",
+      "source": "try: compile('雪=1; nonlocal else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "invalid syntax\nselected/雪.py 1 15 1 19\n'雪=1; nonlocal else' 2 6\nTrue True True\n0 0 '雪=1; nonlocal else'\n"
+    },
+    {
+      "id": "nonlocal-name-valid",
+      "stage": "LA146",
+      "source": "def outer():\n 雪=1\n 鳥=2\n def change():\n  nonlocal 雪,鳥\n  雪=3\n  鳥=4\n change()\n return 雪,鳥\nprint(outer())\n",
+      "stdout": "(3, 4)\n"
+    },
+    {
+      "id": "nonlocal-name-unqualified-0",
+      "stage": "Future",
+      "source": "try: compile('nonlocal 雪.鳥',\"selected.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Surrounding statement, target or declaration grammar retains an explicit native-field boundary.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "nonlocal-name-unqualified-1",
+      "stage": "Future",
+      "source": "try: compile('nonlocal 雪 鳥',\"selected.py\",\"exec\")\nexcept SyntaxError as e: print(e.filename)\n",
       "classification": "explicit-refusal",
       "owner": "#124",
       "boundary": "Surrounding statement, target or declaration grammar retains an explicit native-field boundary.",

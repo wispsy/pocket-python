@@ -609,8 +609,13 @@ lists. Token fields preserve Unicode, compile modes, line endings and compound
 suites. Legal declarations and existing binding diagnostics retain their
 behavior; unqualified adjacent-name/attribute grammar keeps explicit boundaries.
 
-The current fixed generated-syntax corpus contains 5,770 cases: 5,345 supported
-semantic/error comparisons and 425 explicit native-field refusals. The ordinary
+LA-146 qualifies the corresponding absent or invalid names in nonlocal
+declarations. Syntax failures retain priority over enclosing-scope checks;
+legal captured-name mutation and existing no-binding diagnostics are unchanged.
+Unicode, comma lists, line endings and compound suites have independent cases.
+
+The current fixed generated-syntax corpus contains 5,849 cases: 5,422 supported
+semantic/error comparisons and 427 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

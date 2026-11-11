@@ -309,7 +309,7 @@ class Parser {
     if (this.at("global") || this.at("nonlocal")) {
       const declaration = this.take().value;
       const name = () => {
-        if (declaration === "global" && !this.kind("name")) this.fail("Expected an identifier.", this.peek(), "SYNTAX", undefined,
+        if (!this.kind("name")) this.fail("Expected an identifier.", this.peek(), "SYNTAX", undefined,
           this.tokenDiagnostic("invalid syntax"));
         return this.name().value;
       };
