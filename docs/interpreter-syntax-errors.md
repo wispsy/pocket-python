@@ -696,8 +696,14 @@ suspended conversion/cleanup retain native fields through collection,
 cancellation/close and shared limits. Original dynamic frames and installed
 offline Stop/Restart preserve fresh source and reduced-profile boundaries.
 
-The current fixed generated-syntax corpus contains 6,583 cases: 6,110 supported
-semantic/error comparisons and 473 explicit native-field refusals. The ordinary
+LA-160 qualifies invalid ordinary and variadic-keyword lambda parameter starts,
+including operator/delimiter tokens and the distinct parenthesized-parameter
+diagnostic. Signature position controls that message; multiline Unicode spans
+retain the pinned parser's native end-column conversion. Existing valid binding
+and unqualified surrounding-expression metadata keep their ownership paths.
+
+The current fixed generated-syntax corpus contains 6,741 cases: 6,267 supported
+semantic/error comparisons and 474 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

@@ -560,12 +560,32 @@ class Parser {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
     let bareStar = null;
     const incomplete = () => end === ":" && this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined;
-    const parameterName = () => {
+    const parameterName = (parenthesized = false) => {
       if (end !== ":" && !this.kind("name"))
         this.fail("Expected a function parameter.", this.peek(), "SYNTAX", undefined,
           this.tokenDiagnostic("invalid syntax"));
-      if (end === ":" && (this.expressionBoundary() || this.kind("number") || this.kind("string")))
-        this.fail("Expected a lambda parameter.", this.peek(), "SYNTAX", undefined, incomplete());
+      if (end === ":" && !this.kind("name")) {
+        let syntax = incomplete();
+        if (parenthesized && this.at("(")) {
+          let ahead = 1;
+          while (this.peek(ahead).kind === "name") {
+            this.charge(); ahead++;
+            if (this.peek(ahead).value !== ",") break;
+            ahead++;
+          }
+          if (ahead > 1 && this.peek(ahead).value === ")") {
+            const first = this.peek(), last = this.peek(ahead);
+            syntax = this.comprehensionClauseFields ? this.diagnostic("Lambda expression parameters cannot be parenthesized",
+              [first.span[0], first.span[1], last.span[2], last.span[3]]) : undefined;
+            if (syntax && first.span[0] !== last.span[2]) {
+              syntax.text = syntax.text.replace(/\n$/, "");
+              const bytes = new TextEncoder().encode(syntax.text + "\0");
+              syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, last.span[3]))).length;
+            }
+          }
+        }
+        this.fail("Expected a lambda parameter.", this.peek(), "SYNTAX", undefined, syntax);
+      }
       return this.name();
     };
     while (!this.at(end)) {
@@ -612,7 +632,7 @@ class Parser {
         }
         star = true;
       } else {
-        const token = parameterName();
+        const token = parameterName(!star && !slash && !defaultSeen);
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         const value = this.eat("=") ? this.expression() : null;
         if (value !== null) separatorFields = false;
