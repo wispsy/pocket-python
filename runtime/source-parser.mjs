@@ -146,6 +146,7 @@ class Parser {
       }
       if (first && last) {
         syntax = this.diagnostic(message, [value.span[0], value.span[1], last.span[2], last.span[3]]);
+        if (action === "delete" && syntax.text.endsWith("\\\n")) syntax.text = syntax.text.slice(0, -1);
         syntax.repair = this.lexed.source.slice(0, first.start) + "__target" + this.lexed.source.slice(last.end);
       }
     }
@@ -342,7 +343,11 @@ class Parser {
     if (this.eat("del")) {
       const target = () => this.valueOperand(() => this.withoutOperandFields(() => this.expression()));
       const targets = [target()];
-      while (this.eat(",")) { if (this.ending()) break; targets.push(target()); }
+      while (this.eat(",")) {
+        if (this.ending()) break;
+        if (this.expressionBoundary()) targets.forEach(value => this.target(value, true));
+        targets.push(target());
+      }
       targets.forEach(value => this.target(value, true)); return this.node("Delete", start, {targets});
     }
     if (this.at("import") || this.at("from")) return this.imports();

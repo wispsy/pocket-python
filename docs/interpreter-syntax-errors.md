@@ -620,8 +620,13 @@ suspended conversion/cleanup survive collection, cancellation/close and shared
 limits. Original frames and installed offline Stop/Restart retain their paths.
 Statement syntax in eval mode keeps its explicit native-field boundary.
 
-The current fixed generated-syntax corpus contains 5,869 cases: 5,438 supported
-semantic/error comparisons and 431 explicit native-field refusals. The ordinary
+LA-143A preserves earlier invalid deletion targets before a later missing
+operand. Source-only repair validation keeps unqualified surrounding grammar
+behind explicit field boundaries. Continued target lines retain the pinned
+parser's newline-free diagnostic text, including indented suites and Unicode.
+
+The current fixed generated-syntax corpus contains 5,911 cases: 5,464 supported
+semantic/error comparisons and 447 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

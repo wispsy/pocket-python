@@ -97,7 +97,8 @@
     "LA144",
     "LA145",
     "LA146",
-    "LA147"
+    "LA147",
+    "LA143A"
   ],
   "cases": [
     {
@@ -36777,6 +36778,306 @@
       "owner": "#124",
       "boundary": "Statement syntax in eval mode retains its explicit native-field boundary.",
       "source": "try: compile('nonlocal else',\"selected.py\",\"eval\")\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-text-0-exec",
+      "stage": "LA143A",
+      "source": "try: compile('del 1, \\\\\\n ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 1 5 1 6\n'del 1, \\\\' 2 6\nTrue True True\n0 0 'del 1, \\\\\\n \\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-1-single",
+      "stage": "LA143A",
+      "source": "try: compile('del 1, \\\\\\n ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 1 5 1 6\n'del 1, \\\\' 2 6\nTrue True True\n0 0 'del 1, \\\\\\n '\n"
+    },
+    {
+      "id": "deletion-priority-text-2-exec",
+      "stage": "LA143A",
+      "source": "try: compile('del f(), \\\\\\n ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete function call\nselected/雪.py 1 5 1 8\n'del f(), \\\\' 2 6\nTrue True True\n0 0 'del f(), \\\\\\n \\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-3-single",
+      "stage": "LA143A",
+      "source": "try: compile('del f(), \\\\\\n ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete function call\nselected/雪.py 1 5 1 8\n'del f(), \\\\' 2 6\nTrue True True\n0 0 'del f(), \\\\\\n '\n"
+    },
+    {
+      "id": "deletion-priority-text-4-exec",
+      "stage": "LA143A",
+      "source": "try: compile('del (雪+鳥), \\\\\\n ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete expression\nselected/雪.py 1 6 1 9\n'del (雪+鳥), \\\\' 2 6\nTrue True True\n0 0 'del (雪+鳥), \\\\\\n \\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-5-single",
+      "stage": "LA143A",
+      "source": "try: compile('del (雪+鳥), \\\\\\n ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete expression\nselected/雪.py 1 6 1 9\n'del (雪+鳥), \\\\' 2 6\nTrue True True\n0 0 'del (雪+鳥), \\\\\\n '\n"
+    },
+    {
+      "id": "deletion-priority-text-6-exec",
+      "stage": "LA143A",
+      "source": "try: compile('del [雪,1], \\\\\\n ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 1 8 1 9\n'del [雪,1], \\\\' 2 6\nTrue True True\n0 0 'del [雪,1], \\\\\\n \\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-7-single",
+      "stage": "LA143A",
+      "source": "try: compile('del [雪,1], \\\\\\n ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 1 8 1 9\n'del [雪,1], \\\\' 2 6\nTrue True True\n0 0 'del [雪,1], \\\\\\n '\n"
+    },
+    {
+      "id": "deletion-priority-text-8-exec",
+      "stage": "LA143A",
+      "source": "try: compile('del [雪,*鳥], \\\\\\n ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete starred\nselected/雪.py 1 8 1 10\n'del [雪,*鳥], \\\\' 2 6\nTrue True True\n0 0 'del [雪,*鳥], \\\\\\n \\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-9-single",
+      "stage": "LA143A",
+      "source": "try: compile('del [雪,*鳥], \\\\\\n ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete starred\nselected/雪.py 1 8 1 10\n'del [雪,*鳥], \\\\' 2 6\nTrue True True\n0 0 'del [雪,*鳥], \\\\\\n '\n"
+    },
+    {
+      "id": "deletion-priority-text-10-exec",
+      "stage": "LA143A",
+      "source": "try: compile('del 雪 if 鳥 else 羽, \\\\\\n ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete conditional expression\nselected/雪.py 1 5 1 18\n'del 雪 if 鳥 else 羽, \\\\' 2 6\nTrue True True\n0 0 'del 雪 if 鳥 else 羽, \\\\\\n \\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-11-single",
+      "stage": "LA143A",
+      "source": "try: compile('del 雪 if 鳥 else 羽, \\\\\\n ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete conditional expression\nselected/雪.py 1 5 1 18\n'del 雪 if 鳥 else 羽, \\\\' 2 6\nTrue True True\n0 0 'del 雪 if 鳥 else 羽, \\\\\\n '\n"
+    },
+    {
+      "id": "deletion-priority-text-12-exec",
+      "stage": "LA143A",
+      "source": "try: compile('del 1, \\\\\\n # supplied',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 1 5 1 6\n'del 1, \\\\' 2 6\nTrue True True\n0 0 'del 1, \\\\\\n # supplied\\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-13-single",
+      "stage": "LA143A",
+      "source": "try: compile('del 1, \\\\\\n # supplied',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 1 5 1 6\n'del 1, \\\\' 2 6\nTrue True True\n0 0 'del 1, \\\\\\n # supplied'\n"
+    },
+    {
+      "id": "deletion-priority-text-14-exec",
+      "stage": "LA143A",
+      "source": "try: compile('del f(), \\\\\\n 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete function call\nselected/雪.py 1 5 1 8\n'del f(), \\\\' 2 6\nTrue True True\n0 0 'del f(), \\\\\\n 鳥\\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-15-single",
+      "stage": "LA143A",
+      "source": "try: compile('del f(), \\\\\\n 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete function call\nselected/雪.py 1 5 1 8\n'del f(), \\\\' 2 6\nTrue True True\n0 0 'del f(), \\\\\\n 鳥'\n"
+    },
+    {
+      "id": "deletion-priority-text-unqualified-16-exec",
+      "stage": "Future",
+      "source": "try: compile('del (1,\\\\\\n2)',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-text-unqualified-17-single",
+      "stage": "Future",
+      "source": "try: compile('del (1,\\\\\\n2)',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-text-18-exec",
+      "stage": "LA143A",
+      "source": "try: compile('del f(\\\\\\n)',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete function call\nselected/雪.py 1 5 2 2\n'del f(\\\\' 2 6\nTrue True True\n0 0 'del f(\\\\\\n)\\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-19-single",
+      "stage": "LA143A",
+      "source": "try: compile('del f(\\\\\\n)',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete function call\nselected/雪.py 1 5 2 2\n'del f(\\\\' 2 6\nTrue True True\n0 0 'del f(\\\\\\n)'\n"
+    },
+    {
+      "id": "deletion-priority-text-20-exec",
+      "stage": "LA143A",
+      "source": "try: compile('def f():\\n del 1, \\\\\\n ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 2 6 2 7\n' del 1, \\\\' 2 6\nTrue True True\n0 0 'def f():\\n del 1, \\\\\\n \\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-21-single",
+      "stage": "LA143A",
+      "source": "try: compile('def f():\\n del 1, \\\\\\n ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 2 6 2 7\n' del 1, \\\\' 2 6\nTrue True True\n0 0 'def f():\\n del 1, \\\\\\n '\n"
+    },
+    {
+      "id": "deletion-priority-text-22-exec",
+      "stage": "LA143A",
+      "source": "try: compile('if True:\\n del 1, \\\\\\n ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 2 6 2 7\n' del 1, \\\\' 2 6\nTrue True True\n0 0 'if True:\\n del 1, \\\\\\n \\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-23-single",
+      "stage": "LA143A",
+      "source": "try: compile('if True:\\n del 1, \\\\\\n ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 2 6 2 7\n' del 1, \\\\' 2 6\nTrue True True\n0 0 'if True:\\n del 1, \\\\\\n '\n"
+    },
+    {
+      "id": "deletion-priority-text-24-exec",
+      "stage": "LA143A",
+      "source": "try: compile('class C:\\n del 1, \\\\\\n ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 2 6 2 7\n' del 1, \\\\' 2 6\nTrue True True\n0 0 'class C:\\n del 1, \\\\\\n \\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-25-single",
+      "stage": "LA143A",
+      "source": "try: compile('class C:\\n del 1, \\\\\\n ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 2 6 2 7\n' del 1, \\\\' 2 6\nTrue True True\n0 0 'class C:\\n del 1, \\\\\\n '\n"
+    },
+    {
+      "id": "deletion-priority-text-26-exec",
+      "stage": "LA143A",
+      "source": "try: compile('while True:\\n del 1, \\\\\\n ',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 2 6 2 7\n' del 1, \\\\' 2 6\nTrue True True\n0 0 'while True:\\n del 1, \\\\\\n \\n'\n"
+    },
+    {
+      "id": "deletion-priority-text-27-single",
+      "stage": "LA143A",
+      "source": "try: compile('while True:\\n del 1, \\\\\\n ',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "cannot delete literal\nselected/雪.py 2 6 2 7\n' del 1, \\\\' 2 6\nTrue True True\n0 0 'while True:\\n del 1, \\\\\\n '\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-0-exec",
+      "stage": "Future",
+      "source": "try: compile('del 1,:',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-0-single",
+      "stage": "Future",
+      "source": "try: compile('del 1,:',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-1-exec",
+      "stage": "Future",
+      "source": "try: compile('del f(),else',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-1-single",
+      "stage": "Future",
+      "source": "try: compile('del f(),else',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-2-exec",
+      "stage": "Future",
+      "source": "try: compile('del (雪+鳥),and',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-2-single",
+      "stage": "Future",
+      "source": "try: compile('del (雪+鳥),and',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-3-exec",
+      "stage": "Future",
+      "source": "try: compile('del [雪,1],assert',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-3-single",
+      "stage": "Future",
+      "source": "try: compile('del [雪,1],assert',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-4-exec",
+      "stage": "Future",
+      "source": "try: compile('del [雪,*鳥],if',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-4-single",
+      "stage": "Future",
+      "source": "try: compile('del [雪,*鳥],if',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-5-exec",
+      "stage": "Future",
+      "source": "try: compile('del 雪 if 鳥 else 羽,try',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-5-single",
+      "stage": "Future",
+      "source": "try: compile('del 雪 if 鳥 else 羽,try',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-6-exec",
+      "stage": "Future",
+      "source": "try: compile('del 1,pass if 鳥 else 羽',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
+      "stdout": "selected.py\n"
+    },
+    {
+      "id": "deletion-priority-unqualified-6-single",
+      "stage": "Future",
+      "source": "try: compile('del 1,pass if 鳥 else 羽',\"selected.py\",'single')\nexcept SyntaxError as e: print(e.filename)\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Earlier invalid deletion targets, remaining multiline target ranges and statement/conditional grammar retain explicit native-field boundaries.",
       "stdout": "selected.py\n"
     }
   ]
