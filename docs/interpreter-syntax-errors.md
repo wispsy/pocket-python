@@ -821,8 +821,49 @@ filename owners. Suspended conversion/cleanup, collection, interruption, shared
 limits, original frames and installed offline Stop/Restart preserve fresh source
 and the classes-source/1 dynamic-compilation boundary.
 
-The current fixed generated-syntax corpus contains 8,366 cases: 7,819 supported
-semantic/error comparisons and 547 explicit native-field refusals. The ordinary
+LA-178 qualifies malformed separators after complete function parameter
+defaults. Generic token fields retain physical source text, Unicode and exec/
+single mode ranges. Adjacent-expression hints, required-default order, valid
+binding, surrounding annotations and prior-compound metadata retain their
+independent behavior and boundaries.
+
+LA-179 qualifies complete adjacent negation expressions in parameter defaults
+when not lacks in. Function and grouped-lambda diagnostics select the joined
+missing-comma range; ungrouped lambdas select the generic token. Valid not-in
+comparisons keep their execution behavior. Incomplete operands and unqualified
+surrounding grammar retain explicit native-field boundaries.
+
+LA-180 composes default separators and adjacent negations through modules,
+nested compilation, independent native fields/arguments, notes/causes and cyclic
+filename owners. Suspended conversion and cleanup, collection, interruption,
+shared limits, original frames and installed offline Stop/Restart retain their
+classes-source/1 dynamic-compilation boundary.
+
+LA-181 recognizes malformed initial parameter annotations and qualifies native
+SyntaxError payloads for the finite invalid-token starts. Positional, keyword-only
+and variadic parameters retain exact Unicode and physical-line fields. Valid
+annotation expressions, variadic annotation grammar and unqualified malformed
+expressions remain explicitly unsupported under #125.
+
+LA-182 recognizes malformed initial return annotations. The native expected-
+colon diagnostic selects the arrow before the invalid annotation operand,
+preserving physical-line ranges and source text. Earlier parameter failures
+retain priority. Valid return annotations and unqualified annotation expressions
+remain explicitly unsupported under #125.
+
+LA-181A preserves conditional-statement diagnostic priority in parameter and
+return annotations. A pass, break or continue followed by if retains its
+independent native-field boundary instead of inheriting a generic initial-
+annotation payload. Plain invalid starts keep their qualified fields.
+
+LA-183 composes malformed parameter and return annotations through modules,
+nested source, native fields and argument snapshots, notes/causes and cyclic
+filename owners. Suspension, collection, interruption, shared limits, original
+dynamic frames and installed offline Stop/Restart preserve ownership and fresh
+source. Valid annotations remain outside the adopted execution profile.
+
+The current fixed generated-syntax corpus contains 8,933 cases: 8,333 supported
+semantic/error comparisons and 600 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

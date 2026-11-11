@@ -5,6 +5,10 @@ the declared tools with `uv sync --locked --group compiled-build --group browser
 Interpreter differential checks require the pinned CPython 3.14.7 oracle; use
 `UV_PYTHON=3.14.7` on POSIX or set `$env:UV_PYTHON = "3.14.7"` in PowerShell.
 
+Interpreter jobs have a finite 20-minute bound so completed checks can upload
+reports and finish cache cleanup. Command selection, assertions and reference
+pins remain the same.
+
 ```sh
 # Preview and run only a feature's Node units and differential drivers.
 uv run --no-sync python scripts/run_tests.py focused --feature native-descriptors --list
