@@ -1207,7 +1207,9 @@
         "tests/fixtures/interpreter/syntax-errors.json:lambda-slash-tail-00-exec",
         "tests/fixtures/interpreter/syntax-errors.json:generated-functionslash-owner-cycle",
         "tests/fixtures/interpreter/syntax-errors.json:function-default-tail-00-exec",
-        "tests/fixtures/interpreter/syntax-errors.json:parameterseparator-default-boundary"
+        "tests/fixtures/interpreter/syntax-errors.json:parameterseparator-default-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-00-exec",
+        "tests/fixtures/interpreter/syntax-errors.json:lambda-separator-unqualified-5"
       ],
       "boundary_evidence": [
         "tests/fixtures/interpreter/syntax-errors.json:return-operand-lexical-boundary",
@@ -1226,7 +1228,6 @@
         "tests/fixtures/interpreter/exceptions.json:native-attribute-subtype-type-set",
         "tests/fixtures/interpreter/exceptions.json:delete-metadata-dictionary-syntax",
         "tests/fixtures/interpreter/exceptions.json:delete-metadata-inherited-value-native",
-        "tests/fixtures/interpreter/syntax-errors.json:lambda-separator-unqualified-5",
         "tests/fixtures/interpreter/syntax-errors.json:parser-completed-compound-metadata-0",
         "tests/fixtures/interpreter/syntax-errors.json:lexical-earlier-syntax-0",
         "tests/fixtures/interpreter/syntax-errors.json:control-6-single",
@@ -1315,7 +1316,14 @@
         "tests/fixtures/interpreter/syntax-errors.json:function-default-tail-legacy-boundary",
         "tests/fixtures/interpreter/syntax-errors.json:function-default-tail-conditional-boundary",
         "tests/fixtures/interpreter/syntax-errors.json:function-default-tail-lambda-body-boundary",
-        "tests/fixtures/interpreter/syntax-errors.json:function-default-tail-not-tail-boundary"
+        "tests/fixtures/interpreter/syntax-errors.json:function-default-tail-not-tail-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-compound-metadata-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-not-tail-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-comprehension-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-starred-call-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-legacy-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-conditional-boundary",
+        "tests/fixtures/interpreter/syntax-errors.json:lambda-default-tail-lambda-body-boundary"
       ]
     },
     {

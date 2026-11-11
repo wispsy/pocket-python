@@ -641,8 +641,6 @@ class Parser {
         if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
         const value = this.eat("=") ? this.parameterDefault(end, token) : null;
         if (value !== null) separatorFields = false;
-        if (end === ":" && value !== null && ["name", "number", "string"].includes(this.peek().kind))
-          this.fail("Expected a lambda parameter separator.");
         if (!star && defaultSeen && value === null) {
           const syntax = this.at(end) || this.at(",") ?
             this.delimitedDiagnostic("parameter without a default follows parameter with a default", token, end, true) : incomplete();
@@ -678,12 +676,12 @@ class Parser {
         this.comprehensionClauseFields && (missing || this.operandFields) ? syntax : undefined);
     }
     const start = this.index, value = this.expression();
-    if (end !== ":" && (["name", "number", "string"].includes(this.peek().kind) ||
-        ["True", "False", "None", "not", "lambda", "{", "~"].some(token => this.at(token))))
-      this.adjacentDefault(value, start, parameter);
+    if (["name", "number", "string"].includes(this.peek().kind) ||
+        ["True", "False", "None", "lambda", "{", "~"].some(token => this.at(token)))
+      this.adjacentDefault(value, start, parameter, end);
     return value;
   }
-  adjacentDefault(value, start, parameter) {
+  adjacentDefault(value, start, parameter, end) {
     const token = this.peek(), first = this.tokens[start];
     const fail = syntax => this.fail("Expected a parameter default separator.", token, "SYNTAX", undefined, syntax);
     if (!this.comprehensionClauseFields || !this.operandFields || ["Conditional", "Lambda", "Yield"].includes(value.kind) ||
@@ -695,7 +693,14 @@ class Parser {
       fail();
     }
     const left = this.nativeRanges.get(value) ?? value.span, right = this.nativeRanges.get(last) ?? last.span;
-    const generic = first.kind === "name" && (this.tokens[start + 1].kind === "string" || ["_", "match", "case", "type"].includes(first.value));
+    let depth = 0;
+    for (const previous of this.tokens.slice(0, start)) {
+      this.charge();
+      if (["(", "[", "{"].includes(previous.value)) depth++;
+      if ([")", "]", "}"].includes(previous.value)) depth--;
+    }
+    const generic = !depth || first.kind === "name" &&
+      (this.tokens[start + 1].kind === "string" || ["_", "match", "case", "type"].includes(first.value));
     const syntax = generic ? this.tokenDiagnostic("invalid syntax", token) : this.diagnostic(
       "invalid syntax. Perhaps you forgot a comma?", [left[0], left[1], right[2], right[3]]);
     if (!generic && this.peek().span[0] !== left[0]) syntax.text = syntax.text.replace(/\n$/, "");
@@ -710,7 +715,9 @@ class Parser {
         fail();
       }
     }
-    syntax.repair = this.lexed.source.slice(0, parameter.start) + "__default=None" + this.lexed.source.slice(this.previous.end);
+    const body = end === ":" && (["newline", "eof"].includes(this.peek().kind) ||
+      [")", "]", "}"].some(token => this.at(token))) ? ":None" : "";
+    syntax.repair = this.lexed.source.slice(0, parameter.start) + "__default=None" + body + this.lexed.source.slice(this.previous.end);
     if (this.options.mode === "single" && !syntax.repair.endsWith("\n")) syntax.repair += "\n";
     fail(syntax);
   }

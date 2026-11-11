@@ -764,8 +764,15 @@ unqualified surrounding grammar, legacy statements and nested expression tails
 behind explicit field boundaries. A prior default-tail refusal is adopted with
 its original assertion and complete payload checks.
 
-The current fixed generated-syntax corpus contains 7,524 cases: 6,999 supported
-semantic/error comparisons and 525 explicit native-field refusals. The ordinary
+LA-170 qualifies adjacent lambda default expressions. Ungrouped lambdas retain
+the generic token diagnostic; grouping selects the missing-comma hint and joined
+expression range. Unicode, continued lines and compile modes retain exact source
+fields. Source-only repairs preserve surrounding grammar/operand boundaries.
+Four prior refusals are adopted with their original assertions and full payload
+checks; legacy and nested expression-tail diagnostics remain explicitly bounded.
+
+The current fixed generated-syntax corpus contains 7,655 cases: 7,127 supported
+semantic/error comparisons and 528 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
