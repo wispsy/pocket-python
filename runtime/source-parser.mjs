@@ -277,6 +277,8 @@ class Parser {
       syntax.end_lineno = syntax.lineno;
       this.fail("Expected ':'.", token, "SYNTAX", undefined, syntax);
     }
+    if (header?.value === "def" && !this.at(":"))
+      this.fail("Expected ':'.", this.peek(), "SYNTAX", undefined, this.tokenDiagnostic("expected ':'"));
     this.expect(":");
     if (!this.kind("newline")) return this.simpleLine();
     this.take();

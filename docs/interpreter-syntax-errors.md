@@ -678,8 +678,13 @@ suspended conversion/cleanup, collection, cancellation/close and shared limits
 retain their ownership paths. Original dynamic frames and installed offline
 Stop/Restart cover both families; eval-mode statements keep explicit boundaries.
 
-The current fixed generated-syntax corpus contains 6,421 cases: 5,953 supported
-semantic/error comparisons and 468 explicit native-field refusals. The ordinary
+LA-157 qualifies missing function-suite colons before non-newline tokens.
+Unicode, continued lines, decorators, nested suites and compile modes retain
+the native expected-colon wording and token fields. Newline diagnostics,
+annotation admission and prior-compound metadata keep their existing paths.
+
+The current fixed generated-syntax corpus contains 6,490 cases: 6,020 supported
+semantic/error comparisons and 470 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

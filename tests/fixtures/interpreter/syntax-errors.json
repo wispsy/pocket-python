@@ -108,7 +108,8 @@
     "LA153A",
     "LA154",
     "LA155",
-    "LA156"
+    "LA156",
+    "LA157"
   ],
   "cases": [
     {
@@ -40284,6 +40285,426 @@
       "classification": "explicit-refusal",
       "owner": "#124",
       "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "function-header-colon-00-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-00-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) pass'\n"
+    },
+    {
+      "id": "function-header-colon-01-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) else',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) else\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) else\\n'\n"
+    },
+    {
+      "id": "function-header-colon-01-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) else',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) else' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) else'\n"
+    },
+    {
+      "id": "function-header-colon-02-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) return',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 16\n'def 雪(鳥) return\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) return\\n'\n"
+    },
+    {
+      "id": "function-header-colon-02-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) return',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 16\n'def 雪(鳥) return' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) return'\n"
+    },
+    {
+      "id": "function-header-colon-03-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) True',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) True\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) True\\n'\n"
+    },
+    {
+      "id": "function-header-colon-03-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) True',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) True' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) True'\n"
+    },
+    {
+      "id": "function-header-colon-04-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) None',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) None\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) None\\n'\n"
+    },
+    {
+      "id": "function-header-colon-04-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) None',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) None' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) None'\n"
+    },
+    {
+      "id": "function-header-colon-05-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) 1',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) 1\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) 1\\n'\n"
+    },
+    {
+      "id": "function-header-colon-05-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) 1',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) 1' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) 1'\n"
+    },
+    {
+      "id": "function-header-colon-06-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) \"鳥\"',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 13\n'def 雪(鳥) \"鳥\"\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) \"鳥\"\\n'\n"
+    },
+    {
+      "id": "function-header-colon-06-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) \"鳥\"',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 13\n'def 雪(鳥) \"鳥\"' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) \"鳥\"'\n"
+    },
+    {
+      "id": "function-header-colon-07-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) ...',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 13\n'def 雪(鳥) ...\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) ...\\n'\n"
+    },
+    {
+      "id": "function-header-colon-07-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) ...',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 13\n'def 雪(鳥) ...' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) ...'\n"
+    },
+    {
+      "id": "function-header-colon-08-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) =',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) =\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) =\\n'\n"
+    },
+    {
+      "id": "function-header-colon-08-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) =',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) =' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) ='\n"
+    },
+    {
+      "id": "function-header-colon-09-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) ,',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) ,\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) ,\\n'\n"
+    },
+    {
+      "id": "function-header-colon-09-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) ,',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) ,' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) ,'\n"
+    },
+    {
+      "id": "function-header-colon-10-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) ;',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) ;\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) ;\\n'\n"
+    },
+    {
+      "id": "function-header-colon-10-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) ;',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) ;' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) ;'\n"
+    },
+    {
+      "id": "function-header-colon-11-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) +',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) +\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) +\\n'\n"
+    },
+    {
+      "id": "function-header-colon-11-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) +',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) +' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) +'\n"
+    },
+    {
+      "id": "function-header-colon-12-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) *',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) *\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) *\\n'\n"
+    },
+    {
+      "id": "function-header-colon-12-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) *',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) *' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) *'\n"
+    },
+    {
+      "id": "function-header-colon-13-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) **',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 12\n'def 雪(鳥) **\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) **\\n'\n"
+    },
+    {
+      "id": "function-header-colon-13-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) **',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 12\n'def 雪(鳥) **' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) **'\n"
+    },
+    {
+      "id": "function-header-colon-14-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) /',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) /\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) /\\n'\n"
+    },
+    {
+      "id": "function-header-colon-14-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) /',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) /' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) /'\n"
+    },
+    {
+      "id": "function-header-colon-15-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) and',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 13\n'def 雪(鳥) and\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) and\\n'\n"
+    },
+    {
+      "id": "function-header-colon-15-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) and',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 13\n'def 雪(鳥) and' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) and'\n"
+    },
+    {
+      "id": "function-header-colon-16-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) if',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 12\n'def 雪(鳥) if\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) if\\n'\n"
+    },
+    {
+      "id": "function-header-colon-16-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) if',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 12\n'def 雪(鳥) if' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) if'\n"
+    },
+    {
+      "id": "function-header-colon-17-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) 鳥\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) 鳥\\n'\n"
+    },
+    {
+      "id": "function-header-colon-17-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) 鳥' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) 鳥'\n"
+    },
+    {
+      "id": "function-header-colon-18-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) 鳥: pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) 鳥: pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) 鳥: pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-18-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) 鳥: pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 11\n'def 雪(鳥) 鳥: pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) 鳥: pass'\n"
+    },
+    {
+      "id": "function-header-colon-19-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) \\\\\\n pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 2 2 6\n' pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) \\\\\\n pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-19-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) \\\\\\n pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 2 2 6\n' pass' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) \\\\\\n pass'\n"
+    },
+    {
+      "id": "function-header-colon-20-exec",
+      "stage": "LA157",
+      "source": "try: compile('@decorate\\ndef 雪(鳥) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 10 2 14\n'def 雪(鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 '@decorate\\ndef 雪(鳥) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-20-single",
+      "stage": "LA157",
+      "source": "try: compile('@decorate\\ndef 雪(鳥) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 10 2 14\n'def 雪(鳥) pass' 2 6\nTrue True True\nFalse\n0 0 '@decorate\\ndef 雪(鳥) pass'\n"
+    },
+    {
+      "id": "function-header-colon-21-exec",
+      "stage": "LA157",
+      "source": "try: compile('if True:\\n def 雪(鳥) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 11 2 15\n' def 雪(鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n def 雪(鳥) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-21-single",
+      "stage": "LA157",
+      "source": "try: compile('if True:\\n def 雪(鳥) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 11 2 15\n' def 雪(鳥) pass' 2 6\nTrue True True\nFalse\n0 0 'if True:\\n def 雪(鳥) pass'\n"
+    },
+    {
+      "id": "function-header-colon-22-exec",
+      "stage": "LA157",
+      "source": "try: compile('class 羽:\\n def 雪(鳥) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 11 2 15\n' def 雪(鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'class 羽:\\n def 雪(鳥) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-22-single",
+      "stage": "LA157",
+      "source": "try: compile('class 羽:\\n def 雪(鳥) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 11 2 15\n' def 雪(鳥) pass' 2 6\nTrue True True\nFalse\n0 0 'class 羽:\\n def 雪(鳥) pass'\n"
+    },
+    {
+      "id": "function-header-colon-23-exec",
+      "stage": "LA157",
+      "source": "try: compile('def outer():\\n def 雪(鳥) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 11 2 15\n' def 雪(鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def outer():\\n def 雪(鳥) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-23-single",
+      "stage": "LA157",
+      "source": "try: compile('def outer():\\n def 雪(鳥) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 11 2 15\n' def 雪(鳥) pass' 2 6\nTrue True True\nFalse\n0 0 'def outer():\\n def 雪(鳥) pass'\n"
+    },
+    {
+      "id": "function-header-colon-24-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) pass\\r\\n',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-24-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) pass\\r\\n',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-25-exec",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) pass\\r',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-25-single",
+      "stage": "LA157",
+      "source": "try: compile('def 雪(鳥) pass\\r',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 10 1 14\n'def 雪(鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def 雪(鳥) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-26-exec",
+      "stage": "LA157",
+      "source": "try: compile('\\x0cdef 雪(鳥)\\tpass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 11 1 15\n'\\x0cdef 雪(鳥)\\tpass\\n' 2 6\nTrue True True\nFalse\n0 0 '\\x0cdef 雪(鳥)\\tpass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-26-single",
+      "stage": "LA157",
+      "source": "try: compile('\\x0cdef 雪(鳥)\\tpass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 11 1 15\n'\\x0cdef 雪(鳥)\\tpass' 2 6\nTrue True True\nFalse\n0 0 '\\x0cdef 雪(鳥)\\tpass'\n"
+    },
+    {
+      "id": "function-header-colon-27-exec",
+      "stage": "LA157",
+      "source": "try: compile('雪=1\\ndef 雪(鳥) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 2 10 2 14\n'def 雪(鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 '雪=1\\ndef 雪(鳥) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-27-single",
+      "stage": "LA157",
+      "source": "try: compile('雪=1\\ndef 雪(鳥) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "multiple statements found while compiling a single statement\nselected/雪.py 1 4 1 5\n'雪=1\\n' 2 6\nTrue True True\nTrue\n"
+    },
+    {
+      "id": "function-header-colon-28-exec",
+      "stage": "LA157",
+      "source": "try: compile('def f(雪,雪) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 12 1 16\n'def f(雪,雪) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def f(雪,雪) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-28-single",
+      "stage": "LA157",
+      "source": "try: compile('def f(雪,雪) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 12 1 16\n'def f(雪,雪) pass' 2 6\nTrue True True\nFalse\n0 0 'def f(雪,雪) pass'\n"
+    },
+    {
+      "id": "function-header-colon-29-exec",
+      "stage": "LA157",
+      "source": "try: compile('def f(α,𝛂) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 12 1 16\n'def f(α,𝛂) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def f(α,𝛂) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-29-single",
+      "stage": "LA157",
+      "source": "try: compile('def f(α,𝛂) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 12 1 16\n'def f(α,𝛂) pass' 2 6\nTrue True True\nFalse\n0 0 'def f(α,𝛂) pass'\n"
+    },
+    {
+      "id": "function-header-colon-30-exec",
+      "stage": "LA157",
+      "source": "try: compile('def f(雪=1) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 12 1 16\n'def f(雪=1) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def f(雪=1) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-30-single",
+      "stage": "LA157",
+      "source": "try: compile('def f(雪=1) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 12 1 16\n'def f(雪=1) pass' 2 6\nTrue True True\nFalse\n0 0 'def f(雪=1) pass'\n"
+    },
+    {
+      "id": "function-header-colon-31-exec",
+      "stage": "LA157",
+      "source": "try: compile('def f(*雪,**鳥) pass',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 15 1 19\n'def f(*雪,**鳥) pass\\n' 2 6\nTrue True True\nFalse\n0 0 'def f(*雪,**鳥) pass\\n'\n"
+    },
+    {
+      "id": "function-header-colon-31-single",
+      "stage": "LA157",
+      "source": "try: compile('def f(*雪,**鳥) pass',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 15 1 19\n'def f(*雪,**鳥) pass' 2 6\nTrue True True\nFalse\n0 0 'def f(*雪,**鳥) pass'\n"
+    },
+    {
+      "id": "function-header-colon-32-exec",
+      "stage": "LA157",
+      "source": "try: compile('def f() pass if 鳥',\"selected/雪.py\",'exec')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 9 1 13\n'def f() pass if 鳥\\n' 2 6\nTrue True True\nFalse\n0 0 'def f() pass if 鳥\\n'\n"
+    },
+    {
+      "id": "function-header-colon-32-single",
+      "stage": "LA157",
+      "source": "try: compile('def f() pass if 鳥',\"selected/雪.py\",'single')\nexcept SyntaxError as e:\n print(e.msg)\n print(e.filename,e.lineno,e.offset,e.end_lineno,e.end_offset)\n print(repr(e.text),len(e.args),len(e.args[1]))\n print(e.args[0] is e.msg,e.args[1][0] is e.filename,e.args[1][3] is e.text)\n print(e._metadata is None)\n if e._metadata is not None: print(e._metadata[0],e._metadata[1],repr(e._metadata[2]))\n",
+      "stdout": "expected ':'\nselected/雪.py 1 9 1 13\n'def f() pass if 鳥' 2 6\nTrue True True\nFalse\n0 0 'def f() pass if 鳥'\n"
+    },
+    {
+      "id": "function-header-colon-compound-metadata-boundary",
+      "stage": "Future",
+      "source": "try: compile('if True: pass\\ndef 雪(鳥) pass',\"selected.py\",'exec')\nexcept SyntaxError as e: print(e._metadata)\n",
+      "stdout": "(1, 0, 'if True: pass\\ndef 雪(鳥) pass\\n')\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "function-header-colon-eval-boundary",
+      "stage": "Future",
+      "source": "try: compile('def 雪(鳥) pass',\"selected.py\",'eval')\nexcept SyntaxError as e: print(e.filename)\n",
+      "stdout": "selected.py\n",
+      "classification": "explicit-refusal",
+      "owner": "#124",
+      "boundary": "Unqualified surrounding grammar retains its native-field boundary."
+    },
+    {
+      "id": "function-header-colon-valid",
+      "stage": "LA157",
+      "source": "def decorate(value): return value\n@decorate\ndef 雪(鳥=2):\n return 鳥+1\n@decorate\nclass 羽:\n value=雪(4)\nprint(羽.value)\n",
+      "stdout": "5\n"
     }
   ]
 }
