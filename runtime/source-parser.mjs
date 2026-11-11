@@ -108,6 +108,11 @@ class Parser {
   expect(value) { if (!this.at(value)) this.fail("Expected '" + value + "'."); return this.take(); }
   expectKind(kind, message = "Expected " + kind + ".") { if (!this.kind(kind)) this.fail(message); return this.take(); }
   name() { return this.expectKind("name", "Expected an identifier."); }
+  definitionName() {
+    if (!this.kind("name")) this.fail("Expected a definition name.", this.peek(), "SYNTAX", undefined,
+      this.tokenDiagnostic("invalid syntax"));
+    return this.name();
+  }
   ending() { return ["newline", "dedent", "eof"].includes(this.peek().kind) || this.at(";"); }
   invalidTarget(value, action, nested = false) {
     let label = {Call: "function call", Binary: "expression", Unary: "expression", Boolean: "expression",
@@ -212,6 +217,12 @@ class Parser {
       syntax.text = line ? lines[line - 1] + (newline ? "\n" : "") : "";
       syntax.offset = syntax.end_offset = 0;
       this.fail("invalid syntax", this.peek(), "SYNTAX", undefined, syntax);
+    }
+    if (mode === "single" && ["Class", "Function"].includes(body[0]?.kind) &&
+        !this.tokens.some(token => token.kind === "indent")) {
+      const last = this.tokens.filter(token => !["newline", "eof"].includes(token.kind)).at(-1);
+      if (!this.lexed.source.slice(last.end).includes("\n"))
+        this.fail("Interactive definitions require a terminating newline.");
     }
     if (mode === "single" && !this.lexed.source.endsWith("\n") &&
         (this.handlerErrors.length || this.keywordErrors.length &&
@@ -514,8 +525,10 @@ class Parser {
     this.fail("Decorators require a function or class definition.");
   }
   definition(decorators = []) {
-    const start = this.expect("def"), name = this.name().value;
+    const start = this.expect("def"), name = this.definitionName().value;
     if (this.at("[")) this.unsupported("Generic functions are not adopted.");
+    if (!this.at("(")) this.fail("Expected '('.", this.peek(), "SYNTAX", undefined,
+      this.tokenDiagnostic("expected '('"));
     this.expect("(");
     const params = this.parameters(")"); this.expect(")");
     if (this.at("->")) this.unsupported("Return annotations are not adopted.");
@@ -545,6 +558,9 @@ class Parser {
     let bareStar = null;
     const incomplete = () => end === ":" && this.comprehensionClauseFields ? this.tokenDiagnostic("invalid syntax") : undefined;
     const parameterName = () => {
+      if (end !== ":" && !this.kind("name"))
+        this.fail("Expected a function parameter.", this.peek(), "SYNTAX", undefined,
+          this.tokenDiagnostic("invalid syntax"));
       if (end === ":" && (this.expressionBoundary() || this.kind("number") || this.kind("string")))
         this.fail("Expected a lambda parameter.", this.peek(), "SYNTAX", undefined, incomplete());
       return this.name();
@@ -627,7 +643,7 @@ class Parser {
     return this.node("Lambda", start, {name: "<lambda>", params, body: [this.node("Return", value, {value}, value)]}, value);
   }
   classDefinition(decorators = []) {
-    const start = this.expect("class"), name = this.name().value, bases = [];
+    const start = this.expect("class"), name = this.definitionName().value, bases = [];
     let metaclass = null, repeated = null;
     const keywords = [];
     if (this.at("[")) this.unsupported("Generic classes are not adopted.");

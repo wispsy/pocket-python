@@ -625,8 +625,45 @@ operand. Source-only repair validation keeps unqualified surrounding grammar
 behind explicit field boundaries. Continued target lines retain the pinned
 parser's newline-free diagnostic text, including indented suites and Unicode.
 
-The current fixed generated-syntax corpus contains 5,911 cases: 5,464 supported
-semantic/error comparisons and 447 explicit native-field refusals. The ordinary
+LA-148 qualifies missing or invalid function definition names. Token ranges,
+Unicode, continued lines, decorators, nested suites and exec/single modes retain
+the pinned parser's native fields and source metadata. Valid definitions and
+existing lexical or interactive statement priority keep their behavior.
+
+LA-149 applies the same token diagnostics to missing or invalid class names,
+including base-list delimiters, Unicode, decorators and continued source.
+Legal class construction and lexical failures retain their existing paths.
+
+LA-150 composes definition-name fields through modules and nested dynamic source,
+notes/causes, independent args/fields, cyclic filenames and suspended cleanup.
+Collection, cancellation/close, shared limits and original dynamic frames retain
+their existing ownership paths. Installed offline Stop/Restart and reduced-profile
+acceptance include the new families; eval-mode statements keep explicit boundaries.
+
+LA-151 qualifies the expected '(' diagnostic after function names. Unicode,
+comments, explicit continuations, decorators and nested suites preserve exact
+token fields and compile-mode source text. Generic-function admission and
+earlier lexical failures retain their own boundaries.
+
+LA-152 qualifies invalid ordinary and variadic-keyword parameter names in
+function definitions, including comma-separated, positional-only and
+keyword-only positions. Specialized signature errors, valid parameter binding
+and unqualified bare-star grammar retain their existing paths.
+
+LA-153 composes function-opener and parameter-name payloads through modules,
+nested dynamic source, notes/causes and independent field/argument snapshots.
+Cyclic filenames, suspended conversion/cleanup, collection, cancellation/close,
+shared limits and original frames retain their ownership contracts. Installed
+offline acceptance covers fresh Stop/Restart and reduced-profile boundaries.
+
+LA-153A rejects inline interactive function/class definitions without their
+required physical newline, before duplicate-parameter or class-keyword binding.
+Decorators, continued headers, normalized line endings and final comment lines
+retain their termination behavior; indented suites remain valid without a final
+newline. Native EOF fields retain explicit refusal boundaries.
+
+The current fixed generated-syntax corpus contains 6,268 cases: 5,803 supported
+semantic/error comparisons and 465 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
