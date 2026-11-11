@@ -519,6 +519,11 @@ class Parser {
     const decorators = [];
     while (this.eat("@")) {
       if (decorators.length >= PARSER_LIMITS.decorators) this.fail("Decorator count budget exceeded.", this.previous, "COMPILE_BUDGET");
+      if (this.expressionBoundary() || ["=", "*", "**"].some(value => this.at(value))) {
+        const statement = ["pass", "break", "continue"].some(value => this.at(value));
+        this.fail("Expected a decorator expression.", this.peek(), "SYNTAX", undefined,
+          statement && this.peek(1).value === "if" ? undefined : this.tokenDiagnostic("invalid syntax"));
+      }
       decorators.push(this.expression());
       this.expectKind("newline", "Expected a newline after the decorator expression.");
     }
