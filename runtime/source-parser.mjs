@@ -312,7 +312,8 @@ class Parser {
       return this.node("Declaration", start, {declaration, names});
     }
     if (this.eat("assert")) {
-      const test = this.expression(), message = this.eat(",") ? this.expression() : null;
+      const test = this.valueOperand(() => this.expression());
+      const message = this.eat(",") ? this.valueOperand(() => this.expression()) : null;
       return this.node("Assert", start, {test, message});
     }
     if (this.eat("pass")) return this.node("Pass", start);
@@ -328,8 +329,8 @@ class Parser {
       return node;
     }
     if (this.eat("raise")) {
-      const value = this.ending() ? null : this.expression();
-      const cause = this.eat("from") ? this.expression() : null;
+      const value = this.ending() ? null : this.valueOperand(() => this.expression());
+      const cause = this.eat("from") ? this.valueOperand(() => this.expression()) : null;
       return this.node("Raise", start, {value, cause});
     }
     if (this.eat("del")) {
@@ -344,7 +345,7 @@ class Parser {
     if (this.eat("=")) {
       const targets = [value]; this.target(value);
       for (;;) {
-        value = this.expressionList();
+        value = this.valueOperand(() => this.expressionList());
         if (!this.eat("=")) break;
         this.target(value, false, false, "chain"); targets.push(value);
       }
@@ -355,7 +356,7 @@ class Parser {
       this.target(value);
       const token = this.take(), operator = BINARY.get(token.value.slice(0, -1));
       if (!operator) this.unsupported("Augmented operator is not adopted.", token);
-      return this.node("Augment", start, {target: value, operator, value: this.expressionList()});
+      return this.node("Augment", start, {target: value, operator, value: this.valueOperand(() => this.expressionList())});
     }
     if (this.at(":=")) this.fail("Assignment expressions require a permitted expression context.");
     return this.node("Expr", start, {value});
@@ -662,6 +663,11 @@ class Parser {
     const before = this.operandFields; this.operandFields &&= !this.conditionalTest;
     try { this.requiredOperand(); return body(); } finally { this.operandFields = before; }
   }
+  valueOperand(body) {
+    const operand = () => this.rightOperand(body);
+    return ["pass", "break", "continue"].some(value => this.at(value)) && this.peek(1).value === "if" ?
+      this.withoutOperandFields(operand) : operand();
+  }
   withoutOperandFields(body) {
     // Surrounding grammar can select a diagnostic before the missing operand.
     const before = this.operandFields; this.operandFields = false;
@@ -940,8 +946,25 @@ class Parser {
       if (this.kind("name") && this.peek(1).value === "=") {
         const token = this.take(), equal = this.expect("=");
         if (classBases && keywords.length >= 128) this.fail("Class keyword budget exceeded.", this.peek(), "COMPILE_BUDGET");
-        const argument = parseArgument(() => this.expression());
         keywordSite = {span: [token.span[0], token.span[1], equal.span[2], equal.span[3]]};
+        if ([")", ","].some(value => this.at(value))) {
+          const syntax = !positionalError && this.operandFields && this.comprehensionClauseFields && !this.conditionalTest ?
+            this.diagnostic("expected argument value expression", keywordSite.span) : undefined;
+          if (syntax && this.peek().span[0] !== token.span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+          if (syntax && token.span[0] !== equal.span[2]) {
+            const bytes = new TextEncoder().encode(syntax.text + "\0");
+            syntax.end_offset = Array.from(new TextDecoder().decode(bytes.subarray(0, equal.span[3]))).length;
+          }
+          this.fail("Expected a keyword argument value.", this.peek(), "SYNTAX", undefined, syntax);
+        }
+        if (["pass", "break", "continue"].some(value => this.at(value)) && this.peek(1).value !== "if" &&
+            this.peek().span[0] !== this.peek(1).span[0]) {
+          const syntax = !positionalError && this.operandFields && this.comprehensionClauseFields && !this.conditionalTest ?
+            this.tokenDiagnostic("invalid syntax") : undefined;
+          if (syntax) syntax.text = syntax.text.replace(/\n$/, "");
+          this.fail("Expected a keyword argument value.", this.peek(), "SYNTAX", undefined, syntax);
+        }
+        const argument = parseArgument(() => this.valueOperand(() => this.expression()));
         if (seen.has(token.value)) {
           const first = seen.get(token.value);
           if (!repeated || first < repeated.first) repeated = {first, name: token.value,

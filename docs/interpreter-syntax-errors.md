@@ -549,8 +549,46 @@ suspended conversion/cleanup survive collection, cancellation/close and shared
 limits. The example and installed offline console retain original frames, fresh
 Stop/Restart behavior and reduced-profile dynamic-compilation boundaries.
 
-The current fixed generated-syntax corpus contains 5,199 cases: 4,793 supported
-semantic/error comparisons and 406 explicit native-field refusals. The ordinary
+LA-136 qualifies missing assignment values after ordinary, chained and augmented
+assignment operators. Token fields preserve Unicode, physical and implicit line
+endings and compound suites. Invalid targets keep their existing priority;
+statement/conditional combinations retain explicit native-field boundaries.
+
+LA-137 qualifies missing named keyword values in calls and class headers. A
+closing parenthesis or comma selects the name-through-equals range and the
+expected argument value expression message. Other adopted boundaries use their
+token fields. Multiline ranges retain the pinned parser's first-line column
+conversion; earlier invalid argument groups keep independent boundaries.
+
+LA-138 composes assignment and keyword-value fields through registry modules,
+nested dynamic source, chaining/notes and independent argument snapshots. Cyclic
+filename owners and suspended conversion/cleanup retain their fields through
+collection, cancellation/close and shared limits. The example and installed
+offline console preserve original dynamic frames and fresh Stop/Restart paths.
+
+LA-139 qualifies missing assert tests and messages following their comma. Token
+fields preserve Unicode, physical/implicit line endings and compound suites;
+legal tuple tests and assertion arguments retain their existing behavior.
+Statement/conditional combinations keep explicit native-field boundaries.
+
+LA-140 qualifies required raise expressions and explicit causes after from.
+Bare raise remains legal; adopted token fields preserve Unicode, physical and
+implicit line endings and compound suites. Statement/conditional combinations
+retain explicit native-field boundaries.
+
+LA-137A preserves the source text for pass/break/continue keyword values whose
+next token is on another physical line. The pinned parser strips that text's
+newline while retaining the statement-token range and complete source metadata.
+Comments, split names/equals, class headers and compile modes are covered.
+
+LA-141 composes assert and raise operand fields through modules, nested dynamic
+source, notes/causes and independent fields/args. Cyclic filename owners,
+suspended conversion/cleanup and original dynamic frames survive collection,
+cancellation/close and shared allocation limits. The example and installed
+offline console preserve Stop/Restart and reduced-profile boundaries.
+
+The current fixed generated-syntax corpus contains 5,552 cases: 5,137 supported
+semantic/error comparisons and 415 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
