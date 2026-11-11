@@ -9,6 +9,18 @@ Interpreter jobs have a finite 20-minute bound so completed checks can upload
 reports and finish cache cleanup. Command selection, assertions and reference
 pins remain the same.
 
+The generated syntax corpus uses four deterministic case partitions for each
+Node/Chromium drain, stepped and parked driver. Each command validates its same
+partition against CPython and the independent engine; together the four cover
+every case exactly once per driver. This keeps a cold syntax oracle from occupying
+an entire browser job. Reference caches retain separate partition identities,
+and reports record the selected and total counts. Standalone reference validation
+still covers the complete corpus by default. To inspect a single partition:
+
+```sh
+uv run --no-sync python runtime/check_classes.py --corpus tests/fixtures/interpreter/syntax-errors.json --parked --case-shard 1 --case-shards 4
+```
+
 ```sh
 # Preview and run only a feature's Node units and differential drivers.
 uv run --no-sync python scripts/run_tests.py focused --feature native-descriptors --list

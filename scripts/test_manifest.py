@@ -177,16 +177,21 @@ def checks(costs_path=None):
             for profile in profiles:
                 modes = ('drain', 'stepped', 'parked') if corpus in PARKED_CORPORA else ('drain', 'stepped')
                 for mode in modes:
-                    id = f'{corpus}-{profile}-{mode}-{target}'
-                    args = ['--target', target, '--corpus', path]
-                    if profile == 'core':
-                        args += ['--profile', 'core-source/1']
-                    elif corpus in STAGES:
-                        args += ['--stages', *STAGES[corpus]]
-                    if mode != 'drain':
-                        args += ['--' + mode]
-                    add(id, suite, 'python', 'runtime/check_classes.py', *args,
-                        '--report', f'build/{id}-report.json', seconds=weight)
+                    partitions = 4 if corpus == 'syntax-errors' else 1
+                    for part in range(1, partitions + 1):
+                        id = f'{corpus}-{profile}-{mode}-{target}'
+                        args = ['--target', target, '--corpus', path]
+                        if partitions > 1:
+                            id += f'-part-{part}-of-{partitions}'
+                            args += ['--case-shard', str(part), '--case-shards', str(partitions)]
+                        if profile == 'core':
+                            args += ['--profile', 'core-source/1']
+                        elif corpus in STAGES:
+                            args += ['--stages', *STAGES[corpus]]
+                        if mode != 'drain':
+                            args += ['--' + mode]
+                        add(id, suite, 'python', 'runtime/check_classes.py', *args,
+                            '--report', f'build/{id}-report.json', seconds=weight / partitions)
             if target == 'node' and corpus in REFERENCE_CORPORA:
                 id = corpus + '-reference'
                 add(id, 'reference', 'python', 'runtime/check_classes.py',

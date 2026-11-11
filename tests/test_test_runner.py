@@ -37,9 +37,29 @@ class TestRunnerTests(unittest.TestCase):
                           for path in (run_tests.ROOT / 'runtime').glob('*.test.mjs')})
         for target in ('node', 'browser'):
             for corpus in CORPORA:
-                self.assertIn(f'{corpus}-classes-drain-{target}', {check.id for check in inventory})
-                self.assertIn(f'{corpus}-classes-stepped-{target}', {check.id for check in inventory})
+                suffixes = [f'-part-{part}-of-4' for part in range(1, 5)] if corpus == 'syntax-errors' else ['']
+                for mode in ('drain', 'stepped'):
+                    for suffix in suffixes:
+                        self.assertIn(f'{corpus}-classes-{mode}-{target}{suffix}', {check.id for check in inventory})
         self.assertEqual(run_tests.select_checks(['full', 'focused']), run_tests.select_checks(['full']))
+
+    def test_syntax_partitions_preserve_every_source_driver_and_full_reference(self):
+        inventory = checks()
+        for target in ('node', 'browser'):
+            for mode in ('drain', 'stepped', 'parked'):
+                selected = [check for check in inventory if check.id.startswith(f'syntax-errors-classes-{mode}-{target}-')]
+                self.assertEqual(len(selected), 4)
+                parts = []
+                for check in selected:
+                    command = check.command
+                    parts.append(int(command[command.index('--case-shard') + 1]))
+                    self.assertEqual(command[command.index('--case-shards') + 1], '4')
+                    self.assertEqual('--parked' in command, mode == 'parked')
+                    self.assertEqual('--stepped' in command, mode == 'stepped')
+                self.assertEqual(parts, [1, 2, 3, 4])
+        reference, = [check for check in inventory if check.id == 'syntax-errors-reference']
+        self.assertNotIn('--case-shard', reference.command)
+        self.assertNotIn('--case-shards', reference.command)
 
     def test_packaging_order_survives_unsharded_selection(self):
         for suite in ('python', 'smoke'):
