@@ -880,8 +880,13 @@ filename owners. Suspended conversion/cleanup, collection, interruption, shared
 limits, original dynamic frames and installed offline Stop/Restart retain fresh
 source and the classes-source/1 dynamic-compilation boundary.
 
-The current fixed generated-syntax corpus contains 9,117 cases: 8,492 supported
-semantic/error comparisons and 625 explicit native-field refusals. The ordinary
+LA-187 qualifies missing/invalid from-import module starts, invalid dotted module
+components and missing import keywords. Relative module prefixes, Unicode,
+physical newlines and exec/single modes retain exact token fields. Valid import
+admission and unqualified surrounding grammar keep their independent boundaries.
+
+The current fixed generated-syntax corpus contains 9,169 cases: 8,539 supported
+semantic/error comparisons and 630 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.

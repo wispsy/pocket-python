@@ -419,7 +419,11 @@ class Parser {
   }
   qualified() {
     let name = this.name().value;
-    while (this.eat(".")) name += "." + this.name().value;
+    while (this.eat(".")) {
+      if (!this.kind("name")) this.fail("Expected an import module component.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic("invalid syntax"));
+      name += "." + this.name().value;
+    }
     return name;
   }
   imports() {
@@ -428,8 +432,11 @@ class Parser {
     if (start.value === "from") {
       while (this.at(".") || this.at("...")) level += this.take().value.length;
       specifier = this.kind("name") ? this.qualified() : "";
-      if (!specifier && !level) this.fail("Expected an import module.");
-      this.expect("import"); parenthesized = !!this.eat("(");
+      if (!specifier && !level) this.fail("Expected an import module.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic("invalid syntax"));
+      if (!this.at("import")) this.fail("Expected 'import'.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic("invalid syntax"));
+      this.take(); parenthesized = !!this.eat("(");
     }
     for (;;) {
       if (this.at("*")) {
