@@ -72,6 +72,7 @@ for (const [source, mode] of [
   ['assert 雪,else', 'exec'], ['raise 雪 from else', 'exec'],
   ['return else', 'exec'], ['del else', 'exec'],
   ['global 雪,else', 'exec'], ['nonlocal 雪,else', 'exec'],
+  ['def else(): pass', 'exec'], ['class else: pass', 'exec'],
 ]) test('retained ' + JSON.stringify(source) + ' payloads share allocation limits', async () => {
   const result = await runSourceRequest({modules: [unit('held=[]\nprint("ready")\nwhile True:\n try: compile(' + JSON.stringify(source) + ',"selected.py",' + JSON.stringify(mode) + ')\n except SyntaxError as e: held.append(e)\n')],
     compileOptions: {languageProfile: corpus.profile}, memoryLimits: {maxBytes: 100000}, options: {maxSteps: 50000, maxWork: 20000000}});
@@ -125,7 +126,9 @@ for (const [id, filename] of [['generated-syntax-original-dynamic-failure', 'syn
   ['generated-returnoperand-original-dynamic-failure', 'returnoperand-payload-original.py'],
   ['generated-deletetarget-original-dynamic-failure', 'deletetarget-payload-original.py'],
   ['generated-globalname-original-dynamic-failure', 'globalname-payload-original.py'],
-  ['generated-nonlocalname-original-dynamic-failure', 'nonlocalname-payload-original.py']])
+  ['generated-nonlocalname-original-dynamic-failure', 'nonlocalname-payload-original.py'],
+  ['generated-functionname-original-dynamic-failure', 'functionname-payload-original.py'],
+  ['generated-classname-original-dynamic-failure', 'classname-payload-original.py']])
 test(id + ' keeps the original dynamic call frames', async () => {
   const item = corpus.cases.find(item => item.id === id);
   const result = await runSourceRequest({modules: [unit(item.source)], compileOptions: {languageProfile: corpus.profile}});

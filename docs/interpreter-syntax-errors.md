@@ -634,8 +634,14 @@ LA-149 applies the same token diagnostics to missing or invalid class names,
 including base-list delimiters, Unicode, decorators and continued source.
 Legal class construction and lexical failures retain their existing paths.
 
-The current fixed generated-syntax corpus contains 6,045 cases: 5,598 supported
-semantic/error comparisons and 447 explicit native-field refusals. The ordinary
+LA-150 composes definition-name fields through modules and nested dynamic source,
+notes/causes, independent args/fields, cyclic filenames and suspended cleanup.
+Collection, cancellation/close, shared limits and original dynamic frames retain
+their existing ownership paths. Installed offline Stop/Restart and reduced-profile
+acceptance include the new families; eval-mode statements keep explicit boundaries.
+
+The current fixed generated-syntax corpus contains 6,063 cases: 5,614 supported
+semantic/error comparisons and 449 explicit native-field refusals. The ordinary
 exception corpus retains its separate 2,443 cases and seven host/crash/cache
 qualifications. Finite observations do not measure overall Python completion;
 #124, #600/A2, #759 and library/package/candidate/release gates remain open.
