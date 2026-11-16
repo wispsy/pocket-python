@@ -130,7 +130,7 @@ REFERENCE_CORPORA = {
     'numeric',
 }
 STAGES = {'numeric': ('N1', 'N2', 'N3', 'N4', 'N5', 'Future'),
-          'sequences': ('Q1', 'Q2', 'Q3', 'Hints')}
+          'sequences': ('Q1', 'Q2', 'Q3', 'LA205')}
 
 
 def measured_costs(path):
@@ -243,6 +243,8 @@ def checks(costs_path=None):
         '--aggregations', '--report', 'build/ordinary-aggregations-browser-report.json', seconds=30)
     add('ordinary-traversals-browser', 'browser-integration', 'python', 'scripts/ordinary_browser_smoke.py',
         '--traversals', '--report', 'build/ordinary-traversals-browser-report.json', seconds=30)
+    add('ordinary-ordering-browser', 'browser-integration', 'python', 'scripts/ordinary_browser_smoke.py',
+        '--ordering', '--report', 'build/ordinary-ordering-browser-report.json', seconds=40)
     add('interpreter-node-measurements', 'measurements', 'python', 'scripts/interpreter_measurements.py',
         '--no-browser', '--repeats', '3', '--output', 'build/interpreter-node-measurements', seconds=10)
     add('interpreter-browser-measurements', 'measurements', 'python', 'scripts/interpreter_measurements.py',

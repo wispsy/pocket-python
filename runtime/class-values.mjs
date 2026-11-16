@@ -1229,14 +1229,14 @@ export class ClassRuntime {
     if (["__getnewargs__", "__getnewargs_ex__", "__setstate__"].includes(key)) return "#126";
     if (owner === "type" && ["__or__", "__ror__"].includes(key)) return "#125";
     if (owner === "bytearray" && key === "__alloc__") return "#117";
-    if (key === "__length_hint__") return "#120";
+    if (key === "__length_hint__") return ["reversed", "list_reverseiterator"].includes(owner) ? "#116" : "#120";
     if (key === "__reversed__" || owner === "range" && key === "__hash__") return "#116";
     if (["int", "float"].includes(owner) && ["__trunc__", "__floor__", "__ceil__"].includes(key)) return "#184";
     if (["str", "bytes", "bytearray"].includes(owner) && ["__mod__", "__rmod__"].includes(key)) return "#127";
     if (["__repr__", "__str__", "__format__"].includes(key)) return "#127";
     if (["__reduce__", "__reduce_ex__", "__getstate__", "__sizeof__"].includes(key)) return "#126";
     if (Object.hasOwn(EXCEPTIONS, owner)) return "#124";
-    if (["map", "filter", "enumerate", "zip"].includes(owner)) return "#116";
+    if (["reversed", "list_reverseiterator", "map", "filter", "enumerate", "zip"].includes(owner)) return "#116";
     if (owner === "generator" || owner.endsWith("iterator")) return key.startsWith("__") ? "O90" : "#120";
     if (["int", "bool", "float", "complex"].includes(owner)) return key === "__new__" ? "O85" : key.startsWith("__") ? "O90" : "#184";
     if (["str", "list", "tuple", "dict", "range", "slice"].includes(owner)) return key === "__new__" || key === "__init__" ? ["list", "dict"].includes(owner) ? "O86" : "O85" : key.startsWith("__") ? "O90" : "#116";

@@ -19,7 +19,7 @@ Both source profiles receive ordinary function behavior. Class/descriptor exampl
 require explicit `classes-source/1`; core mode gains no class syntax or host grant.
 Default values may use any expression already admitted by the selected profile.
 Parameter/argument counts, container sizes and source budgets stay bounded.
-Construction hints and arbitrary builtin subclasses retain their separate value
+Binary construction hints and arbitrary builtin subclasses retain their separate value
 contracts. Unsupported forms must refuse before misleading partial execution.
 
 ## Bytecode and ownership
@@ -70,9 +70,9 @@ fresh dictionaries, aliasing/capture, malformed signatures, collection and OOM.
 The StarArgs stage uses an owned argument record and resumable acquisition/
 advancement. The expanded matrix has 95 reference cases; 78 selected observations
 include three future refusals. Call assembly bounds each positional/keyword group
-to 128 values. Starred forms with user length hooks conservatively refuse before
-binding/iteration pending the separate construction-hint contract: CPython's
-single-star and assembled positional paths need not query the same hint owner.
+to 128 values. LA-206 adopts the retained user-hint case. A single starred
+positional source skips hints; mixed positional assembly asks the original
+iterable after acquisition. See the [hint contract](interpreter-ordering-traversals.md).
 
 The StarKw stage adopts dictionaries and instance mappings. The 111-program
 matrix includes full key materialization before indexed reads, cached dictionary

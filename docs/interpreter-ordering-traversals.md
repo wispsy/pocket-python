@@ -77,6 +77,17 @@ comparison, comparison-truth and reverse-truth callbacks survive collection or
 close/cancel cleanly. Key allocation failure, instruction/work exhaustion,
 insertion-move limits and nested sorting use the same resource controller.
 
+LA-210 accepts the composed report from an isolated wheel after offline reload,
+including original dynamic callback frames, nine Stop/Restart paths, a waiting
+profile update and offline core-source execution with old-cache removal. The
+fixed corpus has 205 class cases: 201 semantic/error comparisons and four
+explicit subtype/serialization/in-place-sort refusals. Sixty-four cases are
+explicitly shared with core-source/1. Node and Chromium run both profiles in
+drain, stepped and parked modes: 1,614 observations with zero logical teardown.
+The 208 ordering unit checks, 651 adjacent runtime checks, 26 relevant Python
+checks, 759 compatibility probes per target and 52 installed offline checks pass
+locally. CI review and final-main smoke remain the merge checkpoint.
+
 References: [reverse implementation](https://github.com/python/cpython/blob/v3.14.7/Objects/enumobject.c),
 [length hints](https://github.com/python/cpython/blob/v3.14.7/Objects/abstract.c),
 [list operations](https://github.com/python/cpython/blob/v3.14.7/Objects/listobject.c).

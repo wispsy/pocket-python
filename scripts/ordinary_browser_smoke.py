@@ -20,17 +20,34 @@ from interpreter_browser_smoke import EXAMPLE, Handler, Server
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def smoke(require_installed=False, aggregations=False, traversals=False):
+def smoke(require_installed=False, aggregations=False, traversals=False, ordering=False):
     package = Path(pocket_python.__file__).resolve()
     if require_installed:
         assert not package.is_relative_to(ROOT), 'Requires an isolated installed distribution.'
     assert platform.python_version() == '3.14.7'
-    feature = 'traversals' if traversals else 'aggregations' if aggregations else 'display'
-    corpus_path = ROOT / f'tests/fixtures/interpreter/{"formatting" if feature == "display" else feature}.json'
+    feature = 'ordering' if ordering else 'traversals' if traversals else 'aggregations' if aggregations else 'display'
+    corpus_name = 'ordering-traversals' if ordering else 'formatting' if feature == 'display' else feature
+    corpus_path = ROOT / f'tests/fixtures/interpreter/{corpus_name}.json'
     corpus = json.loads(corpus_path.read_bytes())
     example = (ROOT / f'examples/interpreter_{feature}.py').read_text(encoding='utf-8')
     expected = subprocess.check_output([sys.executable, '-I', '-S', '-c', example], text=True, timeout=10)
-    if traversals:
+    if ordering:
+        stages = {'LA204', 'LA207', 'LA210'}
+        frame = 'key at ordering-original.py:2'
+        restart_source = 'print(sorted(map(abs,reversed([-3,1,-2]))),list(zip([1,2],[3,4],strict=True)))\n'
+        restart_stdout = '[1, 2, 3] [(1, 3), (2, 4)]\n'
+        callbacks = [
+            ('reverse-length', 'class S:\n def __len__(self):\n  print("entered")\n  while True: pass\n def __getitem__(self,i): return i\nreversed(S())\n'),
+            ('reverse-pull', 'class S:\n def __len__(self): return 1\n def __getitem__(self,i):\n  print("entered")\n  while True: pass\nnext(reversed(S()))\n'),
+            ('hint', 'class S:\n def __iter__(self): return iter([])\n def __length_hint__(self):\n  print("entered")\n  while True: pass\nlist(S())\n'),
+            ('call-hint', 'class S:\n def __iter__(self): return iter([])\n def __length_hint__(self):\n  print("entered")\n  while True: pass\ndef f(*args): pass\nf(0,*S())\n'),
+            ('unpack-hint', 'class S:\n def __iter__(self): return self\n def __next__(self): return 1\n def __length_hint__(self):\n  print("entered")\n  while True: pass\na,*b=S()\n'),
+            ('sort-key', 'def key(x):\n print("entered")\n while True: pass\nsorted([1],key=key)\n'),
+            ('sort-comparison', 'class S:\n def __lt__(self,other):\n  print("entered")\n  while True: pass\nsorted([S(),S()])\n'),
+            ('sort-truth', 'class T:\n def __bool__(self):\n  print("entered")\n  while True: pass\nclass S:\n def __lt__(self,other): return T()\nsorted([S(),S()])\n'),
+            ('sort-reverse', 'class R:\n def __bool__(self):\n  print("entered")\n  while True: pass\nsorted([1],reverse=R())\n'),
+        ]
+    elif traversals:
         stages = {'LA198', 'LA201'}
         frame = 'apply at traversal-original.py:2'
         restart_source = 'print(list(enumerate(map(abs,filter(None,[-2,0,3])),1)),list(zip([1,2],[3,4],strict=True)))\n'
@@ -61,7 +78,7 @@ def smoke(require_installed=False, aggregations=False, traversals=False):
         restart_stdout = "[1.5] -0.0 {'ready': True}\n"
         callbacks = [(name, 'class Slow:\n def __repr__(self):\n  print("entered")\n  while True: pass\nprint(' + expression + ')\n')
                      for name, expression in [('list-repr', '[Slow()]'), ('dict-key-repr', '{Slow(): [1.5]}')]]
-    if not traversals:
+    if not (traversals or ordering):
         stages = {stage}
     checks = []
     with tempfile.TemporaryDirectory() as temporary:
@@ -160,11 +177,12 @@ if __name__ == '__main__':
     parser.add_argument('--require-installed', action='store_true')
     parser.add_argument('--aggregations', action='store_true', help='Accept selection and accumulation programs.')
     parser.add_argument('--traversals', action='store_true', help='Accept lazy transformations and traversal reports.')
+    parser.add_argument('--ordering', action='store_true', help='Accept reverse traversal, hints and stable reports.')
     parser.add_argument('--report', type=Path)
     args = parser.parse_args()
-    if args.aggregations and args.traversals:
+    if sum((args.aggregations, args.traversals, args.ordering)) > 1:
         parser.error('Select one ordinary source feature.')
-    report = smoke(args.require_installed, args.aggregations, args.traversals)
+    report = smoke(args.require_installed, args.aggregations, args.traversals, args.ordering)
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')

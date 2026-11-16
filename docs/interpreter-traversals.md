@@ -19,7 +19,8 @@ The owned lazy value retains its iterator tuple and callable. Immutable operatio
 records retain partial arguments while acquisition, source pulls, strict truth and
 callbacks suspend. Collection, close, cancellation, work/depth limits and actual
 allocation failures use the existing execution controller. Every source request
-must finish with zero logical resources. General length hints, serialization,
+must finish with zero logical resources. [Owned consumer hints](interpreter-ordering-traversals.md)
+are adopted separately. General native hint APIs, serialization,
 new lazy-type subclass layouts, async traversal and other #116 APIs remain separate.
 
 `tests/fixtures/interpreter/traversals.json` records source/reference observations;

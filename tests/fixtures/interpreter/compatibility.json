@@ -1463,16 +1463,14 @@
     {
       "id": "builtin-sorted",
       "source": "print(callable(sorted))\n",
-      "classification": "deferred",
+      "classification": "supported",
       "reference": {
         "stdout": "True\n",
         "error_type": null
       },
       "engine": {
-        "stdout": "",
-        "error_type": "NameError",
-        "code": "PYTHON",
-        "phase": "execute"
+        "stdout": "True\n",
+        "error_type": null
       }
     },
     {
@@ -9884,6 +9882,45 @@
       },
       "engine": {
         "stdout": "2 True\n1\n",
+        "error_type": null
+      }
+    },
+    {
+      "id": "builtin-reversed-owned",
+      "source": "class S:\n def __len__(self): return 2\n def __getitem__(self,i): return i\nprint(list(reversed(S())))\n",
+      "classification": "supported",
+      "reference": {
+        "stdout": "[1, 0]\n",
+        "error_type": null
+      },
+      "engine": {
+        "stdout": "[1, 0]\n",
+        "error_type": null
+      }
+    },
+    {
+      "id": "builtin-sorted-stable",
+      "source": "print(sorted([(2,\"a\"),(1,\"b\"),(2,\"c\")],key=lambda x:x[0],reverse=True))\n",
+      "classification": "supported",
+      "reference": {
+        "stdout": "[(2, 'a'), (2, 'c'), (1, 'b')]\n",
+        "error_type": null
+      },
+      "engine": {
+        "stdout": "[(2, 'a'), (2, 'c'), (1, 'b')]\n",
+        "error_type": null
+      }
+    },
+    {
+      "id": "builtin-list-hint-order",
+      "source": "class S:\n def __iter__(self): print(\"iter\");return iter([7])\n def __length_hint__(self): print(\"hint\");return 1\nprint(list(S()))\n",
+      "classification": "supported",
+      "reference": {
+        "stdout": "iter\nhint\n[7]\n",
+        "error_type": null
+      },
+      "engine": {
+        "stdout": "iter\nhint\n[7]\n",
         "error_type": null
       }
     }

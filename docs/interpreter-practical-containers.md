@@ -12,7 +12,7 @@ explicit #116 source boundary; these methods bypass admitted item overrides.
 | LA-1 | `list.copy()`, `list.clear()`, `list.reverse()` | Implemented. No arguments or keywords. Copies are fresh shallow base lists; mutation keeps the original list identity and returns None. Native bound/unbound/rebound calls validate their receiver. |
 | LA-2 | `list.insert(index, object, /)`, `list.pop(index=-1, /)` | Implemented. Signed-64-bit index conversion precedes current-length bounds/clipping; owned callbacks may mutate the receiver. Pop returns the original element. |
 | LA-3 | `list.count(value, /)`, `tuple.count(value, /)`, list/tuple `index(value, start=0, stop=sys.maxsize, /)` | Implemented. Identity fast paths and owned equality/truth callbacks scan current contents; positional index bounds convert in order and saturate to signed-size limits. |
-| LA-4 | `list.extend(iterable, /)` | Implemented for adopted iterables without user length hints. Self-extension snapshots the native payload, including subclasses; iterator failures retain the appended prefix. User hints refuse before binding or consumption and remain under #116. |
+| LA-4 | `list.extend(iterable, /)` | Implemented for adopted iterables, including owned length hints after acquisition. Self-extension snapshots the native payload, including subclasses; iterator failures retain the appended prefix. User hints refuse before binding or consumption and remain under #116. |
 | LA-5 | `dict.get(key, default=None, /)`, `dict.setdefault(key, default=None, /)`, `dict.pop(key[, default], /)` | Implemented. Owned hash/equality uses one hash per lookup, retains exact stored keys/defaults/values and restarts after key mutation. Empty pop bypasses hashing. LA-12A preserves original failed-key arguments; see the ordinary exception contract. |
 | LA-6 | `dict.keys()`, `dict.values()`, `dict.items()` | Implemented. Fresh live ordered views support len/truth, iteration and owned membership; native subtype owners stay rooted. Exact-dict view.mapping returns a fresh live read-only proxy. Subtype proxies and view set operations remain #116/#117. |
 | LA-7 | Composed source/offline acceptance | Composed record queues, native subclasses, callbacks, suspended views, modules and dynamic source have reference cases. The offline console covers fresh source, callback errors, interruption/restart and profile updates. Integration does not imply the remaining #116 APIs. |
@@ -21,9 +21,9 @@ LA-193–LA-195 separately adopt [min/max and sum](interpreter-aggregations.md),
 including owned key/comparison/addition callbacks and composed offline reports.
 LA-196–LA-201 add [lazy map/filter/enumerate/zip](interpreter-traversals.md)
 with owned callbacks, strict traversal and composed reports.
-Populated dictionary construction/update, text methods, sorting and general
-reversed protocols retain their issue owners and
-explicit refusals.
+LA-202–LA-210 adopt [reversed, construction/expansion hints and stable sorted](interpreter-ordering-traversals.md).
+Populated dictionary construction/update, text methods and in-place list sorting
+retain their issue owners and explicit refusals.
 
 `practical-containers.json` records exact source observations. The shared test
 manifest runs the admitted profiles in Node and Chromium through draining,
@@ -41,8 +41,8 @@ python scripts/run_tests.py focused --feature practical-containers --feature obj
 python scripts/object_integration_browser_smoke.py --containers
 ```
 
-The differential matrix includes explicit refusals for user length hints,
-`__missing__` definitions, dictionary-subclass view proxies and view set
+The earlier extension-hint refusal is now adopted as LA-206. The differential
+matrix retains explicit refusals for `__missing__` definitions, dictionary-subclass view proxies and view set
 operations. Positive cases and negative boundaries are counted separately.
 Ordinary exception argument/chaining and generic subclass semantics are specified
 in the [exception contract](interpreter-exceptions.md). No library, package,
