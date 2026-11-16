@@ -1,0 +1,439 @@
+{
+  "schema_version": 1,
+  "suite": "interpreter-traversals/1",
+  "profile": "classes-source/1",
+  "reference_version": "3.14.7",
+  "implemented_stages": [
+    "LA196"
+  ],
+  "cases": [
+    {
+      "id": "map-abs",
+      "stage": "LA196",
+      "source": "print(list(map(abs,[-3,0,2])))\n",
+      "stdout": "[3, 0, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-text",
+      "stage": "LA196",
+      "source": "print(tuple(map(ord,\"a\u00e9\ud83d\ude00\")))\n",
+      "stdout": "(97, 233, 128512)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-range",
+      "stage": "LA196",
+      "source": "print(list(map(str,range(-2,2))))\n",
+      "stdout": "['-2', '-1', '0', '1']\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-bytes",
+      "stage": "LA196",
+      "source": "print(list(map(abs,b\"ab\")))\n",
+      "stdout": "[97, 98]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-view",
+      "stage": "LA196",
+      "source": "print(list(map(abs,{3:8,1:9}.keys())))\n",
+      "stdout": "[3, 1]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-lambda",
+      "stage": "LA196",
+      "source": "print(list(map(lambda x:x+2,[1,2])))\n",
+      "stdout": "[3, 4]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-two",
+      "stage": "LA196",
+      "source": "print(list(map(pow,[2,3],[3,2])))\n",
+      "stdout": "[8, 9]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-first-short",
+      "stage": "LA196",
+      "source": "a=iter([1,2,3])\nprint(list(map(pow,[],a)),next(a))\n",
+      "stdout": "[] 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-last-short",
+      "stage": "LA196",
+      "source": "a=iter([2,3,4])\nprint(list(map(pow,a,[2])),next(a))\n",
+      "stdout": "[4] 4\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-shared-source",
+      "stage": "LA196",
+      "source": "a=iter([2,3,4,2,7])\nprint(list(map(pow,a,a)))\n",
+      "stdout": "[8, 16]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-lazy-call",
+      "stage": "LA196",
+      "source": "def f(x):\n print(\"call\",x)\n return x+1\ni=map(f,[1,2])\nprint(\"created\")\nprint(next(i))\nprint(list(i))\n",
+      "stdout": "created\ncall 1\n2\ncall 2\n[3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-return-identity",
+      "stage": "LA196",
+      "source": "a=[]\ni=map(lambda x:x,[a])\nprint(next(i) is a)\n",
+      "stdout": "True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-empty-bad-callable",
+      "stage": "LA196",
+      "source": "print(list(map(None,[])),list(map(7,[])))\n",
+      "stdout": "[] []\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-bad-callable",
+      "stage": "LA196",
+      "source": "list(map(None,[1]))\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-none-function",
+      "stage": "LA196",
+      "source": "list(map(None,[1],[2]))\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-no-args",
+      "stage": "LA196",
+      "source": "try: map()\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "map() must have at least two arguments.\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-one-arg",
+      "stage": "LA196",
+      "source": "try: map(abs)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "map() must have at least two arguments.\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-bad-keyword",
+      "stage": "LA196",
+      "source": "try: map(abs,[],foo=1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "map() got an unexpected keyword argument 'foo'\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-many-keywords",
+      "stage": "LA196",
+      "source": "try: map(abs,[],strict=1,foo=2)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "map() takes at most 1 keyword argument (2 given)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-empty",
+      "stage": "LA196",
+      "source": "print(list(map(pow,[],[],strict=True)))\n",
+      "stdout": "[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-equal",
+      "stage": "LA196",
+      "source": "print(list(map(pow,[2,3],[3,2],strict=True)))\n",
+      "stdout": "[8, 9]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-shorter",
+      "stage": "LA196",
+      "source": "try: list(map(pow,[2,3],[3],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "map() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-longer",
+      "stage": "LA196",
+      "source": "try: list(map(pow,[2],[3,2],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "map() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-plural-shorter",
+      "stage": "LA196",
+      "source": "try: list(map(lambda a,b,c:a+b+c,[1],[2],[],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "map() argument 3 is shorter than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-plural-longer",
+      "stage": "LA196",
+      "source": "try: list(map(lambda a,b,c:a+b+c,[],[],[3],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "map() argument 3 is longer than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-false",
+      "stage": "LA196",
+      "source": "print(list(map(pow,[2,3],[3],strict=[])))\n",
+      "stdout": "[8]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-one",
+      "stage": "LA196",
+      "source": "print(list(map(abs,[-2,1],strict=True)))\n",
+      "stdout": "[2, 1]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-default-next",
+      "stage": "LA196",
+      "source": "i=map(abs,[])\nprint(next(i,7),next(i,8))\n",
+      "stdout": "7 8\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-iter-self",
+      "stage": "LA196",
+      "source": "i=map(abs,[])\nprint(iter(i) is i)\n",
+      "stdout": "True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-stop-callback-retry",
+      "stage": "LA196",
+      "source": "def f(x):\n if x==1: raise StopIteration(\"callback\")\n return x\ni=map(f,[1,2],strict=True)\ntry: next(i)\nexcept StopIteration as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "callback\n2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-error-callback-retry",
+      "stage": "LA196",
+      "source": "def f(x):\n if x==1: raise ValueError(\"callback\")\n return x\ni=map(f,[1,2])\ntry: next(i)\nexcept ValueError as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "callback\n2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-live-list",
+      "stage": "LA196",
+      "source": "a=[1]\ndef f(x):\n if x==1: a.append(2)\n return x\nprint(list(map(f,a)))\n",
+      "stdout": "[1, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-callback-reentry",
+      "stage": "LA196",
+      "source": "def f(x):\n if x==1: print(\"nested\",next(i))\n return x\ni=map(f,[1,2,3])\nprint(list(i))\n",
+      "stdout": "nested 2\n[1, 3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-generator-cleanup",
+      "stage": "LA196",
+      "source": "def g():\n try:\n  yield -2\n  yield -3\n finally: print(\"closed\")\ngen=g()\ni=map(abs,gen)\nprint(next(i))\ngen.close()\nprint(list(i))\n",
+      "stdout": "2\nclosed\n[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-list-extend",
+      "stage": "LA196",
+      "source": "a=[]\na.extend(map(abs,[-2,3]))\nprint(a)\n",
+      "stdout": "[2, 3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-comprehension",
+      "stage": "LA196",
+      "source": "print([x+1 for x in map(abs,[-2,3])])\n",
+      "stdout": "[3, 4]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-aggregation",
+      "stage": "LA196",
+      "source": "print(sum(map(abs,[-2,3])),min(map(abs,[-2,3])))\n",
+      "stdout": "5 2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-construction-order",
+      "stage": "LA196",
+      "source": "class S:\n def __init__(self,n): self.n=n\n def __iter__(self):\n  print(\"iter\",self.n)\n  return iter([self.n])\nclass Strict:\n def __bool__(self):\n  print(\"strict\")\n  return True\ni=map(pow,S(2),S(3),strict=Strict())\nprint(\"created\")\nprint(list(i))\n",
+      "stdout": "strict\niter 2\niter 3\ncreated\n[8]\n"
+    },
+    {
+      "id": "map-strict-before-arity",
+      "stage": "LA196",
+      "source": "class Strict:\n def __bool__(self):\n  print(\"strict\")\n  return True\ntry: map(strict=Strict())\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "strict\nmap() must have at least two arguments.\n"
+    },
+    {
+      "id": "map-temporary-bound-callback",
+      "stage": "LA196",
+      "source": "class A:\n def __init__(self,n): self.n=n\n def apply(self,x): return self.n+x\ni=map(A(7).apply,[1,2])\nprint(list(i))\n",
+      "stdout": "[8, 9]\n"
+    },
+    {
+      "id": "map-indexed-source",
+      "stage": "LA196",
+      "source": "class A:\n def __getitem__(self,i):\n  if i==2: raise IndexError\n  return -i\nprint(list(map(abs,A())))\n",
+      "stdout": "[0, 1]\n"
+    },
+    {
+      "id": "map-transient-stop",
+      "stage": "LA196",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise StopIteration(\"source\")\n  return self.n\ni=map(abs,I())\ntry: next(i)\nexcept StopIteration as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "source\n2\n"
+    },
+    {
+      "id": "map-native-methods",
+      "stage": "LA196",
+      "source": "i=map(abs,[-2,-3])\nprint(type(i) is map,isinstance(i,map),i.__iter__() is i,map.__next__(i),i.__next__())\n",
+      "stdout": "True True True 2 3\n"
+    },
+    {
+      "id": "map-source-error-retry",
+      "stage": "LA196",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise ValueError(\"source\")\n  return -self.n\ni=map(abs,I(),strict=True)\ntry: next(i)\nexcept ValueError as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "source\n2\n"
+    },
+    {
+      "id": "map-probe-error",
+      "stage": "LA196",
+      "source": "class I:\n def __iter__(self): return self\n def __next__(self): raise LookupError(\"probe\")\nlist(map(pow,[],I(),strict=True))\n",
+      "stdout": "",
+      "error_type": "LookupError"
+    },
+    {
+      "id": "map-iterator-acquisition-error",
+      "stage": "LA196",
+      "source": "class A:\n def __iter__(self):\n  print(\"iter\")\n  raise ValueError(\"acquire\")\nmap(abs,A())\n",
+      "stdout": "iter\n",
+      "error_type": "ValueError"
+    }
+  ]
+}

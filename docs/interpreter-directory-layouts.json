@@ -447,6 +447,11 @@
       "type": "TabError",
       "type_case": "type-TabError",
       "instance_case": "instance-TabError"
+    },
+    {
+      "type": "map",
+      "type_case": "type-map",
+      "instance_case": "instance-map"
     }
   ],
   "source_layouts": {
