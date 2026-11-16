@@ -8,3 +8,19 @@ def reverse_report():
 
 
 reverse_report()
+
+
+class Records:
+    def __init__(self):
+        self.items = [("apple", 3), ("pear", 1), ("plum", 3)]
+
+    def __iter__(self):
+        return iter(self.items)
+
+    def __length_hint__(self):
+        print("hint", len(self.items))
+        return len(self.items)
+
+
+records = [*Records()]
+print("records", records)

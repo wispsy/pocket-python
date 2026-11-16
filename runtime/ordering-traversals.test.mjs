@@ -70,3 +70,18 @@ test('constructor hints keep sources and acquired iterators rooted through suspe
   const excessive = await run('class S:\n def __iter__(self): return iter([])\n def __length_hint__(self): return 2**60\nlist(S())\n');
   assert.equal(excessive.error.code, 'BUDGET'); closed(excessive);
 });
+
+test('extension, display, call and unpack hints survive parked collection and teardown', async () => {
+  const source = 'class S:\n def __init__(self): self.items=[[7]]\n def __iter__(self): return iter(self.items)\n def __length_hint__(self):\n  print("hint")\n  return 1\n';
+  await parked(source + 'a=[0]\na.extend(S())\nprint(a)\n', 'hint\n[0, [7]]\n', 'hint\n');
+  await parked(source + 'print([0,*S()])\n', 'hint\n[0, [7]]\n', 'hint\n');
+  await parked(source + 'def f(*args): print(args)\nf(0,*S())\n', 'hint\n(0, [7])\n', 'hint\n');
+  await parked('class S:\n def __init__(self): self.i=0;self.items=[[7],[8]]\n def __iter__(self): return self\n def __next__(self):\n  if self.i==2:raise StopIteration\n  self.i+=1\n  return self.items[self.i-1]\n def __length_hint__(self):\n  print("hint")\n  return 1\na,*b=S()\nprint(a,b)\n', 'hint\n[7] [[8]]\n', 'hint\n');
+});
+
+test('hint allocation failures and nested hints retain shared limits', async () => {
+  const oom = await run('class S:\n def __iter__(self): return iter([7])\n def __length_hint__(self):\n  print("entered")\n  held=[]\n  while True: held.append([1,2,3])\nlist(S())\n', {maxWork: 20000000}, {maxBytes: 80000});
+  assert.equal(oom.error.code, 'OOM'); assert.equal(oom.stdout, 'entered\n'); closed(oom);
+  const nested = await run('class S:\n def __iter__(self): return iter([])\n def __length_hint__(self): return len(list(S()))\nlist(S())\n', {maxDepth: 32, maxWork: 20000000});
+  assert.equal(nested.error.type, 'RecursionError'); closed(nested);
+});
