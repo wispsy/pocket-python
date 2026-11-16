@@ -1,6 +1,6 @@
 """Known source-console assets, canonical LF bytes; refresh with scripts/lock_interpreter.py."""
 
-ENGINE_FINGERPRINT = 'c81cc03a2a85f122de935482bed04b97da98106c1ff570efbce7dcad8fa806ea'
+ENGINE_FINGERPRINT = '63baf8f96c1209c832b2ae681c39606b748ec02ed0d702019438832c83ed17ef'
 ENGINE_FILES = (
     ('browser-protocol.mjs', 10966, '85f50d640eaa5324cf62e75f5dc6050186bf167201208d26e84a49efd74bf499'),
     ('bytecode.mjs', 6836, 'e76fabeea879bc1da8016283f7e74df5974479666b100199c2d3c31a53b8ecf4'),
@@ -10,8 +10,8 @@ ENGINE_FILES = (
     ('dynamic-imports.mjs', 9307, '9996c3f3f7e82cd440cf16244176d37e9456c8dd9bbac2e5ac675cf22497c951'),
     ('dynamic-source.mjs', 7550, 'aed9367c9b981e547ce78dd461de1cc30ffeb39648eb24f51a5b19ab2a4b457d'),
     ('function-bytecode.mjs', 25289, '557fee04912f31df536b2a450d7bc2a1148d64721f7fb45d6e9179476eb0a6a8'),
-    ('function-objects.mjs', 14134, 'e985cda1d8bba59120fd67b00293c7668bef2db756b639668bd724510b520ce3'),
-    ('functions.mjs', 104190, 'bdec9fdcca67480b061b9c6d7b8e0600ced9a441ea158d9b2b6cfe48c14f1d41'),
+    ('function-objects.mjs', 14144, 'f3ad2921885613e69444fc9accc9174b7944d1aca0994e15e387eda0eeb2de93'),
+    ('functions.mjs', 104200, '19b1133d293877575a7155bfa4d7a7fa332b8810d7e27953a7f31fe996c29871'),
     ('interpreter-host.mjs', 7318, '4afadfd987000afa6221ee73dcd64e9c00a2d13c4324718248d396302a39296d'),
     ('interpreter-worker.mjs', 8855, '324cc23100eb40ef04f2909b805d7abc0c8651b4608b3a61a95470ec7e74e19e'),
     ('lazy-iteration.mjs', 6946, 'd418ea65c1f0ac8a171b560f18b5d341fc2a4c16c410cdd91ada6699d3e5d748'),
@@ -26,8 +26,9 @@ ENGINE_FILES = (
     ('module-session.mjs', 12883, 'b7b7859d18ecfee53cc79fbb3eb92820eabe0ad67ea97f5d317d5c59bd0619f1'),
     ('native-namespaces.mjs', 222970, '82fe51b162840bae67e65c61de875d6379b3fc15bd8f04f3a0cecf7b0ded42c9'),
     ('numeric.mjs', 16962, 'c6c05590f995d4cd8fbd77eae4cacc85e4604f42de7cfdbfacd66d61939c645a'),
-    ('operation-runtime.mjs', 337698, '15e0222e952fecf73d8f0b50cde9a5b4873d5f3963bd2a83a591b4f496490d0d'),
-    ('operations.mjs', 61445, '39cf93c76e471d38e8d5bfa43348a2fe9e7b24a30a50975acf6d6497d109227e'),
+    ('operation-runtime.mjs', 338104, '1d44b17dbb39725d0ffaf4f5030f04d0ce2645a8c2445f1d0905ed790479f900'),
+    ('operations.mjs', 62364, '1dd2e6484261fbb44cf2b38a24772cabf83841b8fab2475ab61c2282eb934d4a'),
+    ('sorting.mjs', 4000, '31a667c0d866cb2aedb53c91b9ec628b905ebcc60692bb8639868faf36b55cfb'),
     ('source-compiler.mjs', 53702, 'a6ae1dda3acf925555615fe450cb5bfa24be3f8ef61bd21778abe1cbf029c22d'),
     ('source-identifiers.mjs', 25949, '1e4e6a90728a2d9393eb4b2055d4bd759542f4768d1870b508d629c6888e8914'),
     ('source-modules.mjs', 5115, '3f824a8cf79a9ab78c1b817ed1597d114d851748a6b0894a4ac6b4bdbe01cfef'),
@@ -106,8 +107,10 @@ ENGINE_IMPORTS = (
     ('operation-runtime.mjs', 'module-registry.mjs'),
     ('operation-runtime.mjs', 'numeric.mjs'),
     ('operation-runtime.mjs', 'operations.mjs'),
+    ('operation-runtime.mjs', 'sorting.mjs'),
     ('operation-runtime.mjs', 'values.mjs'),
     ('operations.mjs', 'class-policy.mjs'),
+    ('sorting.mjs', 'operations.mjs'),
     ('source-compiler.mjs', 'class-policy.mjs'),
     ('source-compiler.mjs', 'function-bytecode.mjs'),
     ('source-compiler.mjs', 'source-identifiers.mjs'),
