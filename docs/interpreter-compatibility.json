@@ -5125,7 +5125,7 @@
       "id": "repr",
       "status": "partial",
       "scope": "repr(x), exactly one positional argument: None/bool/int/str or adopted user __repr__. Bytes/bytearray use finite binary representations. LA-190 adds shortest-round-trip binary64 repr/str/print, Python exponent thresholds, signed zero and non-finite spellings in both source profiles. LA-191 adds owned recursive list/tuple/dict representations, cycle markers, live traversal, captured dictionary pairs and repr callbacks.",
-      "gaps": "Float/container/default-object and exception representations.",
+      "gaps": "Complex/set/view/range/default-object and exception representations; format specifications retain their separate owners.",
       "reference_version": "3.14.7",
       "targets": [
         "node",
