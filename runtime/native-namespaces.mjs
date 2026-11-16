@@ -667,6 +667,14 @@ export const NATIVE_NAMESPACES = Object.freeze({
     ["mapping","getset_descriptor"],
     ["__doc__","value",{"type":"none"}],
   ],
+  "enumerate": [
+    ["__new__","builtin_function_or_method"],
+    ["__iter__","wrapper_descriptor"],
+    ["__next__","wrapper_descriptor"],
+    ["__reduce__","method_descriptor"],
+    ["__class_getitem__","classmethod_descriptor"],
+    ["__doc__","value",{"type":"text","value":"Return an enumerate object.\n\n  iterable\n    an object supporting iteration\n\nThe enumerate object yields pairs containing a count (from start, which\ndefaults to zero) and a value yielded by the iterable argument.\n\nenumerate is useful for obtaining an indexed list:\n    (0, seq[0]), (1, seq[1]), (2, seq[2]), ..."}],
+  ],
   "filter": [
     ["__new__","builtin_function_or_method"],
     ["__iter__","wrapper_descriptor"],
@@ -1441,7 +1449,7 @@ export const NATIVE_NAMESPACES = Object.freeze({
     ["__text_signature__","getset_descriptor"],
   ],
 });
-export const NATIVE_DOC_COPIES = Object.freeze(["ArithmeticError", "AssertionError", "AttributeError", "BaseException", "BufferError", "Exception", "GeneratorExit", "ImportError", "IndentationError", "IndexError", "KeyError", "LookupError", "ModuleNotFoundError", "NameError", "NoneType", "NotImplementedType", "OverflowError", "RecursionError", "RuntimeError", "StopIteration", "SyntaxError", "SystemError", "TabError", "TypeError", "UnboundLocalError", "UnicodeDecodeError", "UnicodeEncodeError", "UnicodeError", "UnicodeTranslateError", "ValueError", "ZeroDivisionError", "bool", "bytearray", "bytes", "cell", "classmethod", "code", "complex", "dict", "filter", "float", "frozenset", "function", "int", "list", "map", "mappingproxy", "memoryview", "method", "module", "object", "property", "range", "set", "slice", "staticmethod", "str", "super", "tuple", "type"]);
+export const NATIVE_DOC_COPIES = Object.freeze(["ArithmeticError", "AssertionError", "AttributeError", "BaseException", "BufferError", "Exception", "GeneratorExit", "ImportError", "IndentationError", "IndexError", "KeyError", "LookupError", "ModuleNotFoundError", "NameError", "NoneType", "NotImplementedType", "OverflowError", "RecursionError", "RuntimeError", "StopIteration", "SyntaxError", "SystemError", "TabError", "TypeError", "UnboundLocalError", "UnicodeDecodeError", "UnicodeEncodeError", "UnicodeError", "UnicodeTranslateError", "ValueError", "ZeroDivisionError", "bool", "bytearray", "bytes", "cell", "classmethod", "code", "complex", "dict", "enumerate", "filter", "float", "frozenset", "function", "int", "list", "map", "mappingproxy", "memoryview", "method", "module", "object", "property", "range", "set", "slice", "staticmethod", "str", "super", "tuple", "type"]);
 export const NATIVE_CALLABLE_DOCS = Object.freeze({
   "ArithmeticError.__new__": "Create and return a new object.  See help(type) for accurate signature.",
   "AssertionError.__new__": "Create and return a new object.  See help(type) for accurate signature.",
@@ -1943,6 +1951,11 @@ export const NATIVE_CALLABLE_DOCS = Object.freeze({
   "dict_values.__len__": "Return len(self).",
   "dict_values.__reversed__": "Return a reverse iterator over the dict values.",
   "dict_values.mapping": "dictionary that this view refers to",
+  "enumerate.__new__": "Create and return a new object.  See help(type) for accurate signature.",
+  "enumerate.__iter__": "Implement iter(self).",
+  "enumerate.__next__": "Implement next(self).",
+  "enumerate.__reduce__": "Return state information for pickling.",
+  "enumerate.__class_getitem__": "'enumerate' objects are generic over the type of their values",
   "filter.__new__": "Create and return a new object.  See help(type) for accurate signature.",
   "filter.__iter__": "Implement iter(self).",
   "filter.__next__": "Implement next(self).",
@@ -3076,6 +3089,11 @@ export const NATIVE_CALLABLE_SIGNATURES = Object.freeze({
   "dict_values.__iter__": "($self, /)",
   "dict_values.__len__": "($self, /)",
   "dict_values.__reversed__": "($self, /)",
+  "enumerate.__new__": "($type, *args, **kwargs)",
+  "enumerate.__iter__": "($self, /)",
+  "enumerate.__next__": "($self, /)",
+  "enumerate.__reduce__": "($self, /)",
+  "enumerate.__class_getitem__": "($type, object, /)",
   "filter.__new__": "($type, *args, **kwargs)",
   "filter.__iter__": "($self, /)",
   "filter.__next__": "($self, /)",

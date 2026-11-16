@@ -5,7 +5,8 @@
   "implemented_stages": [
     "O78",
     "LA196",
-    "LA197"
+    "LA197",
+    "LA199"
   ],
   "cases": [
     {
@@ -1331,6 +1332,18 @@
       "stage": "LA197",
       "source": "value=filter(None,[])\nprint(*object.__dir__(value))\nprint(*dir(value))\n",
       "stdout": "__new__ __iter__ __next__ __reduce__ __doc__ __repr__ __hash__ __str__ __getattribute__ __setattr__ __delattr__ __lt__ __le__ __eq__ __ne__ __gt__ __ge__ __init__ __reduce_ex__ __getstate__ __subclasshook__ __init_subclass__ __format__ __sizeof__ __dir__ __class__\n__class__ __delattr__ __dir__ __doc__ __eq__ __format__ __ge__ __getattribute__ __getstate__ __gt__ __hash__ __init__ __init_subclass__ __iter__ __le__ __lt__ __ne__ __new__ __next__ __reduce__ __reduce_ex__ __repr__ __setattr__ __sizeof__ __str__ __subclasshook__\n"
+    },
+    {
+      "id": "type-enumerate",
+      "stage": "LA199",
+      "source": "value=enumerate([])\nprint(type(value).__name__)\nprint(*type.__dir__(type(value)))\nprint(*dir(type(value)))\n",
+      "stdout": "enumerate\n__new__ __iter__ __next__ __reduce__ __class_getitem__ __doc__ __repr__ __hash__ __str__ __getattribute__ __setattr__ __delattr__ __lt__ __le__ __eq__ __ne__ __gt__ __ge__ __init__ __reduce_ex__ __getstate__ __subclasshook__ __init_subclass__ __format__ __sizeof__ __dir__ __class__\n__class__ __class_getitem__ __delattr__ __dir__ __doc__ __eq__ __format__ __ge__ __getattribute__ __getstate__ __gt__ __hash__ __init__ __init_subclass__ __iter__ __le__ __lt__ __ne__ __new__ __next__ __reduce__ __reduce_ex__ __repr__ __setattr__ __sizeof__ __str__ __subclasshook__\n"
+    },
+    {
+      "id": "instance-enumerate",
+      "stage": "LA199",
+      "source": "value=enumerate([])\nprint(*object.__dir__(value))\nprint(*dir(value))\n",
+      "stdout": "__new__ __iter__ __next__ __reduce__ __class_getitem__ __doc__ __repr__ __hash__ __str__ __getattribute__ __setattr__ __delattr__ __lt__ __le__ __eq__ __ne__ __gt__ __ge__ __init__ __reduce_ex__ __getstate__ __subclasshook__ __init_subclass__ __format__ __sizeof__ __dir__ __class__\n__class__ __class_getitem__ __delattr__ __dir__ __doc__ __eq__ __format__ __ge__ __getattribute__ __getstate__ __gt__ __hash__ __init__ __init_subclass__ __iter__ __le__ __lt__ __ne__ __new__ __next__ __reduce__ __reduce_ex__ __repr__ __setattr__ __sizeof__ __str__ __subclasshook__\n"
     }
   ]
 }

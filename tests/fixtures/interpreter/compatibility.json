@@ -923,17 +923,15 @@
     },
     {
       "id": "builtin-enumerate",
-      "source": "print(callable(enumerate))\n",
-      "classification": "deferred",
+      "source": "print(list(enumerate([2,3],7)))\n",
+      "classification": "supported",
       "reference": {
-        "stdout": "True\n",
+        "stdout": "[(7, 2), (8, 3)]\n",
         "error_type": null
       },
       "engine": {
-        "stdout": "",
-        "error_type": "NameError",
-        "code": "PYTHON",
-        "phase": "execute"
+        "stdout": "[(7, 2), (8, 3)]\n",
+        "error_type": null
       }
     },
     {

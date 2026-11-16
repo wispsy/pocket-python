@@ -72,3 +72,8 @@ test('filter bounds rejection scans and retains candidates through owned truth',
   await parked('class V:\n def __bool__(self):\n  print("truth")\n  held=[1,2,3]\n  return True\na=V()\nprint(next(filter(None,[a])) is a)\n', 'truth\nTrue\n', 'truth\n');
   await parked('class P:\n def __init__(self): self.data=[7]\n def test(self,x):\n  print("predicate")\n  return self.data[0]>x\nprint(list(filter(P().test,[1])))\n', 'predicate\n[1]\n', 'predicate\n');
 });
+
+test('parked enumerate roots the start converter and source without losing large counters', async () => {
+  await parked('class Start:\n def __index__(self):\n  print("index")\n  return 2**100\nprint(list(enumerate([7],Start())))\n', 'index\n[(1267650600228229401496703205376, 7)]\n', 'index\n');
+  await parked('class I:\n def __iter__(self): return self\n def __next__(self):\n  print("pull")\n  return [7]\nprint(next(enumerate(I(),2**100)))\n', 'pull\n(1267650600228229401496703205376, [7])\n', 'pull\n');
+});

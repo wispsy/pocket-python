@@ -6,7 +6,8 @@
   "implemented_stages": [
     "LA196",
     "LA197",
-    "LA198"
+    "LA198",
+    "LA199"
   ],
   "cases": [
     {
@@ -788,6 +789,344 @@
       "source": "class P:\n def __init__(self): self.data=[self,7]\n def accept(self,x): return self.data[1]>x\n def apply(self,x): return self.data[1]+x\np=P()\ni=map(p.apply,filter(p.accept,[1,2]))\ndel p\nprint(list(i))\n",
       "stage": "LA198",
       "stdout": "[8, 9]\n"
+    },
+    {
+      "id": "enumerate-list",
+      "stage": "LA199",
+      "source": "print(list(enumerate([\"a\",\"b\"])))\n",
+      "stdout": "[(0, 'a'), (1, 'b')]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-empty",
+      "stage": "LA199",
+      "source": "print(list(enumerate([])))\n",
+      "stdout": "[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-negative",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2],-3)))\n",
+      "stdout": "[(-3, 1), (-2, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-bool-start",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2],True)))\n",
+      "stdout": "[(1, 1), (2, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-unicode",
+      "stage": "LA199",
+      "source": "print(list(enumerate(\"\u00e9\ud83d\ude00\")))\n",
+      "stdout": "[(0, '\u00e9'), (1, '\ud83d\ude00')]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-binary",
+      "stage": "LA199",
+      "source": "print(list(enumerate(b\"ab\")))\n",
+      "stdout": "[(0, 97), (1, 98)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-dictionary",
+      "stage": "LA199",
+      "source": "print(list(enumerate({2:3,1:4})))\n",
+      "stdout": "[(0, 2), (1, 1)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-range",
+      "stage": "LA199",
+      "source": "print(list(enumerate(range(3),7)))\n",
+      "stdout": "[(7, 0), (8, 1), (9, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-huge-positive",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2],2**200)))\n",
+      "stdout": "[(1606938044258990275541962092341162602522202993782792835301376, 1), (1606938044258990275541962092341162602522202993782792835301377, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-huge-negative",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2],-2**200)))\n",
+      "stdout": "[(-1606938044258990275541962092341162602522202993782792835301376, 1), (-1606938044258990275541962092341162602522202993782792835301375, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-i64-boundary",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2,3],2**63-2)))\n",
+      "stdout": "[(9223372036854775806, 1), (9223372036854775807, 2), (9223372036854775808, 3)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-keyword-start",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2],start=7)))\n",
+      "stdout": "[(7, 1), (8, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-keyword-iterable",
+      "stage": "LA199",
+      "source": "print(list(enumerate(iterable=[1,2])))\n",
+      "stdout": "[(0, 1), (1, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-two-keywords",
+      "stage": "LA199",
+      "source": "print(list(enumerate(iterable=[1,2],start=7)))\n",
+      "stdout": "[(7, 1), (8, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-reverse-keywords",
+      "stage": "LA199",
+      "source": "print(list(enumerate(start=7,iterable=[1,2])))\n",
+      "stdout": "[(7, 1), (8, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-identity",
+      "stage": "LA199",
+      "source": "a=[]\ni=enumerate([a])\nv=next(i)\nprint(v[0],v[1] is a,iter(i) is i)\n",
+      "stdout": "0 True True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-retained-tuples",
+      "stage": "LA199",
+      "source": "i=enumerate([1,2,3])\na=next(i)\nb=next(i)\nprint(a,b,list(i),a,b)\n",
+      "stdout": "(0, 1) (1, 2) [(2, 3)] (0, 1) (1, 2)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-default-next",
+      "stage": "LA199",
+      "source": "i=enumerate([])\nprint(next(i,7),next(i,8))\n",
+      "stdout": "7 8\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-lazy-pipeline",
+      "stage": "LA199",
+      "source": "print(list(enumerate(map(abs,filter(None,[-2,0,3])),10)))\n",
+      "stdout": "[(10, 2), (11, 3)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-live-mutation",
+      "stage": "LA199",
+      "source": "a=[1]\ni=enumerate(a)\nprint(next(i))\na.append(2)\nprint(list(i))\n",
+      "stdout": "(0, 1)\n[(1, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-bad-start",
+      "stage": "LA199",
+      "source": "enumerate([],1.5)\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-bad-source",
+      "stage": "LA199",
+      "source": "enumerate(1)\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-no-args",
+      "stage": "LA199",
+      "source": "try: enumerate()\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "enumerate() missing required argument 'iterable'\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-too-many",
+      "stage": "LA199",
+      "source": "try: enumerate([],0,1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "enumerate() takes at most 2 arguments (3 given)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-invalid-keyword",
+      "stage": "LA199",
+      "source": "try: enumerate([],foo=1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "'foo' is an invalid keyword argument for enumerate()\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-missing-iterable",
+      "stage": "LA199",
+      "source": "try: enumerate(start=1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "'start' is an invalid keyword argument for enumerate()\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-positional-duplicate",
+      "stage": "LA199",
+      "source": "try: enumerate([],iterable=[])\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "'iterable' is an invalid keyword argument for enumerate()\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-many-keywords",
+      "stage": "LA199",
+      "source": "try: enumerate(iterable=[],start=1,foo=2)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "enumerate() missing required argument 'iterable'\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-index-before-iter",
+      "stage": "LA199",
+      "source": "class Start:\n def __index__(self):\n  print(\"index\")\n  return 7\nclass Source:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\ni=enumerate(Source(),Start())\nprint(\"created\")\nprint(list(i))\n",
+      "stdout": "index\niter\ncreated\n[(7, 1), (8, 2)]\n"
+    },
+    {
+      "id": "enumerate-int-subtype",
+      "stage": "LA199",
+      "source": "class I(int):\n def __index__(self): raise ValueError(\"ignored\")\nprint(list(enumerate([1,2],I(7))))\n",
+      "stdout": "[(7, 1), (8, 2)]\n"
+    },
+    {
+      "id": "enumerate-start-index-subtype-result",
+      "stage": "LA199",
+      "source": "class I(int): pass\nclass Start:\n def __index__(self): return I(7)\nprint(list(enumerate([1,2],Start())))\n",
+      "stdout": "[(7, 1), (8, 2)]\n"
+    },
+    {
+      "id": "enumerate-owned-reentry",
+      "stage": "LA199",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  n=self.n\n  if n==1: print(\"nested\",next(e))\n  if n>3: raise StopIteration\n  return n\ne=enumerate(I(),7)\nprint(list(e))\n",
+      "stdout": "nested (7, 2)\n[(8, 1), (9, 3)]\n"
+    },
+    {
+      "id": "enumerate-transient-stop",
+      "stage": "LA199",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise StopIteration(\"source\")\n  return self.n\ne=enumerate(I(),7)\ntry: next(e)\nexcept StopIteration as error: print(str(error))\nprint(next(e))\n",
+      "stdout": "source\n(7, 2)\n"
+    },
+    {
+      "id": "enumerate-error-retry",
+      "stage": "LA199",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise ValueError(\"source\")\n  return self.n\ne=enumerate(I(),7)\ntry: next(e)\nexcept ValueError as error: print(str(error))\nprint(next(e))\n",
+      "stdout": "source\n(7, 2)\n"
+    },
+    {
+      "id": "enumerate-index-error-order",
+      "stage": "LA199",
+      "source": "class Start:\n def __index__(self):\n  print(\"index\")\n  raise ValueError(\"start\")\nclass Source:\n def __iter__(self):\n  print(\"iter\")\n  return iter([])\nenumerate(Source(),Start())\n",
+      "stdout": "index\n",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "enumerate-bad-index-result",
+      "stage": "LA199",
+      "source": "class Start:\n def __index__(self): return 1.5\nenumerate([],Start())\n",
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "enumerate-native-slots",
+      "stage": "LA199",
+      "source": "i=enumerate([1,2],7)\nprint(type(i) is enumerate,isinstance(i,enumerate),enumerate.__iter__(i) is i,enumerate.__next__(i),i.__next__())\n",
+      "stdout": "True True True (7, 1) (8, 2)\n"
     }
   ]
 }
