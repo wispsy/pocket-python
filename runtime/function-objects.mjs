@@ -158,6 +158,13 @@ export class ProtocolIteratorValue {
     this.index = 0n; this.exhausted = false;
   }
 }
+export class LazyIteratorValue extends ProtocolIteratorValue {
+  constructor(kind, iterators, callable = null, strict = false, index = 0n) {
+    super(kind, null);
+    this.iterators = Object.freeze([...iterators]); this.callable = callable;
+    this.strict = strict; this.index = index;
+  }
+}
 export class NotImplementedValue {}
 // Internal canonical scalar identity record; never a source-visible value.
 export class IntegerIdentityRecord {
@@ -217,4 +224,4 @@ export const EXCEPTION_LAYOUTS = Object.freeze({...Object.fromEntries(GENERIC_EX
 export const EXCEPTION_BASES = Object.freeze(Object.keys(EXCEPTION_LAYOUTS));
 
 // The source-visible builtin namespace contains only adopted capabilities.
-export const SOURCE_BUILTINS = Object.freeze(["sum", "min", "max", "__import__", "exec", "__name__", "eval", "compile", "print", "str", "repr", "len", "isinstance", "bool", "iter", "next", "memoryview", "bytes", "bytearray", "set", "frozenset", "all", "any", "list", "tuple", "range", "int", "float", "complex", "abs", "divmod", "pow", "round", "bin", "oct", "hex", "chr", "ord", "id", "globals", "locals", "vars", "dir", "dict", "super", "getattr", "setattr", "delattr", "hasattr", "type", "issubclass", "property", "staticmethod", "classmethod", "callable", "slice", "hash", "reversed", "object", "NotImplemented", ...Object.keys(EXCEPTIONS)]);
+export const SOURCE_BUILTINS = Object.freeze(["map", "filter", "enumerate", "zip", "sum", "min", "max", "__import__", "exec", "__name__", "eval", "compile", "print", "str", "repr", "len", "isinstance", "bool", "iter", "next", "memoryview", "bytes", "bytearray", "set", "frozenset", "all", "any", "list", "tuple", "range", "int", "float", "complex", "abs", "divmod", "pow", "round", "bin", "oct", "hex", "chr", "ord", "id", "globals", "locals", "vars", "dir", "dict", "super", "getattr", "setattr", "delattr", "hasattr", "type", "issubclass", "property", "staticmethod", "classmethod", "callable", "slice", "hash", "reversed", "object", "NotImplemented", ...Object.keys(EXCEPTIONS)]);

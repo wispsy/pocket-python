@@ -1,6 +1,6 @@
 import {isVerifiedFunctionCode} from "./function-bytecode.mjs";
 import {NATIVE_NAMESPACES, NATIVE_DOC_COPIES, NATIVE_CALLABLE_DOCS, NATIVE_CALLABLE_SIGNATURES} from "./native-namespaces.mjs";
-import {ClassValue, HierarchyTransaction, ClassNamespaceValue, DictionaryViewValue, NamespaceLookupRequest, InstanceValue, BoundMethodValue, SuperValue, FunctionValue, BuiltinValue, ExceptionValue, EXCEPTIONS, EXCEPTION_BASES, EXCEPTION_LAYOUTS, matchesException, PropertyValue, MethodWrapperValue, PropertyAccessorValue, GeneratorValue, FrameValue, FrameLocalsValue, ModuleValue, CodeValue, Cell, NotImplementedValue, ProtocolIteratorValue, AppendValue, ValueMethod} from "./function-objects.mjs";
+import {ClassValue, HierarchyTransaction, ClassNamespaceValue, DictionaryViewValue, NamespaceLookupRequest, InstanceValue, BoundMethodValue, SuperValue, FunctionValue, BuiltinValue, ExceptionValue, EXCEPTIONS, EXCEPTION_BASES, EXCEPTION_LAYOUTS, matchesException, PropertyValue, MethodWrapperValue, PropertyAccessorValue, GeneratorValue, FrameValue, FrameLocalsValue, ModuleValue, CodeValue, Cell, NotImplementedValue, ProtocolIteratorValue, LazyIteratorValue, AppendValue, ValueMethod} from "./function-objects.mjs";
 import {allowsClassSpecial, isSpecialName, METACLASS_PROTOCOLS, NATIVE_PROTOCOL_KEYS} from "./class-policy.mjs";
 import {ValueRuntime, valueLayout, IteratorValue} from "./values.mjs";
 import {isPythonIdentifier} from "./source-identifiers.mjs";
@@ -13,7 +13,7 @@ export const CONTAINER_METHODS = Object.freeze({
 });
 export const CONTAINER_METHOD_NAMES = new Set(Object.values(CONTAINER_METHODS).flat());
 export const CLASS_LIMITS = Object.freeze({bases: 16, mro: 64, attributes: 128, name: 256});
-const NATIVE_TYPES = new Set(["type", "bool", "int", "float", "complex", "str", "list", "tuple", "dict", "range", "slice", "set", "frozenset", "bytes", "bytearray", "memoryview",
+const NATIVE_TYPES = new Set(["map", "filter", "enumerate", "zip", "type", "bool", "int", "float", "complex", "str", "list", "tuple", "dict", "range", "slice", "set", "frozenset", "bytes", "bytearray", "memoryview",
   "mappingproxy", "super", "property", "staticmethod", "classmethod", "NoneType", "NotImplementedType", "function", "method", "method-wrapper", "method_descriptor", "wrapper_descriptor", "builtin_function_or_method", "generator", "module", "code", "frame", "FrameLocalsProxy", "cell",
   "list_iterator", "tuple_iterator", "str_iterator", "str_ascii_iterator", "dict_keyiterator", "range_iterator", "longrange_iterator", "set_iterator", "bytes_iterator", "bytearray_iterator", "memory_iterator", "iterator", "callable_iterator", ...Object.keys(EXCEPTIONS)]);
 for (const name of Object.keys(NATIVE_NAMESPACES)) if (name !== "object") NATIVE_TYPES.add(name);
@@ -344,6 +344,8 @@ export class ClassRuntime {
       this.charge(1);
       if (base instanceof BuiltinValue && base.name === "type") { this.touch(base); continue; }
       if (base instanceof BuiltinValue && NATIVE_SUBCLASS_BASES.includes(base.name)) { this.touch(base); continue; }
+      if (base instanceof BuiltinValue && ["map", "filter", "enumerate", "zip"].includes(base.name))
+        this.fail("UnsupportedOperationError", "Lazy iterator subclasses require the #116 layout contract", "UNSUPPORTED");
       if (base instanceof BuiltinValue && NATIVE_TYPES.has(base.name)) {
         if (Object.hasOwn(EXCEPTIONS, base.name) || ["list", "dict", "set", "bytearray", "property", "staticmethod", "classmethod", "module", "super"].includes(base.name))
           this.fail("UnsupportedOperationError", "This native subclass layout retains its owning stage", "UNSUPPORTED");
@@ -535,6 +537,7 @@ export class ClassRuntime {
       else if (value instanceof ModuleValue) name = "module";
       else if (value instanceof Cell) name = "cell";
       else if (value instanceof NotImplementedValue) name = "NotImplementedType";
+      else if (value instanceof LazyIteratorValue) name = value.kind;
       else if (value instanceof ProtocolIteratorValue) name = value.kind === "callable" ? "callable_iterator" : "iterator";
       else if (Object.hasOwn(EXCEPTIONS, value?.name)) name = value.name;
     }
@@ -1116,7 +1119,7 @@ export class ClassRuntime {
     }
     if (receiver instanceof GeneratorValue)
       this.fixedMutationFailure(receiver, name, key, "Generator state is read-only");
-    if (receiver instanceof IteratorValue || receiver instanceof ProtocolIteratorValue && ["indexed", "callable"].includes(receiver.kind))
+    if (receiver instanceof IteratorValue || receiver instanceof LazyIteratorValue || receiver instanceof ProtocolIteratorValue && ["indexed", "callable"].includes(receiver.kind))
       this.fixedMutationFailure(receiver, name, key, "Iterator attributes are read-only");
     if (receiver instanceof FrameValue && ["f_lineno", "f_trace", "f_trace_lines", "f_trace_opcodes"].includes(name))
       this.fail("UnsupportedOperationError", "Frame tracing and jumping require a separate contract", "UNSUPPORTED");
@@ -1233,6 +1236,7 @@ export class ClassRuntime {
     if (["__repr__", "__str__", "__format__"].includes(key)) return "#127";
     if (["__reduce__", "__reduce_ex__", "__getstate__", "__sizeof__"].includes(key)) return "#126";
     if (Object.hasOwn(EXCEPTIONS, owner)) return "#124";
+    if (["map", "filter", "enumerate", "zip"].includes(owner)) return "#116";
     if (owner === "generator" || owner.endsWith("iterator")) return key.startsWith("__") ? "O90" : "#120";
     if (["int", "bool", "float", "complex"].includes(owner)) return key === "__new__" ? "O85" : key.startsWith("__") ? "O90" : "#184";
     if (["str", "list", "tuple", "dict", "range", "slice"].includes(owner)) return key === "__new__" || key === "__init__" ? ["list", "dict"].includes(owner) ? "O86" : "O85" : key.startsWith("__") ? "O90" : "#116";
@@ -1630,7 +1634,7 @@ export class ClassRuntime {
     if (this.isInstance(receiver)) return false;
     return receiver instanceof ModuleValue || receiver instanceof Cell || receiver instanceof CodeValue || receiver instanceof FrameValue || receiver instanceof FrameLocalsValue || receiver instanceof ExceptionValue || receiver instanceof DictionaryViewValue ||
       receiver instanceof MethodWrapperValue || receiver instanceof SuperValue || receiver instanceof ClassNamespaceValue || receiver instanceof PropertyValue || receiver instanceof GeneratorValue ||
-      receiver instanceof IteratorValue || receiver instanceof ProtocolIteratorValue && ["indexed", "callable"].includes(receiver.kind) ||
+      receiver instanceof IteratorValue || receiver instanceof LazyIteratorValue || receiver instanceof ProtocolIteratorValue && ["indexed", "callable"].includes(receiver.kind) ||
       this.values.isRange(receiver) || this.values.isSlice(receiver) || this.containerDirectoryNames(receiver) !== null || this.numericDirectoryNames(receiver) !== null || this.nativeCallableDirectoryKind(receiver) !== null;
   }
   nativeTypeDirectoryNames(type) {

@@ -56,8 +56,9 @@ test('the layout audit accounts for every actual native type and callable descri
  assert.deepEqual(audit.native_types.map(row=>row.type).sort(),Object.keys(NATIVE_NAMESPACES).sort());
  const ids=new Map(corpus.cases.map(item=>[item.id,item]));
  for (const row of audit.native_types) {
-  assert.equal(ids.get(row.type_case)?.stage,'O78',row.type);
-  if(row.instance_case) assert.equal(ids.get(row.instance_case)?.stage,'O78',row.type);
+  const stage=row.stage??'O78';assert.ok(corpus.implemented_stages.includes(stage),row.type);
+  assert.equal(ids.get(row.type_case)?.stage,stage,row.type);
+  if(row.instance_case) assert.equal(ids.get(row.instance_case)?.stage,stage,row.type);
   else { assert.equal(row.instance_boundary?.owner,'#124');assert.equal(ids.get(row.instance_boundary.case)?.stage,'ExceptionConstruction'); }
  }
  for(const [type, reference] of Object.entries(audit.source_layouts)) {
