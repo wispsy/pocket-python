@@ -59,5 +59,31 @@ values, empty identities, callback order/errors and deterministic numeric sample
 This adopts the sum API over existing value families; complex representation,
 new codecs, general libraries and other numeric methods keep their own owners.
 
+## Composed acceptance
+
+LA-195 combines selection and totals with recursive record displays, temporary
+bound keys, retained closures, generic accumulator objects, live list mutation,
+generator cleanup, imports and dynamic source. The example
+`examples/interpreter_aggregations.py` is ordinary executable Python. The corpus
+has 139 cases, including 101 explicitly shared with core-source/1; each profile
+runs through Node and Chromium drain, stepped and parked execution. Counts refer
+to this finite API corpus and do not measure complete Python compatibility.
+
+`scripts/ordinary_browser_smoke.py --aggregations` runs the report and composed
+cases after an offline reload, preserves original dynamic key frames and stops
+inside owned key, comparison and addition callbacks. Each fresh Restart runs a
+new aggregation program. A waiting service-worker update retains the old profile
+until reload, then verifies core-profile aggregation offline and removes the old
+cache. `--require-installed` checks an isolated installed distribution.
+
+```sh
+python scripts/run_tests.py focused --feature aggregations
+python scripts/run_tests.py browser-conformance --feature aggregations
+python scripts/ordinary_browser_smoke.py --aggregations
+```
+
+Track B application/UI/host contracts, DOM authority, unadopted consumers and
+library/package/release gates remain separate. This batch does not change them.
+
 References: [builtin interfaces](https://docs.python.org/3.14/builtins/functions.html),
 [pinned accumulation phases](https://github.com/python/cpython/blob/v3.14.7/Python/bltinmodule.c).

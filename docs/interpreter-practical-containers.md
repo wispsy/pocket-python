@@ -17,10 +17,11 @@ explicit #116 source boundary; these methods bypass admitted item overrides.
 | LA-6 | `dict.keys()`, `dict.values()`, `dict.items()` | Implemented. Fresh live ordered views support len/truth, iteration and owned membership; native subtype owners stay rooted. Exact-dict view.mapping returns a fresh live read-only proxy. Subtype proxies and view set operations remain #116/#117. |
 | LA-7 | Composed source/offline acceptance | Composed record queues, native subclasses, callbacks, suspended views, modules and dynamic source have reference cases. The offline console covers fresh source, callback errors, interruption/restart and profile updates. Integration does not imply the remaining #116 APIs. |
 
-The initial two batches do not adopt populated dictionary construction/update,
-text methods, aggregate/sorting/map/filter APIs, enumerate/zip or general reversed
-protocols. Existing delivered APIs remain available; each remaining surface keeps
-its issue owner and explicit refusal.
+LA-193–LA-195 separately adopt [min/max and sum](interpreter-aggregations.md),
+including owned key/comparison/addition callbacks and composed offline reports.
+Populated dictionary construction/update, text methods, sorting/map/filter APIs,
+enumerate/zip and general reversed protocols retain their issue owners and
+explicit refusals.
 
 `practical-containers.json` records exact source observations. The shared test
 manifest runs the admitted profiles in Node and Chromium through draining,

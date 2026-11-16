@@ -5,7 +5,8 @@
   "reference_version": "3.14.7",
   "implemented_stages": [
     "LA193",
-    "LA194"
+    "LA194",
+    "LA195"
   ],
   "cases": [
     {
@@ -1201,6 +1202,74 @@
       ],
       "source": "print(sum([-2**63,2**63,1e16,1.,-1e16]),sum([2**63-1,-(2**63-1),1e16,1.,-1e16]))\n",
       "stdout": "0.0 1.0\n"
+    },
+    {
+      "id": "aggregation-composed-report",
+      "stage": "LA195",
+      "source": "\"\"\"Select readings and calculate totals in an ordinary report.\"\"\"\n\n\nclass Reading:\n    def __init__(self, name, value):\n        self.name = name\n        self.value = value\n\n    def __repr__(self):\n        return \"Reading\" + repr((self.name, self.value))\n\n\ndef magnitude(reading):\n    return reading.value\n\n\ndef values(readings):\n    for reading in readings:\n        yield reading.value\n\n\nreadings = [Reading(\"first\", 1.5), Reading(\"second\", 2.5), Reading(\"third\", 2.5)]\nreport = {\n    \"smallest\": min(readings, key=magnitude),\n    \"largest\": max(readings, key=magnitude),\n    \"total\": sum(values(readings)),\n}\nprint(report)\nprint(\"first tie\", report[\"largest\"] is readings[1])\nprint(\"compensated\", sum([1e16, 1.0, -1e16]))\nprint(\"empty\", min([], default=None), sum([], start=0.0))\n",
+      "stdout": "{'smallest': Reading('first', 1.5), 'largest': Reading('second', 2.5), 'total': 6.5}\nfirst tie True\ncompensated 1.0\nempty None 0.0\n"
+    },
+    {
+      "id": "aggregation-retained-bound-callable",
+      "stage": "LA195",
+      "source": "class Owner:\n def __init__(self,scale): self.scale=scale\n def key(self,row):\n  held=[self.scale,row]\n  def read(): return held[0]*held[1][1]\n  return read()\nclass Total:\n def __init__(self,n): self.n=n\n def __add__(self,row): return Total(self.n+row[1])\n def __repr__(self): return \"Total\"+repr([self.n])\nrows=[(\"a\",1.5),(\"b\",2.5),(\"c\",2.5)]\nprint(max(rows,key=Owner(2).key),min(rows,key=Owner(-1).key),sum(rows,Total(0)))\n",
+      "stdout": "('b', 2.5) ('b', 2.5) Total[6.5]\n"
+    },
+    {
+      "id": "aggregation-generator-cleanup",
+      "stage": "LA195",
+      "source": "def rows():\n try:\n  yield 3\n  yield 1\n finally: print(\"cleanup\")\ndef key(value):\n print(\"key\",value)\n if value==1: raise ValueError(\"selected\")\n return value\ng=rows()\ntry: min(g,key=key)\nexcept ValueError as e: print(e.args)\nfinally: g.close()\nprint(sum([1.5,2.5]))\n",
+      "stdout": "key 3\nkey 1\n('selected',)\ncleanup\n4.0\n"
+    },
+    {
+      "id": "aggregation-live-key-mutation",
+      "stage": "LA195",
+      "source": "rows=[3,2]\ndef key(value):\n print(\"key\",value)\n if value==3: rows.append(1)\n return value\nprint(min(rows,key=key),rows,sum(rows))\n",
+      "stdout": "key 3\nkey 2\nkey 1\n1 [3, 2, 1] 6\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "aggregation-dynamic-source",
+      "stage": "LA195",
+      "source": "namespace={}\nexec(\"rows=[1.5,2.5,-0.0]\\nreport={'min':min(rows),'max':max(rows),'sum':sum(rows)}\",namespace)\nprint(namespace[\"report\"])\n",
+      "stdout": "{'min': -0.0, 'max': 2.5, 'sum': 4.0}\n"
+    },
+    {
+      "id": "aggregation-original-dynamic-frame",
+      "stage": "LA195",
+      "source": "code=compile(\"def key(value):\\n return 1//0\\n\",\"aggregation-original.py\",\"exec\")\nexec(code)\nmax([1],key=key)\n",
+      "stdout": "",
+      "error_type": "ZeroDivisionError"
+    },
+    {
+      "id": "aggregation-core-report",
+      "stage": "LA195",
+      "source": "rows=[(\"a\",1.5),(\"b\",2.5),(\"c\",2.5)]\ndef amount(row): return row[1]\ndef values():\n for row in rows: yield row[1]\nprint({\"min\":min(rows,key=amount),\"max\":max(rows,key=amount),\"total\":sum(values())})\nprint(max([],default=rows) is rows,sum([[1],[2]],[]))\n",
+      "stdout": "{'min': ('a', 1.5), 'max': ('b', 2.5), 'total': 6.5}\nTrue [1, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "aggregation-modules",
+      "stage": "LA195",
+      "source": "import aggregate\nprint(aggregate.report([1.5,2.5,-0.0]))\n",
+      "imports": [
+        "aggregate"
+      ],
+      "modules": [
+        {
+          "name": "aggregate",
+          "package": false,
+          "imports": [],
+          "source": "def report(values): return {\"min\":min(values),\"max\":max(values),\"sum\":sum(values)}\n"
+        }
+      ],
+      "stdout": "{'min': -0.0, 'max': 2.5, 'sum': 4.0}\n"
     }
   ]
 }

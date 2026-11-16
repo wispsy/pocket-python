@@ -235,6 +235,8 @@ def checks(costs_path=None):
         '--syntax-errors', '--report', 'build/syntax-errors-browser-report.json', seconds=20)
     add('ordinary-display-browser', 'browser-integration', 'python', 'scripts/ordinary_browser_smoke.py',
         '--report', 'build/ordinary-display-browser-report.json', seconds=30)
+    add('ordinary-aggregations-browser', 'browser-integration', 'python', 'scripts/ordinary_browser_smoke.py',
+        '--aggregations', '--report', 'build/ordinary-aggregations-browser-report.json', seconds=30)
     add('interpreter-node-measurements', 'measurements', 'python', 'scripts/interpreter_measurements.py',
         '--no-browser', '--repeats', '3', '--output', 'build/interpreter-node-measurements', seconds=10)
     add('interpreter-browser-measurements', 'measurements', 'python', 'scripts/interpreter_measurements.py',
