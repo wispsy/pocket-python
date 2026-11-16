@@ -20,22 +20,41 @@ from interpreter_browser_smoke import EXAMPLE, Handler, Server
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def smoke(require_installed=False):
+def smoke(require_installed=False, aggregations=False):
     package = Path(pocket_python.__file__).resolve()
     if require_installed:
         assert not package.is_relative_to(ROOT), 'Requires an isolated installed distribution.'
     assert platform.python_version() == '3.14.7'
-    corpus_path = ROOT / 'tests/fixtures/interpreter/formatting.json'
+    feature = 'aggregations' if aggregations else 'display'
+    corpus_path = ROOT / ('tests/fixtures/interpreter/aggregations.json' if aggregations else
+                          'tests/fixtures/interpreter/formatting.json')
     corpus = json.loads(corpus_path.read_bytes())
-    example = (ROOT / 'examples/interpreter_display.py').read_text(encoding='utf-8')
+    example = (ROOT / f'examples/interpreter_{feature}.py').read_text(encoding='utf-8')
     expected = subprocess.check_output([sys.executable, '-I', '-S', '-c', example], text=True, timeout=10)
+    if aggregations:
+        stage = 'LA195'
+        frame = 'key at aggregation-original.py:2'
+        restart_source = 'print(min([2,1]),max([2,1]),sum([1e16,1.,-1e16]))\n'
+        restart_stdout = '1 2 1.0\n'
+        callbacks = [
+            ('key', 'def key(value):\n print("entered")\n while True: pass\nmin([1],key=key)\n'),
+            ('comparison', 'class Slow:\n def __lt__(self,other):\n  print("entered")\n  while True: pass\nmin([Slow(),Slow()])\n'),
+            ('addition', 'class Slow:\n def __add__(self,other):\n  print("entered")\n  while True: pass\nsum([1],Slow())\n'),
+        ]
+    else:
+        stage = 'LA192'
+        frame = '__repr__ at display-original.py:2'
+        restart_source = 'print([1.5],-0.0,{"ready":True})\n'
+        restart_stdout = "[1.5] -0.0 {'ready': True}\n"
+        callbacks = [(name, 'class Slow:\n def __repr__(self):\n  print("entered")\n  while True: pass\nprint(' + expression + ')\n')
+                     for name, expression in [('list-repr', '[Slow()]'), ('dict-key-repr', '{Slow(): [1.5]}')]]
     checks = []
     with tempfile.TemporaryDirectory() as temporary:
         root = Path(temporary)
         engine = read_interpreter(ROOT / 'runtime')
         selected = build_interpreter(EXAMPLE.write_source(root / 'source', source=example), engine,
                                      root / 'site/console', language_profile='classes-source/1')
-        reduced = build_interpreter(EXAMPLE.write_source(root / 'core-source', source='print([1.5])\n'),
+        reduced = build_interpreter(EXAMPLE.write_source(root / 'core-source', source=restart_source),
                                     engine, root / 'reduced')
         server = Server(('127.0.0.1', 0), partial(Handler, directory=str(root / 'site')))
         server.paths = []
@@ -71,14 +90,13 @@ def smoke(require_installed=False):
                     run(example, expected)
                     checks.append('report-example-after-offline-reload')
                     for case in corpus['cases']:
-                        if case['stage'] != 'LA192' or case.get('modules'):
+                        if case['stage'] != stage or case.get('modules'):
                             continue
                         run(case['source'], case['stdout'], case.get('error_type'))
-                        if case['id'] == 'display-original-dynamic-frame':
-                            assert '__repr__ at display-original.py:2' in page.locator('#diagnostic').inner_text()
+                        if case['id'].endswith('original-dynamic-frame'):
+                            assert frame in page.locator('#diagnostic').inner_text()
                         checks.append(case['id'])
-                    for expression in ['[Slow()]', '{Slow(): [1.5]}']:
-                        source = 'class Slow:\n def __repr__(self):\n  print("entered")\n  while True: pass\nprint(' + expression + ')\n'
+                    for name, source in callbacks:
                         page.fill('#input', source)
                         page.click('#run')
                         page.wait_for_function("()=>document.querySelector('#result').textContent==='entered\\n'")
@@ -86,8 +104,8 @@ def smoke(require_installed=False):
                         page.wait_for_function("()=>document.querySelector('#status').textContent==='Stopped'")
                         page.click('#restart')
                         ready()
-                        run('print([1.5],-0.0,{"ready":True})\n', "[1.5] -0.0 {'ready': True}\n")
-                        checks.append('stop-repr-callback-and-fresh-restart-' + str(len(checks)))
+                        run(restart_source, restart_stdout)
+                        checks.append('stop-' + name + '-callback-and-fresh-restart')
                     context.set_offline(False)
                     shutil.rmtree(root / 'site/console')
                     shutil.copytree(root / 'reduced', root / 'site/console')
@@ -106,8 +124,8 @@ def smoke(require_installed=False):
                     page = context.new_page()
                     page.goto(url)
                     ready()
-                    run('print([1.5],(1,),{"a":2})\n', "[1.5] (1,) {'a': 2}\n")
-                    checks.append('core-profile-update-offline-display-and-old-cache-removal')
+                    run(restart_source, restart_stdout)
+                    checks.append('core-profile-update-offline-' + feature + '-and-old-cache-removal')
                     assert not errors, errors
                 finally:
                     browser.close()
@@ -115,7 +133,7 @@ def smoke(require_installed=False):
             server.shutdown()
             thread.join()
             server.server_close()
-    return {'schema_version': 1, 'suite': 'interpreter-ordinary-display-offline/1',
+    return {'schema_version': 1, 'suite': f'interpreter-ordinary-{feature}-offline/1',
             'installed_distribution_required': require_installed, 'package_origin': str(package),
             'corpus_sha256': hashlib.sha256(corpus_path.read_bytes()).hexdigest(),
             'engine_fingerprint': selected['engine']['fingerprint'], 'checks': checks,
@@ -125,9 +143,10 @@ def smoke(require_installed=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--require-installed', action='store_true')
+    parser.add_argument('--aggregations', action='store_true', help='Accept selection and accumulation programs.')
     parser.add_argument('--report', type=Path)
     args = parser.parse_args()
-    report = smoke(args.require_installed)
+    report = smoke(args.require_installed, args.aggregations)
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')

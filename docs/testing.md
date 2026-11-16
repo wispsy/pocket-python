@@ -41,6 +41,7 @@ uv run --no-sync python scripts/run_tests.py browser-conformance --shard 1 --sha
 uv run --no-sync python scripts/run_tests.py browser-integration --shard 1 --shards 3
 uv run --no-sync python scripts/run_tests.py python
 uv run --no-sync python scripts/ordinary_browser_smoke.py
+uv run --no-sync python scripts/ordinary_browser_smoke.py --aggregations
 ```
 
 `python` prepares the supplied runtime, checks generated locks, runs Python tests,
@@ -59,6 +60,13 @@ previews commands without executing them. Independent checks use deterministic
 weighted shards; packaging and preparation retain their required order. New
 `runtime/*.test.mjs` files are included automatically. Add a corpus or a new
 driver/profile combination to the manifest alongside its implementation.
+
+The aggregation corpus runs both source profiles in Node and Chromium through
+drain, stepped and parked drivers. The ordinary browser acceptance command runs
+composed reports after an offline reload, verifies original dynamic callback
+frames, interrupts key/comparison/addition callbacks, restarts fresh and accepts
+a core-profile update after the old service-worker cache is removed. Pass
+`--require-installed` from an isolated wheel environment to verify packaging.
 
 Each invocation writes a JSON report and command logs under `build/test-results/`.
 Reports include the tested Git revision, whether the checkout was modified,
