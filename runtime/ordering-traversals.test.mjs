@@ -62,3 +62,11 @@ test('reverse callbacks share work, cancellation and actual allocation limits', 
     {maxSteps: 100000, maxWork: 20000000}, {maxBytes: 80000});
   assert.equal(oom.error.code, 'OOM'); assert.equal(oom.stdout, 'entered\n'); closed(oom);
 });
+
+test('constructor hints keep sources and acquired iterators rooted through suspension', async () => {
+  await parked('class S:\n def __init__(self): self.items=[[7]]\n def __iter__(self): return iter(self.items)\n def __length_hint__(self):\n  print("hint")\n  return 1\nprint(list(S()))\n', 'hint\n[[7]]\n', 'hint\n');
+  const limited = await run('class S:\n def __iter__(self): return iter([])\n def __length_hint__(self):\n  while True: pass\nlist(S())\n', {maxWork: 3000});
+  assert.equal(limited.error.code, 'BUDGET'); closed(limited);
+  const excessive = await run('class S:\n def __iter__(self): return iter([])\n def __length_hint__(self): return 2**60\nlist(S())\n');
+  assert.equal(excessive.error.code, 'BUDGET'); closed(excessive);
+});

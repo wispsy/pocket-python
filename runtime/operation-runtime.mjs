@@ -546,6 +546,32 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     const task = unaryTask("next", iterator, site, continuation("consume-next", {name, receiver: iterator, result, after, depth}), depth);
     state.temporaries = operationRoots(task); return task;
   };
+  const hintCount = (value, site, after) => {
+    if (value > BigInt(VALUE_LIMITS.items)) hard("BUDGET", "ExecutionLimitError", "Iterable length hint exceeds the sequence budget.");
+    return valueTask(null, site, after);
+  };
+  const hintLookup = (record, site) => {
+    state.temporaries.push(record.receiver);
+    const plan = classes.special(record.receiver, "__length_hint__");
+    if (!plan) return valueTask(null, site, record.after);
+    return plan.kind === "value" ? callTask(plan.value, [], [], [], site, continuation("hint-call", record), record.depth) :
+      callTask(plan.callable, plan.args, [], [], site, continuation("hint-bound", record), record.depth);
+  };
+  const iterableHint = (receiver, site, after, depth) => {
+    const record = {receiver, after, depth};
+    state.temporaries.push(receiver);
+    if (receiver instanceof ProtocolIteratorValue && receiver.kind === "reverse")
+      return callTask(classes.builtin(receiver.nativeName + ".__length_hint__"), [receiver], [], [], site, continuation("hint-call", record), depth);
+    if (receiver instanceof ProtocolIteratorValue && receiver.kind === "indexed")
+      return receiver.exhausted ? valueTask(null, site, after) :
+        unaryTask("len", receiver.source, site, continuation("hint-indexed", record), depth);
+    if (!userProtocol(receiver)) {
+      values.checkConstructionHint(receiver);
+      return valueTask(null, site, after);
+    }
+    return classes.hasSlot(classes.checkingType(receiver), "__len__") ?
+      unaryTask("len", receiver, site, continuation("hint-length", record), depth) : hintLookup(record, site);
+  };
   const nativeReverse = (receiver, site, after) => {
     const source = classes.payload(receiver);
     state.temporaries.push(receiver, source);
@@ -1016,6 +1042,9 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
         return valueTask(values.tuple([false, null]), site, current);
       if (current.kind === "module-missing" && value.name === "AttributeError" && current.mode === "import") return moduleMissing(current, site);
       if (current.kind === "dir-length" && value.name === "TypeError") return directoryHint(current, site);
+      if (current.kind === "hint-length" && isException(value, "TypeError")) return hintLookup(current, site);
+      if (["hint-call", "hint-indexed"].includes(current.kind) && isException(value, "TypeError"))
+        return valueTask(null, site, current.after);
       if (current.kind === "dir-hint-call" && value.name === "TypeError") return directoryNext(current, site);
       if (current.kind === "object-dir-dictionary" && value.name === "AttributeError") return objectDirectoryDictionary(current, null, site);
       if (current.kind === "object-dir-class" && value.name === "AttributeError")
@@ -1758,7 +1787,28 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
       const middle = Math.floor((completion.lower + completion.upper) / 2);
       return directorySort({...completion, ...(value ? {upper: middle} : {lower: middle + 1})}, site);
     }
-    if (completion?.kind === "consume-iter") return consumeNext(completion.name, value, completion.result, site, completion.after, completion.depth);
+    if (completion?.kind === "hint-length") return hintCount(value, site, completion.after);
+    if (completion?.kind === "hint-indexed")
+      return hintCount(value > completion.receiver.index ? values.int(value - completion.receiver.index) : 0n, site, completion.after);
+    if (completion?.kind === "hint-bound")
+      return callTask(value, [], [], [], site, continuation("hint-call", completion), completion.depth);
+    if (completion?.kind === "hint-call") return valueTask(value, site, continuation("hint-value", completion));
+    if (completion?.kind === "hint-value") {
+      if (value instanceof NotImplementedValue) return valueTask(null, site, completion.after);
+      const count = classes.payload(value);
+      if (typeof count !== "bigint" && typeof count !== "boolean")
+        python("TypeError", "__length_hint__ must be an integer, not " + classes.checkingType(value).name);
+      const size = typeof count === "boolean" ? BigInt(count) : count;
+      if (size < -9223372036854775808n || size > 9223372036854775807n)
+        python("OverflowError", "Python int too large to convert to C ssize_t");
+      if (size < 0n) python("ValueError", "__length_hint__() should return >= 0");
+      return hintCount(size, site, completion.after);
+    }
+    if (completion?.kind === "consume-iter") return completion.hinted ?
+      iterableHint(completion.name === "tuple" ? value : completion.receiver, site, continuation("consume-hinted", {...completion, receiver: value}), completion.depth) :
+      consumeNext(completion.name, value, completion.result, site, completion.after, completion.depth);
+    if (completion?.kind === "consume-hinted")
+      return consumeNext(completion.name, completion.receiver, completion.result, site, completion.after, completion.depth);
     if (completion?.kind === "consume-next") {
       const {name, receiver, result, after, depth} = completion;
       state.temporaries.push(value);
@@ -2472,13 +2522,14 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
           state.temporaries = operationRoots(task);
           const {name, receiver} = task, building = ["list", "tuple", "syntax-details"].includes(name);
           const hintOwner = receiver instanceof ProtocolIteratorValue && receiver.kind === "indexed" ? receiver.source : receiver;
-          if (name !== "syntax-details" && (building || name === "bytes") && userProtocol(hintOwner) &&
+          if (name !== "syntax-details" && (building && task.result !== null || name === "bytes") && userProtocol(hintOwner) &&
               ["__len__", "__length_hint__"].some(slot => (hintOwner.nativePayload === undefined ? classes.lookup(classes.checkingType(hintOwner), slot).found : classes.hasSlot(classes.checkingType(hintOwner), slot))))
             hard("UNSUPPORTED", "UnsupportedOperationError", "User length hints require a separate construction stage.");
           const result = task.result ?? (building ? values.list([]) : ["bytes", "bytearray"].includes(name) ? values.binaryValue([], true) :
             ["set", "frozenset"].includes(name) ? values.newSet(name === "frozenset") : null);
           state.temporaries.push(result);
-          task = unaryTask("iter", receiver, site, continuation("consume-iter", {name, receiver, result, after: completion, depth}), depth);
+          task = unaryTask("iter", receiver, site, continuation("consume-iter", {name, receiver, result,
+            hinted: ["list", "tuple"].includes(name) && task.result === null, after: completion, depth}), depth);
           continue;
         }
         if (task.kind === "numeric") {

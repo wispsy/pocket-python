@@ -6,7 +6,8 @@
   "implemented_stages": [
     "LA202",
     "LA203",
-    "LA204"
+    "LA204",
+    "LA205"
   ],
   "cases": [
     {
@@ -626,6 +627,226 @@
         "core-source/1",
         "classes-source/1"
       ]
+    },
+    {
+      "id": "hint-list-hint",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): print(\"hint\");return 2\nprint(list(S()))\n",
+      "stdout": "iter\nhint\n[1, 2]\n"
+    },
+    {
+      "id": "hint-tuple-hint",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): print(\"hint\");return 2\nprint(tuple(S()))\n",
+      "stdout": "iter\n(1, 2)\n"
+    },
+    {
+      "id": "hint-list-len",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __len__(self): print(\"len\");return 2\nprint(list(S()))\n",
+      "stdout": "iter\nlen\n[1, 2]\n"
+    },
+    {
+      "id": "hint-tuple-len",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __len__(self): print(\"len\");return 2\nprint(tuple(S()))\n",
+      "stdout": "iter\n(1, 2)\n"
+    },
+    {
+      "id": "hint-list-len-fallback",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __len__(self): print(\"len\");raise TypeError(\"skip\")\n def __length_hint__(self): print(\"hint\");return 2\nprint(list(S()))\n",
+      "stdout": "iter\nlen\nhint\n[1, 2]\n"
+    },
+    {
+      "id": "hint-tuple-len-fallback",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __len__(self): print(\"len\");raise TypeError(\"skip\")\n def __length_hint__(self): print(\"hint\");return 2\nprint(tuple(S()))\n",
+      "stdout": "iter\n(1, 2)\n"
+    },
+    {
+      "id": "hint-list-len-first",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __len__(self): print(\"len\");return 2\n def __length_hint__(self): print(\"wrong\");return 9\nprint(list(S()))\n",
+      "stdout": "iter\nlen\n[1, 2]\n"
+    },
+    {
+      "id": "hint-tuple-len-first",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __len__(self): print(\"len\");return 2\n def __length_hint__(self): print(\"wrong\");return 9\nprint(tuple(S()))\n",
+      "stdout": "iter\n(1, 2)\n"
+    },
+    {
+      "id": "hint-list-hint-notimplemented",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): print(\"hint\");return NotImplemented\nprint(list(S()))\n",
+      "stdout": "iter\nhint\n[1, 2]\n"
+    },
+    {
+      "id": "hint-tuple-hint-notimplemented",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): print(\"hint\");return NotImplemented\nprint(tuple(S()))\n",
+      "stdout": "iter\n(1, 2)\n"
+    },
+    {
+      "id": "hint-list-hint-typeerror",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): print(\"hint\");raise TypeError(\"skip\")\nprint(list(S()))\n",
+      "stdout": "iter\nhint\n[1, 2]\n"
+    },
+    {
+      "id": "hint-tuple-hint-typeerror",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): print(\"hint\");raise TypeError(\"skip\")\nprint(tuple(S()))\n",
+      "stdout": "iter\n(1, 2)\n"
+    },
+    {
+      "id": "hint-list-hint-none",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n __length_hint__=None\nprint(list(S()))\n",
+      "stdout": "iter\n[1, 2]\n"
+    },
+    {
+      "id": "hint-tuple-hint-none",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n __length_hint__=None\nprint(tuple(S()))\n",
+      "stdout": "iter\n(1, 2)\n"
+    },
+    {
+      "id": "hint-list-len-none",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n __len__=None\n def __length_hint__(self): print(\"hint\");return 2\nprint(list(S()))\n",
+      "stdout": "iter\nhint\n[1, 2]\n"
+    },
+    {
+      "id": "hint-tuple-len-none",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n __len__=None\n def __length_hint__(self): print(\"hint\");return 2\nprint(tuple(S()))\n",
+      "stdout": "iter\n(1, 2)\n"
+    },
+    {
+      "id": "hint-result-negative",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): return -1\nprint(list(S()))\n",
+      "stdout": "iter\n",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "hint-result-positive-overflow",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): return 2**100\nprint(list(S()))\n",
+      "stdout": "iter\n",
+      "error_type": "OverflowError"
+    },
+    {
+      "id": "hint-result-negative-overflow",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): return -(2**100)\nprint(list(S()))\n",
+      "stdout": "iter\n",
+      "error_type": "OverflowError"
+    },
+    {
+      "id": "hint-result-float",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): return 1.0\nprint(list(S()))\n",
+      "stdout": "iter\n",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "hint-result-index-only",
+      "stage": "LA205",
+      "source": "class I:\n def __index__(self): print(\"wrong index\");return 2\nclass S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): return I()\nprint(list(S()))\n",
+      "stdout": "iter\n",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "hint-result-bool",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): return True\nprint(list(S()))\n",
+      "stdout": "iter\n[1, 2]\n"
+    },
+    {
+      "id": "hint-result-subtype",
+      "stage": "LA205",
+      "source": "class I(int):\n def __index__(self): print(\"wrong index\");return 7\nclass S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __length_hint__(self): return I(2)\nprint(list(S()))\n",
+      "stdout": "iter\n[1, 2]\n"
+    },
+    {
+      "id": "hint-different-source-and-iterator",
+      "stage": "LA205",
+      "source": "class I:\n def __iter__(self): print(\"iterator iter\");return self\n def __next__(self): raise StopIteration\n def __length_hint__(self): print(\"wrong iterator hint\");return 2\nclass S:\n def __iter__(self): print(\"source iter\");return I()\n def __length_hint__(self): print(\"source hint\");return 2\nprint(list(S()))\n",
+      "stdout": "source iter\nsource hint\n[]\n"
+    },
+    {
+      "id": "hint-acquisition-failure",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self): print(\"iter\");raise ValueError(\"no iterator\")\n def __length_hint__(self): print(\"wrong\");return 2\nlist(S())\n",
+      "stdout": "iter\n",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "hint-binding-failure",
+      "stage": "LA205",
+      "source": "class D:\n def __get__(self,obj,owner): print(\"binding\");raise TypeError(\"bind\")\nclass S:\n __length_hint__=D()\n def __iter__(self): print(\"iter\");return iter([])\nlist(S())\n",
+      "stdout": "iter\nbinding\n",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "hint-binding-call",
+      "stage": "LA205",
+      "source": "class D:\n def __get__(self,obj,owner): print(\"bind\");return lambda:2\nclass S:\n __length_hint__=D()\n def __iter__(self): print(\"iter\");return iter([7])\nprint(list(S()))\n",
+      "stdout": "iter\nbind\n[7]\n"
+    },
+    {
+      "id": "hint-valueerror",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self): print(\"iter\");return iter([7])\n def __length_hint__(self): print(\"hint\");raise ValueError(\"hint failed\")\nlist(S())\n",
+      "stdout": "iter\nhint\n",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "hint-reverse-list-copy",
+      "stage": "LA205",
+      "source": "class S:\n def __len__(self): print(\"len\");return 2\n def __getitem__(self,i): print(\"get\",i);return i\nprint(list(reversed(S())))\n",
+      "stdout": "len\nlen\nget 1\nget 0\n[1, 0]\n"
+    },
+    {
+      "id": "hint-indexed-source",
+      "stage": "LA205",
+      "source": "class S:\n def __len__(self): print(\"len\");return 2\n def __getitem__(self,i):\n  if i==2: raise IndexError\n  return i\nprint(list(iter(S())))\n",
+      "stdout": "len\n[0, 1]\n"
+    },
+    {
+      "id": "hint-mutation-after-acquisition",
+      "stage": "LA205",
+      "source": "class S:\n def __init__(self): self.data=[1]\n def __iter__(self): print(\"iter\");return iter(self.data)\n def __len__(self): print(\"len\");self.data.append(2);return 2\nprint(tuple(S()))\n",
+      "stdout": "iter\n(1,)\n"
+    },
+    {
+      "id": "hint-integer-subtype-length",
+      "stage": "LA205",
+      "source": "class N(int): pass\nclass S:\n def __iter__(self): return iter([7])\n def __len__(self): return N(1)\nprint(list(S()))\n",
+      "stdout": "[7]\n"
+    },
+    {
+      "id": "hint-len-result--1",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __len__(self): return -1\n def __length_hint__(self): print(\"fallback\");return 2\nprint(list(S()))\n",
+      "stdout": "iter\n",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "hint-len-result-2xx100",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __len__(self): return 2**100\n def __length_hint__(self): print(\"fallback\");return 2\nprint(list(S()))\n",
+      "stdout": "iter\n",
+      "error_type": "OverflowError"
+    },
+    {
+      "id": "hint-len-result-bad",
+      "stage": "LA205",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __len__(self): return \"bad\"\n def __length_hint__(self): print(\"fallback\");return 2\nprint(list(S()))\n",
+      "stdout": "iter\nfallback\n[1, 2]\n"
     }
   ]
 }

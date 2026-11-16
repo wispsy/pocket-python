@@ -28,6 +28,17 @@ runnable `examples/interpreter_ordering.py` report provides ordinary source for
 the offline acceptance. Length/pull callbacks share cancellation, work/depth and
 allocation limits; parked collection, close and cancellation release all owners.
 
+LA-205 adopts owned construction hints after iterator acquisition. `list` asks
+the original iterable; `tuple` asks its acquired iterator. `__len__` wins when
+present and valid, while TypeError falls back to `__length_hint__`. Hint calls
+returning NotImplemented or raising TypeError use the default. Descriptor binding
+failures and invalid returned values propagate. Integer subtype payloads are
+accepted without invoking their index override; negative and signed-size overflow
+checks preserve reference priority. Indexed/reverse iterator hints read their
+retained source's current length. Estimates above the fixed sequence-item budget
+fail with the shared resource error. Estimates do not allocate a fictitious
+capacity; actual retained containers continue to use the common memory ledger.
+
 References: [reverse implementation](https://github.com/python/cpython/blob/v3.14.7/Objects/enumobject.c),
 [length hints](https://github.com/python/cpython/blob/v3.14.7/Objects/abstract.c),
 [list operations](https://github.com/python/cpython/blob/v3.14.7/Objects/listobject.c).
