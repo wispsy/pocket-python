@@ -321,6 +321,15 @@ export function completion(kind, fields = {}) {
       depthCheck(record.depth);
       if (!["min", "max"].includes(record.name)) throw new TypeError("Invalid selection operation.");
       break;
+    case "sum-iter": case "sum-next": case "sum-added":
+      record = {kind, receiver: fields.receiver ?? null, result: fields.result ?? null, phase: fields.phase,
+        reHigh: fields.reHigh ?? 0, reLow: fields.reLow ?? 0, imHigh: fields.imHigh ?? 0, imLow: fields.imLow ?? 0,
+        depth: fields.depth, after};
+      depthCheck(record.depth);
+      if (!["initial", "integer", "float", "complex", "generic", "after-integer", "after-float"].includes(record.phase) ||
+          [record.reHigh, record.reLow, record.imHigh, record.imLow].some(value => typeof value !== "number"))
+        throw new TypeError("Invalid sum accumulation phase.");
+      break;
     case "print-argument":
       record = {kind, args: operands(fields.args), index: fields.index, depth: fields.depth, after};
       depthCheck(record.depth);
@@ -408,6 +417,7 @@ function visit(record) {
     case "container-repr": return [record.receiver, record.parts, record.item, record.keyText, ...completionRoots(record.after)];
     case "selection-iter": case "selection-next": case "selection-key": case "selection-compared": case "selection-truth":
       return [record.receiver, record.key, record.fallback, record.best, record.bestKey, record.candidate, record.candidateKey, ...completionRoots(record.after)];
+    case "sum-iter": case "sum-next": case "sum-added": return [record.receiver, record.result, ...completionRoots(record.after)];
     case "unicode-translate-message": return [record.receiver, ...completionRoots(record.after)];
     case "unicode-codec-reason": return [record.receiver, ...completionRoots(record.after)];
     case "unicode-codec-message": return [record.receiver, record.reason, ...completionRoots(record.after)];

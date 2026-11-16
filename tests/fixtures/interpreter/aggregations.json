@@ -4,7 +4,8 @@
   "profile": "classes-source/1",
   "reference_version": "3.14.7",
   "implemented_stages": [
-    "LA193"
+    "LA193",
+    "LA194"
   ],
   "cases": [
     {
@@ -462,6 +463,744 @@
       "stage": "LA193",
       "source": "print(max.__name__,max.__module__,type(max).__name__,callable(max))\n",
       "stdout": "max builtins builtin_function_or_method True\n"
+    },
+    {
+      "id": "sum-empty",
+      "stage": "LA194",
+      "source": "print(sum([]),sum([],7),sum([],True))\n",
+      "stdout": "0 7 True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-integers",
+      "stage": "LA194",
+      "source": "print(sum(range(10)),sum([True,False,3]),sum([2**100,-2**99]))\n",
+      "stdout": "45 4 633825300114114700748351602688\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-integer-boundaries",
+      "stage": "LA194",
+      "source": "print(sum([2**63-1,1,-2**63]),sum([-(2**63),-1,2**63]),sum([2**64,1]))\n",
+      "stdout": "0 -1 18446744073709551617\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-float-compensation",
+      "stage": "LA194",
+      "source": "print(sum([1e16,1.,-1e16]),sum([0.1]*10),sum([1.,1e100,1.,-1e100]))\n",
+      "stdout": "1.0 1.0 2.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-float-start",
+      "stage": "LA194",
+      "source": "x=1.5\nprint(sum([],x),sum([],x) is x,sum([1e16,1.,-1e16],0.0))\n",
+      "stdout": "1.5 False 1.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-signed-zero",
+      "stage": "LA194",
+      "source": "print(sum([-0.0]),sum([], -0.0),sum([-0.0],-0.0),sum([0.0],-0.0))\n",
+      "stdout": "0.0 -0.0 -0.0 0.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-nonfinite",
+      "stage": "LA194",
+      "source": "print(sum([float(\"inf\"),1.]),sum([float(\"inf\"),-float(\"inf\")]),sum([float(\"nan\")]))\n",
+      "stdout": "inf nan nan\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-overflow",
+      "stage": "LA194",
+      "source": "print(sum([1e308,1e308,-1e308]),sum([1e308,-1e308,1e-300]))\n",
+      "stdout": "inf 1e-300\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-large-start-generic",
+      "stage": "LA194",
+      "source": "print(sum([1e16,1.,-1e16],2**64),sum([1e16,1.,-1e16],True))\n",
+      "stdout": "1.8446744073709552e+19 0.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-complex",
+      "stage": "LA194",
+      "source": "z=sum([1e16+1j,1.,-1e16,2j])\nprint(z.real,z.imag)\n",
+      "stdout": "1.0 3.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-complex-start",
+      "stage": "LA194",
+      "source": "z=complex(-0.0,-0.0)\nx=sum([],z)\nprint(x is z,x.real,x.imag)\n",
+      "stdout": "False -0.0 -0.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-mixed-complex",
+      "stage": "LA194",
+      "source": "z=sum([0.1,0.2,1j,1e16,1.,-1e16])\nprint(z.real,z.imag)\n",
+      "stdout": "1.3 1.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-list-start",
+      "stage": "LA194",
+      "source": "start=[]\nresult=sum([[1],[2]],start)\nprint(result,start,result is start,sum([],start) is start)\n",
+      "stdout": "[1, 2] [] False True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-tuple-start",
+      "stage": "LA194",
+      "source": "print(sum([(1,),(2,)],()))\n",
+      "stdout": "(1, 2)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-generator",
+      "stage": "LA194",
+      "source": "def source():\n yield 1\n yield 2\n yield 3\nprint(sum(source(),start=4))\n",
+      "stdout": "10\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-text-start",
+      "stage": "LA194",
+      "source": "try: sum([],\"text\")\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "sum() can't sum strings [use ''.join(seq) instead]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-bytes-start",
+      "stage": "LA194",
+      "source": "try: sum([],b\"a\")\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "sum() can't sum bytes [use b''.join(seq) instead]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-bytearray-start",
+      "stage": "LA194",
+      "source": "try: sum([],bytearray(b\"a\"))\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "sum() can't sum bytearray [use b''.join(seq) instead]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-no-args",
+      "stage": "LA194",
+      "source": "try: sum()\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "sum() takes at least 1 positional argument (0 given)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-extra",
+      "stage": "LA194",
+      "source": "try: sum([],1,2)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "sum() takes at most 2 arguments (3 given)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-extra-keyword",
+      "stage": "LA194",
+      "source": "try: sum([],start=1,bad=2)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "sum() takes at most 2 arguments (3 given)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-unknown",
+      "stage": "LA194",
+      "source": "try: sum([],bad=2)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "sum() got an unexpected keyword argument 'bad'\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-duplicate-start",
+      "stage": "LA194",
+      "source": "try: sum([],1,start=2)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "sum() takes at most 2 arguments (3 given)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-positional-only",
+      "stage": "LA194",
+      "source": "try: sum(iterable=[])\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "sum() takes at least 1 positional argument (0 given)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-owned-add",
+      "stage": "LA194",
+      "source": "class A:\n def __init__(self,n): self.n=n\n def __add__(self,other):\n  print(self.n,other)\n  return A(self.n+other)\n def __iadd__(self,other): raise ValueError(\"inplace\")\nstart=A(1)\nresult=sum([2,3],start)\nprint(result.n,start.n,sum([],start) is start)\n",
+      "stdout": "1 2\n3 3\n6 1 True\n"
+    },
+    {
+      "id": "sum-reflected-to-float",
+      "stage": "LA194",
+      "source": "class R:\n def __radd__(self,other):\n  print(\"reflected\")\n  return 0.0\nprint(sum([R(),1e16,1.,-1e16]))\n",
+      "stdout": "reflected\n1.0\n"
+    },
+    {
+      "id": "sum-float-subclass-start",
+      "stage": "LA194",
+      "source": "class F(float): pass\nprint(sum([1e16,1.,-1e16],F(0.0)))\n",
+      "stdout": "0.0\n"
+    },
+    {
+      "id": "sum-float-subclass-item",
+      "stage": "LA194",
+      "source": "class F(float): pass\nprint(sum([1e16,F(1.),-1e16]))\n",
+      "stdout": "0.0\n"
+    },
+    {
+      "id": "sum-integer-subclass-fast-float",
+      "stage": "LA194",
+      "source": "class I(int):\n def __float__(self): raise ValueError(\"float\")\n def __radd__(self,other): raise ValueError(\"radd\")\nprint(sum([0.0,I(1)]))\n",
+      "stdout": "1.0\n"
+    },
+    {
+      "id": "sum-float-subclass-fast-complex",
+      "stage": "LA194",
+      "source": "class F(float):\n def __float__(self): raise ValueError(\"float\")\n def __radd__(self,other): raise ValueError(\"radd\")\nz=sum([0j,F(1.5)])\nprint(z.real,z.imag)\n",
+      "stdout": "1.5 0.0\n"
+    },
+    {
+      "id": "sum-complex-subclass-generic",
+      "stage": "LA194",
+      "source": "class C(complex):\n def __radd__(self,other): return 3.5\nprint(sum([0j,C(1)]))\n",
+      "stdout": "3.5\n"
+    },
+    {
+      "id": "sum-iterator-before-start",
+      "stage": "LA194",
+      "source": "class I:\n def __iter__(self):\n  print(\"iter\")\n  return self\n def __next__(self):\n  print(\"next\")\n  raise StopIteration\ntry: sum(I(),\"bad\")\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "iter\nsum() can't sum strings [use ''.join(seq) instead]\n"
+    },
+    {
+      "id": "sum-iterator-before-invalid",
+      "stage": "LA194",
+      "source": "class I:\n def __iter__(self): raise ValueError(\"iter\")\nsum(I(),\"bad\")\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "sum-subclass-text-start",
+      "stage": "LA194",
+      "source": "class S(str): pass\ntry: sum([],S(\"bad\"))\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "sum() can't sum strings [use ''.join(seq) instead]\n"
+    },
+    {
+      "id": "sum-addition-stop",
+      "stage": "LA194",
+      "source": "class A:\n def __add__(self,other): raise StopIteration(\"addition\")\nsum([1],A())\n",
+      "stdout": "",
+      "error_type": "StopIteration"
+    },
+    {
+      "id": "sum-iterator-failure",
+      "stage": "LA194",
+      "source": "class I:\n def __iter__(self): return self\n def __next__(self): raise ValueError(\"next\")\nsum(I())\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "sum-huge-int-float",
+      "stage": "LA194",
+      "source": "print(\"before\")\nsum([0.0,10**1000])\n",
+      "stdout": "before\n",
+      "error_type": "OverflowError"
+    },
+    {
+      "id": "sum-keyed-reports",
+      "stage": "LA194",
+      "source": "rows=[(\"a\",1.5),(\"b\",2.5)]\nprint(sum([value for name,value in rows]),min(rows,key=lambda r:r[1]),max(rows,key=lambda r:r[1]))\n",
+      "stdout": "4.0 ('a', 1.5) ('b', 2.5)\n"
+    },
+    {
+      "id": "sum-binary64-sample-00",
+      "stage": "LA194",
+      "source": "print(sum([-1e+16, 1e+100, 1.0, -0.0, 0.1, -0.0, 1099511627776, -0.0, -0.0, 1.0, 1e+100, -1e+16],0.0))\n",
+      "stdout": "2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-01",
+      "stage": "LA194",
+      "source": "print(sum([-0.0, -1e+16, -1e+100, -1e+16, 1e+100, 1.0, 1099511627776, 0.1, -1e+16, -1e+100, -1e+100, -0.0],2**64))\n",
+      "stdout": "-2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-02",
+      "stage": "LA194",
+      "source": "print(sum([1e+100, 1099511627776, -1e+100, 1099511627776, -1e+100, -1e+16, 1.0, -0.0, -0.0, 0.1, -0.0, 1099511627776],0.0))\n",
+      "stdout": "-1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-03",
+      "stage": "LA194",
+      "source": "print(sum([-0.0, 1099511627776, 0.1, 1.0, -0.0, 0.1, 1e+100, 1.0, 1.0, -0.0, 1099511627776, 0.1],0))\n",
+      "stdout": "1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-04",
+      "stage": "LA194",
+      "source": "print(sum([1.0, 1099511627776, 1e+100, -0.0, 1.0, -1e+16, -1e+16, -1e+100, 1.0, -1e+16, -1e+16, -0.0],0))\n",
+      "stdout": "-3.999890048837222e+16\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-05",
+      "stage": "LA194",
+      "source": "print(sum([-1e+16, -0.0, 1e+100, 1.0, 1.0, -1e+16, 1e+100, 1.0, 1e+16, 1e+16, 1e+100, 1.0],0))\n",
+      "stdout": "3.0000000000000002e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-06",
+      "stage": "LA194",
+      "source": "print(sum([-1e+100, -0.0, -1e+16, -0.0, 1099511627776, 1e+100, -0.0, -0.0, -0.0, 1099511627776, -0.0, 1e+100],0))\n",
+      "stdout": "1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-07",
+      "stage": "LA194",
+      "source": "print(sum([1.0, -1e+16, 1.0, -1e+100, -1e+100, -1e+16, 1099511627776, 1.0, 1e+16, 1.0, 1099511627776, 1.0],0.0))\n",
+      "stdout": "-2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-08",
+      "stage": "LA194",
+      "source": "print(sum([-0.0, -1e+16, -1e+100, 1e+16, -0.0, -1e+100, -1e+100, 1099511627776, 1099511627776, -1e+16, -1e+100, 1e+16],2**64))\n",
+      "stdout": "-4e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-09",
+      "stage": "LA194",
+      "source": "print(sum([1e+16, 1e+16, -1e+16, -1e+100, 1e+16, 1.0, -1e+100, 0.1, 0.1, 1.0, -1e+16, 1099511627776],0))\n",
+      "stdout": "-2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-10",
+      "stage": "LA194",
+      "source": "print(sum([1e+100, -1e+100, 1e+16, -1e+16, 0.1, 1e+100, 1099511627776, 1e+16, -0.0, 1e+100, 0.1, -1e+16],2**64))\n",
+      "stdout": "2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-11",
+      "stage": "LA194",
+      "source": "print(sum([0.1, -1e+100, 1e+16, -1e+100, -0.0, -0.0, -1e+100, -1e+16, -1e+16, 1e+100, 1.0, 0.1],0.0))\n",
+      "stdout": "-2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-12",
+      "stage": "LA194",
+      "source": "print(sum([0.1, -0.0, -0.0, 1.0, -1e+100, 0.1, 0.1, 1099511627776, 1e+16, 1e+16, -1e+100, 0.1],2**64))\n",
+      "stdout": "-2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-13",
+      "stage": "LA194",
+      "source": "print(sum([-0.0, 1e+100, 1.0, 1e+16, 1e+100, 0.1, 1e+16, -0.0, -1e+100, 0.1, -0.0, 1e+100],2**64))\n",
+      "stdout": "2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-14",
+      "stage": "LA194",
+      "source": "print(sum([1099511627776, -1e+100, 1.0, 1e+100, 1e+100, -1e+16, 1e+100, 0.1, -0.0, -0.0, -1e+100, 1.0],2**64))\n",
+      "stdout": "1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-15",
+      "stage": "LA194",
+      "source": "print(sum([1e+16, 1099511627776, 0.1, -1e+100, 1099511627776, 1e+16, -0.0, 1.0, 1.0, -1e+100, 0.1, 0.1],2**64))\n",
+      "stdout": "-2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-16",
+      "stage": "LA194",
+      "source": "print(sum([1e+16, 1.0, -1e+16, -1e+16, 0.1, 1e+16, -1e+100, -1e+100, 1e+100, 1e+16, -1e+100, 1e+100],True))\n",
+      "stdout": "-1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-17",
+      "stage": "LA194",
+      "source": "print(sum([1.0, -1e+16, -1e+100, -1e+100, -1e+100, -1e+16, -0.0, -0.0, 1099511627776, 1e+16, -0.0, -1e+100],True))\n",
+      "stdout": "-4e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-18",
+      "stage": "LA194",
+      "source": "print(sum([1099511627776, -1e+16, 1099511627776, 1e+16, 1099511627776, -1e+100, -1e+100, 1e+16, -0.0, -0.0, 0.1, 1e+100],0.0))\n",
+      "stdout": "-1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-19",
+      "stage": "LA194",
+      "source": "print(sum([0.1, -1e+16, 0.1, 1e+16, -0.0, -1e+16, 1e+100, -1e+16, 1e+16, -1e+100, -1e+16, -1e+100],0))\n",
+      "stdout": "-1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-20",
+      "stage": "LA194",
+      "source": "print(sum([1.0, 1.0, -0.0, 0.1, -1e+16, 0.1, -1e+100, 1e+100, 1e+16, 1099511627776, -1e+16, 1e+100],True))\n",
+      "stdout": "1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-21",
+      "stage": "LA194",
+      "source": "print(sum([1.0, -0.0, 0.1, 1e+100, 1099511627776, 1e+16, -1e+16, -1e+16, -1e+100, 1099511627776, 1099511627776, 1099511627776],0.0))\n",
+      "stdout": "-9995601953488894.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-22",
+      "stage": "LA194",
+      "source": "print(sum([1e+100, 1e+16, -0.0, 1.0, 1e+100, -0.0, -0.0, 0.1, -1e+16, -0.0, 1e+100, 1099511627776],0))\n",
+      "stdout": "3.0000000000000002e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-23",
+      "stage": "LA194",
+      "source": "print(sum([-1e+16, 1e+100, -1e+16, 1e+100, 1e+100, -0.0, -1e+16, -1e+16, -1e+16, -0.0, 1e+100, 1.0],True))\n",
+      "stdout": "4e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-24",
+      "stage": "LA194",
+      "source": "print(sum([-1e+100, -1e+100, -1e+100, -1e+16, 1099511627776, 1.0, -1e+16, -1e+16, -0.0, 1e+100, -1e+100, -1e+16],True))\n",
+      "stdout": "-3.0000000000000002e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-25",
+      "stage": "LA194",
+      "source": "print(sum([1099511627776, -0.0, 1e+16, 1e+100, 1.0, -1e+16, 1e+100, 1e+16, 1e+100, 0.1, 1e+100, 1e+100],0.0))\n",
+      "stdout": "5e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-26",
+      "stage": "LA194",
+      "source": "print(sum([1.0, 1.0, 0.1, -0.0, 1e+100, 0.1, 1099511627776, 1e+100, -1e+100, 1e+16, 1e+16, -1e+100],True))\n",
+      "stdout": "0.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-27",
+      "stage": "LA194",
+      "source": "print(sum([0.1, 1e+100, 1e+16, 0.1, 1099511627776, 1099511627776, 0.1, 1099511627776, -1e+16, -0.0, -1e+16, 1e+100],0.0))\n",
+      "stdout": "2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-28",
+      "stage": "LA194",
+      "source": "print(sum([0.1, -0.0, -0.0, -0.0, 1e+16, -1e+16, 0.1, 1.0, -0.0, -0.0, -1e+16, 0.1],True))\n",
+      "stdout": "-9999999999999996.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-29",
+      "stage": "LA194",
+      "source": "print(sum([-1e+16, 1.0, -1e+16, -1e+100, 0.1, 1e+16, 1.0, 1e+100, 0.1, 1.0, -0.0, 1e+100],2**64))\n",
+      "stdout": "1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-30",
+      "stage": "LA194",
+      "source": "print(sum([0.1, 1e+16, 1099511627776, -1e+16, 1099511627776, -0.0, -1e+16, 1.0, 1.0, -1e+100, 1.0, 1e+100],True))\n",
+      "stdout": "0.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-31",
+      "stage": "LA194",
+      "source": "print(sum([0.1, -1e+100, 1.0, 0.1, 0.1, 1099511627776, 1099511627776, 0.1, -0.0, 1e+100, 0.1, 1e+16],2**64))\n",
+      "stdout": "1e+16\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-32",
+      "stage": "LA194",
+      "source": "print(sum([-0.0, 1099511627776, -0.0, 1e+16, -1e+100, -0.0, -1e+100, -1e+100, -0.0, 0.1, 1099511627776, 1e+16],0))\n",
+      "stdout": "-3.0000000000000002e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-33",
+      "stage": "LA194",
+      "source": "print(sum([0.1, 1.0, 1099511627776, -0.0, 0.1, 1.0, -1e+100, 1099511627776, -1e+16, -1e+16, -0.0, 1.0],0))\n",
+      "stdout": "-1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-34",
+      "stage": "LA194",
+      "source": "print(sum([0.1, 1e+100, 1.0, 1e+16, -0.0, 1e+16, 1e+100, 1.0, 1e+16, -0.0, -0.0, 1e+16],0.0))\n",
+      "stdout": "2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-35",
+      "stage": "LA194",
+      "source": "print(sum([1099511627776, 1.0, 1e+16, -0.0, -0.0, 1.0, -0.0, 1099511627776, -1e+16, -1e+16, 1099511627776, 0.1],2**64))\n",
+      "stdout": "1.8436747372244435e+19\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-36",
+      "stage": "LA194",
+      "source": "print(sum([0.1, 1e+16, -0.0, 0.1, -1e+16, 1099511627776, 1099511627776, 1e+100, 1e+16, 1e+100, -1e+16, 1099511627776],0.0))\n",
+      "stdout": "2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-37",
+      "stage": "LA194",
+      "source": "print(sum([-1e+16, -0.0, 1e+16, 1.0, 1e+16, 1e+100, 1e+16, 1e+100, 1e+100, -1e+16, -1e+100, 1.0],0.0))\n",
+      "stdout": "2e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-38",
+      "stage": "LA194",
+      "source": "print(sum([1e+100, 1099511627776, 1e+16, -1e+16, 0.1, -1e+16, -1e+16, 0.1, -1e+100, -0.0, 0.1, -1e+100],True))\n",
+      "stdout": "-1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-binary64-sample-39",
+      "stage": "LA194",
+      "source": "print(sum([0.1, -1e+16, 0.1, -1e+16, 1e+16, 1.0, 1e+16, 1e+100, 0.1, -0.0, 1099511627776, 1099511627776],2**64))\n",
+      "stdout": "1e+100\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "sum-overflow-cancellation-phase",
+      "stage": "LA194",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "print(sum([-2**63,2**63,1e16,1.,-1e16]),sum([2**63-1,-(2**63-1),1e16,1.,-1e16]))\n",
+      "stdout": "0.0 1.0\n"
     }
   ]
 }

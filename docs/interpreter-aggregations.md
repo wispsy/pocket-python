@@ -32,3 +32,32 @@ their individual contracts; this does not admit new syntax or async iterables.
 shared manifest runs both profiles in Node and Chromium through drain, stepped
 and parked drivers. Lifecycle tests exercise suspended callbacks, forced
 collection, interruption and zero logical teardown.
+
+## Sum
+
+LA-194 adopts `sum(iterable, /, start=0)`. Signature validation precedes iterator
+acquisition; acquisition precedes rejecting string/bytes/bytearray starts. Empty
+generic inputs return the exact start object. Addition uses ordinary `+`, with
+owned reflected slots where required, and never mutates a list start through
+in-place addition. Iterator exhaustion ends the fold; addition errors, including
+`StopIteration`, propagate.
+
+The pinned 64-bit reference's numeric phases are explicit. Small exact integers
+accumulate within signed 64-bit bounds, then transition through ordinary addition.
+Exact float and complex totals use Neumaier compensation with Python's operation
+order, non-finite recovery and signed-zero behavior. Real and imaginary components
+have separate compensation. Exact/subclass transitions follow the reference:
+integer payloads bypass conversion callbacks in numeric phases; generic arithmetic
+does not silently re-enter a prior optimized phase. Complex phases likewise consume
+admitted real payloads without unrelated conversion hooks.
+
+Immutable sum continuations retain the iterator and generic accumulator. Their
+bounded binary64 metadata carries no Python-object edges. Numeric conversion,
+allocation, addition callbacks and iterator work share the activation's budgets.
+The corpus includes cancellation-prone magnitudes, subtypes, overflow/non-finite
+values, empty identities, callback order/errors and deterministic numeric samples.
+This adopts the sum API over existing value families; complex representation,
+new codecs, general libraries and other numeric methods keep their own owners.
+
+References: [builtin interfaces](https://docs.python.org/3.14/builtins/functions.html),
+[pinned accumulation phases](https://github.com/python/cpython/blob/v3.14.7/Python/bltinmodule.c).

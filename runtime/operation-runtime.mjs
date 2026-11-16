@@ -1,4 +1,5 @@
 import {dynamicImporter} from "./dynamic-imports.mjs";
+import {addCompensated, totalCompensated} from "./numeric.mjs";
 import {dynamicEvaluator} from "./dynamic-evaluation.mjs";
 import {dynamicCompiler} from "./dynamic-source.mjs";
 import {NATIVE_SUBCLASS_BASES, CONTAINER_METHODS, CONTAINER_METHOD_NAMES} from "./class-values.mjs";
@@ -554,6 +555,50 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     return compareTask(record.name === "min" ? "less" : "greater", key, record.bestKey, site,
       continuation("selection-compared", {...record, candidateKey: key}), record.depth);
   };
+  const smallSumInteger = value => typeof value === "bigint" && value >= -(1n << 63n) && value < 1n << 63n;
+  const sumInitialize = (record, result, gate = "initial") => {
+    const phase = gate === "initial" && smallSumInteger(result) ? "integer" :
+      ["initial", "after-integer"].includes(gate) && values.isFloat(result) ? "float" :
+        gate !== "generic" && values.isComplex(result) ? "complex" : "generic";
+    return {...record, phase, result: ["float", "complex"].includes(phase) ? null : result,
+      reHigh: phase === "float" ? result.value : phase === "complex" ? result.real : 0,
+      reLow: 0, imHigh: phase === "complex" ? result.imag : 0, imLow: 0};
+  };
+  const sumMaterialize = record => record.phase === "float" ? values.float(totalCompensated(record.reHigh, record.reLow)) :
+    record.phase === "complex" ? values.complex(totalCompensated(record.reHigh, record.reLow), totalCompensated(record.imHigh, record.imLow)) :
+      record.phase === "integer" ? values.int(record.result) : record.result;
+  const sumNext = (record, site) => {
+    const task = unaryTask("next", record.receiver, site, continuation("sum-next", record), record.depth);
+    state.temporaries = operationRoots(task); return task;
+  };
+  const sumItem = (record, item, site) => {
+    charge(1);
+    const payload = classes.payload(item), integer = ["bigint", "boolean"].includes(typeof payload);
+    if (record.phase === "integer" && ["bigint", "boolean"].includes(typeof item)) {
+      const operand = typeof item === "boolean" ? BigInt(item) : item;
+      if (smallSumInteger(operand)) {
+        const result = record.result + operand;
+        if (smallSumInteger(result)) return sumNext({...record, result}, site);
+      }
+    }
+    if (record.phase === "float" && (values.isFloat(item) || integer)) {
+      if (integer) charge(payload.toString().length);
+      const [reHigh, reLow] = addCompensated(record.reHigh, record.reLow, values.number(integer ? payload : item));
+      return sumNext({...record, reHigh, reLow}, site);
+    }
+    if (record.phase === "complex" && (values.isComplex(item) || integer || values.isFloat(payload))) {
+      if (integer) charge(payload.toString().length);
+      const real = values.isComplex(item) ? item.real : values.number(payload);
+      const [reHigh, reLow] = addCompensated(record.reHigh, record.reLow, real);
+      const [imHigh, imLow] = values.isComplex(item) ? addCompensated(record.imHigh, record.imLow, item.imag) : [record.imHigh, record.imLow];
+      return sumNext({...record, reHigh, reLow, imHigh, imLow}, site);
+    }
+    const result = sumMaterialize(record); state.temporaries.push(result, item, record.receiver);
+    const phase = record.phase === "integer" ? "after-integer" : record.phase === "float" ? "after-float" : "generic";
+    const after = continuation("sum-added", {...record, result: null, phase});
+    return userProtocol(result) || userProtocol(item) ? arithmeticTask("add", [result, item], site, after, record.depth) :
+      valueTask(values.binary("add", result, item), site, after);
+  };
   const consumeFinish = (name, result, site, after) => {
     state.temporaries.push(result);
     const value = name === "bytes" ? values.binaryValue(result.items) : ["tuple", "syntax-details"].includes(name) ? values.tuple(result.items) :
@@ -1028,6 +1073,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
       if (current.kind === "call-star-next") return valueTask(current.receiver, site, current.after);
       if (current.kind === "consume-next") return consumeFinish(current.name, current.result, site, current.after);
       if (current.kind === "selection-next") return selectionFinish(current, site);
+      if (current.kind === "sum-next") return valueTask(sumMaterialize(current), site, current.after);
     }
     return null;
   };
@@ -1868,6 +1914,14 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     if (completion?.kind === "selection-truth") return selectionNext({...completion,
       best: value ? completion.candidate : completion.best, bestKey: value ? completion.candidateKey : completion.bestKey,
       candidate: null, candidateKey: null}, site);
+    if (completion?.kind === "sum-iter") {
+      const start = classes.payload(completion.result);
+      if (values.isString(start)) python("TypeError", "sum() can't sum strings [use ''.join(seq) instead]");
+      if (values.isBinary(start)) python("TypeError", start.mutable ? "sum() can't sum bytearray [use b''.join(seq) instead]" : "sum() can't sum bytes [use b''.join(seq) instead]");
+      return sumNext(sumInitialize({...completion, receiver: value}, completion.result), site);
+    }
+    if (completion?.kind === "sum-next") return sumItem(completion, value, site);
+    if (completion?.kind === "sum-added") return sumNext(sumInitialize(completion, value, completion.phase), site);
     if (completion?.kind === "optional-truth") return unaryTask(completion.operation, value, site,
       completion.after, completion.depth);
     if (completion?.kind === "invoke") return callTask(value, completion.args, completion.keywords,
@@ -3784,6 +3838,15 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             count("builtin:" + callable.name);
             if (args.length !== 1 || keywords.length) python("TypeError", callable.name + "() requires one positional iterable");
             task = consumeTask(callable.name, args[0], site, completion, depth); continue;
+          }
+          if (callable.name === "sum") {
+            count("builtin:sum");
+            if (!args.length) python("TypeError", "sum() takes at least 1 positional argument (0 given)");
+            if (args.length + keywords.length > 2) python("TypeError", "sum() takes at most 2 arguments (" + (args.length + keywords.length) + " given)");
+            const invalid = keywords.find(name => name !== "start");
+            if (invalid !== undefined) python("TypeError", "sum() got an unexpected keyword argument '" + invalid + "'");
+            const result = args.length > 1 ? args[1] : keywords.length ? keywordValues[0] : 0n;
+            task = unaryTask("iter", args[0], site, continuation("sum-iter", {result, phase: "initial", depth, after: completion}), depth); continue;
           }
           if (["min", "max"].includes(callable.name)) {
             count("builtin:" + callable.name);
