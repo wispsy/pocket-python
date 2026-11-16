@@ -10,7 +10,8 @@
     "LA205",
     "LA206",
     "LA207",
-    "LA208"
+    "LA208",
+    "LA209"
   ],
   "cases": [
     {
@@ -1341,6 +1342,141 @@
       "stage": "LA208",
       "source": "class S:\n def __iter__(self): print(\"iter\");return iter([3,1,2])\n def __length_hint__(self): print(\"hint\");return 3\nprint(sorted(S()))\n",
       "stdout": "iter\nhint\n[1, 2, 3]\n"
+    },
+    {
+      "id": "sorted-owned-stability",
+      "stage": "LA209",
+      "source": "class V:\n def __init__(self,n,label): self.n=n;self.label=label\n def __lt__(self,other): return self.n<other.n\na=[V(2,\"a\"),V(1,\"b\"),V(2,\"c\")]\nprint([x.label for x in sorted(a)])\nprint([x.label for x in sorted(a,reverse=True)])\n",
+      "stdout": "['b', 'a', 'c']\n['a', 'c', 'b']\n"
+    },
+    {
+      "id": "sorted-rich-truth",
+      "stage": "LA209",
+      "source": "class T:\n def __init__(self,b):self.b=b\n def __bool__(self):print(\"truth\");return self.b\nclass V:\n def __init__(self,n):self.n=n\n def __lt__(self,other):return T(self.n<other.n)\nprint([x.n for x in sorted([V(2),V(1)])])\n",
+      "stdout": "truth\n[1, 2]\n"
+    },
+    {
+      "id": "sorted-reflected-ordering",
+      "stage": "LA209",
+      "source": "class V:\n def __init__(self,n):self.n=n\n def __lt__(self,other):return NotImplemented\n def __gt__(self,other):return self.n>other.n\nprint([x.n for x in sorted([V(3),V(1),V(2)])])\n",
+      "stdout": "[1, 2, 3]\n"
+    },
+    {
+      "id": "sorted-type-priority",
+      "stage": "LA209",
+      "source": "class A:\n def __lt__(self,other):print(\"left\");return False\nclass B(A):\n def __gt__(self,other):print(\"reflected\");return True\na=A()\nb=B()\nprint(sorted([b,a])[0] is a)\n",
+      "stdout": "reflected\nTrue\n"
+    },
+    {
+      "id": "sorted-key-owned-comparison",
+      "stage": "LA209",
+      "source": "class V:\n def __init__(self,n,label): self.n=n;self.label=label\n def __lt__(self,other): return self.n<other.n\ndef key(x):return V(x[0],x[1])\na=[(2,\"a\"),(1,\"b\"),(2,\"c\")]\nprint(sorted(a,key=key,reverse=True))\n",
+      "stdout": "[(2, 'a'), (2, 'c'), (1, 'b')]\n"
+    },
+    {
+      "id": "sorted-temporary-key-owner",
+      "stage": "LA209",
+      "source": "class K:\n def __init__(self):self.scale=-1\n def key(self,x):return self.scale*x\nprint(sorted([1,3,2],key=K().key))\n",
+      "stdout": "[3, 2, 1]\n"
+    },
+    {
+      "id": "sorted-compare-mutates-source",
+      "stage": "LA209",
+      "source": "class V:\n def __init__(self,n):self.n=n\n def __lt__(self,other):a.clear();return self.n<other.n\na=[V(3),V(1),V(2)]\nprint([x.n for x in sorted(a)],a)\n",
+      "stdout": "[1, 2, 3] []\n"
+    },
+    {
+      "id": "sorted-nested-key",
+      "stage": "LA209",
+      "source": "def key(x):\n print(\"key\",x)\n return sorted([x,-x])[0]\nprint(sorted([1,3,2],key=key))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "key 1\nkey 3\nkey 2\n[3, 2, 1]\n"
+    },
+    {
+      "id": "sorted-tie-identity",
+      "stage": "LA209",
+      "source": "a=[1]\nb=[1]\nr=sorted([a,b],key=lambda x:0,reverse=True)\nprint(r[0] is a,r[1] is b)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "True True\n"
+    },
+    {
+      "id": "sorted-equality-never-called",
+      "stage": "LA209",
+      "source": "class V:\n def __init__(self,n):self.n=n\n def __lt__(self,other):return self.n<other.n\n def __eq__(self,other):raise ValueError(\"wrong equality\")\nprint([x.n for x in sorted([V(2),V(1),V(2)])])\n",
+      "stdout": "[1, 2, 2]\n"
+    },
+    {
+      "id": "sorted-original-dynamic-error",
+      "stage": "LA209",
+      "source": "code=compile('def key(x):\\n raise ValueError(\"original sorted key\")\\n',\"ordering-original.py\",\"exec\")\nexec(code)\nsorted([1],key=key)\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "sorted-key-generator-error",
+      "stage": "LA209",
+      "source": "def key(x):return (n for n in [x])\nsorted([2,1],key=key)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "sorted-key-value",
+      "stage": "LA209",
+      "source": "def key(x):print(\"key\",x);raise ValueError(\"key\")\nsorted([3,1],key=key)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "key 3\n",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "sorted-key-stop",
+      "stage": "LA209",
+      "source": "def key(x):print(\"key\",x);raise StopIteration(\"key\")\nsorted([3,1],key=key)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "key 3\n",
+      "error_type": "StopIteration"
+    },
+    {
+      "id": "sorted-compare-value",
+      "stage": "LA209",
+      "source": "class V:\n def __lt__(self,other):raise ValueError(\"comparison\")\nsorted([V(),V()])\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "sorted-compare-stop",
+      "stage": "LA209",
+      "source": "class V:\n def __lt__(self,other):raise StopIteration(\"comparison\")\nsorted([V(),V()])\n",
+      "stdout": "",
+      "error_type": "StopIteration"
+    },
+    {
+      "id": "sorted-truth-failure",
+      "stage": "LA209",
+      "source": "class T:\n def __bool__(self):raise ValueError(\"comparison truth\")\nclass V:\n def __lt__(self,other):return T()\nsorted([V(),V()])\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "sorted-comparison-cycle",
+      "stage": "LA209",
+      "source": "class V:\n def __init__(self,n):self.n=n;self.link=self\n def __lt__(self,other):return self.link.n<other.link.n\nprint([x.n for x in sorted([V(3),V(1),V(2)])])\n",
+      "stdout": "[1, 2, 3]\n"
     }
   ]
 }

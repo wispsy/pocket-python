@@ -70,6 +70,13 @@ not CPython's internal sorting algorithm or pathological comparator schedules.
 Source mutation by callbacks cannot replace the private materialized list.
 The shared item/work budgets bound insertion moves and retained key storage.
 
+LA-209 qualifies owned/reflected less-than, subtype priority, rich truth results,
+bound key owners, cyclic keys, source mutation, reentrant sorting and original
+dynamic failures. No equality callback is substituted for less-than. Parked key,
+comparison, comparison-truth and reverse-truth callbacks survive collection or
+close/cancel cleanly. Key allocation failure, instruction/work exhaustion,
+insertion-move limits and nested sorting use the same resource controller.
+
 References: [reverse implementation](https://github.com/python/cpython/blob/v3.14.7/Objects/enumobject.c),
 [length hints](https://github.com/python/cpython/blob/v3.14.7/Objects/abstract.c),
 [list operations](https://github.com/python/cpython/blob/v3.14.7/Objects/listobject.c).

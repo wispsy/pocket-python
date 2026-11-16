@@ -85,3 +85,25 @@ test('hint allocation failures and nested hints retain shared limits', async () 
   const nested = await run('class S:\n def __iter__(self): return iter([])\n def __length_hint__(self): return len(list(S()))\nlist(S())\n', {maxDepth: 32, maxWork: 20000000});
   assert.equal(nested.error.type, 'RecursionError'); closed(nested);
 });
+
+test('sorting retains keys, owners, comparisons and truth results while parked', async () => {
+  await parked('class K:\n def __init__(self):self.data=[-1]\n def key(self,x):\n  print("key")\n  return self.data[0]*x\nprint(sorted([1,2],key=K().key))\n', 'key\nkey\n[2, 1]\n', 'key\n');
+  const values = 'class V:\n def __init__(self,n):self.n=n;self.link=self\n def __lt__(self,other):\n  print("compare")\n  return self.link.n<other.link.n\nprint([x.n for x in sorted([V(2),V(1)])])\n';
+  await parked(values, 'compare\n[1, 2]\n', 'compare\n');
+  await parked('class T:\n def __init__(self,b):self.b=b\n def __bool__(self):\n  print("truth")\n  return self.b\nclass V:\n def __init__(self,n):self.n=n\n def __lt__(self,other):return T(self.n<other.n)\nprint([x.n for x in sorted([V(2),V(1)])])\n', 'truth\n[1, 2]\n', 'truth\n');
+  await parked('class R:\n def __bool__(self):\n  print("reverse")\n  return True\nprint(sorted([1,2],reverse=R()))\n', 'reverse\n[2, 1]\n', 'reverse\n');
+});
+
+test('sorting shares work, allocation, depth and cancellation limits', async () => {
+  const limited = await run('def key(x):\n while True:pass\nsorted([1],key=key)\n', {maxWork: 3000});
+  assert.equal(limited.error.code, 'BUDGET'); closed(limited);
+  const moves = await run('sorted(range(300,0,-1))\n', {maxWork: 30000});
+  assert.equal(moves.error.code, 'BUDGET'); closed(moves);
+  const oom = await run('def key(x):\n print("entered")\n held=[]\n while True:held.append([1,2,3])\nsorted([1],key=key)\n', {maxWork: 20000000}, {maxBytes: 80000});
+  assert.equal(oom.error.code, 'OOM'); assert.equal(oom.stdout, 'entered\n'); closed(oom);
+  const depth = await run('def key(x):return sorted([x],key=key)\nsorted([1],key=key)\n', {maxDepth: 32, maxWork: 20000000});
+  assert.equal(depth.error.type, 'RecursionError'); closed(depth);
+  let polls = 0;
+  const cancelled = await run('sorted(range(1000,0,-1))\n', {shouldCancel: () => ++polls > 1000});
+  assert.equal(cancelled.error.code, 'CANCELLED'); closed(cancelled);
+});
