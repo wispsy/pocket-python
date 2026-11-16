@@ -404,3 +404,9 @@ The `classes-source/1` profile also supports [bounded dynamic source](docs/inter
 and granted module registry. The [dynamic source example](examples/interpreter_dynamic_source.py)
 uses the selected `operator/1` library profile; compilation and namespace changes
 do not add loader or host capabilities.
+
+[Lazy traversal](docs/interpreter-traversals.md) adds `map` with Python 3.14 strict
+length checks and `filter` with owned predicates and truth callbacks. Iterators
+retain their callable/source owners through pause and collection. The
+[reading report](examples/interpreter_traversals.py) composes generators, lazy
+pipelines and aggregation. Primitive/function pipelines also run in core-source/1.

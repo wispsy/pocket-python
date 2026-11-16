@@ -13,9 +13,14 @@ const closed = result => { for (const key of ['bytes', 'objects', 'roots', 'fram
 const corpus = JSON.parse(readFileSync(new URL('../tests/fixtures/interpreter/traversals.json', import.meta.url)));
 for (const item of corpus.cases.filter(item => corpus.implemented_stages.includes(item.stage))) {
   test('traversal source: ' + item.id, async () => {
-    const result = await run(item.source, {maxWork: 20000000});
+    const result = await runSourceRequest({modules: [{...unit(item.source), imports: item.imports ?? []},
+      ...(item.modules ?? []).map(module => ({...module, notice: 'Synthetic traversal helper'}))],
+      compileOptions: profile, options: {maxWork: 20000000}});
     assert.equal(result.stdout, item.stdout ?? '');
     assert.equal(result.error?.type, item.error_type, JSON.stringify(result.error));
+    if (item.error_frames) assert.deepEqual(result.error.traceback.map(frame => ({function: frame.function, line: frame.location.span[0]})), item.error_frames);
+    if (item.id === 'pipeline-original-dynamic-frame') assert.deepEqual(result.error.traceback.map(frame =>
+      [frame.function, frame.location.filename, frame.location.span[0]]), [['<module>', 'sources/app.py', 2], ['apply', 'traversal-original.py', 2]]);
     closed(result);
   });
 }

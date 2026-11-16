@@ -5,7 +5,8 @@
   "reference_version": "3.14.7",
   "implemented_stages": [
     "LA196",
-    "LA197"
+    "LA197",
+    "LA198"
   ],
   "cases": [
     {
@@ -704,6 +705,89 @@
       "stage": "LA197",
       "source": "class S:\n def __getitem__(self,i):\n  if i==3: raise IndexError\n  return i\nprint(list(filter(None,S())))\n",
       "stdout": "[1, 2]\n"
+    },
+    {
+      "id": "pipeline-retained-closures",
+      "source": "def outer(n):\n def accept(x): return x>n\n def apply(x): return [n,x]\n return map(apply,filter(accept,[1,3,4]))\ni=outer(2)\nprint(list(i))\n",
+      "stage": "LA198",
+      "stdout": "[[2, 3], [2, 4]]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "pipeline-generator-cleanup",
+      "source": "def source():\n try:\n  yield 0\n  yield -2\n  yield -3\n finally: print(\"cleanup\")\ng=source()\ni=map(abs,filter(None,g))\nprint(next(i))\ng.close()\nprint(list(i))\n",
+      "stage": "LA198",
+      "stdout": "2\ncleanup\n[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "pipeline-mutation-and-aliases",
+      "source": "a=[[1],[2]]\ndef apply(x):\n if x is a[0]: a.append([3])\n return x\nitems=list(map(apply,filter(None,a)))\nprint(items,items[0] is a[0],items[-1] is a[-1])\n",
+      "stage": "LA198",
+      "stdout": "[[1], [2], [3]] True True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "pipeline-original-dynamic-frame",
+      "source": "exec(compile(\"def apply(x):\\n raise ValueError(\\\"callback\\\")\\n\", \"traversal-original.py\", \"exec\"))\nprint(next(map(apply,[1])))\n",
+      "stage": "LA198",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "pipeline-original-truth-error",
+      "source": "class Truth:\n def __bool__(self): raise LookupError(\"truth\")\ndef accept(x): return Truth()\nprint(next(filter(accept,[1])))\n",
+      "stage": "LA198",
+      "stdout": "",
+      "error_type": "LookupError",
+      "error_frames": [
+        {
+          "function": "<module>",
+          "line": 4
+        },
+        {
+          "function": "__bool__",
+          "line": 2
+        }
+      ]
+    },
+    {
+      "id": "pipeline-generic-aggregation",
+      "source": "class Total:\n def __init__(self,n): self.n=n\n def __add__(self,x): return Total(self.n+x)\nprint(sum(map(abs,filter(None,[-2,0,3])),Total(7)).n)\n",
+      "stage": "LA198",
+      "stdout": "12\n"
+    },
+    {
+      "id": "pipeline-imported-callback",
+      "source": "import helper\nprint(list(map(helper.apply,filter(helper.accept,[0,1,2]))))\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "package": false,
+          "imports": [],
+          "source": "factor=3\ndef accept(x): return x>0\ndef apply(x): return factor*x\n"
+        }
+      ],
+      "stage": "LA198",
+      "stdout": "[3, 6]\n"
+    },
+    {
+      "id": "pipeline-bound-owner-cycle",
+      "source": "class P:\n def __init__(self): self.data=[self,7]\n def accept(self,x): return self.data[1]>x\n def apply(self,x): return self.data[1]+x\np=P()\ni=map(p.apply,filter(p.accept,[1,2]))\ndel p\nprint(list(i))\n",
+      "stage": "LA198",
+      "stdout": "[8, 9]\n"
     }
   ]
 }

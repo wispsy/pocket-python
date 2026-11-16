@@ -42,3 +42,13 @@ owners, candidate objects and nested callback graphs remain rooted while parked.
 Unbounded rejection scans share work and cancellation limits.
 
 Reference: [pinned builtin implementation](https://github.com/python/cpython/blob/v3.14.7/Python/bltinmodule.c).
+
+LA-198 composes lazy pipelines with generators, temporary bound methods,
+closures, imports, dynamic source and iterable aggregation. The runnable
+`examples/interpreter_traversals.py` report runs as ordinary Python and through
+the independent engine. `scripts/ordinary_browser_smoke.py --traversals` accepts
+new source after offline reload, preserves original dynamic callback frames,
+stops suspended map/filter/truth/acquisition callbacks and restarts fresh. A
+waiting service-worker update keeps the original profile until reload, then
+checks the core-source pipeline offline and removes the old cache. Add
+`--require-installed` to verify an isolated wheel installation.

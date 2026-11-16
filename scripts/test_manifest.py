@@ -239,6 +239,8 @@ def checks(costs_path=None):
         '--report', 'build/ordinary-display-browser-report.json', seconds=30)
     add('ordinary-aggregations-browser', 'browser-integration', 'python', 'scripts/ordinary_browser_smoke.py',
         '--aggregations', '--report', 'build/ordinary-aggregations-browser-report.json', seconds=30)
+    add('ordinary-traversals-browser', 'browser-integration', 'python', 'scripts/ordinary_browser_smoke.py',
+        '--traversals', '--report', 'build/ordinary-traversals-browser-report.json', seconds=30)
     add('interpreter-node-measurements', 'measurements', 'python', 'scripts/interpreter_measurements.py',
         '--no-browser', '--repeats', '3', '--output', 'build/interpreter-node-measurements', seconds=10)
     add('interpreter-browser-measurements', 'measurements', 'python', 'scripts/interpreter_measurements.py',
