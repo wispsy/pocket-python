@@ -6,6 +6,15 @@ export function roundQuotient(numerator, denominator) {
   return quotient;
 }
 
+// Neumaier compensation with binary64 operation order and signed-zero recovery.
+export function addCompensated(high, low, value) {
+  const next = high + value;
+  return [next, low + (Math.abs(high) >= Math.abs(value) ? (high - next) + value : (value - next) + high)];
+}
+export function totalCompensated(high, low) {
+  return low !== 0 && Number.isFinite(low) ? high + low : high;
+}
+
 export function divideIntegers(left, right, {charge, fail}) {
   if (right === 0n) fail("ZeroDivisionError", "division by zero", "ZERO_DIVISION");
   const negative = (left < 0n) !== (right < 0n);
