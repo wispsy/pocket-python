@@ -13,7 +13,7 @@ export const CONTAINER_METHODS = Object.freeze({
 });
 export const CONTAINER_METHOD_NAMES = new Set(Object.values(CONTAINER_METHODS).flat());
 export const CLASS_LIMITS = Object.freeze({bases: 16, mro: 64, attributes: 128, name: 256});
-const NATIVE_TYPES = new Set(["reversed", "map", "filter", "enumerate", "zip", "type", "bool", "int", "float", "complex", "str", "list", "tuple", "dict", "range", "slice", "set", "frozenset", "bytes", "bytearray", "memoryview",
+const NATIVE_TYPES = new Set(["list_reverseiterator", "reversed", "map", "filter", "enumerate", "zip", "type", "bool", "int", "float", "complex", "str", "list", "tuple", "dict", "range", "slice", "set", "frozenset", "bytes", "bytearray", "memoryview",
   "mappingproxy", "super", "property", "staticmethod", "classmethod", "NoneType", "NotImplementedType", "function", "method", "method-wrapper", "method_descriptor", "wrapper_descriptor", "builtin_function_or_method", "generator", "module", "code", "frame", "FrameLocalsProxy", "cell",
   "list_iterator", "tuple_iterator", "str_iterator", "str_ascii_iterator", "dict_keyiterator", "range_iterator", "longrange_iterator", "set_iterator", "bytes_iterator", "bytearray_iterator", "memory_iterator", "iterator", "callable_iterator", ...Object.keys(EXCEPTIONS)]);
 for (const name of Object.keys(NATIVE_NAMESPACES)) if (name !== "object") NATIVE_TYPES.add(name);
@@ -344,7 +344,7 @@ export class ClassRuntime {
       this.charge(1);
       if (base instanceof BuiltinValue && base.name === "type") { this.touch(base); continue; }
       if (base instanceof BuiltinValue && NATIVE_SUBCLASS_BASES.includes(base.name)) { this.touch(base); continue; }
-      if (base instanceof BuiltinValue && ["map", "filter", "enumerate", "zip"].includes(base.name))
+      if (base instanceof BuiltinValue && ["reversed", "map", "filter", "enumerate", "zip"].includes(base.name))
         this.fail("UnsupportedOperationError", "Lazy iterator subclasses require the #116 layout contract", "UNSUPPORTED");
       if (base instanceof BuiltinValue && NATIVE_TYPES.has(base.name)) {
         if (Object.hasOwn(EXCEPTIONS, base.name) || ["list", "dict", "set", "bytearray", "property", "staticmethod", "classmethod", "module", "super"].includes(base.name))

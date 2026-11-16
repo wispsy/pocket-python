@@ -471,6 +471,18 @@
       "type_case": "type-zip",
       "instance_case": "instance-zip",
       "stage": "LA200"
+    },
+    {
+      "type": "reversed",
+      "type_case": "type-reversed",
+      "instance_case": "instance-reversed",
+      "stage": "LA203"
+    },
+    {
+      "type": "list_reverseiterator",
+      "type_case": "type-list_reverseiterator",
+      "instance_case": "instance-list_reverseiterator",
+      "stage": "LA203"
     }
   ],
   "source_layouts": {

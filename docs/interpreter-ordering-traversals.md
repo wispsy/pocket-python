@@ -15,6 +15,13 @@ releases the source and permanently exhausts the iterator; IndexError and
 StopIteration become normal exhaustion, while other errors propagate once.
 Temporary sequences and pending descriptors use the common owned machine.
 
+LA-203 adds native list reverse iterators, generic reverse iterators for the
+adopted text/tuple/binary/buffer layouts, and exact reversed ranges, including
+lengths beyond signed 64-bit size. Dictionary/view reversal retains live ordered
+mutation checks. Native list/range descriptors use the actual payload even when
+subclasses override indexing or length. Native type identities, directories,
+bound/unbound advancement and reverse length hints preserve detached owners.
+
 References: [reverse implementation](https://github.com/python/cpython/blob/v3.14.7/Objects/enumobject.c),
 [length hints](https://github.com/python/cpython/blob/v3.14.7/Objects/abstract.c),
 [list operations](https://github.com/python/cpython/blob/v3.14.7/Objects/listobject.c).
