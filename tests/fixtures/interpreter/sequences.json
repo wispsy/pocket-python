@@ -6,7 +6,8 @@
   "implemented_stages": [
     "Q1",
     "Q2",
-    "Q3"
+    "Q3",
+    "LA205"
   ],
   "cases": [
     {
@@ -282,7 +283,7 @@
       "id": "construct-unicode",
       "stage": "Q2",
       "source": "a=list(\"A\\U0001f680e\\u0301\")\nb=tuple(\"\\U0001f680\")\nprint(len(a),a[1],len(b),b[0])\n",
-      "stdout": "4 🚀 1 🚀\n",
+      "stdout": "4 \ud83d\ude80 1 \ud83d\ude80\n",
       "profiles": [
         "core-source/1",
         "classes-source/1"
@@ -556,7 +557,7 @@
     },
     {
       "id": "construct-length-hint",
-      "stage": "Hints",
+      "stage": "LA205",
       "source": "class A:\n def __iter__(self):\n  print(\"iter\")\n  return iter([7])\n def __len__(self):\n  print(\"len\")\n  return 1\nprint(list(A())[0])\n",
       "stdout": "iter\nlen\n7\n",
       "profiles": [

@@ -280,8 +280,10 @@ export function completion(kind, fields = {}) {
       break;
     case "call-star-iter": case "call-star-next":
       record = {kind, receiver: fields.receiver, iterator: fields.iterator ?? null, after}; break;
-    case "consume-iter": case "consume-next": case "consume-truth": case "consume-stored": case "consume-byte":
-      record = {kind, name: consumerName(fields.name), receiver: fields.receiver, result: fields.result ?? null, depth: fields.depth, after};
+    case "hint-length": case "hint-bound": case "hint-call": case "hint-value": case "hint-indexed":
+      record = {kind, receiver: fields.receiver, depth: fields.depth, after}; depthCheck(record.depth); break;
+    case "consume-iter": case "consume-hinted": case "consume-next": case "consume-truth": case "consume-stored": case "consume-byte":
+      record = {kind, name: consumerName(fields.name), receiver: fields.receiver, result: fields.result ?? null, hinted: fields.hinted === true, depth: fields.depth, after};
       depthCheck(record.depth); break;
     case "contains-result": case "search-iter": case "search-next":
     case "search-equal": case "search-truth":
@@ -498,7 +500,8 @@ function visit(record) {
     case "call-map-probe": case "call-map-value": case "call-map-insert": case "call-map-stored":
       return [record.receiver, record.mapping, record.keys, record.key, record.item, record.hash, ...completionRoots(record.after)];
     case "call-star-iter": case "call-star-next": return [record.receiver, record.iterator, ...completionRoots(record.after)];
-    case "consume-iter": case "consume-next": case "consume-truth": case "consume-stored": case "consume-byte": return [record.receiver, record.result, ...completionRoots(record.after)];
+    case "hint-length": case "hint-bound": case "hint-call": case "hint-value": case "hint-indexed": return [record.receiver, ...completionRoots(record.after)];
+    case "consume-iter": case "consume-hinted": case "consume-next": case "consume-truth": case "consume-stored": case "consume-byte": return [record.receiver, record.result, ...completionRoots(record.after)];
     case "contains-result": case "search-iter": case "search-next": case "search-equal": case "search-truth": return [record.receiver, record.key, ...completionRoots(record.after)];
     case "sentinel-equal": case "sentinel-truth": return [record.receiver, record.value, ...completionRoots(record.after)];
     case "compare-result": case "ne-result": case "sequence-item": case "sequence-truth": return [record.left, record.right, ...completionRoots(record.after)];

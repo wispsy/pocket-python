@@ -140,10 +140,10 @@ test('owned consumers retain partial results and outer destinations in every pha
   assert.throws(()=>completion('consume-next',{name:'list',receiver,result,depth:-1}),TypeError);
 });
 
-test('construction refuses user length hints before binding or consuming source hooks',async()=>{
+test('construction validates iterator acquisition before looking up length hints',async()=>{
   for(const name of ['list','tuple'])for(const slot of ['__len__','__length_hint__']){
     const result=await run('class A:\n @property\n def __iter__(self):\n  print("bad iter")\n  return str\n @property\n def '+slot+'(self):\n  print("bad hint")\n  return str\n'+name+'(A())\n');
-    assert.equal(result.error.code,'UNSUPPORTED');assert.equal(result.stdout,'');
+    assert.equal(result.error.type,'TypeError');assert.equal(result.stdout,'bad iter\n');
     if(result.closed)closed(result);else{assert.equal(result.error.phase,'bind');assert.equal(result.stats,null);}
   }
   const predicates=await run('class A:\n def __iter__(self): return iter([1])\n def __len__(self):\n  print("bad hint")\n  return 1\nprint(all(A()),any(A()))\n');
