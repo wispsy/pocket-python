@@ -33,13 +33,23 @@ def reference_case(case):
         return reference(source, 'sources/app.py')
 
 
-def references(corpus_path=CORPUS):
+def case_partition(cases, index=1, count=1):
+    """Select one complete, deterministic stride without empty partitions."""
+    if type(index) is not int or type(count) is not int or not 1 <= index <= count:
+        raise ValueError('Case partition must satisfy 1 <= index <= count.')
+    if count > 1 and count > len(cases):
+        raise ValueError('Case partitions cannot be empty.')
+    return cases[index - 1::count]
+
+
+def references(corpus_path=CORPUS, case_shard=1, case_shards=1):
     raw = corpus_path.read_bytes()
     corpus = json.loads(raw)
     if corpus.get('reference_version') and platform.python_version() != corpus['reference_version']:
         raise AssertionError('The corpus requires its explicitly pinned reference version.')
+    selected = case_partition(corpus['cases'], case_shard, case_shards)
     records = []
-    for case in corpus['cases']:
+    for case in selected:
         try:
             actual = reference_case(case)
         except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
@@ -62,17 +72,22 @@ def references(corpus_path=CORPUS):
             'reference_qualifications': [{key: case[key] for key in ('id', 'classification', 'owner', 'boundary') if key in case}
                                          for case in corpus.get('reference_boundaries', [])],
             'corpus_sha256': hashlib.sha256(raw).hexdigest(), 'source_execution': False,
+            'case_partition': {'index': case_shard, 'count': case_shards,
+                               'selected': len(selected), 'total': len(corpus['cases'])},
             'implementation_status': 'Reference mode does not execute the independent engine; see source-mode reports.',
             'cases': records, 'summary': {status: sum(r['reference_status'] == status for r in records)
                                         for status in ['pass', 'fail']}}
 
 
-def cached_references(corpus_path, cache_dir=None):
+def cached_references(corpus_path, cache_dir=None, case_shard=1, case_shards=1):
     """Reuse only successful, intact reports for these exact oracle inputs."""
     cache_dir = Path(cache_dir or os.environ.get('POCKET_PYTHON_REFERENCE_CACHE',
                                                 ROOT.parent / 'build/reference-cache'))
+    raw = corpus_path.read_bytes()
+    selected = case_partition(json.loads(raw)['cases'], case_shard, case_shards)
     identity = {
-        'corpus': hashlib.sha256(corpus_path.read_bytes()).hexdigest(),
+        'corpus': hashlib.sha256(raw).hexdigest(),
+        'case_partition': {'index': case_shard, 'count': case_shards},
         'python': sys.version, 'implementation': platform.python_implementation(),
         'host': platform.platform(),
         'harness': {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
@@ -82,18 +97,20 @@ def cached_references(corpus_path, cache_dir=None):
         return hashlib.sha256(json.dumps(value, sort_keys=True).encode('utf-8')).hexdigest()
 
     key = digest(identity)
-    path = cache_dir / f'{corpus_path.stem}-{key}.json'
+    prefix = f'{corpus_path.stem}-part-{case_shard}-of-{case_shards}'
+    path = cache_dir / f'{prefix}-{key}.json'
     try:
         saved = json.loads(path.read_bytes())
         report = saved['report']
         if (saved['identity'] == identity and saved['report_sha256'] == digest(report) and
                 report['corpus_sha256'] == identity['corpus'] and
+                [case['id'] for case in report['cases']] == [case['id'] for case in selected] and
                 report['summary'] == {'pass': len(report['cases']), 'fail': 0} and
                 all(case['reference_status'] == 'pass' for case in report['cases'])):
             return {**report, 'reference_cache': {'key': key, 'hit': True}}
     except (FileNotFoundError, ValueError, KeyError, TypeError):
         pass
-    report = references(corpus_path)
+    report = references(corpus_path, case_shard, case_shards)
     if not report['summary']['fail']:
         cache_dir.mkdir(parents=True, exist_ok=True)
         # Atomic replacement also permits independent processes to share a cache.
@@ -105,14 +122,15 @@ def cached_references(corpus_path, cache_dir=None):
             temporary.replace(path)
         finally:
             temporary.unlink(missing_ok=True)
-        for previous in cache_dir.glob(corpus_path.stem + '-*.json'):
+        for previous in cache_dir.glob(prefix + '-*.json'):
             if previous != path:
                 previous.unlink(missing_ok=True)
     return {**report, 'reference_cache': {'key': key, 'hit': False}}
 
 
-def check(target, channel=None, corpus_path=CORPUS, stages=None, stepped=False, profile=None, parked=False):
-    report = cached_references(corpus_path)
+def check(target, channel=None, corpus_path=CORPUS, stages=None, stepped=False, profile=None, parked=False,
+          case_shard=1, case_shards=1):
+    report = cached_references(corpus_path, case_shard=case_shard, case_shards=case_shards)
     if report['summary']['fail']:
         raise AssertionError('The class reference corpus differs from its recorded expectations.')
     corpus = json.loads(corpus_path.read_bytes())
@@ -120,7 +138,8 @@ def check(target, channel=None, corpus_path=CORPUS, stages=None, stepped=False, 
     available = {case['stage'] for case in corpus['cases']}
     if stages and not set(stages) <= available:
         raise ValueError('Unknown corpus stage selection.')
-    cases = [case for case in corpus['cases'] if (not stages or case['stage'] in stages) and
+    cases = [case for case in case_partition(corpus['cases'], case_shard, case_shards)
+             if (not stages or case['stage'] in stages) and
              selected_profile in case.get('profiles', [corpus['profile']])]
     if not cases:
         raise ValueError('No source cases belong to the selected profile/stages.')
@@ -192,11 +211,18 @@ if __name__ == '__main__':
     parser.add_argument('--stepped', action='store_true', help='Advance the internal owned execution one instruction at a time.')
     parser.add_argument('--parked', action='store_true', help='Park and restore the complete execution scope owner at every instruction boundary.')
     parser.add_argument('--corpus', type=Path, default=CORPUS)
-    parser.add_argument('--stages', nargs='+', help='Execute only these source stages; reference validation still covers the complete corpus.')
+    parser.add_argument('--stages', nargs='+', help='Execute only these source stages; reference validation covers the complete selected case partition.')
+    parser.add_argument('--case-shard', type=int, default=1, help='One-based corpus partition index.')
+    parser.add_argument('--case-shards', type=int, default=1, help='Deterministic corpus partition count; defaults to the complete corpus.')
     parser.add_argument('--profile', choices=['core-source/1', 'classes-source/1'], help='Select explicitly profiled source cases from the corpus.')
     parser.add_argument('--report', type=Path)
     args = parser.parse_args()
-    report = references(args.corpus) if args.reference_only else check(args.target, args.channel, args.corpus, args.stages, args.stepped, args.profile, args.parked)
+    try:
+        report = references(args.corpus, args.case_shard, args.case_shards) if args.reference_only else check(
+            args.target, args.channel, args.corpus, args.stages, args.stepped, args.profile, args.parked,
+            args.case_shard, args.case_shards)
+    except ValueError as error:
+        parser.error(str(error))
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')

@@ -833,13 +833,13 @@
     },
     {
       "path": "runtime/source-parser.mjs",
-      "site": "if (this.at(\"->\")) this.unsupported(\"Return annotations are not adopted.\");",
+      "site": "this.unsupported(\"Return annotations are not adopted.\", arrow);",
       "owner": "#125",
       "boundary": "Annotation/type-parameter/generic semantics."
     },
     {
       "path": "runtime/source-parser.mjs",
-      "site": "if (end !== \":\" && this.at(\":\")) this.unsupported(\"Parameter annotations are not adopted.\");",
+      "site": "this.unsupported(\"Parameter annotations are not adopted.\", colon);",
       "owner": "#125",
       "boundary": "Annotation/type-parameter/generic semantics."
     },

@@ -35,7 +35,13 @@ for source in ["雪=", "record=[", "value='unfinished", "if True:\nvalue=7",
                "def record() pass", "class Record pass", "lambda **+: 1", "lambda *else: 1",
                "def record(value=else): pass", "lambda value=else: 1",
                "def record(/value): pass", "lambda value,/*items: 1",
-               "def record(value=1 other): pass", "lambda value=1 other: 1"]:
+               "def record(value=1 other): pass", "lambda value=1 other: 1",
+               "def record((first,last)): pass", "def record(value=1,required+other): pass",
+               "def record(*items,*else): pass", "def record(**options,1): pass",
+               "def record(value=1;): pass", "def record(value=1 not other): pass",
+               "def record(value:else): pass", "def record()->else: pass",
+               "@else\ndef record(): pass", "@decorate\npass",
+               "from records.else import value", "import records.else"]:
     error = validate(source, "records/input.py")
     original = error.args
     error.args = ()
