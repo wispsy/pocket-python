@@ -108,7 +108,7 @@
     {
       "id": "container-values",
       "status": "partial",
-      "scope": "List/tuple/dict literals, item access/mutation, scalar list deletion, primitive reads, list append/aliases/in-place operations and primitive-key dictionary equivalence/order; classes-source/1 also admits bounded list/tuple RHS slice assignment/deletion. Classes-source/1 also adopts user/default dictionary keys and owned list/tuple/dictionary equality. Finite list/tuple construction preserves primitive and owned iterable elements; user length hints remain refused. Set/frozenset construction, displays, owned membership/equality, finite mutation APIs and primitive algebra are adopted. Bytes/bytearray values adopt a finite binary-sequence/codec surface. Ordinary list/tuple repetition makes shallow copies with primitive factors in both profiles and owned index callbacks in classes-source/1. LA-1\u2013LA-7 adopt list copy/clear/reverse/insert/pop/count/index/extend, tuple count/index and dict get/setdefault/pop/keys/values/items with owned callbacks and live views; exact signatures and retained boundaries are in docs/interpreter-practical-containers.md.",
+      "scope": "List/tuple/dict literals, item access/mutation, scalar list deletion, primitive reads, list append/aliases/in-place operations and primitive-key dictionary equivalence/order; classes-source/1 also admits bounded list/tuple RHS slice assignment/deletion. Classes-source/1 also adopts user/default dictionary keys and owned list/tuple/dictionary equality. Finite list/tuple construction preserves primitive and owned iterable elements; user length hints remain refused. Set/frozenset construction, displays, owned membership/equality, finite mutation APIs and primitive algebra are adopted. Bytes/bytearray values adopt a finite binary-sequence/codec surface. Ordinary list/tuple repetition makes shallow copies with primitive factors in both profiles and owned index callbacks in classes-source/1. LA-1\u2013LA-7 adopt list copy/clear/reverse/insert/pop/count/index/extend, tuple count/index and dict get/setdefault/pop/keys/values/items with owned callbacks and live views; exact signatures and retained boundaries are in docs/interpreter-practical-containers.md. LA-193 adds owned min/max selection with key/default, live iteration and first-tie identity.",
       "gaps": "Populated dictionary construction/update, remaining list/text/consumer APIs, user length hints, general iterable slice assignment, __missing__ source admission, subtype view proxies and view set operations retain their exact #116/#117 owners; structural dictionary comparison mutation outside adopted native namespaces remains deferred.",
       "reference_version": "3.14.7",
       "targets": [
@@ -4790,9 +4790,9 @@
     },
     {
       "id": "max",
-      "status": "deferred",
-      "scope": "Not installed; resolving this builtin name raises Python NameError.",
-      "gaps": "No implementation/API support credit from the negative availability probe.",
+      "status": "partial",
+      "scope": "LA-193: max(iterable, *, key=None, default=...) and multiple positional item forms, first-tie identity, owned iteration/key/comparison/truth callbacks and exact default identity in the admitted source profiles.",
+      "gaps": "Comparison/value families outside the admitted engine profile and async iterables retain their separate owners.",
       "reference_version": "3.14.7",
       "targets": [
         "node",
@@ -4804,7 +4804,10 @@
       "probes": [
         "builtin-max"
       ],
-      "evidence": []
+      "evidence": [
+        "tests/fixtures/interpreter/aggregations.json:max-comparison-truth",
+        "tests/fixtures/interpreter/aggregations.json:max-first-tie"
+      ]
     },
     {
       "id": "memoryview",
@@ -4829,9 +4832,9 @@
     },
     {
       "id": "min",
-      "status": "deferred",
-      "scope": "Not installed; resolving this builtin name raises Python NameError.",
-      "gaps": "No implementation/API support credit from the negative availability probe.",
+      "status": "partial",
+      "scope": "LA-193: min(iterable, *, key=None, default=...) and multiple positional item forms, first-tie identity, owned iteration/key/comparison/truth callbacks and exact default identity in the admitted source profiles.",
+      "gaps": "Comparison/value families outside the admitted engine profile and async iterables retain their separate owners.",
       "reference_version": "3.14.7",
       "targets": [
         "node",
@@ -4843,7 +4846,10 @@
       "probes": [
         "builtin-min"
       ],
-      "evidence": []
+      "evidence": [
+        "tests/fixtures/interpreter/aggregations.json:min-comparison-truth",
+        "tests/fixtures/interpreter/aggregations.json:min-first-tie"
+      ]
     },
     {
       "id": "next",

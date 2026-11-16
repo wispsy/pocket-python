@@ -541,6 +541,19 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     const task = unaryTask("next", iterator, site, continuation("consume-next", {name, receiver: iterator, result, after, depth}), depth);
     state.temporaries = operationRoots(task); return task;
   };
+  const selectionNext = (record, site) => {
+    const task = unaryTask("next", record.receiver, site, continuation("selection-next", record), record.depth);
+    state.temporaries = operationRoots(task); return task;
+  };
+  const selectionFinish = (record, site) => {
+    if (!record.found && !record.hasDefault) python("ValueError", record.name + "() iterable argument is empty");
+    return valueTask(record.found ? record.best : record.fallback, site, record.after);
+  };
+  const selectionKey = (record, key, site) => {
+    if (!record.found) return selectionNext({...record, found: true, best: record.candidate, bestKey: key, candidate: null, candidateKey: null}, site);
+    return compareTask(record.name === "min" ? "less" : "greater", key, record.bestKey, site,
+      continuation("selection-compared", {...record, candidateKey: key}), record.depth);
+  };
   const consumeFinish = (name, result, site, after) => {
     state.temporaries.push(result);
     const value = name === "bytes" ? values.binaryValue(result.items) : ["tuple", "syntax-details"].includes(name) ? values.tuple(result.items) :
@@ -1014,6 +1027,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
       if (["unpack-next", "unpack-rest-next"].includes(current.kind)) return unpackFinish(current, site);
       if (current.kind === "call-star-next") return valueTask(current.receiver, site, current.after);
       if (current.kind === "consume-next") return consumeFinish(current.name, current.result, site, current.after);
+      if (current.kind === "selection-next") return selectionFinish(current, site);
     }
     return null;
   };
@@ -1842,6 +1856,18 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
       values.append(completion.parts, part);
       return representationNext({...completion, item: null, keyText: null, size}, site);
     }
+    if (completion?.kind === "selection-iter") return selectionNext({...completion, receiver: value}, site);
+    if (completion?.kind === "selection-next") {
+      const record = {...completion, candidate: value};
+      return record.key === null ? selectionKey(record, value, site) :
+        callTask(record.key, [value], [], [], site, continuation("selection-key", record), record.depth);
+    }
+    if (completion?.kind === "selection-key") return selectionKey(completion, value, site);
+    if (completion?.kind === "selection-compared") return unaryTask("truth", value, site,
+      continuation("selection-truth", completion), completion.depth);
+    if (completion?.kind === "selection-truth") return selectionNext({...completion,
+      best: value ? completion.candidate : completion.best, bestKey: value ? completion.candidateKey : completion.bestKey,
+      candidate: null, candidateKey: null}, site);
     if (completion?.kind === "optional-truth") return unaryTask(completion.operation, value, site,
       completion.after, completion.depth);
     if (completion?.kind === "invoke") return callTask(value, completion.args, completion.keywords,
@@ -3758,6 +3784,19 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             count("builtin:" + callable.name);
             if (args.length !== 1 || keywords.length) python("TypeError", callable.name + "() requires one positional iterable");
             task = consumeTask(callable.name, args[0], site, completion, depth); continue;
+          }
+          if (["min", "max"].includes(callable.name)) {
+            count("builtin:" + callable.name);
+            if (!args.length) python("TypeError", callable.name + " expected at least 1 argument, got 0");
+            const invalid = keywords.find(name => !["key", "default"].includes(name));
+            if (invalid !== undefined) python("TypeError", callable.name + "() got an unexpected keyword argument '" + invalid + "'");
+            const hasDefault = keywords.includes("default");
+            if (hasDefault && args.length > 1) python("TypeError", "Cannot specify a default for " + callable.name + "() with multiple positional arguments");
+            const record = {name: callable.name, key: keywords.includes("key") ? keywordValues[keywords.indexOf("key")] : null,
+              fallback: hasDefault ? keywordValues[keywords.indexOf("default")] : null, hasDefault,
+              found: false, depth, after: completion};
+            const source = args.length === 1 ? args[0] : values.tuple(args);
+            task = unaryTask("iter", source, site, continuation("selection-iter", record), depth); continue;
           }
           if (values.numeric && numericNames.has(callable.name)) {
             count("builtin:"+callable.name);

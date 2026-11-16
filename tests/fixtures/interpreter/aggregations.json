@@ -1,0 +1,467 @@
+{
+  "schema_version": 1,
+  "suite": "interpreter-aggregations/1",
+  "profile": "classes-source/1",
+  "reference_version": "3.14.7",
+  "implemented_stages": [
+    "LA193"
+  ],
+  "cases": [
+    {
+      "id": "min-integers",
+      "stage": "LA193",
+      "source": "print(min([3,-1,7]))\n",
+      "stdout": "-1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-variadic",
+      "stage": "LA193",
+      "source": "print(min(3,-1,7))\n",
+      "stdout": "-1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-string",
+      "stage": "LA193",
+      "source": "print(min(\"\ud83d\ude00a\u00e9\"))\n",
+      "stdout": "a\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-range",
+      "stage": "LA193",
+      "source": "print(min(range(-3,5)))\n",
+      "stdout": "-3\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-bool-float",
+      "stage": "LA193",
+      "source": "print(min([True,1.5,-2]))\n",
+      "stdout": "-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-default",
+      "stage": "LA193",
+      "source": "print(min([],default=[7]))\n",
+      "stdout": "[7]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-key",
+      "stage": "LA193",
+      "source": "print(min([-3,1,2],key=abs))\n",
+      "stdout": "1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-key-none",
+      "stage": "LA193",
+      "source": "print(min([2,1],key=None))\n",
+      "stdout": "1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-nan-first",
+      "stage": "LA193",
+      "source": "print(min([float(\"nan\"),1.0]))\n",
+      "stdout": "nan\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-nan-last",
+      "stage": "LA193",
+      "source": "print(min([1.0,float(\"nan\")]))\n",
+      "stdout": "1.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-empty",
+      "stage": "LA193",
+      "source": "try: min([])\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "stdout": "ValueError min() iterable argument is empty\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-no-args",
+      "stage": "LA193",
+      "source": "try: min()\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "stdout": "TypeError min expected at least 1 argument, got 0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-unknown",
+      "stage": "LA193",
+      "source": "try: min([],bad=1)\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "stdout": "TypeError min() got an unexpected keyword argument 'bad'\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-multi-default",
+      "stage": "LA193",
+      "source": "try: min(1,2,default=0)\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "stdout": "TypeError Cannot specify a default for min() with multiple positional arguments\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-default-identity",
+      "stage": "LA193",
+      "source": "d=[]\nprint(min([],key=1,default=d) is d)\n",
+      "stdout": "True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-first-tie",
+      "stage": "LA193",
+      "source": "a=[1];b=[2]\ndef key(x):\n print(x[0])\n return 0\nprint(min(a,b,key=key) is a)\n",
+      "stdout": "1\n2\nTrue\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-generator",
+      "stage": "LA193",
+      "source": "def source():\n yield 2\n yield 1\n yield 3\nprint(min(source()))\n",
+      "stdout": "1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "min-key-stop",
+      "stage": "LA193",
+      "source": "def key(x): raise StopIteration(\"key\")\nmin([1],key=key,default=7)\n",
+      "stdout": "",
+      "error_type": "StopIteration"
+    },
+    {
+      "id": "min-key-error",
+      "stage": "LA193",
+      "source": "def key(x): raise ValueError(\"key\")\nmin([1],key=key)\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "min-comparison-truth",
+      "stage": "LA193",
+      "source": "class Truth:\n def __bool__(self):\n  print(\"truth\")\n  return True\nclass Key:\n def __lt__(self,other): return Truth()\n def __gt__(self,other): return Truth()\ndef key(x): return Key()\na=[1];b=[2]\nprint(min([a,b],key=key) is b)\n",
+      "stdout": "truth\nTrue\n"
+    },
+    {
+      "id": "min-live-mutation",
+      "stage": "LA193",
+      "source": "a=[3,2,1]\ndef key(x):\n print(x)\n if x==3: a.pop()\n return x\nprint(min(a,key=key))\n",
+      "stdout": "3\n2\n2\n"
+    },
+    {
+      "id": "min-owned-iterator",
+      "stage": "LA193",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self):\n  print(\"iter\")\n  return self\n def __next__(self):\n  self.i+=1\n  if self.i>3: raise StopIteration\n  return self.i\nprint(min(I()))\n",
+      "stdout": "iter\n1\n"
+    },
+    {
+      "id": "min-iterator-failure",
+      "stage": "LA193",
+      "source": "class I:\n def __iter__(self): return self\n def __next__(self): raise ValueError(\"next\")\nmin(I(),default=7)\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "min-compare-stop",
+      "stage": "LA193",
+      "source": "class X:\n def __lt__(self,other): raise StopIteration(\"compare\")\n def __gt__(self,other): raise StopIteration(\"compare\")\nmin([X(),X()],default=7)\n",
+      "stdout": "",
+      "error_type": "StopIteration"
+    },
+    {
+      "id": "min-callable-key",
+      "stage": "LA193",
+      "source": "class Key:\n @property\n def __call__(self):\n  def use(x): return -x\n  return use\nprint(min([1,2,3],key=Key()))\n",
+      "stdout": "3\n"
+    },
+    {
+      "id": "min-metadata",
+      "stage": "LA193",
+      "source": "print(min.__name__,min.__module__,type(min).__name__,callable(min))\n",
+      "stdout": "min builtins builtin_function_or_method True\n"
+    },
+    {
+      "id": "max-integers",
+      "stage": "LA193",
+      "source": "print(max([3,-1,7]))\n",
+      "stdout": "7\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-variadic",
+      "stage": "LA193",
+      "source": "print(max(3,-1,7))\n",
+      "stdout": "7\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-string",
+      "stage": "LA193",
+      "source": "print(max(\"\ud83d\ude00a\u00e9\"))\n",
+      "stdout": "\ud83d\ude00\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-range",
+      "stage": "LA193",
+      "source": "print(max(range(-3,5)))\n",
+      "stdout": "4\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-bool-float",
+      "stage": "LA193",
+      "source": "print(max([True,1.5,-2]))\n",
+      "stdout": "1.5\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-default",
+      "stage": "LA193",
+      "source": "print(max([],default=[7]))\n",
+      "stdout": "[7]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-key",
+      "stage": "LA193",
+      "source": "print(max([-3,1,2],key=abs))\n",
+      "stdout": "-3\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-key-none",
+      "stage": "LA193",
+      "source": "print(max([2,1],key=None))\n",
+      "stdout": "2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-nan-first",
+      "stage": "LA193",
+      "source": "print(max([float(\"nan\"),1.0]))\n",
+      "stdout": "nan\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-nan-last",
+      "stage": "LA193",
+      "source": "print(max([1.0,float(\"nan\")]))\n",
+      "stdout": "1.0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-empty",
+      "stage": "LA193",
+      "source": "try: max([])\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "stdout": "ValueError max() iterable argument is empty\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-no-args",
+      "stage": "LA193",
+      "source": "try: max()\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "stdout": "TypeError max expected at least 1 argument, got 0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-unknown",
+      "stage": "LA193",
+      "source": "try: max([],bad=1)\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "stdout": "TypeError max() got an unexpected keyword argument 'bad'\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-multi-default",
+      "stage": "LA193",
+      "source": "try: max(1,2,default=0)\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "stdout": "TypeError Cannot specify a default for max() with multiple positional arguments\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-default-identity",
+      "stage": "LA193",
+      "source": "d=[]\nprint(max([],key=1,default=d) is d)\n",
+      "stdout": "True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-first-tie",
+      "stage": "LA193",
+      "source": "a=[1];b=[2]\ndef key(x):\n print(x[0])\n return 0\nprint(max(a,b,key=key) is a)\n",
+      "stdout": "1\n2\nTrue\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-generator",
+      "stage": "LA193",
+      "source": "def source():\n yield 2\n yield 1\n yield 3\nprint(max(source()))\n",
+      "stdout": "3\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "max-key-stop",
+      "stage": "LA193",
+      "source": "def key(x): raise StopIteration(\"key\")\nmax([1],key=key,default=7)\n",
+      "stdout": "",
+      "error_type": "StopIteration"
+    },
+    {
+      "id": "max-key-error",
+      "stage": "LA193",
+      "source": "def key(x): raise ValueError(\"key\")\nmax([1],key=key)\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "max-comparison-truth",
+      "stage": "LA193",
+      "source": "class Truth:\n def __bool__(self):\n  print(\"truth\")\n  return True\nclass Key:\n def __lt__(self,other): return Truth()\n def __gt__(self,other): return Truth()\ndef key(x): return Key()\na=[1];b=[2]\nprint(max([a,b],key=key) is b)\n",
+      "stdout": "truth\nTrue\n"
+    },
+    {
+      "id": "max-live-mutation",
+      "stage": "LA193",
+      "source": "a=[3,2,1]\ndef key(x):\n print(x)\n if x==3: a.pop()\n return x\nprint(max(a,key=key))\n",
+      "stdout": "3\n2\n3\n"
+    },
+    {
+      "id": "max-owned-iterator",
+      "stage": "LA193",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self):\n  print(\"iter\")\n  return self\n def __next__(self):\n  self.i+=1\n  if self.i>3: raise StopIteration\n  return self.i\nprint(max(I()))\n",
+      "stdout": "iter\n3\n"
+    },
+    {
+      "id": "max-iterator-failure",
+      "stage": "LA193",
+      "source": "class I:\n def __iter__(self): return self\n def __next__(self): raise ValueError(\"next\")\nmax(I(),default=7)\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "max-compare-stop",
+      "stage": "LA193",
+      "source": "class X:\n def __lt__(self,other): raise StopIteration(\"compare\")\n def __gt__(self,other): raise StopIteration(\"compare\")\nmax([X(),X()],default=7)\n",
+      "stdout": "",
+      "error_type": "StopIteration"
+    },
+    {
+      "id": "max-callable-key",
+      "stage": "LA193",
+      "source": "class Key:\n @property\n def __call__(self):\n  def use(x): return -x\n  return use\nprint(max([1,2,3],key=Key()))\n",
+      "stdout": "1\n"
+    },
+    {
+      "id": "max-metadata",
+      "stage": "LA193",
+      "source": "print(max.__name__,max.__module__,type(max).__name__,callable(max))\n",
+      "stdout": "max builtins builtin_function_or_method True\n"
+    }
+  ]
+}

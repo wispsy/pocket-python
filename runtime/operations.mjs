@@ -313,6 +313,14 @@ export function completion(kind, fields = {}) {
           !Number.isSafeInteger(record.size) || record.size < 2 || !["item", "key", "value"].includes(record.phase))
         throw new TypeError("Invalid container representation phase.");
       break;
+    case "selection-iter": case "selection-next": case "selection-key": case "selection-compared": case "selection-truth":
+      record = {kind, name: fields.name, receiver: fields.receiver ?? null, key: fields.key ?? null,
+        fallback: fields.fallback ?? null, hasDefault: fields.hasDefault === true, found: fields.found === true,
+        best: fields.best ?? null, bestKey: fields.bestKey ?? null, candidate: fields.candidate ?? null,
+        candidateKey: fields.candidateKey ?? null, depth: fields.depth, after};
+      depthCheck(record.depth);
+      if (!["min", "max"].includes(record.name)) throw new TypeError("Invalid selection operation.");
+      break;
     case "print-argument":
       record = {kind, args: operands(fields.args), index: fields.index, depth: fields.depth, after};
       depthCheck(record.depth);
@@ -398,6 +406,8 @@ function visit(record) {
     case "syntax-details": return [record.receiver, record.result, ...completionRoots(record.after)];
     case "syntax-message": return [record.receiver, record.suffix, ...completionRoots(record.after)];
     case "container-repr": return [record.receiver, record.parts, record.item, record.keyText, ...completionRoots(record.after)];
+    case "selection-iter": case "selection-next": case "selection-key": case "selection-compared": case "selection-truth":
+      return [record.receiver, record.key, record.fallback, record.best, record.bestKey, record.candidate, record.candidateKey, ...completionRoots(record.after)];
     case "unicode-translate-message": return [record.receiver, ...completionRoots(record.after)];
     case "unicode-codec-reason": return [record.receiver, ...completionRoots(record.after)];
     case "unicode-codec-message": return [record.receiver, record.reason, ...completionRoots(record.after)];
