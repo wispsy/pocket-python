@@ -308,10 +308,6 @@
       "id": "reverse-native-hint",
       "stage": "LA203",
       "source": "a=[1,2,3]\ni=reversed(a)\nprint(i.__length_hint__())\nprint(next(i),i.__length_hint__())\na.clear()\nprint(i.__length_hint__(),next(i,99),i.__length_hint__())\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "3\n3 2\n0 99 0\n"
     },
     {
@@ -626,16 +622,6 @@
       "stage": "LA204",
       "source": "print(list(reversed({3:8,1:9}.items())))\n",
       "stdout": "[(1, 9), (3, 8)]\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ]
-    },
-    {
-      "id": "reverse-native-binding-core",
-      "stage": "LA204",
-      "source": "print(list(reversed([1,2])\nt=type(i)\nprint(t.__iter__(i) is i,t.__next__(i),i.__next__())\n)))\n",
-      "stdout": "\n",
       "profiles": [
         "core-source/1",
         "classes-source/1"
