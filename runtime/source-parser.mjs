@@ -419,7 +419,11 @@ class Parser {
   }
   qualified() {
     let name = this.name().value;
-    while (this.eat(".")) name += "." + this.name().value;
+    while (this.eat(".")) {
+      if (!this.kind("name")) this.fail("Expected an import module component.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic("invalid syntax"));
+      name += "." + this.name().value;
+    }
     return name;
   }
   imports() {
@@ -428,13 +432,27 @@ class Parser {
     if (start.value === "from") {
       while (this.at(".") || this.at("...")) level += this.take().value.length;
       specifier = this.kind("name") ? this.qualified() : "";
-      if (!specifier && !level) this.fail("Expected an import module.");
-      this.expect("import"); parenthesized = !!this.eat("(");
+      if (!specifier && !level) this.fail("Expected an import module.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic("invalid syntax"));
+      if (!this.at("import")) this.fail("Expected 'import'.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic("invalid syntax"));
+      this.take(); parenthesized = !!this.eat("(");
     }
     for (;;) {
       if (this.at("*")) {
-        if (specifier === null) this.fail("Invalid import target.");
+        if (specifier === null) this.fail("Invalid import target.", this.peek(), "SYNTAX", undefined,
+          this.tokenDiagnostic("invalid syntax"));
         this.unsupported("Wildcard imports are not adopted.");
+      }
+      if (!this.kind("name")) {
+        const missing = !aliases.length && !parenthesized && this.kind("newline");
+        const syntax = this.tokenDiagnostic(missing ? "Expected one or more names after 'import'" : "invalid syntax");
+        if (missing) {
+          const token = this.peek(), source = this.lexed.source;
+          const implicit = this.options.mode === "single" && source[token.start] !== "\n";
+          syntax.end_offset = Array.from(source.split("\n")[token.span[0] - 1] ?? "").length + (implicit ? 0 : 1);
+        }
+        this.fail("Expected an imported name.", this.peek(), "SYNTAX", undefined, syntax);
       }
       const name = specifier === null ? this.qualified() : this.name().value;
       const asname = this.eat("as") ? this.importAlias() : null;
@@ -519,13 +537,29 @@ class Parser {
     const decorators = [];
     while (this.eat("@")) {
       if (decorators.length >= PARSER_LIMITS.decorators) this.fail("Decorator count budget exceeded.", this.previous, "COMPILE_BUDGET");
+      if (this.expressionBoundary() || ["=", "*", "**"].some(value => this.at(value))) {
+        const statement = ["pass", "break", "continue"].some(value => this.at(value));
+        const syntax = statement && this.peek(1).value === "if" ? undefined : this.tokenDiagnostic("invalid syntax");
+        if (syntax && statement && this.peek(1).span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+        this.fail("Expected a decorator expression.", this.peek(), "SYNTAX", undefined,
+          syntax);
+      }
       decorators.push(this.expression());
-      this.expectKind("newline", "Expected a newline after the decorator expression.");
+      if (!this.kind("newline")) {
+        const syntax = ["=", ":="].some(value => this.at(value)) ? undefined : this.tokenDiagnostic("invalid syntax");
+        const adjacent = ["name", "number", "string"].includes(this.peek().kind) ||
+          ["True", "False", "None", "...", "lambda", "{", "~"].some(value => this.at(value));
+        if (syntax?.text.endsWith("\\\n") && adjacent)
+          syntax.text = syntax.text.slice(0, -1);
+        this.fail("Expected a newline after the decorator expression.", this.peek(), "SYNTAX", undefined, syntax);
+      }
+      this.take();
     }
     if (this.at("def")) return this.definition(decorators);
     if (this.at("class")) return this.classDefinition(decorators);
     if (this.at("async")) this.unsupported("Async definitions require a later stage.");
-    this.fail("Decorators require a function or class definition.");
+    this.fail("Decorators require a function or class definition.", this.peek(), "SYNTAX", undefined,
+      ["eof", "dedent"].includes(this.peek().kind) ? undefined : this.tokenDiagnostic("invalid syntax"));
   }
   definition(decorators = []) {
     const start = this.expect("def"), name = this.definitionName().value;
@@ -534,7 +568,16 @@ class Parser {
       this.tokenDiagnostic("expected '('"));
     this.expect("(");
     const params = this.parameters(")"); this.expect(")");
-    if (this.at("->")) this.unsupported("Return annotations are not adopted.");
+    if (this.eat("->")) {
+      const arrow = this.previous;
+      if (this.expressionBoundary() || ["=", "*", "**"].some(value => this.at(value))) {
+        const statement = ["pass", "break", "continue"].some(value => this.at(value));
+        const syntax = statement && this.peek(1).value === "if" ? undefined : this.diagnostic("expected ':'", arrow.span);
+        if (syntax && arrow.span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+        this.fail("Expected a return annotation.", arrow, "SYNTAX", undefined, syntax);
+      }
+      this.unsupported("Return annotations are not adopted.", arrow);
+    }
     const before = [this.functionDepth, this.loopDepth]; this.functionDepth++; this.loopDepth = 0;
     let body;
     try { body = this.suite(start); } finally { [this.functionDepth, this.loopDepth] = before; }
@@ -555,6 +598,16 @@ class Parser {
       }
     }
     return syntax;
+  }
+  parameterAnnotation() {
+    const colon = this.eat(":");
+    if (!colon) return;
+    if (this.expressionBoundary() || this.at("=") || this.at("**")) {
+      const statement = ["pass", "break", "continue"].some(value => this.at(value));
+      this.fail("Expected a parameter annotation.", this.peek(), "SYNTAX", undefined,
+        statement && this.peek(1).value === "if" ? undefined : this.tokenDiagnostic("invalid syntax"));
+    }
+    this.unsupported("Parameter annotations are not adopted.", colon);
   }
   parameters(end) {
     let positional = [], posonly = [], kwonly = [], vararg = [], kwarg = [], slash = false, star = false, defaultSeen = false;
@@ -600,7 +653,7 @@ class Parser {
       if (this.eat("**")) {
         const token = parameterName();
         kwarg.push({name: token.value, value: null, span: token.span});
-        if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
+        if (end !== ":") this.parameterAnnotation();
         if (this.at("=")) this.fail("A variadic keyword parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
           this.diagnostic("var-keyword argument cannot have default value", this.peek().span));
       } else
@@ -631,7 +684,7 @@ class Parser {
         if (this.kind("name")) {
           const token = this.take();
           vararg.push({name: token.value, value: null, span: token.span});
-          if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
+          if (end !== ":") this.parameterAnnotation();
           if (this.at("=")) this.fail("A variadic positional parameter cannot have a default.", this.peek(), "SYNTAX", undefined,
             this.diagnostic("var-positional argument cannot have default value", this.peek().span));
         } else {
@@ -643,7 +696,7 @@ class Parser {
         star = true;
       } else {
         const token = parameterName(!star && !slash && !defaultSeen);
-        if (end !== ":" && this.at(":")) this.unsupported("Parameter annotations are not adopted.");
+        if (end !== ":") this.parameterAnnotation();
         const value = this.eat("=") ? this.parameterDefault(end, token) : null;
         if (value !== null) separatorFields = false;
         if (!star && defaultSeen && value === null) {
@@ -658,7 +711,7 @@ class Parser {
       if (this.at(end)) break;
       if (end === ":" && !this.at(",")) this.fail("Expected a lambda parameter separator.", this.peek(), "SYNTAX", undefined,
         incomplete(this.previous.value === "/" && this.at("*") ? "expected comma between / and *" : "invalid syntax"));
-      if (end !== ":" && separatorFields && !this.at(","))
+      if (end !== ":" && (separatorFields || this.comprehensionClauseFields && this.operandFields) && !this.at(","))
         this.fail("Expected a function parameter separator.", this.peek(), "SYNTAX", undefined,
           this.tokenDiagnostic(this.previous.value === "/" && this.at("*") ? "expected comma between / and *" : "invalid syntax"));
       this.expect(",");
@@ -681,14 +734,17 @@ class Parser {
       this.fail("Expected a parameter default value.", this.peek(), "SYNTAX", undefined,
         this.comprehensionClauseFields && (missing || this.operandFields) ? syntax : undefined);
     }
-    const start = this.index, value = this.expression();
+    const start = this.index, before = this.parameterDefaultDepth;
+    this.parameterDefaultDepth = this.depth + 1;
+    let value;
+    try { value = this.expression(); } finally { this.parameterDefaultDepth = before; }
     if (["name", "number", "string"].includes(this.peek().kind) ||
-        ["True", "False", "None", "lambda", "{", "~"].some(token => this.at(token)))
+        ["True", "False", "None", "lambda", "{", "~", "not"].some(token => this.at(token)))
       this.adjacentDefault(value, start, parameter, end);
     return value;
   }
   adjacentDefault(value, start, parameter, end) {
-    const token = this.peek(), first = this.tokens[start];
+    const token = this.peek(), first = this.tokens[start], genericToken = this.at("not") ? this.peek(1) : token;
     const fail = syntax => this.fail("Expected a parameter default separator.", token, "SYNTAX", undefined, syntax);
     if (!this.comprehensionClauseFields || !this.operandFields || ["Conditional", "Lambda", "Yield"].includes(value.kind) ||
         first.kind === "name" && (["print", "exec"].includes(first.value) ||
@@ -708,8 +764,8 @@ class Parser {
     }
     const generic = !depth || first.kind === "name" &&
       (this.tokens[start + 1].kind === "string" || ["_", "match", "case", "type"].includes(first.value));
-    const syntax = generic ? depth ? this.delimitedDiagnostic("invalid syntax", token, end, true) :
-      this.tokenDiagnostic("invalid syntax", token) : this.diagnostic(
+    const syntax = generic ? depth ? this.delimitedDiagnostic("invalid syntax", genericToken, end, true) :
+      this.tokenDiagnostic("invalid syntax", genericToken) : this.diagnostic(
       "invalid syntax. Perhaps you forgot a comma?", [left[0], left[1], right[2], right[3]]);
     if (this.peek().span[0] !== syntax.lineno) syntax.text = syntax.text.replace(/\n$/, "");
     if (!generic && left[0] !== right[2]) {
@@ -987,6 +1043,7 @@ class Parser {
   comparison() {
     const left = this.bitwiseOr(), parts = [];
     while ((["keyword", "op"].includes(this.peek().kind) && COMPARISONS.has(this.peek().value)) || this.at("not")) {
+      if (this.at("not") && this.peek(1).value !== "in" && this.parameterDefaultDepth === this.depth) break;
       const token = this.take(); let operator = COMPARISONS.get(token.value), invert = false;
       if (token.value === "not") { this.expect("in"); operator = "contains"; invert = true; }
       else if (token.value === "is" && this.eat("not")) invert = true;
