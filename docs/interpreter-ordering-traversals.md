@@ -22,6 +22,12 @@ mutation checks. Native list/range descriptors use the actual payload even when
 subclasses override indexing or length. Native type identities, directories,
 bound/unbound advancement and reverse length hints preserve detached owners.
 
+LA-204 composes reversal with lazy pipelines, module callbacks, dynamic source,
+cyclic temporary records, live slot replacement and generator cleanup. The
+runnable `examples/interpreter_ordering.py` report provides ordinary source for
+the offline acceptance. Length/pull callbacks share cancellation, work/depth and
+allocation limits; parked collection, close and cancellation release all owners.
+
 References: [reverse implementation](https://github.com/python/cpython/blob/v3.14.7/Objects/enumobject.c),
 [length hints](https://github.com/python/cpython/blob/v3.14.7/Objects/abstract.c),
 [list operations](https://github.com/python/cpython/blob/v3.14.7/Objects/listobject.c).

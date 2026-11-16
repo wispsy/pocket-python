@@ -5,7 +5,8 @@
   "reference_version": "3.14.7",
   "implemented_stages": [
     "LA202",
-    "LA203"
+    "LA203",
+    "LA204"
   ],
   "cases": [
     {
@@ -185,140 +186,84 @@
       "id": "reverse-native-list",
       "stage": "LA203",
       "source": "i=reversed([1,2,3])\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "list_reverseiterator True\n[3, 2, 1] 99\n"
     },
     {
       "id": "reverse-native-tuple",
       "stage": "LA203",
       "source": "i=reversed((1,2,3))\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "reversed True\n[3, 2, 1] 99\n"
     },
     {
       "id": "reverse-native-text",
       "stage": "LA203",
       "source": "i=reversed(\"a\u00e9\ud83d\ude00\")\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "reversed True\n['\ud83d\ude00', '\u00e9', 'a'] 99\n"
     },
     {
       "id": "reverse-native-bytes",
       "stage": "LA203",
       "source": "i=reversed(b\"ab\")\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "reversed True\n[98, 97] 99\n"
     },
     {
       "id": "reverse-native-bytearray",
       "stage": "LA203",
       "source": "i=reversed(bytearray(b\"ab\"))\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "reversed True\n[98, 97] 99\n"
     },
     {
       "id": "reverse-native-memory",
       "stage": "LA203",
       "source": "i=reversed(memoryview(b\"ab\"))\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "reversed True\n[98, 97] 99\n"
     },
     {
       "id": "reverse-native-range",
       "stage": "LA203",
       "source": "i=reversed(range(2,9,2))\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "range_iterator True\n[8, 6, 4, 2] 99\n"
     },
     {
       "id": "reverse-native-empty-range",
       "stage": "LA203",
       "source": "i=reversed(range(0))\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "range_iterator True\n[] 99\n"
     },
     {
       "id": "reverse-native-negative-range",
       "stage": "LA203",
       "source": "i=reversed(range(9,1,-2))\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "range_iterator True\n[3, 5, 7, 9] 99\n"
     },
     {
       "id": "reverse-native-long-range",
       "stage": "LA203",
       "source": "i=reversed(range(10**100,10**100+3))\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "longrange_iterator True\n[10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002, 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001, 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000] 99\n"
     },
     {
       "id": "reverse-native-dict",
       "stage": "LA203",
       "source": "i=reversed({3:8,1:9})\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "dict_reversekeyiterator True\n[1, 3] 99\n"
     },
     {
       "id": "reverse-native-keys",
       "stage": "LA203",
       "source": "i=reversed({3:8,1:9}.keys())\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "dict_reversekeyiterator True\n[1, 3] 99\n"
     },
     {
       "id": "reverse-native-values",
       "stage": "LA203",
       "source": "i=reversed({3:8,1:9}.values())\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "dict_reversevalueiterator True\n[9, 8] 99\n"
     },
     {
       "id": "reverse-native-items",
       "stage": "LA203",
       "source": "i=reversed({3:8,1:9}.items())\nprint(type(i).__name__,iter(i) is i)\nprint(list(i),next(i,99))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "dict_reverseitemiterator True\n[(1, 9), (3, 8)] 99\n"
     },
     {
@@ -357,10 +302,6 @@
       "id": "reverse-native-binding",
       "stage": "LA203",
       "source": "i=reversed([1,2])\nt=type(i)\nprint(t.__iter__(i) is i,t.__next__(i),i.__next__())\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "True 2 1\n"
     },
     {
@@ -383,10 +324,6 @@
       "id": "reverse-huge-range",
       "stage": "LA203",
       "source": "i=reversed(range(10**100))\nprint(type(i).__name__,next(i),next(i))\n",
-      "profiles": [
-        "core-source/1",
-        "classes-source/1"
-      ],
       "stdout": "longrange_iterator 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999 9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999998\n"
     },
     {
@@ -453,6 +390,256 @@
       ],
       "stdout": "",
       "error_type": "TypeError"
+    },
+    {
+      "id": "reverse-pipeline",
+      "stage": "LA204",
+      "source": "print(list(map(abs,reversed([-3,2,-1]))))\nprint(list(enumerate(reversed((4,5)),10)))\nprint(list(zip(reversed(\"ab\"),[1,2],strict=True)))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[1, 2, 3]\n[(10, 5), (11, 4)]\n[('b', 1), ('a', 2)]\n"
+    },
+    {
+      "id": "reverse-owned-pipeline",
+      "stage": "LA204",
+      "source": "class S:\n def __len__(self): return 3\n def __getitem__(self,i): return [2,-3,4][i]\nprint(list(filter(lambda x:x>2,map(abs,reversed(S())))))\n",
+      "stdout": "[4, 3]\n"
+    },
+    {
+      "id": "reverse-temporary-cycle",
+      "stage": "LA204",
+      "source": "class S:\n def __init__(self): self.data=[self,[7]]\n def __len__(self): return 2\n def __getitem__(self,i): return self.data[i]\ni=reversed(S())\nprint(next(i))\na=next(i)\nprint(a.data[0] is a,next(i,99))\n",
+      "stdout": "[7]\nTrue 99\n"
+    },
+    {
+      "id": "reverse-generator-cleanup",
+      "stage": "LA204",
+      "source": "def g():\n try:\n  yield next(reversed([7,8]))\n finally: print(\"close\")\ni=g()\nprint(next(i))\ni.close()\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "8\nclose\n"
+    },
+    {
+      "id": "reverse-dynamic-frame",
+      "stage": "LA204",
+      "source": "exec(\"def f():\\n return next(reversed([7,8]))\\n\")\nprint(f())\n",
+      "stdout": "8\n"
+    },
+    {
+      "id": "reverse-captured-builtin",
+      "stage": "LA204",
+      "source": "r=reversed\ndef f(x): return list(r(x))\nprint(f([1,2,3]))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[3, 2, 1]\n"
+    },
+    {
+      "id": "reverse-member-core",
+      "stage": "LA204",
+      "source": "print(2 in reversed([1,2]),9 not in reversed((1,2)))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "True True\n"
+    },
+    {
+      "id": "reverse-slot-switch",
+      "stage": "LA204",
+      "source": "class S:\n def __len__(self): return 2\n def __getitem__(self,i):\n  if i==1: S.__getitem__=lambda self,n:n+10\n  return i\nprint([x for x in reversed(S())])\n",
+      "stdout": "[1, 10]\n"
+    },
+    {
+      "id": "reverse-imported-callback",
+      "stage": "LA204",
+      "source": "from helper import S\nprint(list(map(abs,reversed(S()))))\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "class S:\n def __len__(self): return 2\n def __getitem__(self,i): return [-2,-3][i]\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "[3, 2]\n"
+    },
+    {
+      "id": "reverse-item-error-frames",
+      "stage": "LA204",
+      "source": "class S:\n def __len__(self): return 2\n def __getitem__(self,i):\n  def fail(): raise ValueError(\"reverse item\")\n  return fail()\nnext(reversed(S()))\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "reverse-bound-method-owner",
+      "stage": "LA204",
+      "source": "class A:\n def __init__(self): self.data=[1,2]\n def items(self): return reversed(self.data)\nprint(list(A().items()))\n",
+      "stdout": "[2, 1]\n"
+    },
+    {
+      "id": "reverse-list-reflection",
+      "stage": "LA204",
+      "source": "a=[1,2]\ni=reversed(a)\nprint(type(i).__name__,\"__next__\" in dir(i),\"__length_hint__\" in dir(type(i)))\nprint(type(i).__next__(i),list(i))\n",
+      "stdout": "list_reverseiterator True True\n2 [1]\n"
+    },
+    {
+      "id": "reverse-native-list-core",
+      "stage": "LA204",
+      "source": "print(list(reversed([1,2,3])))\n",
+      "stdout": "[3, 2, 1]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-tuple-core",
+      "stage": "LA204",
+      "source": "print(list(reversed((1,2,3))))\n",
+      "stdout": "[3, 2, 1]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-text-core",
+      "stage": "LA204",
+      "source": "print(list(reversed(\"a\u00e9\ud83d\ude00\")))\n",
+      "stdout": "['\ud83d\ude00', '\u00e9', 'a']\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-bytes-core",
+      "stage": "LA204",
+      "source": "print(list(reversed(b\"ab\")))\n",
+      "stdout": "[98, 97]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-bytearray-core",
+      "stage": "LA204",
+      "source": "print(list(reversed(bytearray(b\"ab\"))))\n",
+      "stdout": "[98, 97]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-memory-core",
+      "stage": "LA204",
+      "source": "print(list(reversed(memoryview(b\"ab\"))))\n",
+      "stdout": "[98, 97]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-range-core",
+      "stage": "LA204",
+      "source": "print(list(reversed(range(2,9,2))))\n",
+      "stdout": "[8, 6, 4, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-empty-range-core",
+      "stage": "LA204",
+      "source": "print(list(reversed(range(0))))\n",
+      "stdout": "[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-negative-range-core",
+      "stage": "LA204",
+      "source": "print(list(reversed(range(9,1,-2))))\n",
+      "stdout": "[3, 5, 7, 9]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-long-range-core",
+      "stage": "LA204",
+      "source": "print(list(reversed(range(10**100,10**100+3))))\n",
+      "stdout": "[10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002, 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001, 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-dict-core",
+      "stage": "LA204",
+      "source": "print(list(reversed({3:8,1:9})))\n",
+      "stdout": "[1, 3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-keys-core",
+      "stage": "LA204",
+      "source": "print(list(reversed({3:8,1:9}.keys())))\n",
+      "stdout": "[1, 3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-values-core",
+      "stage": "LA204",
+      "source": "print(list(reversed({3:8,1:9}.values())))\n",
+      "stdout": "[9, 8]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-items-core",
+      "stage": "LA204",
+      "source": "print(list(reversed({3:8,1:9}.items())))\n",
+      "stdout": "[(1, 9), (3, 8)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "reverse-native-binding-core",
+      "stage": "LA204",
+      "source": "print(list(reversed([1,2])\nt=type(i)\nprint(t.__iter__(i) is i,t.__next__(i),i.__next__())\n)))\n",
+      "stdout": "\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
     }
   ]
 }

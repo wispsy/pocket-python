@@ -4123,7 +4123,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
           }
           if (["iter", "next"].includes(callable.name) && state.frames.at(-1).pool.code.version >= 4) {
             count("builtin:" + callable.name);
-            if (state.frames.at(-1).pool.code.version === 4 && args.length === 2 && !(callable.name === "next" && (args[0] instanceof GeneratorValue || args[0] instanceof LazyIteratorValue)))
+            if (state.frames.at(-1).pool.code.version === 4 && args.length === 2 && !(callable.name === "next" && (args[0] instanceof GeneratorValue || args[0] instanceof LazyIteratorValue || args[0] instanceof ProtocolIteratorValue && args[0].kind === "reverse")))
               hard("UNSUPPORTED", "UnsupportedOperationError", "This two-argument primitive iteration form requires classes-source/1.");
             if (args.length < 1 || args.length > 2 || keywords.length) python("TypeError", callable.name + "() requires one or two positional arguments");
             if (callable.name === "iter" && args.length === 2) {

@@ -51,3 +51,14 @@ test('reverse acquisition and pulls retain temporary owners while parked', async
   await parked('class S:\n def __init__(self): self.items=[[7]]\n def __len__(self):\n  print("length")\n  return 1\n def __getitem__(self,i):\n  print("item")\n  return self.items[i]\nprint(next(reversed(S())))\n', 'length\nitem\n[7]\n', 'length\n');
   await parked('class S:\n def __init__(self): self.items=[[7]]\n def __len__(self): return 1\n def __getitem__(self,i):\n  print("item")\n  return self.items[i]\nprint(next(reversed(S())))\n', 'item\n[7]\n', 'item\n');
 });
+
+test('reverse callbacks share work, cancellation and actual allocation limits', async () => {
+  const limited = await run('class S:\n def __len__(self):\n  while True: pass\n def __getitem__(self,i): return i\nreversed(S())\n', {maxWork: 3000});
+  assert.equal(limited.error.code, 'BUDGET'); closed(limited);
+  let polls = 0;
+  const cancelled = await run('sum(reversed(range(10**100)))\n', {shouldCancel: () => ++polls > 100});
+  assert.equal(cancelled.error.code, 'CANCELLED'); closed(cancelled);
+  const oom = await run('class S:\n def __len__(self): return 1\n def __getitem__(self,i):\n  print("entered")\n  held=[]\n  while True: held.append([1,2,3])\nnext(reversed(S()))\n',
+    {maxSteps: 100000, maxWork: 20000000}, {maxBytes: 80000});
+  assert.equal(oom.error.code, 'OOM'); assert.equal(oom.stdout, 'entered\n'); closed(oom);
+});
