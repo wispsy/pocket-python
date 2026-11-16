@@ -1567,17 +1567,15 @@
     },
     {
       "id": "builtin-zip",
-      "source": "print(callable(zip))\n",
-      "classification": "deferred",
+      "source": "print(list(zip([1,2],[3,4],strict=True)))\n",
+      "classification": "supported",
       "reference": {
-        "stdout": "True\n",
+        "stdout": "[(1, 3), (2, 4)]\n",
         "error_type": null
       },
       "engine": {
-        "stdout": "",
-        "error_type": "NameError",
-        "code": "PYTHON",
-        "phase": "execute"
+        "stdout": "[(1, 3), (2, 4)]\n",
+        "error_type": null
       }
     },
     {

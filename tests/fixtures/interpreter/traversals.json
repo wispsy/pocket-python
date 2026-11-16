@@ -7,7 +7,8 @@
     "LA196",
     "LA197",
     "LA198",
-    "LA199"
+    "LA199",
+    "LA200"
   ],
   "cases": [
     {
@@ -1127,6 +1128,523 @@
       "stage": "LA199",
       "source": "i=enumerate([1,2],7)\nprint(type(i) is enumerate,isinstance(i,enumerate),enumerate.__iter__(i) is i,enumerate.__next__(i),i.__next__())\n",
       "stdout": "True True True (7, 1) (8, 2)\n"
+    },
+    {
+      "id": "zip-empty",
+      "stage": "LA200",
+      "source": "print(list(zip()),list(zip(strict=True)))\n",
+      "stdout": "[] []\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-one",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2])))\n",
+      "stdout": "[(1,), (2,)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-two",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2],[3,4])))\n",
+      "stdout": "[(1, 3), (2, 4)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-three",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2],\"ab\",range(7,9))))\n",
+      "stdout": "[(1, 'a', 7), (2, 'b', 8)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-shortest",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2,3],[4])))\n",
+      "stdout": "[(1, 4)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-first-empty",
+      "stage": "LA200",
+      "source": "a=iter([1,2])\nprint(list(zip([],a)),next(a))\n",
+      "stdout": "[] 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-last-empty",
+      "stage": "LA200",
+      "source": "a=iter([1,2])\nprint(list(zip(a,[])),next(a))\n",
+      "stdout": "[] 2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-shared-source",
+      "stage": "LA200",
+      "source": "a=iter([1,2,3,4,5])\nprint(list(zip(a,a)))\n",
+      "stdout": "[(1, 2), (3, 4)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-unicode-binary",
+      "stage": "LA200",
+      "source": "print(list(zip(\"\u00e9\ud83d\ude00\",b\"ab\")))\n",
+      "stdout": "[('\u00e9', 97), ('\ud83d\ude00', 98)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-dictionary-views",
+      "stage": "LA200",
+      "source": "a={\"a\":1,\"b\":2}\nprint(list(zip(a.keys(),a.values())))\n",
+      "stdout": "[('a', 1), ('b', 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-equal",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2],[3,4],strict=True)))\n",
+      "stdout": "[(1, 3), (2, 4)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-one",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2],strict=True)))\n",
+      "stdout": "[(1,), (2,)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-false",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2],[3],strict=[])))\n",
+      "stdout": "[(1, 3)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-shorter",
+      "stage": "LA200",
+      "source": "try: list(zip([1,2],[3],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-longer",
+      "stage": "LA200",
+      "source": "try: list(zip([1],[2,3],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-plural-shorter",
+      "stage": "LA200",
+      "source": "try: list(zip([1],[2],[],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is shorter than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-plural-longer",
+      "stage": "LA200",
+      "source": "try: list(zip([],[],[1],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is longer than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-shared-source",
+      "stage": "LA200",
+      "source": "a=iter([1,2,3])\nz=zip(a,a,strict=True)\nprint(next(z))\ntry: next(z)\nexcept ValueError as e: print(str(e))\nprint(next(z,9))\n",
+      "stdout": "(1, 2)\nzip() argument 2 is shorter than argument 1\n9\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-retry-mismatch",
+      "stage": "LA200",
+      "source": "a=iter([1,2,3])\nb=iter([4])\nz=zip(a,b,strict=True)\nprint(next(z))\ntry: next(z)\nexcept ValueError as e: print(str(e))\nprint(list(a))\n",
+      "stdout": "(1, 4)\nzip() argument 2 is shorter than argument 1\n[3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-identity",
+      "stage": "LA200",
+      "source": "a=[]\nb={}\nz=zip([a],[b])\np=next(z)\nprint(p[0] is a,p[1] is b,iter(z) is z)\n",
+      "stdout": "True True True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-retained-tuples",
+      "stage": "LA200",
+      "source": "z=zip([1,2,3],[4,5,6])\na=next(z)\nb=next(z)\nprint(a,b,list(z),a,b)\n",
+      "stdout": "(1, 4) (2, 5) [(3, 6)] (1, 4) (2, 5)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-default-next",
+      "stage": "LA200",
+      "source": "z=zip()\nprint(next(z,7),next(z,8))\n",
+      "stdout": "7 8\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-keyword",
+      "stage": "LA200",
+      "source": "try: zip(foo=1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "zip() got an unexpected keyword argument 'foo'\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-many-keywords",
+      "stage": "LA200",
+      "source": "try: zip([],strict=True,foo=1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "zip() takes at most 1 keyword argument (2 given)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-noniterable",
+      "stage": "LA200",
+      "source": "zip([],1)\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-lazy-map",
+      "stage": "LA200",
+      "source": "print(list(zip(map(abs,[-2,3]),filter(None,[0,4,5]),strict=True)))\n",
+      "stdout": "[(2, 4), (3, 5)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-live-list",
+      "stage": "LA200",
+      "source": "a=[1]\nz=zip(a,[3,4])\nprint(next(z))\na.append(2)\nprint(list(z))\n",
+      "stdout": "(1, 3)\n[(2, 4)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-unpacking",
+      "stage": "LA200",
+      "source": "for a,b in zip([1,2],[3,4]): print(a+b)\n",
+      "stdout": "4\n6\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-acquisition-order",
+      "stage": "LA200",
+      "source": "class Source:\n def __init__(self,n): self.n=n\n def __iter__(self):\n  print(\"iter\",self.n)\n  return iter([self.n])\nclass Strict:\n def __bool__(self):\n  print(\"strict\")\n  return True\nz=zip(Source(1),Source(2),strict=Strict())\nprint(\"created\")\nprint(list(z))\n",
+      "stdout": "strict\niter 1\niter 2\ncreated\n[(1, 2)]\n"
+    },
+    {
+      "id": "zip-pull-order",
+      "stage": "LA200",
+      "source": "class I:\n def __init__(self,n): self.n=n\n def __iter__(self):\n  print(\"iter\",self.n)\n  return self\n def __next__(self):\n  print(\"next\",self.n)\n  return self.n\nz=zip(I(1),I(2))\nprint(\"created\")\nprint(next(z))\n",
+      "stdout": "iter 1\niter 2\ncreated\nnext 1\nnext 2\n(1, 2)\n"
+    },
+    {
+      "id": "zip-probe-error",
+      "stage": "LA200",
+      "source": "class I:\n def __iter__(self): return self\n def __next__(self): raise LookupError(\"probe\")\nlist(zip([],I(),strict=True))\n",
+      "stdout": "",
+      "error_type": "LookupError"
+    },
+    {
+      "id": "zip-transient-stop",
+      "stage": "LA200",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise StopIteration(\"source\")\n  return self.n\nz=zip(I(),[7,8])\ntry: next(z)\nexcept StopIteration as e: print(str(e))\nprint(next(z))\n",
+      "stdout": "source\n(2, 7)\n"
+    },
+    {
+      "id": "zip-error-retry",
+      "stage": "LA200",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise ValueError(\"source\")\n  return self.n\nz=zip([7,8],I(),strict=True)\ntry: next(z)\nexcept ValueError as e: print(str(e))\nprint(next(z))\n",
+      "stdout": "source\n(8, 2)\n"
+    },
+    {
+      "id": "zip-owned-reentry",
+      "stage": "LA200",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  n=self.n\n  if n==1: print(\"nested\",next(z))\n  return n\nz=zip(I(),[7,8,9])\nprint(next(z))\n",
+      "stdout": "nested (2, 7)\n(1, 8)\n"
+    },
+    {
+      "id": "zip-native-slots",
+      "stage": "LA200",
+      "source": "z=zip([1,2],[3,4])\nprint(type(z) is zip,isinstance(z,zip),zip.__iter__(z) is z,zip.__next__(z),z.__next__())\n",
+      "stdout": "True True True (1, 3) (2, 4)\n"
+    },
+    {
+      "id": "zip-no-args-strict-truth",
+      "stage": "LA200",
+      "source": "class Strict:\n def __bool__(self):\n  print(\"strict\")\n  return True\nprint(list(zip(strict=Strict())))\n",
+      "stdout": "strict\n[]\n"
+    },
+    {
+      "id": "zip-strict-truth-error",
+      "stage": "LA200",
+      "source": "class Strict:\n def __bool__(self): raise ValueError(\"strict\")\nzip(strict=Strict())\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "zip-strict-matrix-2-0-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-2-0-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-2-1-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-2-1-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-0-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],[2],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-0-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-1-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],[2],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-1-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-2-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[1],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is shorter than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-2-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[],[2],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is longer than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-0-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],[2],[3],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-0-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],[],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-1-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],[2],[3],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-1-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],[],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-2-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[1],[],[3],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is shorter than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-2-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[],[2],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is longer than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-3-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[1],[2],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 4 is shorter than arguments 1-3\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-3-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[],[],[3],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 4 is longer than arguments 1-3\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
     }
   ]
 }

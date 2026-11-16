@@ -1448,8 +1448,16 @@ export const NATIVE_NAMESPACES = Object.freeze({
     ["__qualname__","getset_descriptor"],
     ["__text_signature__","getset_descriptor"],
   ],
+  "zip": [
+    ["__new__","builtin_function_or_method"],
+    ["__iter__","wrapper_descriptor"],
+    ["__next__","wrapper_descriptor"],
+    ["__reduce__","method_descriptor"],
+    ["__setstate__","method_descriptor"],
+    ["__doc__","value",{"type":"text","value":"The zip object yields n-length tuples, where n is the number of\niterables passed as positional arguments to zip().  The i-th element\nin every tuple comes from the i-th iterable argument to zip().  This\ncontinues until the shortest argument is exhausted.\n\nIf strict is true and one of the arguments is exhausted before the\nothers, raise a ValueError.\n\n   >>> list(zip('abcdefg', range(3), range(4)))\n   [('a', 0, 0), ('b', 1, 1), ('c', 2, 2)]"}],
+  ],
 });
-export const NATIVE_DOC_COPIES = Object.freeze(["ArithmeticError", "AssertionError", "AttributeError", "BaseException", "BufferError", "Exception", "GeneratorExit", "ImportError", "IndentationError", "IndexError", "KeyError", "LookupError", "ModuleNotFoundError", "NameError", "NoneType", "NotImplementedType", "OverflowError", "RecursionError", "RuntimeError", "StopIteration", "SyntaxError", "SystemError", "TabError", "TypeError", "UnboundLocalError", "UnicodeDecodeError", "UnicodeEncodeError", "UnicodeError", "UnicodeTranslateError", "ValueError", "ZeroDivisionError", "bool", "bytearray", "bytes", "cell", "classmethod", "code", "complex", "dict", "enumerate", "filter", "float", "frozenset", "function", "int", "list", "map", "mappingproxy", "memoryview", "method", "module", "object", "property", "range", "set", "slice", "staticmethod", "str", "super", "tuple", "type"]);
+export const NATIVE_DOC_COPIES = Object.freeze(["ArithmeticError", "AssertionError", "AttributeError", "BaseException", "BufferError", "Exception", "GeneratorExit", "ImportError", "IndentationError", "IndexError", "KeyError", "LookupError", "ModuleNotFoundError", "NameError", "NoneType", "NotImplementedType", "OverflowError", "RecursionError", "RuntimeError", "StopIteration", "SyntaxError", "SystemError", "TabError", "TypeError", "UnboundLocalError", "UnicodeDecodeError", "UnicodeEncodeError", "UnicodeError", "UnicodeTranslateError", "ValueError", "ZeroDivisionError", "bool", "bytearray", "bytes", "cell", "classmethod", "code", "complex", "dict", "enumerate", "filter", "float", "frozenset", "function", "int", "list", "map", "mappingproxy", "memoryview", "method", "module", "object", "property", "range", "set", "slice", "staticmethod", "str", "super", "tuple", "type", "zip"]);
 export const NATIVE_CALLABLE_DOCS = Object.freeze({
   "ArithmeticError.__new__": "Create and return a new object.  See help(type) for accurate signature.",
   "AssertionError.__new__": "Create and return a new object.  See help(type) for accurate signature.",
@@ -2625,6 +2633,11 @@ export const NATIVE_CALLABLE_DOCS = Object.freeze({
   "wrapper_descriptor.__doc__": null,
   "wrapper_descriptor.__qualname__": null,
   "wrapper_descriptor.__text_signature__": null,
+  "zip.__new__": "Create and return a new object.  See help(type) for accurate signature.",
+  "zip.__iter__": "Implement iter(self).",
+  "zip.__next__": "Implement next(self).",
+  "zip.__reduce__": "Return state information for pickling.",
+  "zip.__setstate__": "Set state information for unpickling.",
   "__build_class__": "__build_class__(func, name, /, *bases, [metaclass], **kwds) -> class\n\nInternal helper function used by the class statement.",
   "__import__": "Import a module.\n\nBecause this function is meant for use by the Python\ninterpreter and not for general use, it is better to use\nimportlib.import_module() to programmatically import a module.\n\nThe globals argument is only used to determine the context;\nthey are not modified.  The locals argument is unused.  The fromlist\nshould be a list of names to emulate ``from name import ...``, or an\nempty list to emulate ``import name``.\nWhen importing a module from a package, note that __import__('A.B', ...)\nreturns package A when fromlist is empty, but its submodule B when\nfromlist is not empty.  The level argument is used to determine whether\nto perform absolute or relative imports: 0 is absolute, while a positive\nnumber is the number of parent directories to search relative to the\ncurrent module.",
   "abs": "Return the absolute value of the argument.",
@@ -3642,6 +3655,11 @@ export const NATIVE_CALLABLE_SIGNATURES = Object.freeze({
   "wrapper_descriptor.__call__": "($self, /, *args, **kwargs)",
   "wrapper_descriptor.__get__": "($self, instance, owner=None, /)",
   "wrapper_descriptor.__reduce__": "($self, /)",
+  "zip.__new__": "($type, *args, **kwargs)",
+  "zip.__iter__": "($self, /)",
+  "zip.__next__": "($self, /)",
+  "zip.__reduce__": "($self, /)",
+  "zip.__setstate__": "($self, object, /)",
   "__build_class__": null,
   "__import__": "($module, /, name, globals=None, locals=None, fromlist=(),\n           level=0)",
   "abs": "($module, x, /)",
