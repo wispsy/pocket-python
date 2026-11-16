@@ -32,4 +32,13 @@ python scripts/run_tests.py focused --feature traversals
 python scripts/run_tests.py browser-conformance --feature traversals
 ```
 
+LA-197 adopts `filter(function, iterable, /)`. Construction validates the signature
+then acquires the iterator. Each advancement pulls candidates lazily, calls the
+predicate and converts its result to Python truth until a match is found. `None`
+and the native `bool` predicate test the original candidate directly. Matching
+items preserve identity. Predicate/truth failures consume only the candidate
+already pulled; later calls resume with the following item. Temporary predicate
+owners, candidate objects and nested callback graphs remain rooted while parked.
+Unbounded rejection scans share work and cancellation limits.
+
 Reference: [pinned builtin implementation](https://github.com/python/cpython/blob/v3.14.7/Python/bltinmodule.c).

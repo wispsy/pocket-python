@@ -60,3 +60,10 @@ test('parked map retains temporary callable owners and partially gathered tuples
   await parked('class A:\n def __init__(self): self.data=[7]\n def apply(self,a,b):\n  print("entered")\n  return self.data[0]+a[0]+b[0]\nprint(next(map(A().apply,[[1]],[[2]])))\n', 'entered\n10\n', 'entered\n');
   await parked('class I:\n def __iter__(self): return self\n def __next__(self):\n  print("pull")\n  return [2]\nprint(next(map(lambda a,b:a[0]+b[0],[[1]],I())))\n', 'pull\n3\n', 'pull\n');
 });
+
+test('filter bounds rejection scans and retains candidates through owned truth', async () => {
+  const result = await run('next(filter(lambda x:False,range(10**100)))\n', {maxWork: 5000});
+  assert.equal(result.error.code, 'BUDGET'); closed(result);
+  await parked('class V:\n def __bool__(self):\n  print("truth")\n  held=[1,2,3]\n  return True\na=V()\nprint(next(filter(None,[a])) is a)\n', 'truth\nTrue\n', 'truth\n');
+  await parked('class P:\n def __init__(self): self.data=[7]\n def test(self,x):\n  print("predicate")\n  return self.data[0]>x\nprint(list(filter(P().test,[1])))\n', 'predicate\n[1]\n', 'predicate\n');
+});
