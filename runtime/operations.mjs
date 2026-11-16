@@ -258,10 +258,10 @@ export function completion(kind, fields = {}) {
     case "binary-result": case "binary-count": case "binary-member":
       record = {kind, receiver: fields.receiver, mutable: fields.mutable === true, after}; break;
     case "byte-assignment": record = {kind, receiver: fields.receiver, key: fields.key, after}; break;
-    case "display-iter": case "display-next":
-      record = {kind, receiver: fields.receiver, iterator: fields.iterator ?? null, after}; break;
+    case "display-iter": case "display-hinted": case "display-next":
+      record = {kind, receiver: fields.receiver, source: fields.source ?? null, iterator: fields.iterator ?? null, after}; break;
     case "display-insert": record = {kind, receiver: fields.receiver, after}; break;
-    case "unpack-iter": case "unpack-next": case "unpack-rest-iter": case "unpack-rest-next":
+    case "unpack-iter": case "unpack-next": case "unpack-rest-iter": case "unpack-rest-hinted": case "unpack-rest-next":
       record = {kind, receiver: fields.receiver, iterator: fields.iterator ?? null, sourceIterator: fields.sourceIterator ?? null, result: fields.result,
         before: fields.before, tail: fields.tail ?? null, after};
       if (!Number.isSafeInteger(record.before) || record.before < 0 || record.before > 128 ||
@@ -278,8 +278,8 @@ export function completion(kind, fields = {}) {
           record.hash !== null && typeof record.hash !== "bigint" || !["mapping", "keyword", "display"].includes(record.mode) ||
           record.version !== null && (!Number.isSafeInteger(record.version) || record.version < 0)) throw new TypeError("Invalid mapping expansion phase.");
       break;
-    case "call-star-iter": case "call-star-next":
-      record = {kind, receiver: fields.receiver, iterator: fields.iterator ?? null, after}; break;
+    case "call-star-iter": case "call-star-hinted": case "call-star-next":
+      record = {kind, receiver: fields.receiver, source: fields.source ?? null, hinted: fields.hinted === true, iterator: fields.iterator ?? null, after}; break;
     case "hint-length": case "hint-bound": case "hint-call": case "hint-value": case "hint-indexed":
       record = {kind, receiver: fields.receiver, depth: fields.depth, after}; depthCheck(record.depth); break;
     case "consume-iter": case "consume-hinted": case "consume-next": case "consume-truth": case "consume-stored": case "consume-byte":
@@ -492,14 +492,14 @@ function visit(record) {
     case "next-default": return [record.receiver, record.default, ...completionRoots(record.after)];
     case "binary-result": case "binary-count": case "binary-member": return [record.receiver, ...completionRoots(record.after)];
     case "byte-assignment": return [record.receiver, record.key, ...completionRoots(record.after)];
-    case "display-iter": case "display-next": return [record.receiver, record.iterator, ...completionRoots(record.after)];
+    case "display-iter": case "display-hinted": case "display-next": return [record.receiver, ...(record.source === null ? [] : [record.source]), record.iterator, ...completionRoots(record.after)];
     case "display-insert": return [record.receiver, ...completionRoots(record.after)];
-    case "unpack-iter": case "unpack-next": case "unpack-rest-iter": case "unpack-rest-next": return [record.receiver, record.iterator, record.sourceIterator, record.result, ...completionRoots(record.after)];
+    case "unpack-iter": case "unpack-next": case "unpack-rest-iter": case "unpack-rest-hinted": case "unpack-rest-next": return [record.receiver, record.iterator, record.sourceIterator, record.result, ...completionRoots(record.after)];
     case "call-duplicate-result": return [record.receiver, record.key, ...completionRoots(record.after)];
     case "call-map-lookup": case "call-map-keys": case "call-map-sequence": case "call-map-hash":
     case "call-map-probe": case "call-map-value": case "call-map-insert": case "call-map-stored":
       return [record.receiver, record.mapping, record.keys, record.key, record.item, record.hash, ...completionRoots(record.after)];
-    case "call-star-iter": case "call-star-next": return [record.receiver, record.iterator, ...completionRoots(record.after)];
+    case "call-star-iter": case "call-star-hinted": case "call-star-next": return [record.receiver, ...(record.source === null ? [] : [record.source]), record.iterator, ...completionRoots(record.after)];
     case "hint-length": case "hint-bound": case "hint-call": case "hint-value": case "hint-indexed": return [record.receiver, ...completionRoots(record.after)];
     case "consume-iter": case "consume-hinted": case "consume-next": case "consume-truth": case "consume-stored": case "consume-byte": return [record.receiver, record.result, ...completionRoots(record.after)];
     case "contains-result": case "search-iter": case "search-next": case "search-equal": case "search-truth": return [record.receiver, record.key, ...completionRoots(record.after)];

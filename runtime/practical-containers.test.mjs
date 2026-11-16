@@ -94,11 +94,11 @@ test('extension retains its iterator and partial results during park/cancel/clos
   await callbackLifetime('class A:\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n>1: raise StopIteration\n  print("entered")\n  return [7]\ni=A()\ni.n=0\na=[]\na.extend(i)\nprint(a[0][0])\n', 'entered\n7\n');
 });
 
-test('extension refuses user hints before binding or consuming callbacks', async () => {
+test('extension validates acquisition before calling length hints', async () => {
   for (const slot of ['__len__', '__length_hint__']) {
     const source = 'class A:\n @property\n def __iter__(self):\n  print("bad iter")\n  return str\n def ' + slot + '(self):\n  print("bad hint")\n  return 1\n[].extend(A())\n';
     const result = await runSourceRequest({modules: [unit(source)], compileOptions: {languageProfile: corpus.profile}});
-    assert.equal(result.error?.code, 'UNSUPPORTED'); assert.equal(result.stdout, ''); closed(result.closed);
+    assert.equal(result.error?.type, 'TypeError'); assert.equal(result.stdout, 'bad iter\n'); closed(result.closed);
   }
 });
 

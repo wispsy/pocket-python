@@ -973,7 +973,7 @@ function activation(program, {maxSteps = 10_000, maxWork = 1_000_000, maxDepth =
       } else if (op === "call-start") stack.push(allocate(CallArguments, stack.pop()));
       else if (["call-argument", "call-keyword", "call-star", "call-mapping"].includes(op)) {
         const value = stack.pop(), receiver = stack.pop();
-        if (op === "call-star") dispatch(expandArguments(receiver, value, summary(frame, cursor)));
+        if (op === "call-star") dispatch(expandArguments(receiver, value, summary(frame, cursor), arg === "list"));
         else if (op === "call-mapping") dispatch(expandMapping(receiver, value, summary(frame, cursor)));
         else if (op === "call-keyword") dispatch(keywordArgument(receiver, arg, value, summary(frame, cursor)));
         else { appendArgument(receiver, value); stack.push(receiver); }

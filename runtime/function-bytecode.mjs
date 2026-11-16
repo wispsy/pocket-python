@@ -163,7 +163,10 @@ export function verifyFunctions(program) {
         else if (modern && op === "raise-from") {}
         else if (modern && op === "assertion-error") { length = 2; if (typeof arg !== "boolean") fail("Invalid assertion message flag."); }
         else if (modern && op === "call-keyword") { length = 2; if (!validName(arg)) fail("Invalid assembled keyword name."); }
-        else if (modern && ["call-start", "call-argument", "call-star", "call-mapping", "call-expanded"].includes(op)) {}
+        else if (modern && op === "call-star") {
+          if (instruction.length === 2) { length = 2; if (arg !== "list") fail("Invalid argument expansion hint mode."); }
+        }
+        else if (modern && ["call-start", "call-argument", "call-mapping", "call-expanded"].includes(op)) {}
         else if (op === "call") {
           length = 3; if (!integer(arg, FUNCTION_LIMITS.names)) fail("Invalid positional argument count."); names(extra, validName);
         } else if (CONSTRUCT.has(op)) { length = 2; if (op === "build-set" && !modern || !integer(arg, 1024)) fail("Invalid container item count."); }

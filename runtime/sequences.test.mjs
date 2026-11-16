@@ -104,10 +104,10 @@ test('primitive constructors preserve aliases, iterator state and empty/fresh co
 });
 
 test('constructor limits and huge range hints fail without leaking partial containers',async()=>{
-  for(const source of ['list(range(1025))\n','tuple("'+'x'.repeat(1025)+'")\n']){
+  for(const source of ['list(range(1025))\n','tuple(iter(range(10**100)))\n','tuple("'+'x'.repeat(1025)+'")\n']){
     const result=await run(source);assert.equal(result.error.code,'BUDGET');closed(result);
   }
-  for(const source of ['list(range(10**100))\n','tuple(iter(range(10**100)))\n']){
+  for(const source of ['list(range(10**100))\n']){
     const result=await run(source);assert.equal(result.error.type,'OverflowError');closed(result);
   }
   const oom=await run('a=list("'+'x'.repeat(800)+'")\n',{maxWork:20000000},{maxBytes:16000});

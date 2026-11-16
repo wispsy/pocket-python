@@ -9,7 +9,8 @@
     "Unpack",
     "Display",
     "O68",
-    "LA8"
+    "LA8",
+    "LA206"
   ],
   "cases": [
     {
@@ -973,25 +974,21 @@
     },
     {
       "id": "star-unpack-user-hints-deferred",
-      "stage": "Future",
+      "stage": "LA206",
       "source": "class A:\n def __iter__(self): return iter([1,2])\n def __len__(self): return 2\na,*b=A()\nprint(a,len(b))\n",
       "stdout": "1 1\n",
       "profiles": [
         "classes-source/1"
-      ],
-      "owner": "#116",
-      "boundary": "General iterable length-hint consumers remain a separate sequence API."
+      ]
     },
     {
       "id": "star-display-user-hints-deferred",
-      "stage": "Future",
+      "stage": "LA206",
       "source": "class A:\n def __iter__(self): return iter([1,2])\n def __len__(self): return 2\na=[*A()]\nprint(len(a))\n",
       "stdout": "2\n",
       "profiles": [
         "classes-source/1"
-      ],
-      "owner": "#116",
-      "boundary": "General iterable length-hint consumers remain a separate sequence API."
+      ]
     },
     {
       "id": "star-set-display",

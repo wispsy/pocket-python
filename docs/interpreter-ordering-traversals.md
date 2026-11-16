@@ -29,7 +29,7 @@ the offline acceptance. Length/pull callbacks share cancellation, work/depth and
 allocation limits; parked collection, close and cancellation release all owners.
 
 LA-205 adopts owned construction hints after iterator acquisition. `list` asks
-the original iterable; `tuple` asks its acquired iterator. `__len__` wins when
+the original iterable; pinned `tuple` traversal skips hints entirely. `__len__` wins when
 present and valid, while TypeError falls back to `__length_hint__`. Hint calls
 returning NotImplemented or raising TypeError use the default. Descriptor binding
 failures and invalid returned values propagate. Integer subtype payloads are
@@ -38,6 +38,16 @@ checks preserve reference priority. Indexed/reverse iterator hints read their
 retained source's current length. Estimates above the fixed sequence-item budget
 fail with the shared resource error. Estimates do not allocate a fictitious
 capacity; actual retained containers continue to use the common memory ledger.
+
+LA-206 extends the same hint operation to `list.extend`, starred sequence
+displays, mixed positional call assembly and starred assignment remainders.
+Acquisition finishes before hint lookup. A single starred call argument and
+`tuple()` skip hints in the pinned reference; mixed call arguments use the
+original iterable, while unpacking asks the remainder iterator after its second
+iterator acquisition. The verified optional `call-star` operand `list` preserves
+that source distinction. Failures retain prior destination/argument effects and
+use existing item and argument limits. The earlier hint refusal observations
+are promoted into their original corpora with explicit adoption stages.
 
 References: [reverse implementation](https://github.com/python/cpython/blob/v3.14.7/Objects/enumobject.c),
 [length hints](https://github.com/python/cpython/blob/v3.14.7/Objects/abstract.c),

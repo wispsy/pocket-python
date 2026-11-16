@@ -7,7 +7,8 @@
     "LA202",
     "LA203",
     "LA204",
-    "LA205"
+    "LA205",
+    "LA206"
   ],
   "cases": [
     {
@@ -847,6 +848,127 @@
       "stage": "LA205",
       "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\n def __len__(self): return \"bad\"\n def __length_hint__(self): print(\"fallback\");return 2\nprint(list(S()))\n",
       "stdout": "iter\nfallback\n[1, 2]\n"
+    },
+    {
+      "id": "hint-order-list",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\nprint(list(S()))\n",
+      "stdout": "iter-S\nhint-S\npull 1\npull 2\n[1, 2]\n"
+    },
+    {
+      "id": "hint-order-tuple",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\nprint(tuple(S()))\n",
+      "stdout": "iter-S\npull 1\npull 2\n(1, 2)\n"
+    },
+    {
+      "id": "hint-order-tuple-iterator",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\nprint(tuple(I()))\n",
+      "stdout": "iter-I\npull 1\npull 2\n(1, 2)\n"
+    },
+    {
+      "id": "hint-order-single-star",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\ndef f(*x): print(x)\nf(*S())\n",
+      "stdout": "iter-S\npull 1\npull 2\n(1, 2)\n"
+    },
+    {
+      "id": "hint-order-single-star-iterator",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\ndef f(*x): print(x)\nf(*I())\n",
+      "stdout": "iter-I\npull 1\npull 2\n(1, 2)\n"
+    },
+    {
+      "id": "hint-order-mixed-star",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\ndef f(*x): print(x)\nf(0,*S())\n",
+      "stdout": "iter-S\nhint-S\npull 1\npull 2\n(0, 1, 2)\n"
+    },
+    {
+      "id": "hint-order-multiple-star",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\ndef f(*x): print(x)\nf(*S(),*S())\n",
+      "stdout": "iter-S\nhint-S\npull 1\npull 2\niter-S\nhint-S\npull 1\npull 2\n(1, 2, 1, 2)\n"
+    },
+    {
+      "id": "hint-order-single-star-keyword",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\ndef f(*x,**kw): print(x,kw)\nf(*S(),x=3)\n",
+      "stdout": "iter-S\npull 1\npull 2\n(1, 2) {'x': 3}\n"
+    },
+    {
+      "id": "hint-order-list-display",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\nprint([*S()])\n",
+      "stdout": "iter-S\nhint-S\npull 1\npull 2\n[1, 2]\n"
+    },
+    {
+      "id": "hint-order-tuple-display",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\nprint((*S(),))\n",
+      "stdout": "iter-S\nhint-S\npull 1\npull 2\n(1, 2)\n"
+    },
+    {
+      "id": "hint-order-extend",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\na=[0]\na.extend(S())\nprint(a)\n",
+      "stdout": "iter-S\nhint-S\npull 1\npull 2\n[0, 1, 2]\n"
+    },
+    {
+      "id": "hint-order-unpack",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\na,*b=S()\nprint(a,b)\n",
+      "stdout": "iter-S\npull 1\niter-I\nhint-I\npull 2\n1 [2]\n"
+    },
+    {
+      "id": "hint-order-unpack-all",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\n*a,=S()\nprint(a)\n",
+      "stdout": "iter-S\niter-I\nhint-I\npull 1\npull 2\n[1, 2]\n"
+    },
+    {
+      "id": "hint-order-unpack-before-after",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\na,*b,c=S()\nprint(a,b,c)\n",
+      "stdout": "iter-S\npull 1\niter-I\nhint-I\npull 2\n1 [] 2\n"
+    },
+    {
+      "id": "hint-order-unpack-no-star",
+      "stage": "LA206",
+      "source": "class I:\n def __init__(self): self.i=0\n def __iter__(self): print(\"iter-I\");return self\n def __next__(self):\n  self.i+=1\n  if self.i>2: raise StopIteration\n  print(\"pull\",self.i)\n  return self.i\n def __length_hint__(self): print(\"hint-I\");return 2\nclass S:\n def __iter__(self): print(\"iter-S\");return I()\n def __length_hint__(self): print(\"hint-S\");return 2\na,b=S()\nprint(a,b)\n",
+      "stdout": "iter-S\npull 1\npull 2\n1 2\n"
+    },
+    {
+      "id": "hint-extend-partial",
+      "stage": "LA206",
+      "source": "class S:\n def __iter__(self): return self\n def __length_hint__(self): print(\"hint\");return 2\n def __next__(self):\n  if self.n==1: raise ValueError(\"pull\")\n  self.n+=1\n  return 7\ns=S()\ns.n=0\na=[1]\ntry: a.extend(s)\nexcept ValueError: print(a)\n",
+      "stdout": "hint\n[1, 7]\n"
+    },
+    {
+      "id": "hint-extend-destination-mutation",
+      "stage": "LA206",
+      "source": "class S:\n def __iter__(self): return iter([7])\n def __len__(self): a.append(2);return 1\na=[1]\na.extend(S())\nprint(a)\n",
+      "stdout": "[1, 2, 7]\n"
+    },
+    {
+      "id": "hint-display-error-after-previous",
+      "stage": "LA206",
+      "source": "class S:\n def __iter__(self): print(\"iter\");return iter([7])\n def __length_hint__(self): raise ValueError(\"hint\")\na=[1]\ntry: a=[0,*S()]\nexcept ValueError as e: print(a,str(e))\n",
+      "stdout": "iter\n[1] hint\n"
+    },
+    {
+      "id": "hint-call-invalid-result",
+      "stage": "LA206",
+      "source": "class S:\n def __iter__(self): print(\"iter\");return iter([7])\n def __length_hint__(self): return \"bad\"\ndef f(*a): print(\"wrong\")\nf(0,*S())\n",
+      "stdout": "iter\n",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "hint-single-call-ignores-invalid",
+      "stage": "LA206",
+      "source": "class S:\n def __iter__(self): print(\"iter\");return iter([7])\n def __length_hint__(self): return \"bad\"\ndef f(*a): print(a)\nf(*S())\n",
+      "stdout": "iter\n(7,)\n"
     }
   ]
 }

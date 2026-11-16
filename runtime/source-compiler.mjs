@@ -476,7 +476,8 @@ class Compiler {
             emit(value, "call-start");
             for (const arg of value.args) {
               expr(arg.kind === "StarredArgument" ? arg.value : arg);
-              emit(arg, arg.kind === "StarredArgument" ? "call-star" : "call-argument");
+              if (arg.kind === "StarredArgument" && value.args.length > 1) emit(arg, "call-star", "list");
+              else emit(arg, arg.kind === "StarredArgument" ? "call-star" : "call-argument");
             }
             for (const keyword of value.keywords) {
               expr(keyword.value);
@@ -568,7 +569,8 @@ class Compiler {
               pushNone(value); emit(value, "call-start");
               for (const base of value.bases) {
                 expr(base.kind === "StarredArgument" ? base.value : base);
-                emit(base, base.kind === "StarredArgument" ? "call-star" : "call-argument");
+                if (base.kind === "StarredArgument" && value.bases.length > 1) emit(base, "call-star", "list");
+                else emit(base, base.kind === "StarredArgument" ? "call-star" : "call-argument");
               }
               for (const keyword of value.keywords || []) {
                 expr(keyword.value); emit(value, keyword.name === null ? "call-mapping" : "call-keyword", ...(keyword.name === null ? [] : [keyword.name]));

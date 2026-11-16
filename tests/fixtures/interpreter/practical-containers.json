@@ -11,7 +11,8 @@
     "LA-5",
     "LA-6",
     "LA-7",
-    "LA-6A"
+    "LA-6A",
+    "LA206"
   ],
   "cases": [
     {
@@ -993,11 +994,9 @@
     },
     {
       "id": "extend-refuses-__length_hint__",
-      "stage": "Hints",
+      "stage": "LA206",
       "source": "class A:\n def __iter__(self):\n  print(\"iter\")\n  return iter([7])\n def __length_hint__(self):\n  print(\"hint\")\n  return 1\na=[]\na.extend(A())\nprint(a[0])\n",
-      "stdout": "iter\nhint\n7\n",
-      "owner": "#116",
-      "boundary": "User iterable length hints remain a pre-consumption refusal under the remaining construction/extension contract."
+      "stdout": "iter\nhint\n7\n"
     },
     {
       "id": "dict-get-defaults",

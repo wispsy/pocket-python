@@ -794,12 +794,9 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
       return () => { receiver.keywords.pop(); receiver.keywordValues.pop(); };
     });
   };
-  const expandArguments = (receiver, iterable, site) => {
+  const expandArguments = (receiver, iterable, site, hinted = false) => {
     argumentOwner(receiver);
-    const hintOwner = iterable instanceof ProtocolIteratorValue && iterable.kind === "indexed" ? iterable.source : iterable;
-    if (userProtocol(hintOwner) && ["__len__", "__length_hint__"].some(slot => classes.hasSlot(classes.checkingType(hintOwner), slot)))
-      hard("UNSUPPORTED", "UnsupportedOperationError", "User length hints require a separate construction stage.");
-    return unaryTask("iter", iterable, site, continuation("call-star-iter", {receiver}));
+    return unaryTask("iter", iterable, site, continuation("call-star-iter", {receiver, source: iterable, hinted}));
   };
   const keywordMap = receiver => {
     argumentOwner(receiver);
@@ -881,18 +878,11 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     return formatted ? unaryTask("str", key, site, continuation("call-duplicate-result", {receiver, key, after})) :
       unaryTask("call-keyword-duplicate", receiver, site, after);
   };
-  const refuseHints = receiver => {
-    const owner = receiver instanceof ProtocolIteratorValue && receiver.kind === "indexed" ? receiver.source : receiver;
-    if (userProtocol(owner) && ["__len__", "__length_hint__"].some(slot => classes.hasSlot(classes.checkingType(owner), slot)))
-      hard("UNSUPPORTED", "UnsupportedOperationError", "User length hints require a separate construction stage.");
-  };
   const expandDisplay = (receiver, iterable, site) => {
     if (!values.isList(receiver)) hard("BYTECODE", "BytecodeError", "Sequence display requires its owned result.");
-    refuseHints(iterable);
-    return unaryTask("iter", iterable, site, continuation("display-iter", {receiver}));
+    return unaryTask("iter", iterable, site, continuation("display-iter", {receiver, source: iterable}));
   };
   const expandUnpack = (receiver, before, tail, site) => {
-    if (tail !== null) refuseHints(receiver);
     const result = values.list([]); state.temporaries.push(result);
     return unaryTask("iter", receiver, site, continuation("unpack-iter", {receiver, result, before, tail}));
   };
@@ -1653,20 +1643,23 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     if (completion?.kind.startsWith("delegate-")) return delegateResult(completion.kind, value, site);
     count("deliver:" + (completion?.kind ?? "stack"));
     if (completion?.kind === "display-insert") return valueTask(completion.receiver, site, completion.after);
-    if (completion?.kind === "display-iter") return unaryTask("next", value, site,
-      continuation("display-next", {receiver: completion.receiver, iterator: value, after: completion.after}));
+    if (completion?.kind === "display-iter") return iterableHint(completion.source, site,
+      continuation("display-hinted", {receiver: completion.receiver, iterator: value, after: completion.after}), 0);
+    if (completion?.kind === "display-hinted") return unaryTask("next", completion.iterator, site,
+      continuation("display-next", completion));
     if (completion?.kind === "display-next") {
       state.temporaries.push(value); values.append(completion.receiver, value);
       return unaryTask("next", completion.iterator, site, continuation("display-next", completion));
     }
     if (completion?.kind === "unpack-iter") {
-      if (completion.tail !== null) refuseHints(value);
       const fields = {...completion, iterator: value, sourceIterator: value};
       return completion.tail !== null && completion.before === 0 ? unaryTask("iter", value, site, continuation("unpack-rest-iter", fields)) :
         unaryTask("next", value, site, continuation("unpack-next", fields));
     }
-    if (completion?.kind === "unpack-rest-iter") return unaryTask("next", value, site,
-      continuation("unpack-rest-next", {...completion, iterator: value}));
+    if (completion?.kind === "unpack-rest-iter") return iterableHint(completion.iterator, site,
+      continuation("unpack-rest-hinted", {...completion, iterator: value}), 0);
+    if (completion?.kind === "unpack-rest-hinted") return unaryTask("next", completion.iterator, site,
+      continuation("unpack-rest-next", completion));
     if (completion?.kind === "unpack-next") {
       if (completion.tail === null && completion.result.items.length === completion.before) python("ValueError", "Too many values to unpack");
       state.temporaries.push(value); values.append(completion.result, value);
@@ -1709,8 +1702,12 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
       continuation("call-map-stored", completion), 0, "set", completion.item, value);
     if (completion?.kind === "call-map-stored") return completion.mode === "keyword" ? valueTask(completion.receiver, site, completion.after) :
       mappingNext({...completion, position: completion.position + 1}, site);
-    if (completion?.kind === "call-star-iter") return unaryTask("next", value, site,
-      continuation("call-star-next", {receiver: completion.receiver, iterator: value, after: completion.after}));
+    if (completion?.kind === "call-star-iter") {
+      const next = continuation("call-star-hinted", {receiver: completion.receiver, iterator: value, after: completion.after});
+      return completion.hinted ? iterableHint(completion.source, site, next, 0) : valueTask(null, site, next);
+    }
+    if (completion?.kind === "call-star-hinted") return unaryTask("next", completion.iterator, site,
+      continuation("call-star-next", completion));
     if (completion?.kind === "call-star-next") {
       appendArgument(completion.receiver, value);
       return unaryTask("next", completion.iterator, site, continuation("call-star-next", completion));
@@ -1805,7 +1802,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
       return hintCount(size, site, completion.after);
     }
     if (completion?.kind === "consume-iter") return completion.hinted ?
-      iterableHint(completion.name === "tuple" ? value : completion.receiver, site, continuation("consume-hinted", {...completion, receiver: value}), completion.depth) :
+      iterableHint(completion.receiver, site, continuation("consume-hinted", {...completion, receiver: value}), completion.depth) :
       consumeNext(completion.name, value, completion.result, site, completion.after, completion.depth);
     if (completion?.kind === "consume-hinted")
       return consumeNext(completion.name, completion.receiver, completion.result, site, completion.after, completion.depth);
@@ -2522,14 +2519,14 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
           state.temporaries = operationRoots(task);
           const {name, receiver} = task, building = ["list", "tuple", "syntax-details"].includes(name);
           const hintOwner = receiver instanceof ProtocolIteratorValue && receiver.kind === "indexed" ? receiver.source : receiver;
-          if (name !== "syntax-details" && (building && task.result !== null || name === "bytes") && userProtocol(hintOwner) &&
+          if (name !== "syntax-details" && name === "bytes" && userProtocol(hintOwner) &&
               ["__len__", "__length_hint__"].some(slot => (hintOwner.nativePayload === undefined ? classes.lookup(classes.checkingType(hintOwner), slot).found : classes.hasSlot(classes.checkingType(hintOwner), slot))))
             hard("UNSUPPORTED", "UnsupportedOperationError", "User length hints require a separate construction stage.");
           const result = task.result ?? (building ? values.list([]) : ["bytes", "bytearray"].includes(name) ? values.binaryValue([], true) :
             ["set", "frozenset"].includes(name) ? values.newSet(name === "frozenset") : null);
           state.temporaries.push(result);
           task = unaryTask("iter", receiver, site, continuation("consume-iter", {name, receiver, result,
-            hinted: ["list", "tuple"].includes(name) && task.result === null, after: completion, depth}), depth);
+            hinted: name === "list", after: completion, depth}), depth);
           continue;
         }
         if (task.kind === "numeric") {
@@ -3937,7 +3934,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
               task = consumeTask(callable.name, source, site, completion, depth); continue;
             }
             if (callable.name === "tuple" && values.isSequenceType(source, "tuple")) { task = valueTask(source, site, completion); continue; }
-            if (args.length) values.checkConstructionHint(source);
+            if (args.length && callable.name === "list") values.checkConstructionHint(source);
             const result = values.list([]); state.temporaries.push(result);
             if (args.length) {
               const iterator = values.iterator(source); state.temporaries.push(iterator);
