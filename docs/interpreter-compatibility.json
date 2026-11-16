@@ -4776,9 +4776,9 @@
     },
     {
       "id": "map",
-      "status": "deferred",
-      "scope": "Not installed; resolving this builtin name raises Python NameError.",
-      "gaps": "No implementation/API support credit from the negative availability probe.",
+      "status": "partial",
+      "scope": "map(function, iterable, /, *iterables, strict=False) with eager iterator acquisition, lazy owned calls, strict probes and retries.",
+      "gaps": "Serialization, lazy-type subclass layouts and async traversal remain separate.",
       "reference_version": "3.14.7",
       "targets": [
         "node",
@@ -4790,7 +4790,10 @@
       "probes": [
         "builtin-map"
       ],
-      "evidence": []
+      "evidence": [
+        "tests/fixtures/interpreter/traversals.json:map-abs",
+        "tests/fixtures/interpreter/traversals.json:map-construction-order"
+      ]
     },
     {
       "id": "max",

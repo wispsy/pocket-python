@@ -1,6 +1,6 @@
 import {isVerifiedFunctionCode} from "./function-bytecode.mjs";
 import {NATIVE_NAMESPACES, NATIVE_DOC_COPIES, NATIVE_CALLABLE_DOCS, NATIVE_CALLABLE_SIGNATURES} from "./native-namespaces.mjs";
-import {ClassValue, HierarchyTransaction, ClassNamespaceValue, DictionaryViewValue, NamespaceLookupRequest, InstanceValue, BoundMethodValue, SuperValue, FunctionValue, BuiltinValue, ExceptionValue, EXCEPTIONS, EXCEPTION_BASES, EXCEPTION_LAYOUTS, matchesException, PropertyValue, MethodWrapperValue, PropertyAccessorValue, GeneratorValue, FrameValue, FrameLocalsValue, ModuleValue, CodeValue, Cell, NotImplementedValue, ProtocolIteratorValue, AppendValue, ValueMethod} from "./function-objects.mjs";
+import {ClassValue, HierarchyTransaction, ClassNamespaceValue, DictionaryViewValue, NamespaceLookupRequest, InstanceValue, BoundMethodValue, SuperValue, FunctionValue, BuiltinValue, ExceptionValue, EXCEPTIONS, EXCEPTION_BASES, EXCEPTION_LAYOUTS, matchesException, PropertyValue, MethodWrapperValue, PropertyAccessorValue, GeneratorValue, FrameValue, FrameLocalsValue, ModuleValue, CodeValue, Cell, NotImplementedValue, ProtocolIteratorValue, LazyIteratorValue, AppendValue, ValueMethod} from "./function-objects.mjs";
 import {allowsClassSpecial, isSpecialName, METACLASS_PROTOCOLS, NATIVE_PROTOCOL_KEYS} from "./class-policy.mjs";
 import {ValueRuntime, valueLayout, IteratorValue} from "./values.mjs";
 import {isPythonIdentifier} from "./source-identifiers.mjs";
@@ -13,7 +13,7 @@ export const CONTAINER_METHODS = Object.freeze({
 });
 export const CONTAINER_METHOD_NAMES = new Set(Object.values(CONTAINER_METHODS).flat());
 export const CLASS_LIMITS = Object.freeze({bases: 16, mro: 64, attributes: 128, name: 256});
-const NATIVE_TYPES = new Set(["type", "bool", "int", "float", "complex", "str", "list", "tuple", "dict", "range", "slice", "set", "frozenset", "bytes", "bytearray", "memoryview",
+const NATIVE_TYPES = new Set(["map", "type", "bool", "int", "float", "complex", "str", "list", "tuple", "dict", "range", "slice", "set", "frozenset", "bytes", "bytearray", "memoryview",
   "mappingproxy", "super", "property", "staticmethod", "classmethod", "NoneType", "NotImplementedType", "function", "method", "method-wrapper", "method_descriptor", "wrapper_descriptor", "builtin_function_or_method", "generator", "module", "code", "frame", "FrameLocalsProxy", "cell",
   "list_iterator", "tuple_iterator", "str_iterator", "str_ascii_iterator", "dict_keyiterator", "range_iterator", "longrange_iterator", "set_iterator", "bytes_iterator", "bytearray_iterator", "memory_iterator", "iterator", "callable_iterator", ...Object.keys(EXCEPTIONS)]);
 for (const name of Object.keys(NATIVE_NAMESPACES)) if (name !== "object") NATIVE_TYPES.add(name);
@@ -535,6 +535,7 @@ export class ClassRuntime {
       else if (value instanceof ModuleValue) name = "module";
       else if (value instanceof Cell) name = "cell";
       else if (value instanceof NotImplementedValue) name = "NotImplementedType";
+      else if (value instanceof LazyIteratorValue) name = value.kind;
       else if (value instanceof ProtocolIteratorValue) name = value.kind === "callable" ? "callable_iterator" : "iterator";
       else if (Object.hasOwn(EXCEPTIONS, value?.name)) name = value.name;
     }
@@ -1116,7 +1117,7 @@ export class ClassRuntime {
     }
     if (receiver instanceof GeneratorValue)
       this.fixedMutationFailure(receiver, name, key, "Generator state is read-only");
-    if (receiver instanceof IteratorValue || receiver instanceof ProtocolIteratorValue && ["indexed", "callable"].includes(receiver.kind))
+    if (receiver instanceof IteratorValue || receiver instanceof LazyIteratorValue || receiver instanceof ProtocolIteratorValue && ["indexed", "callable"].includes(receiver.kind))
       this.fixedMutationFailure(receiver, name, key, "Iterator attributes are read-only");
     if (receiver instanceof FrameValue && ["f_lineno", "f_trace", "f_trace_lines", "f_trace_opcodes"].includes(name))
       this.fail("UnsupportedOperationError", "Frame tracing and jumping require a separate contract", "UNSUPPORTED");
@@ -1219,6 +1220,7 @@ export class ClassRuntime {
   }
   nativeInvocationOwner(callable) {
     const name = callable.name, owner = name.slice(0, name.indexOf(".")), key = name.slice(name.indexOf(".") + 1);
+    if (owner === "map") return "#116";
     if (key === "__class_getitem__") return "#125";
     if (["__buffer__", "__release_buffer__"].includes(key)) return "#117";
     if (["__enter__", "__exit__"].includes(key)) return "#121";
@@ -1630,7 +1632,7 @@ export class ClassRuntime {
     if (this.isInstance(receiver)) return false;
     return receiver instanceof ModuleValue || receiver instanceof Cell || receiver instanceof CodeValue || receiver instanceof FrameValue || receiver instanceof FrameLocalsValue || receiver instanceof ExceptionValue || receiver instanceof DictionaryViewValue ||
       receiver instanceof MethodWrapperValue || receiver instanceof SuperValue || receiver instanceof ClassNamespaceValue || receiver instanceof PropertyValue || receiver instanceof GeneratorValue ||
-      receiver instanceof IteratorValue || receiver instanceof ProtocolIteratorValue && ["indexed", "callable"].includes(receiver.kind) ||
+      receiver instanceof IteratorValue || receiver instanceof LazyIteratorValue || receiver instanceof ProtocolIteratorValue && ["indexed", "callable"].includes(receiver.kind) ||
       this.values.isRange(receiver) || this.values.isSlice(receiver) || this.containerDirectoryNames(receiver) !== null || this.numericDirectoryNames(receiver) !== null || this.nativeCallableDirectoryKind(receiver) !== null;
   }
   nativeTypeDirectoryNames(type) {

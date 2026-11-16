@@ -1,4 +1,5 @@
 import {dynamicImporter} from "./dynamic-imports.mjs";
+import {lazyIteration} from "./lazy-iteration.mjs";
 import {addCompensated, totalCompensated} from "./numeric.mjs";
 import {dynamicEvaluator} from "./dynamic-evaluation.mjs";
 import {dynamicCompiler} from "./dynamic-source.mjs";
@@ -6,7 +7,7 @@ import {NATIVE_SUBCLASS_BASES, CONTAINER_METHODS, CONTAINER_METHOD_NAMES} from "
 import {ARITHMETIC_SLOTS, ORDERING_SLOTS, CLASS_PROTOCOL_NAMES, NATIVE_PROTOCOL_KEYS, allowsClassSpecial} from "./class-policy.mjs";
 import {VALUE_LIMITS, StringValue} from "./values.mjs";
 import {RegistryError} from "./module-registry.mjs";
-import {ModuleValue, FrameValue, FrameLocalsValue, Environment, SOURCE_BUILTINS, environmentCell, GeneratorValue, FunctionValue, CallArguments, Cell, CodeValue, SuperValue, BuiltinValue, AppendValue, ValueMethod, ExceptionValue, EXCEPTIONS, EXCEPTION_BASES, EXCEPTION_LAYOUTS, matchesException, isException, ClassValue, ClassNamespaceValue, DictionaryViewValue, NamespaceLookupCache, NamespaceLookupRequest, InstanceValue, BoundMethodValue, PropertyValue, MethodWrapperValue, PropertyAccessorValue, ProtocolIteratorValue, NotImplementedValue} from "./function-objects.mjs";
+import {ModuleValue, FrameValue, FrameLocalsValue, Environment, SOURCE_BUILTINS, environmentCell, GeneratorValue, FunctionValue, CallArguments, Cell, CodeValue, SuperValue, BuiltinValue, AppendValue, ValueMethod, ExceptionValue, EXCEPTIONS, EXCEPTION_BASES, EXCEPTION_LAYOUTS, matchesException, isException, ClassValue, ClassNamespaceValue, DictionaryViewValue, NamespaceLookupCache, NamespaceLookupRequest, InstanceValue, BoundMethodValue, PropertyValue, MethodWrapperValue, PropertyAccessorValue, ProtocolIteratorValue, LazyIteratorValue, NotImplementedValue} from "./function-objects.mjs";
 import {completion as continuation, completionRoots, callTask, constructTask, unaryTask, valueTask, itemTask, attributeTask, instanceTask, subclassTask, sliceTask, containsTask, compareTask, dictionaryTask, dictionaryBuildTask, namespaceCreateTask, hierarchyTask, arithmeticTask, numericTask, consumeTask, operationRoots} from "./operations.mjs";
 
 export class Raised { constructor(value) { this.value = value; } }
@@ -26,6 +27,7 @@ const NATIVE_ARITIES = Object.freeze({
 export function operationRuntime({state, memory, values, classes, moduleContext, maxDepth,
   allocate, mutate, python, nameError, addTrace, registryException, hard, charge, enter, bind, block, store, onOutput, setCell, load, loadName, builtinLookup, reflectFrame, generatorFrame, visibleFrame, classNamespace, classFallback, classModule, beginClass, enterClass, classQualification, classFirstline, classEnd, handlerType, raiseException, settle, resumeGenerator, yieldGenerator, delegateResult, injectGenerator}) {
   const compiler = dynamicCompiler({state, memory, values, classes, allocate, charge, python, hard});
+  const lazy = lazyIteration({state, values, allocate, charge, python});
   const evaluator = dynamicEvaluator({state, values, classes, allocate, enter, bind, loadName, classModule, compiler, python});
   const importer = dynamicImporter({state, moduleContext, values, classes, builtinLookup, python, hard});
   const userProtocol = value => classes.protocolObject(value);
@@ -1066,6 +1068,10 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
         return unaryTask("iterator-stop", current.receiver, site, current.after);
       }
       if (!isException(value, "StopIteration")) continue;
+      if (current.kind.startsWith("lazy-")) {
+        const recovered = lazy.stopped(current, site);
+        if (recovered) return recovered;
+      }
       if (current.kind === "delegate-next") return valueTask(classes.exceptionValue(value), site, continuation("delegate-return", {receiver: current.receiver}));
       if (current.kind === "next-default") return valueTask(current.default, site, current.after);
       if (current.kind === "for-next") return valueTask(null, site, continuation("for-exhausted"));
@@ -1904,6 +1910,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
       values.append(completion.parts, part);
       return representationNext({...completion, item: null, keyText: null, size}, site);
     }
+    if (completion?.kind.startsWith("lazy-")) return lazy.resume(completion, value, site);
     if (completion?.kind === "selection-iter") return selectionNext({...completion, receiver: value}, site);
     if (completion?.kind === "selection-next") {
       const record = {...completion, candidate: value};
@@ -2732,6 +2739,11 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
               if (operation === "iter") { task = deliver(value, completion, site); continue; }
               resumeGenerator(value, "send", null, site, completion); return;
             }
+            if (value instanceof LazyIteratorValue) {
+              if (operation === "iter") { task = deliver(value, completion, site); continue; }
+              if (++depth > maxDepth) python("RecursionError", "maximum implicit iteration dispatch depth exceeded");
+              task = lazy.next(value, site, completion, depth); continue;
+            }
             if (value instanceof ProtocolIteratorValue) {
               if (operation === "iter") { task = deliver(value, completion, site); continue; }
               if (value.exhausted) python("StopIteration", "");
@@ -3110,7 +3122,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             task = nativeOwner === "method" ? unaryTask("hash", args[0].callable, site,
               continuation("native-method-hash", {receiver: args[0], after: completion}), depth) : valueTask(values.pythonHash(args[0]), site, completion); continue;
           }
-          if (["__iter__", "__next__"].includes(nativeName) && (nativeOwner === "generator" || nativeOwner.endsWith("iterator"))) {
+          if (["__iter__", "__next__"].includes(nativeName) && (nativeOwner === "map" || nativeOwner === "generator" || nativeOwner.endsWith("iterator"))) {
             if (keywords.length || args.length !== 1) python("TypeError", nativeName + " takes no arguments");
             task = unaryTask(nativeName === "__iter__" ? "iter" : "next", args[0], site, completion, depth); continue;
           }
@@ -3423,7 +3435,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             state.temporaries.push(type);
             task = finishType(type, [...namespace], site, completion, keywords, keywordValues, cell, dictcell); continue;
           }
-          if (classes.isType(callable) && !["FrameLocalsProxy", "cell", "code", "mappingproxy", "type", "super", "property", "staticmethod", "classmethod", "slice", "dict", "bool", "int", "float", "complex", "str", "list", "tuple", "range", "set", "frozenset", "bytes", "bytearray", "memoryview", ...Object.keys(EXCEPTIONS)].includes(callable.name)) {
+          if (classes.isType(callable) && !["map", "FrameLocalsProxy", "cell", "code", "mappingproxy", "type", "super", "property", "staticmethod", "classmethod", "slice", "dict", "bool", "int", "float", "complex", "str", "list", "tuple", "range", "set", "frozenset", "bytes", "bytearray", "memoryview", ...Object.keys(EXCEPTIONS)].includes(callable.name)) {
             if (/^dict_(keys|values|items|(?:reverse)?(?:key|value|item)iterator)$/.test(callable.name)) python("TypeError", "cannot create dictionary view or iterator instances");
             if (["method_descriptor", "wrapper_descriptor", "getset_descriptor", "member_descriptor", "classmethod_descriptor"].includes(callable.name)) python("TypeError", "cannot create '" + callable.name + "' instances");
             if (["NoneType", "NotImplementedType"].includes(callable.name)) {
@@ -3842,6 +3854,10 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             if (args.length !== 1 || keywords.length) python("TypeError", callable.name + "() requires one positional iterable");
             task = consumeTask(callable.name, args[0], site, completion, depth); continue;
           }
+          if (callable.name === "map") {
+            count("builtin:" + callable.name);
+            task = lazy.start(callable.name, args, keywords, keywordValues, site, completion, depth); continue;
+          }
           if (callable.name === "sum") {
             count("builtin:sum");
             if (!args.length) python("TypeError", "sum() takes at least 1 positional argument (0 given)");
@@ -4041,7 +4057,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
           }
           if (["iter", "next"].includes(callable.name) && state.frames.at(-1).pool.code.version >= 4) {
             count("builtin:" + callable.name);
-            if (state.frames.at(-1).pool.code.version === 4 && args.length === 2 && !(callable.name === "next" && args[0] instanceof GeneratorValue))
+            if (state.frames.at(-1).pool.code.version === 4 && args.length === 2 && !(callable.name === "next" && (args[0] instanceof GeneratorValue || args[0] instanceof LazyIteratorValue)))
               hard("UNSUPPORTED", "UnsupportedOperationError", "This two-argument primitive iteration form requires classes-source/1.");
             if (args.length < 1 || args.length > 2 || keywords.length) python("TypeError", callable.name + "() requires one or two positional arguments");
             if (callable.name === "iter" && args.length === 2) {

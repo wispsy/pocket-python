@@ -1218,17 +1218,15 @@
     },
     {
       "id": "builtin-map",
-      "source": "print(callable(map))\n",
-      "classification": "deferred",
+      "source": "print(list(map(abs,[-2,3])))\n",
+      "classification": "supported",
       "reference": {
-        "stdout": "True\n",
+        "stdout": "[2, 3]\n",
         "error_type": null
       },
       "engine": {
-        "stdout": "",
-        "error_type": "NameError",
-        "code": "PYTHON",
-        "phase": "execute"
+        "stdout": "[2, 3]\n",
+        "error_type": null
       }
     },
     {

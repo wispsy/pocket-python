@@ -942,6 +942,14 @@ export const NATIVE_NAMESPACES = Object.freeze({
     ["__setstate__","method_descriptor"],
     ["__doc__","value",{"type":"none"}],
   ],
+  "map": [
+    ["__new__","builtin_function_or_method"],
+    ["__iter__","wrapper_descriptor"],
+    ["__next__","wrapper_descriptor"],
+    ["__reduce__","method_descriptor"],
+    ["__setstate__","method_descriptor"],
+    ["__doc__","value",{"type":"text","value":"Make an iterator that computes the function using arguments from\neach of the iterables.  Stops when the shortest iterable is exhausted.\n\nIf strict is true and one of the arguments is exhausted before the\nothers, raise a ValueError."}],
+  ],
   "mappingproxy": [
     ["__new__","builtin_function_or_method"],
     ["__repr__","wrapper_descriptor"],
@@ -1426,7 +1434,7 @@ export const NATIVE_NAMESPACES = Object.freeze({
     ["__text_signature__","getset_descriptor"],
   ],
 });
-export const NATIVE_DOC_COPIES = Object.freeze(["ArithmeticError", "AssertionError", "AttributeError", "BaseException", "BufferError", "Exception", "GeneratorExit", "ImportError", "IndentationError", "IndexError", "KeyError", "LookupError", "ModuleNotFoundError", "NameError", "NoneType", "NotImplementedType", "OverflowError", "RecursionError", "RuntimeError", "StopIteration", "SyntaxError", "SystemError", "TabError", "TypeError", "UnboundLocalError", "UnicodeDecodeError", "UnicodeEncodeError", "UnicodeError", "UnicodeTranslateError", "ValueError", "ZeroDivisionError", "bool", "bytearray", "bytes", "cell", "classmethod", "code", "complex", "dict", "float", "frozenset", "function", "int", "list", "mappingproxy", "memoryview", "method", "module", "object", "property", "range", "set", "slice", "staticmethod", "str", "super", "tuple", "type"]);
+export const NATIVE_DOC_COPIES = Object.freeze(["ArithmeticError", "AssertionError", "AttributeError", "BaseException", "BufferError", "Exception", "GeneratorExit", "ImportError", "IndentationError", "IndexError", "KeyError", "LookupError", "ModuleNotFoundError", "NameError", "NoneType", "NotImplementedType", "OverflowError", "RecursionError", "RuntimeError", "StopIteration", "SyntaxError", "SystemError", "TabError", "TypeError", "UnboundLocalError", "UnicodeDecodeError", "UnicodeEncodeError", "UnicodeError", "UnicodeTranslateError", "ValueError", "ZeroDivisionError", "bool", "bytearray", "bytes", "cell", "classmethod", "code", "complex", "dict", "float", "frozenset", "function", "int", "list", "map", "mappingproxy", "memoryview", "method", "module", "object", "property", "range", "set", "slice", "staticmethod", "str", "super", "tuple", "type"]);
 export const NATIVE_CALLABLE_DOCS = Object.freeze({
   "ArithmeticError.__new__": "Create and return a new object.  See help(type) for accurate signature.",
   "AssertionError.__new__": "Create and return a new object.  See help(type) for accurate signature.",
@@ -2171,6 +2179,11 @@ export const NATIVE_CALLABLE_DOCS = Object.freeze({
   "longrange_iterator.__length_hint__": "Private method returning an estimate of len(list(it)).",
   "longrange_iterator.__reduce__": "Return state information for pickling.",
   "longrange_iterator.__setstate__": "Set state information for unpickling.",
+  "map.__new__": "Create and return a new object.  See help(type) for accurate signature.",
+  "map.__iter__": "Implement iter(self).",
+  "map.__next__": "Implement next(self).",
+  "map.__reduce__": "Return state information for pickling.",
+  "map.__setstate__": "Set state information for unpickling.",
   "mappingproxy.__new__": "Create and return a new object.  See help(type) for accurate signature.",
   "mappingproxy.__repr__": "Return repr(self).",
   "mappingproxy.__hash__": "Return hash(self).",
@@ -3253,6 +3266,11 @@ export const NATIVE_CALLABLE_SIGNATURES = Object.freeze({
   "longrange_iterator.__length_hint__": "($self, /)",
   "longrange_iterator.__reduce__": "($self, /)",
   "longrange_iterator.__setstate__": "($self, object, /)",
+  "map.__new__": "($type, *args, **kwargs)",
+  "map.__iter__": "($self, /)",
+  "map.__next__": "($self, /)",
+  "map.__reduce__": "($self, /)",
+  "map.__setstate__": "($self, object, /)",
   "mappingproxy.__new__": "($type, *args, **kwargs)",
   "mappingproxy.__repr__": "($self, /)",
   "mappingproxy.__hash__": "($self, /)",
