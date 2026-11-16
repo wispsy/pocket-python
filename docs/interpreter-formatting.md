@@ -175,3 +175,9 @@ list and dictionary key callbacks, waiting updates and a core-profile offline
 reload. Node/Chromium differential checks retain drain, stepped and parked
 execution, including zero logical teardown. These observations do not adopt
 format specifications, f/t-strings, additional libraries or DOM capabilities.
+
+LA-192A keeps the legacy bytecode-3 display boundary; expanded float/container
+display belongs to source bytecode 4/5. It also reconciles three earlier syntax
+cases whose qualified metadata tuples can now be displayed, retaining their
+original assertions and adding full native-field/argument observations. The
+independent prior-compound metadata boundary remains explicit at field access.

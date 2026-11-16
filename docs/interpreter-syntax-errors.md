@@ -25,6 +25,14 @@ snapshots remain readable; replacing the native metadata field clears that
 field's boundary normally. Lexical errors retain their separately qualified
 zero-statement metadata.
 
+LA-192A preserves that boundary for an invalid `elif` operand after the first
+branch body has completed. Direct and native descriptor reads refuse until
+replacement clears the field boundary. Three earlier comprehension/dictionary
+metadata tuples now have display support: their original assertions are retained
+and independent full native-field/argument observations are added. This changes
+display acceptance, without widening the surrounding grammar. The corpus has
+9,382 finite cases: 8,730 supported comparisons and 652 explicit refusals.
+
 The [source corpus](../tests/fixtures/interpreter/syntax-errors.json) runs through
 Node and Chromium draining, stepping and parked execution. Tests also collect
 cyclic filename/error graphs between instructions and check cancellation,

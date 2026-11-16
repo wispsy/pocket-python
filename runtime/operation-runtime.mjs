@@ -29,6 +29,8 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
   const evaluator = dynamicEvaluator({state, values, classes, allocate, enter, bind, loadName, classModule, compiler, python});
   const importer = dynamicImporter({state, moduleContext, values, classes, builtinLookup, python, hard});
   const userProtocol = value => classes.protocolObject(value);
+  const sourceDisplay = () => state.frames.at(-1)?.pool.code.version >= 4;
+  const containerDisplay = value => sourceDisplay() && values.representationKind(value) !== null;
   const exceptionDisplay = value => value instanceof ExceptionValue && (value.name === "KeyError" || ["UnicodeTranslateError", "UnicodeEncodeError", "UnicodeDecodeError"].includes(value.name) || value.nativeFields?.has("msg") || value.args.length > 1 ||
     value.args.length === 1 && !(value.args[0] === null || ["bigint", "boolean"].includes(typeof value.args[0]) || value.args[0] instanceof StringValue));
   const genericHash = value => value === null ? values.pythonHash(null) : typeof value === "boolean" || typeof value === "bigint" ? values.objectId(value) : values.identityHash(value);
@@ -79,7 +81,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     if (typeof value === "boolean") return value ? "True" : "False";
     if (typeof value === "bigint") return value.toString();
     if (value instanceof ExceptionValue) return value.message;
-    if (values.isBinary(value) || values.isFloat(value)) return values.text(values.repr(value));
+    if (values.isBinary(value) || values.isFloat(value) && sourceDisplay()) return values.text(values.repr(value));
     const text = values.text(value);
     if (text !== null) return text;
     hard("UNSUPPORTED", "UnsupportedOperationError", "Formatting this value is outside the function stage.");
@@ -2018,7 +2020,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     let text = prefix;
     for (; index < args.length; index++) {
       if (index) text += " ";
-      if (userProtocol(args[index]) || exceptionDisplay(args[index]) || values.representationKind(args[index]) !== null) {
+      if (userProtocol(args[index]) || exceptionDisplay(args[index]) || containerDisplay(args[index])) {
         if (text) write(text);
         return unaryTask("str", args[index], site, continuation("print-argument", {args, index, depth, after}), depth);
       }
@@ -2787,7 +2789,8 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
               task = exceptionString(value, site, completion, depth, matchesException(value.name, "ImportError")); continue;
             }
             if (!userProtocol(value)) {
-              if (values.representationKind(value) !== null) { task = representContainer(value, site, completion, depth); continue; }
+              if (containerDisplay(value)) { task = representContainer(value, site, completion, depth); continue; }
+              if (values.isFloat(value) && !sourceDisplay()) display(value);
               const result = operation === "repr" ? values.repr(value) :
                 values.text(value) !== null ? value : values.string(Array.from(display(value), char => char.codePointAt(0)));
               task = deliver(result, completion, site); continue;
@@ -4058,10 +4061,10 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             if (args.length !== 1 || keywords.length) python("TypeError", "repr() requires one positional argument");
             task = unaryTask("repr", args[0], site, completion, depth); continue;
           }
-          if (callable.name === "str" && args.length === 1 && !keywords.length && (userProtocol(args[0]) || exceptionDisplay(args[0]) || values.representationKind(args[0]) !== null)) {
+          if (callable.name === "str" && args.length === 1 && !keywords.length && (userProtocol(args[0]) || exceptionDisplay(args[0]) || containerDisplay(args[0]))) {
             count("builtin:str"); task = unaryTask("str", args[0], site, completion, depth); continue;
           }
-          if (callable.name === "print" && !keywords.length && args.some(value => userProtocol(value) || exceptionDisplay(value) || values.representationKind(value) !== null)) {
+          if (callable.name === "print" && !keywords.length && args.some(value => userProtocol(value) || exceptionDisplay(value) || containerDisplay(value))) {
             count("builtin:print"); task = printNext(args, 0, site, completion, depth); continue;
           }
           if (["len", "bool"].includes(callable.name) && args.length === 1 && !keywords.length) {
