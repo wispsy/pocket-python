@@ -8,7 +8,8 @@
     "LA203",
     "LA204",
     "LA205",
-    "LA206"
+    "LA206",
+    "LA207"
   ],
   "cases": [
     {
@@ -969,6 +970,77 @@
       "stage": "LA206",
       "source": "class S:\n def __iter__(self): print(\"iter\");return iter([7])\n def __length_hint__(self): return \"bad\"\ndef f(*a): print(a)\nf(*S())\n",
       "stdout": "iter\n(7,)\n"
+    },
+    {
+      "id": "hint-reverse-lazy-composition",
+      "stage": "LA207",
+      "source": "class S:\n def __init__(self): self.data=[-1,3,-2]\n def __iter__(self): print(\"iter\");return iter(self.data)\n def __length_hint__(self): print(\"hint\");return 3\na=[*S()]\nprint(list(enumerate(filter(lambda x:x>1,map(abs,reversed(a))),10)))\n",
+      "stdout": "iter\nhint\n[(10, 2), (11, 3)]\n"
+    },
+    {
+      "id": "hint-temporary-retained-cycle",
+      "stage": "LA207",
+      "source": "class S:\n def __init__(self): self.data=[self,[7]]\n def __iter__(self): return iter(self.data)\n def __length_hint__(self): print(\"hint\");return 2\na=list(S())\nprint(a[0].data[0] is a[0],a[1])\n",
+      "stdout": "hint\nTrue [7]\n"
+    },
+    {
+      "id": "hint-dynamic-callback",
+      "stage": "LA207",
+      "source": "exec('def hint(self):\\n print(\"dynamic hint\")\\n return 1\\n')\nclass S:\n __length_hint__=hint\n def __iter__(self): return iter([7])\nprint([*S()])\n",
+      "stdout": "dynamic hint\n[7]\n"
+    },
+    {
+      "id": "hint-imported-callback",
+      "stage": "LA207",
+      "source": "from helper import S\nprint(list(S()))\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "class S:\n def __iter__(self): return iter([7])\n def __length_hint__(self): print(\"module hint\");return 1\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "module hint\n[7]\n"
+    },
+    {
+      "id": "hint-bound-owner",
+      "stage": "LA207",
+      "source": "class H:\n def __init__(self): self.value=2\n def hint(self): print(\"bound\");return self.value\nclass S:\n def __iter__(self): return iter([1,2])\n def __init__(self): self.__class__.__length_hint__=H().hint\nprint(list(S()))\n",
+      "stdout": "bound\n[1, 2]\n"
+    },
+    {
+      "id": "hint-binder-none-falls-back",
+      "stage": "LA207",
+      "source": "class D:\n def __get__(self,obj,owner): print(\"bind\");return None\nclass S:\n __length_hint__=D()\n def __iter__(self): return iter([7])\nprint(list(S()))\n",
+      "stdout": "bind\n[7]\n"
+    },
+    {
+      "id": "hint-length-binding-typeerror",
+      "stage": "LA207",
+      "source": "class D:\n def __get__(self,obj,owner): print(\"bind len\");raise TypeError(\"skip\")\nclass S:\n __len__=D()\n def __iter__(self): return iter([7])\n def __length_hint__(self): print(\"hint\");return 1\nprint(list(S()))\n",
+      "stdout": "bind len\nhint\n[7]\n"
+    },
+    {
+      "id": "hint-indexed-typeerror-is-default",
+      "stage": "LA207",
+      "source": "class S:\n def __len__(self): print(\"len\");raise TypeError(\"skip\")\n def __getitem__(self,i):\n  if i:raise IndexError\n  return 7\nprint(list(iter(S())))\n",
+      "stdout": "len\n[7]\n"
+    },
+    {
+      "id": "hint-no-repeated-hint",
+      "stage": "LA207",
+      "source": "class S:\n def __init__(self): self.i=0\n def __iter__(self): return self\n def __length_hint__(self): print(\"hint\");return 0\n def __next__(self):\n  self.i+=1\n  if self.i>3:raise StopIteration\n  return self.i\nprint(list(S()))\n",
+      "stdout": "hint\n[1, 2, 3]\n"
+    },
+    {
+      "id": "hint-no-consumer-truth",
+      "stage": "LA207",
+      "source": "class S:\n def __iter__(self): return iter([1,0])\n def __length_hint__(self): print(\"wrong\");return 2\nprint(all(S()),any(S()))\n",
+      "stdout": "False True\n"
     }
   ]
 }

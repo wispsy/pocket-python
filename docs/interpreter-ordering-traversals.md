@@ -49,6 +49,14 @@ that source distinction. Failures retain prior destination/argument effects and
 use existing item and argument limits. The earlier hint refusal observations
 are promoted into their original corpora with explicit adoption stages.
 
+LA-207 composes hints with reverse/lazy pipelines, temporary cyclic records,
+module and dynamic callbacks, bound owners and descriptor failures. Parked
+extension, display, call and unpack operations retain both the original source
+and acquired iterator; cancellation, close, nested depth failure and actual hint
+allocation failure release partial graphs. Truth consumers continue to skip
+hints. Binary constructors and unrelated native hint APIs retain their separate
+scope rather than gaining support from this consumer slice.
+
 References: [reverse implementation](https://github.com/python/cpython/blob/v3.14.7/Objects/enumobject.c),
 [length hints](https://github.com/python/cpython/blob/v3.14.7/Objects/abstract.c),
 [list operations](https://github.com/python/cpython/blob/v3.14.7/Objects/listobject.c).
