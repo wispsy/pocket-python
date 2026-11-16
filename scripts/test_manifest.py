@@ -190,8 +190,12 @@ def checks(costs_path=None):
                             args += ['--stages', *STAGES[corpus]]
                         if mode != 'drain':
                             args += ['--' + mode]
+                        # A cold syntax oracle launches one isolated Python per
+                        # case. Leave headroom until a successful job supplies
+                        # this partition's measured cost.
+                        estimate = weight / partitions * (1.5 if corpus == 'syntax-errors' and target == 'browser' else 1)
                         add(id, suite, 'python', 'runtime/check_classes.py', *args,
-                            '--report', f'build/{id}-report.json', seconds=weight / partitions)
+                            '--report', f'build/{id}-report.json', seconds=estimate)
             if target == 'node' and corpus in REFERENCE_CORPORA:
                 id = corpus + '-reference'
                 add(id, 'reference', 'python', 'runtime/check_classes.py',

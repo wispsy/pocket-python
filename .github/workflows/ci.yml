@@ -107,12 +107,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - {suite: browser-conformance, shard: 1, shards: 6}
-          - {suite: browser-conformance, shard: 2, shards: 6}
-          - {suite: browser-conformance, shard: 3, shards: 6}
-          - {suite: browser-conformance, shard: 4, shards: 6}
-          - {suite: browser-conformance, shard: 5, shards: 6}
-          - {suite: browser-conformance, shard: 6, shards: 6}
+          - {suite: browser-conformance, shard: 1, shards: 8}
+          - {suite: browser-conformance, shard: 2, shards: 8}
+          - {suite: browser-conformance, shard: 3, shards: 8}
+          - {suite: browser-conformance, shard: 4, shards: 8}
+          - {suite: browser-conformance, shard: 5, shards: 8}
+          - {suite: browser-conformance, shard: 6, shards: 8}
+          - {suite: browser-conformance, shard: 7, shards: 8}
+          - {suite: browser-conformance, shard: 8, shards: 8}
           - {suite: browser-integration, shard: 1, shards: 3}
           - {suite: browser-integration, shard: 2, shards: 3}
           - {suite: browser-integration, shard: 3, shards: 3}
