@@ -78,7 +78,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     if (typeof value === "boolean") return value ? "True" : "False";
     if (typeof value === "bigint") return value.toString();
     if (value instanceof ExceptionValue) return value.message;
-    if (values.isBinary(value)) return values.text(values.repr(value));
+    if (values.isBinary(value) || values.isFloat(value)) return values.text(values.repr(value));
     const text = values.text(value);
     if (text !== null) return text;
     hard("UNSUPPORTED", "UnsupportedOperationError", "Formatting this value is outside the function stage.");

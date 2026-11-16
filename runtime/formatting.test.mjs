@@ -5,11 +5,25 @@ import {compileSourceModules} from './source-modules.mjs';
 import {ModuleSession} from './module-session.mjs';
 import {Execution} from './functions.mjs';
 import {ValueRuntime} from './values.mjs';
+import {reprReal} from './numeric.mjs';
 
 const unit = source => ({name: 'app', source, imports: [], package: false, notice: 'Synthetic formatting notice'});
 const profile = {languageProfile: 'classes-source/1'};
 const run = (source, options = {}, memoryLimits = undefined) => runSourceRequest({modules: [unit(source)], compileOptions: profile, options, memoryLimits});
 const closed = result => { for (const key of ['bytes','objects','roots','frames','external']) assert.equal(result.closed[key], 0); };
+
+test('float display preserves shortest digits, Python thresholds and signed special values', async () => {
+  for (const [value, expected] of [[-0, '-0.0'], [1e-5, '1e-05'], [1e-4, '0.0001'],
+    [1e15, '1000000000000000.0'], [1e16, '1e+16'], [1e23, '1e+23'],
+    [Number.MIN_VALUE, '5e-324'], [Number.MAX_VALUE, '1.7976931348623157e+308'],
+    [Infinity, 'inf'], [-Infinity, '-inf'], [NaN, 'nan']]) assert.equal(reprReal(value), expected);
+  for (const languageProfile of ['core-source/1', 'classes-source/1']) {
+    const result = await runSourceRequest({modules: [unit('print(1.5,-0.0,repr(1e-5),str(1e16))\n')], compileOptions: {languageProfile}});
+    assert.equal(result.stdout, '1.5 -0.0 1e-05 1e+16\n'); assert.equal(result.error, undefined); closed(result);
+  }
+  let polls = 0;
+  assert.throws(() => reprReal(1.7976931348623157e308, () => { if (++polls > 2) throw Error('cancelled'); }), /cancelled/);
+});
 
 test('primitive repr stays in the core profile and expanded strings obey the value limit', async () => {
   const result = await runSourceRequest({modules: [unit('s="A😀"\nprint(repr(s),str(s) is s,len(str()),repr(-9007199254740993))\n')]});
@@ -17,7 +31,7 @@ test('primitive repr stays in the core profile and expanded strings obey the val
   assert.equal(result.stdout, "'A😀' True 0 -9007199254740993\n"); closed(result);
   const values = new ValueRuntime();
   assert.throws(() => values.repr(values.string(Array(20000).fill(0))), {code: 'BUDGET'});
-  assert.throws(() => values.repr(values.float(1.5)), {code: 'UNSUPPORTED'});
+  assert.equal(values.text(values.repr(values.float(1.5))), '1.5');
 });
 
 test('callback and invalid-result errors retain their caller and Python source frames', async () => {

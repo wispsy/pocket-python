@@ -133,6 +133,52 @@ export function floatRatio(value) {
   return {numerator, denominator};
 }
 
+// Shortest decimal round trip, choosing the closest decimal and even ties.
+// Exact ratios avoid inheriting the host's display thresholds or digit choice.
+export function reprReal(value, charge = () => {}) {
+  if (Number.isNaN(value)) return "nan";
+  const sign = value < 0 || Object.is(value, -0) ? "-" : "";
+  if (!Number.isFinite(value)) return sign + "inf";
+  if (value === 0) return sign + "0.0";
+  const absolute = Math.abs(value), {numerator, denominator} = floatRatio(absolute);
+  let exponent = Math.floor(Math.log10(absolute));
+  const comparePower = power => power >= 0 ? numerator - denominator * 10n ** BigInt(power) :
+    numerator * 10n ** BigInt(-power) - denominator;
+  charge(2200);
+  while (comparePower(exponent) < 0n) exponent--;
+  while (comparePower(exponent + 1) >= 0n) exponent++;
+  for (let precision = 1; precision <= 17; precision++) {
+    let scale = exponent - precision + 1;
+    charge(1075 + 4 * Math.abs(scale) + 4 * precision);
+    const power = 10n ** BigInt(Math.abs(scale));
+    const top = scale < 0 ? numerator * power : numerator;
+    const bottom = scale < 0 ? denominator : denominator * power;
+    const nearest = roundQuotient(top, bottom);
+    let coefficient = null, distance = null;
+    // At a power of two the rounding interval can be asymmetric. A neighbouring
+    // decimal may round trip even when the closest unconstrained decimal fails.
+    for (const candidate of [nearest - 1n, nearest, nearest + 1n]) {
+      if (candidate <= 0n || candidate.toString().replace(/0+$/, "").length > precision ||
+          Number(candidate.toString() + "e" + scale) !== absolute) continue;
+      const delta = top - candidate * bottom, error = delta < 0n ? -delta : delta;
+      if (distance === null || error < distance || error === distance && !(candidate & 1n)) {
+        coefficient = candidate; distance = error;
+      }
+    }
+    if (coefficient === null) continue;
+    while (coefficient % 10n === 0n) { coefficient /= 10n; scale++; }
+    const digits = coefficient.toString(), scientific = digits.length + scale - 1;
+    if (scientific < -4 || scientific >= 16) return sign + digits[0] +
+      (digits.length > 1 ? "." + digits.slice(1) : "") + "e" + (scientific < 0 ? "-" : "+") +
+      String(Math.abs(scientific)).padStart(2, "0");
+    const point = digits.length + scale;
+    return sign + (point <= 0 ? "0." + "0".repeat(-point) + digits :
+      point >= digits.length ? digits + "0".repeat(point - digits.length) + ".0" :
+        digits.slice(0, point) + "." + digits.slice(point));
+  }
+  throw new Error("Finite binary64 value has no 17-digit decimal round trip.");
+}
+
 export function roundReal(value, ndigits, controls) {
   const {charge, fail} = controls, negative = value < 0 || Object.is(value, -0);
   if (ndigits === null) {

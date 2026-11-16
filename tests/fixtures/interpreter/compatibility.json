@@ -137,16 +137,14 @@
     {
       "id": "float-formatting",
       "source": "print(1.5)\n",
-      "classification": "deferred",
+      "classification": "supported",
       "reference": {
         "stdout": "1.5\n",
         "error_type": null
       },
       "engine": {
-        "stdout": "",
-        "error_type": null,
-        "code": "UNSUPPORTED",
-        "phase": "execute"
+        "stdout": "1.5\n",
+        "error_type": null
       }
     },
     {

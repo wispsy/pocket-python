@@ -1,7 +1,7 @@
 // Independent Python values. Native Number is used only inside explicit floats.
 import {GeneratorValue, FrameValue, FrameLocalsValue, generatorRoots, Cell, Environment, CodePool, CodeValue, ModuleValue, FunctionValue, CallArguments, BuiltinValue, AppendValue, ValueMethod, ExceptionValue, ClassValue, HierarchyTransaction, ClassNamespaceValue, DictionaryViewValue, NamespaceLookupCache, InstanceValue, BoundMethodValue, SuperValue, PropertyValue, MethodWrapperValue, PropertyAccessorValue, ProtocolIteratorValue, NotImplementedValue, IntegerIdentityRecord} from "./function-objects.mjs";
 import {isPrintable} from "./string-printability.mjs";
-import {divideIntegers, powerIntegers, powerReals, modularPower, roundInteger, roundReal, parseInteger, parseReal, parseComplex, complexArithmetic, complexPower} from "./numeric.mjs";
+import {divideIntegers, powerIntegers, powerReals, modularPower, roundInteger, roundReal, reprReal, parseInteger, parseReal, parseComplex, complexArithmetic, complexPower} from "./numeric.mjs";
 export const VALUE_LIMITS = Object.freeze({digits: 4096, text: 65536, items: 1024, depth: 32});
 
 class FloatValue {
@@ -328,6 +328,7 @@ export class ValueRuntime {
     return this.string(points);
   }
   repr(value) {
+    if (value instanceof FloatValue) return this.string(Array.from(reprReal(value.value, this.charge), char => char.codePointAt(0)));
     if (value instanceof BinaryValue) {
       const quote = value.items.includes(39) && !value.items.includes(34) ? "\"" : "'", parts = [value.mutable ? "bytearray(b" : "b", quote];
       this.charge(value.items.length + 1);

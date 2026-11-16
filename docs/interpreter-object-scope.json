@@ -183,18 +183,6 @@
     },
     {
       "corpus": "tests/fixtures/interpreter/native-protocols.json",
-      "case": "display-float__repr__",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/native-protocols.json",
-      "case": "display-float__str__",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/native-protocols.json",
       "case": "display-complex__repr__",
       "owner": "#127",
       "boundary": "Unadopted native float/complex/container display signatures."

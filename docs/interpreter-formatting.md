@@ -29,7 +29,7 @@ right, before print begins converting them. A caller can retain a builtin in a
 variable or pass it through an adopted callback; formatting must use the same
 operation path in each case.
 
-Floats, recursive containers, default address-bearing object/class/function/module
+Recursive containers, default address-bearing object/class/function/module
 displays, exception repr, __format__/format, format specifications, f-strings,
 t-strings, ascii and byte decoding remain explicit future work in INT-TEXT-01.
 An instance with no adopted representation must fail UNSUPPORTED rather than
@@ -131,3 +131,19 @@ References: [repr/str data model](https://docs.python.org/3.14/reference/datamod
 [pinned CPython repr slot](https://github.com/python/cpython/blob/v3.14.7/Objects/typeobject.c).
 The live documentation may describe a later maintenance version; executable
 expectations remain pinned to 3.14.7.
+
+## Float representations
+
+LA-190 adopts binary64 `repr`, `str` and positional `print` in both source
+profiles, including native descriptors and compatible float subclasses. Finite
+values select the shortest decimal that round trips, then the closest decimal
+and even ties, using exact integer ratios. Python fixed/scientific thresholds,
+exponent padding, `.0`, signed zero, `inf` and `nan` spellings are explicit.
+This is independent of JavaScript number display. The bounded conversion charges
+work before exact arithmetic and creates an owned string through the usual value
+limits. Existing profile and bytecode versions retain their meaning.
+
+The pinned corpus includes exponent boundaries and adjacent floats, subnormal and
+maximum finite values, deterministic binary64 samples and explicit native calls.
+Format specifications, complex displays and the remaining text families keep
+their separate #127/#184 boundaries.
