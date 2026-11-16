@@ -183,18 +183,6 @@
     },
     {
       "corpus": "tests/fixtures/interpreter/native-protocols.json",
-      "case": "display-float__repr__",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/native-protocols.json",
-      "case": "display-float__str__",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/native-protocols.json",
       "case": "display-complex__repr__",
       "owner": "#127",
       "boundary": "Unadopted native float/complex/container display signatures."
@@ -202,42 +190,6 @@
     {
       "corpus": "tests/fixtures/interpreter/native-protocols.json",
       "case": "display-complex__str__",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/native-protocols.json",
-      "case": "display-list__repr__",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/native-protocols.json",
-      "case": "display-list__str__",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/native-protocols.json",
-      "case": "display-tuple__repr__",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/native-protocols.json",
-      "case": "display-tuple__str__",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/native-protocols.json",
-      "case": "display-dict__repr__",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/native-protocols.json",
-      "case": "display-dict__str__",
       "owner": "#127",
       "boundary": "Unadopted native float/complex/container display signatures."
     },
@@ -272,22 +224,10 @@
       "boundary": "General iterable length-hint consumers remain a separate sequence API."
     },
     {
-      "corpus": "tests/fixtures/interpreter/property-diagnostics.json",
-      "case": "diagnostic-display-boundary",
-      "owner": "#127",
-      "boundary": "Recursive display of callback-bearing containers in property diagnostics."
-    },
-    {
       "corpus": "tests/fixtures/interpreter/property-directories.json",
       "case": "listed-method-not-adopted",
       "owner": "#126",
       "boundary": "Serialization/reduction library protocol."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/property-names.json",
-      "case": "diagnostic-nested",
-      "owner": "#127",
-      "boundary": "Recursive display of callback-bearing containers in property diagnostics."
     },
     {
       "corpus": "tests/fixtures/interpreter/repetition.json",

@@ -9,6 +9,14 @@ Interpreter jobs have a finite 20-minute bound so completed checks can upload
 reports and finish cache cleanup. Command selection, assertions and reference
 pins remain the same.
 
+CI-12 refreshes costs from all twelve successful Linux interpreter/browser
+conformance reports in the accepted eight-shard run. That run exposed larger
+exception costs than the previous samples: its two heaviest browser jobs spent
+1,011 and 1,027 seconds in checks despite similar modeled totals. Refreshed
+longest-first balancing models about 809 seconds per browser shard before setup.
+New checks retain case-count estimates until a complete successful job supplies
+their timings. The 20-minute job bound and full check matrix stay in place.
+
 The generated syntax corpus uses four deterministic case partitions for each
 Node/Chromium drain, stepped and parked driver. Each command validates its same
 partition against CPython and the independent engine; together the four cover
@@ -32,6 +40,8 @@ uv run --no-sync python scripts/run_tests.py prepare-browser
 uv run --no-sync python scripts/run_tests.py browser-conformance --shard 1 --shards 8
 uv run --no-sync python scripts/run_tests.py browser-integration --shard 1 --shards 3
 uv run --no-sync python scripts/run_tests.py python
+uv run --no-sync python scripts/ordinary_browser_smoke.py
+uv run --no-sync python scripts/ordinary_browser_smoke.py --aggregations
 ```
 
 `python` prepares the supplied runtime, checks generated locks, runs Python tests,
@@ -50,6 +60,13 @@ previews commands without executing them. Independent checks use deterministic
 weighted shards; packaging and preparation retain their required order. New
 `runtime/*.test.mjs` files are included automatically. Add a corpus or a new
 driver/profile combination to the manifest alongside its implementation.
+
+The aggregation corpus runs both source profiles in Node and Chromium through
+drain, stepped and parked drivers. The ordinary browser acceptance command runs
+composed reports after an offline reload, verifies original dynamic callback
+frames, interrupts key/comparison/addition callbacks, restarts fresh and accepts
+a core-profile update after the old service-worker cache is removed. Pass
+`--require-installed` from an isolated wheel environment to verify packaging.
 
 Each invocation writes a JSON report and command logs under `build/test-results/`.
 Reports include the tested Git revision, whether the checkout was modified,

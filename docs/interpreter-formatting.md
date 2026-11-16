@@ -29,7 +29,7 @@ right, before print begins converting them. A caller can retain a builtin in a
 variable or pass it through an adopted callback; formatting must use the same
 operation path in each case.
 
-Floats, recursive containers, default address-bearing object/class/function/module
+Default address-bearing object/class/function/module
 displays, exception repr, __format__/format, format specifications, f-strings,
 t-strings, ascii and byte decoding remain explicit future work in INT-TEXT-01.
 An instance with no adopted representation must fail UNSUPPORTED rather than
@@ -131,3 +131,53 @@ References: [repr/str data model](https://docs.python.org/3.14/reference/datamod
 [pinned CPython repr slot](https://github.com/python/cpython/blob/v3.14.7/Objects/typeobject.c).
 The live documentation may describe a later maintenance version; executable
 expectations remain pinned to 3.14.7.
+
+## Float representations
+
+LA-190 adopts binary64 `repr`, `str` and positional `print` in both source
+profiles, including native descriptors and compatible float subclasses. Finite
+values select the shortest decimal that round trips, then the closest decimal
+and even ties, using exact integer ratios. Python fixed/scientific thresholds,
+exponent padding, `.0`, signed zero, `inf` and `nan` spellings are explicit.
+This is independent of JavaScript number display. The bounded conversion charges
+work before exact arithmetic and creates an owned string through the usual value
+limits. Existing profile and bytecode versions retain their meaning.
+
+The pinned corpus includes exponent boundaries and adjacent floats, subnormal and
+maximum finite values, deterministic binary64 samples and explicit native calls.
+Format specifications, complex displays and the remaining text families keep
+their separate #127/#184 boundaries.
+
+## Recursive container representations
+
+LA-191 adds native list, tuple and dict `repr`, `str` and positional `print`,
+including compatible native subclasses. Nested values call their Python `repr`
+slots on the owned execution machine. Shared aliases display independently;
+active recursive lists, tuples and dictionaries use `[...]`, `(...)` and `{...}`.
+Traversal reads live list lengths and dictionary positions; each dictionary
+key/value pair is retained before its key callback. Existing mutation APIs keep
+their own admission boundaries.
+
+Representation state lives in immutable continuations with exhaustive roots for
+the receiver, captured item, key text and an arena-owned list of rendered pieces.
+The recursion guard follows active continuations and frames, so exceptions,
+collection, interruption and close naturally release it. Text, item, work and
+depth limits remain bounded. Primitive-only printing retains its original path.
+Callback-bearing property-name diagnostics now use the same container renderer;
+their original assertions and source frames are retained in the adopted cases.
+Set/view/range, complex and default address-bearing displays remain separate.
+
+LA-192 composes report records, retained callback fields, generator cleanup,
+registry modules and dynamic source. The runnable `examples/interpreter_display.py`
+is accepted through an installed offline console. The dedicated ordinary-display
+browser check covers fresh source, original dynamic frames, Stop/Restart during
+list and dictionary key callbacks, waiting updates and a core-profile offline
+reload. Node/Chromium differential checks retain drain, stepped and parked
+execution, including zero logical teardown. These observations do not adopt
+format specifications, f/t-strings, additional libraries or DOM capabilities.
+
+LA-192A keeps the legacy bytecode-3 display boundary; expanded float/container
+display belongs to source bytecode 4/5. It also reconciles three earlier syntax
+cases whose qualified metadata tuples can now be displayed, retaining their
+original assertions and adding full native-field/argument observations. The
+independent prior-compound metadata boundary remains explicit at field access.

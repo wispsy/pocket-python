@@ -12,6 +12,18 @@ Python 3.14 compatibility and a useful language/library profile.
 application engine, consuming that useful profile while language work continues.
 The first language batches adopt [practical container APIs](docs/interpreter-practical-containers.md).
 
+The development interpreter now displays floats and recursive list/tuple/dict
+records through `repr`, `str` and positional `print`, including owned Python
+callbacks and cycle markers. Run `python -m examples.interpreter_display` for a
+small report example. The [display contract](docs/interpreter-formatting.md)
+records the exact scope and remaining text/formatting work.
+
+The [aggregation APIs](docs/interpreter-aggregations.md) add `min`/`max` with
+ordered key callbacks, defaults and first-tie identity, plus `sum` with owned
+addition and Python 3.14 compensated float/complex accumulation. Run
+`python -m examples.interpreter_aggregations` for a reading report. These APIs
+use the existing source profiles and admitted value families.
+
 Pocket-python builds offline browser applications from explicit verified client
 sources. The compiled profile runs emitted JavaScript and selected helpers in a
 module worker. The supplied MicroPython profile runs compatible Python through

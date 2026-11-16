@@ -9,6 +9,15 @@ import {Execution} from './functions.mjs';
 const corpus = JSON.parse(readFileSync(new URL('../tests/fixtures/interpreter/syntax-errors.json', import.meta.url)));
 const unit = source => ({name: 'app', source, imports: [], package: false, notice: 'Synthetic syntax failure fixture'});
 const closed = stats => { for (const key of ['bytes', 'objects', 'roots', 'frames', 'external']) assert.equal(stats[key], 0, key); };
+test('elif metadata keeps its independent field boundary and accepts explicit replacement', async () => {
+  const prefix = 'try: compile("if True: pass\\nelif : pass","selected.py","exec")\nexcept SyntaxError as caught: e=caught\n';
+  for (const access of ['e._metadata', 'SyntaxError._metadata.__get__(e,SyntaxError)']) {
+    const result = await runSourceRequest({modules: [unit(prefix + 'print(' + access + ')\n')], compileOptions: {languageProfile: corpus.profile}});
+    assert.equal(result.error.code, 'UNSUPPORTED'); assert.equal(result.stdout, ''); closed(result.closed);
+  }
+  const replaced = await runSourceRequest({modules: [unit(prefix + 'e._metadata=[7]\nprint(e._metadata)\n')], compileOptions: {languageProfile: corpus.profile}});
+  assert.equal(replaced.error, undefined); assert.equal(replaced.stdout, '[7]\n'); closed(replaced.closed);
+});
 for (const item of corpus.cases) for (const languageProfile of item.profiles ?? [corpus.profile])
   test(languageProfile + ': ' + item.id, async () => {
     const result = await runSourceRequest({modules: [{...unit(item.source), imports: item.imports ?? []},

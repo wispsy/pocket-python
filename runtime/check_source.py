@@ -24,8 +24,13 @@ def prepared():
     corpus = {name: json.loads(raw) for name, raw in inputs.items()}
     cases = [*corpus["source.json"]["cases"], *corpus["source.json"]["boundaries"],
              *corpus["source.json"]["malformed_source"], *corpus["source.json"]["limits"]]
-    cases.extend({**case, **case.get("source_expectation", {}), "id": "functions:" + case["id"]}
-                 for case in corpus["functions.json"]["cases"] + corpus["functions.json"]["limits"])
+    for case in corpus["functions.json"]["cases"] + corpus["functions.json"]["limits"]:
+        adapted = {**case, **case.get("source_expectation", {}), "id": "functions:" + case["id"]}
+        # An explicit null adopts the source case through the oracle while
+        # preserving the legacy bytecode fixture's negative expectation.
+        if "code" in case.get("source_expectation", {}) and adapted["code"] is None:
+            adapted.pop("code")
+        cases.append(adapted)
     cases.extend({**case, "id": "modules:" + case["id"]} for case in corpus["modules.json"]["cases"] + corpus["modules.json"]["limits"])
     cases.extend({**case, "id": "language:" + case["id"]} for case in corpus["language.json"]["cases"]
                  if case["id"] in {"closure", "exception-finally", "argument-default"})

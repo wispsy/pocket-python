@@ -4,7 +4,9 @@
   "profile": "classes-source/1",
   "reference_version": "3.14.7",
   "implemented_stages": [
-    "O90"
+    "O90",
+    "LA190",
+    "LA191"
   ],
   "cases": [
     {
@@ -3457,19 +3459,15 @@
     },
     {
       "id": "display-float__repr__",
-      "stage": "Future",
+      "stage": "LA190",
       "source": "value=7.0\nprint(type(value).__repr__(value)==repr(value))\n",
-      "stdout": "True\n",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
+      "stdout": "True\n"
     },
     {
       "id": "display-float__str__",
-      "stage": "Future",
+      "stage": "LA190",
       "source": "value=7.0\nprint(type(value).__str__(value)==str(value))\n",
-      "stdout": "True\n",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
+      "stdout": "True\n"
     },
     {
       "id": "display-complex__repr__",
@@ -3501,51 +3499,39 @@
     },
     {
       "id": "display-list__repr__",
-      "stage": "Future",
+      "stage": "LA191",
       "source": "value=[7]\nprint(type(value).__repr__(value)==repr(value))\n",
-      "stdout": "True\n",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
+      "stdout": "True\n"
     },
     {
       "id": "display-list__str__",
-      "stage": "Future",
+      "stage": "LA191",
       "source": "value=[7]\nprint(type(value).__str__(value)==str(value))\n",
-      "stdout": "True\n",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
+      "stdout": "True\n"
     },
     {
       "id": "display-tuple__repr__",
-      "stage": "Future",
+      "stage": "LA191",
       "source": "value=(7,)\nprint(type(value).__repr__(value)==repr(value))\n",
-      "stdout": "True\n",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
+      "stdout": "True\n"
     },
     {
       "id": "display-tuple__str__",
-      "stage": "Future",
+      "stage": "LA191",
       "source": "value=(7,)\nprint(type(value).__str__(value)==str(value))\n",
-      "stdout": "True\n",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
+      "stdout": "True\n"
     },
     {
       "id": "display-dict__repr__",
-      "stage": "Future",
+      "stage": "LA191",
       "source": "value={7:8}\nprint(type(value).__repr__(value)==repr(value))\n",
-      "stdout": "True\n",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
+      "stdout": "True\n"
     },
     {
       "id": "display-dict__str__",
-      "stage": "Future",
+      "stage": "LA191",
       "source": "value={7:8}\nprint(type(value).__str__(value)==str(value))\n",
-      "stdout": "True\n",
-      "owner": "#127",
-      "boundary": "Unadopted native float/complex/container display signatures."
+      "stdout": "True\n"
     },
     {
       "id": "display-set__repr__",

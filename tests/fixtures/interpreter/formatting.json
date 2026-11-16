@@ -4,7 +4,10 @@
   "profile": "classes-source/1",
   "reference_version": "3.14.7",
   "implemented_stages": [
-    "R1"
+    "R1",
+    "LA190",
+    "LA191",
+    "LA192"
   ],
   "cases": [
     {
@@ -377,27 +380,43 @@
     },
     {
       "id": "future-float-repr",
-      "stage": "R2",
+      "stage": "LA190",
       "source": "print(repr(1.5))\n",
-      "stdout": "1.5\n"
+      "stdout": "1.5\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
     },
     {
       "id": "future-container-repr",
-      "stage": "R2",
+      "stage": "LA191",
       "source": "print(repr([1,2]))\n",
-      "stdout": "[1, 2]\n"
+      "stdout": "[1, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
     },
     {
       "id": "future-float-str",
-      "stage": "R2",
+      "stage": "LA190",
       "source": "print(str(1.5))\n",
-      "stdout": "1.5\n"
+      "stdout": "1.5\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
     },
     {
       "id": "future-container-str",
-      "stage": "R2",
+      "stage": "LA191",
       "source": "print(str([1,2]))\n",
-      "stdout": "[1, 2]\n"
+      "stdout": "[1, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
     },
     {
       "id": "future-default-object",
@@ -436,6 +455,1133 @@
       "stage": "R2",
       "source": "class A:\n @property\n def __repr__(self): raise AttributeError(\"binding\")\nprint(\"A object at 0x\" in str(A()))\n",
       "stdout": "True\n"
+    },
+    {
+      "id": "float-display-000",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=0.0\nprint(repr(x),str(x),x)\n",
+      "stdout": "0.0 0.0 0.0\n"
+    },
+    {
+      "id": "float-display-001",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-0.0\nprint(repr(x),str(x),x)\n",
+      "stdout": "-0.0 -0.0 -0.0\n"
+    },
+    {
+      "id": "float-display-002",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.0\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.0 1.0 1.0\n"
+    },
+    {
+      "id": "float-display-003",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-1.0\nprint(repr(x),str(x),x)\n",
+      "stdout": "-1.0 -1.0 -1.0\n"
+    },
+    {
+      "id": "float-display-004",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.5\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.5 1.5 1.5\n"
+    },
+    {
+      "id": "float-display-005",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=0.1\nprint(repr(x),str(x),x)\n",
+      "stdout": "0.1 0.1 0.1\n"
+    },
+    {
+      "id": "float-display-006",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=0.30000000000000004\nprint(repr(x),str(x),x)\n",
+      "stdout": "0.30000000000000004 0.30000000000000004 0.30000000000000004\n"
+    },
+    {
+      "id": "float-display-007",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1e-05\nprint(repr(x),str(x),x)\n",
+      "stdout": "1e-05 1e-05 1e-05\n"
+    },
+    {
+      "id": "float-display-008",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=0.0001\nprint(repr(x),str(x),x)\n",
+      "stdout": "0.0001 0.0001 0.0001\n"
+    },
+    {
+      "id": "float-display-009",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1000000000000000.0\nprint(repr(x),str(x),x)\n",
+      "stdout": "1000000000000000.0 1000000000000000.0 1000000000000000.0\n"
+    },
+    {
+      "id": "float-display-010",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1e+16\nprint(repr(x),str(x),x)\n",
+      "stdout": "1e+16 1e+16 1e+16\n"
+    },
+    {
+      "id": "float-display-011",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1e+23\nprint(repr(x),str(x),x)\n",
+      "stdout": "1e+23 1e+23 1e+23\n"
+    },
+    {
+      "id": "float-display-012",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=5e-324\nprint(repr(x),str(x),x)\n",
+      "stdout": "5e-324 5e-324 5e-324\n"
+    },
+    {
+      "id": "float-display-013",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=2.2250738585072014e-308\nprint(repr(x),str(x),x)\n",
+      "stdout": "2.2250738585072014e-308 2.2250738585072014e-308 2.2250738585072014e-308\n"
+    },
+    {
+      "id": "float-display-014",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.7976931348623157e+308\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.7976931348623157e+308 1.7976931348623157e+308 1.7976931348623157e+308\n"
+    },
+    {
+      "id": "float-display-015",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=9.999999999999999e-05\nprint(repr(x),str(x),x)\n",
+      "stdout": "9.999999999999999e-05 9.999999999999999e-05 9.999999999999999e-05\n"
+    },
+    {
+      "id": "float-display-016",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=0.00010000000000000002\nprint(repr(x),str(x),x)\n",
+      "stdout": "0.00010000000000000002 0.00010000000000000002 0.00010000000000000002\n"
+    },
+    {
+      "id": "float-display-017",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=9999999999999998.0\nprint(repr(x),str(x),x)\n",
+      "stdout": "9999999999999998.0 9999999999999998.0 9999999999999998.0\n"
+    },
+    {
+      "id": "float-display-018",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.0000000000000002e+16\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.0000000000000002e+16 1.0000000000000002e+16 1.0000000000000002e+16\n"
+    },
+    {
+      "id": "float-display-019",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=0.9999999999999999\nprint(repr(x),str(x),x)\n",
+      "stdout": "0.9999999999999999 0.9999999999999999 0.9999999999999999\n"
+    },
+    {
+      "id": "float-display-020",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.0000000000000002\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.0000000000000002 1.0000000000000002 1.0000000000000002\n"
+    },
+    {
+      "id": "float-display-021",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.9999999999999998\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.9999999999999998 1.9999999999999998 1.9999999999999998\n"
+    },
+    {
+      "id": "float-display-022",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=2.0000000000000004\nprint(repr(x),str(x),x)\n",
+      "stdout": "2.0000000000000004 2.0000000000000004 2.0000000000000004\n"
+    },
+    {
+      "id": "float-display-023",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=9.999999999999997e+22\nprint(repr(x),str(x),x)\n",
+      "stdout": "9.999999999999997e+22 9.999999999999997e+22 9.999999999999997e+22\n"
+    },
+    {
+      "id": "float-display-024",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.0000000000000001e+23\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.0000000000000001e+23 1.0000000000000001e+23 1.0000000000000001e+23\n"
+    },
+    {
+      "id": "float-display-025",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=8.172116739756492e-101\nprint(repr(x),str(x),x)\n",
+      "stdout": "8.172116739756492e-101 8.172116739756492e-101 8.172116739756492e-101\n"
+    },
+    {
+      "id": "float-display-026",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=3.2982729364655143e+105\nprint(repr(x),str(x),x)\n",
+      "stdout": "3.2982729364655143e+105 3.2982729364655143e+105 3.2982729364655143e+105\n"
+    },
+    {
+      "id": "float-display-027",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=3.8008443809670815e+147\nprint(repr(x),str(x),x)\n",
+      "stdout": "3.8008443809670815e+147 3.8008443809670815e+147 3.8008443809670815e+147\n"
+    },
+    {
+      "id": "float-display-028",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=2.567548204111985e-34\nprint(repr(x),str(x),x)\n",
+      "stdout": "2.567548204111985e-34 2.567548204111985e-34 2.567548204111985e-34\n"
+    },
+    {
+      "id": "float-display-029",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.456690637287068e+178\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.456690637287068e+178 1.456690637287068e+178 1.456690637287068e+178\n"
+    },
+    {
+      "id": "float-display-030",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=2.9549825207788785e-217\nprint(repr(x),str(x),x)\n",
+      "stdout": "2.9549825207788785e-217 2.9549825207788785e-217 2.9549825207788785e-217\n"
+    },
+    {
+      "id": "float-display-031",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=2.3732730147404732e-203\nprint(repr(x),str(x),x)\n",
+      "stdout": "2.3732730147404732e-203 2.3732730147404732e-203 2.3732730147404732e-203\n"
+    },
+    {
+      "id": "float-display-032",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-3.769416963244268e-54\nprint(repr(x),str(x),x)\n",
+      "stdout": "-3.769416963244268e-54 -3.769416963244268e-54 -3.769416963244268e-54\n"
+    },
+    {
+      "id": "float-display-033",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-2.3449288853824238e+57\nprint(repr(x),str(x),x)\n",
+      "stdout": "-2.3449288853824238e+57 -2.3449288853824238e+57 -2.3449288853824238e+57\n"
+    },
+    {
+      "id": "float-display-034",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-5.508612662529219e-272\nprint(repr(x),str(x),x)\n",
+      "stdout": "-5.508612662529219e-272 -5.508612662529219e-272 -5.508612662529219e-272\n"
+    },
+    {
+      "id": "float-display-035",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-3.1829926467908938e-201\nprint(repr(x),str(x),x)\n",
+      "stdout": "-3.1829926467908938e-201 -3.1829926467908938e-201 -3.1829926467908938e-201\n"
+    },
+    {
+      "id": "float-display-036",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-1.0430355558006252e-265\nprint(repr(x),str(x),x)\n",
+      "stdout": "-1.0430355558006252e-265 -1.0430355558006252e-265 -1.0430355558006252e-265\n"
+    },
+    {
+      "id": "float-display-037",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-8.125376359793407e-289\nprint(repr(x),str(x),x)\n",
+      "stdout": "-8.125376359793407e-289 -8.125376359793407e-289 -8.125376359793407e-289\n"
+    },
+    {
+      "id": "float-display-038",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=6.428974866937769e+132\nprint(repr(x),str(x),x)\n",
+      "stdout": "6.428974866937769e+132 6.428974866937769e+132 6.428974866937769e+132\n"
+    },
+    {
+      "id": "float-display-039",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=6.995688397157325e+75\nprint(repr(x),str(x),x)\n",
+      "stdout": "6.995688397157325e+75 6.995688397157325e+75 6.995688397157325e+75\n"
+    },
+    {
+      "id": "float-display-040",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-2.946608529611499e+101\nprint(repr(x),str(x),x)\n",
+      "stdout": "-2.946608529611499e+101 -2.946608529611499e+101 -2.946608529611499e+101\n"
+    },
+    {
+      "id": "float-display-041",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-3.1418564271665266e-45\nprint(repr(x),str(x),x)\n",
+      "stdout": "-3.1418564271665266e-45 -3.1418564271665266e-45 -3.1418564271665266e-45\n"
+    },
+    {
+      "id": "float-display-042",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-2.968928141766429e-133\nprint(repr(x),str(x),x)\n",
+      "stdout": "-2.968928141766429e-133 -2.968928141766429e-133 -2.968928141766429e-133\n"
+    },
+    {
+      "id": "float-display-043",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=6.887368065689311e+112\nprint(repr(x),str(x),x)\n",
+      "stdout": "6.887368065689311e+112 6.887368065689311e+112 6.887368065689311e+112\n"
+    },
+    {
+      "id": "float-display-044",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=3.829541126768875e+167\nprint(repr(x),str(x),x)\n",
+      "stdout": "3.829541126768875e+167 3.829541126768875e+167 3.829541126768875e+167\n"
+    },
+    {
+      "id": "float-display-045",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=2.5474456026482183e-225\nprint(repr(x),str(x),x)\n",
+      "stdout": "2.5474456026482183e-225 2.5474456026482183e-225 2.5474456026482183e-225\n"
+    },
+    {
+      "id": "float-display-046",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.8205246902423444e+242\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.8205246902423444e+242 1.8205246902423444e+242 1.8205246902423444e+242\n"
+    },
+    {
+      "id": "float-display-047",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-4.530570063444839e-221\nprint(repr(x),str(x),x)\n",
+      "stdout": "-4.530570063444839e-221 -4.530570063444839e-221 -4.530570063444839e-221\n"
+    },
+    {
+      "id": "float-display-048",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=6.806093243067764e+42\nprint(repr(x),str(x),x)\n",
+      "stdout": "6.806093243067764e+42 6.806093243067764e+42 6.806093243067764e+42\n"
+    },
+    {
+      "id": "float-display-049",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-2.2603849937538257e-56\nprint(repr(x),str(x),x)\n",
+      "stdout": "-2.2603849937538257e-56 -2.2603849937538257e-56 -2.2603849937538257e-56\n"
+    },
+    {
+      "id": "float-display-050",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.1450288737969197e-155\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.1450288737969197e-155 1.1450288737969197e-155 1.1450288737969197e-155\n"
+    },
+    {
+      "id": "float-display-051",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=4.445591111853155e-144\nprint(repr(x),str(x),x)\n",
+      "stdout": "4.445591111853155e-144 4.445591111853155e-144 4.445591111853155e-144\n"
+    },
+    {
+      "id": "float-display-052",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=4.287840065952185e-53\nprint(repr(x),str(x),x)\n",
+      "stdout": "4.287840065952185e-53 4.287840065952185e-53 4.287840065952185e-53\n"
+    },
+    {
+      "id": "float-display-053",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=6.535120411901673e-306\nprint(repr(x),str(x),x)\n",
+      "stdout": "6.535120411901673e-306 6.535120411901673e-306 6.535120411901673e-306\n"
+    },
+    {
+      "id": "float-display-054",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-3.0007105348041617e+125\nprint(repr(x),str(x),x)\n",
+      "stdout": "-3.0007105348041617e+125 -3.0007105348041617e+125 -3.0007105348041617e+125\n"
+    },
+    {
+      "id": "float-display-055",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=3.460406207448531e-61\nprint(repr(x),str(x),x)\n",
+      "stdout": "3.460406207448531e-61 3.460406207448531e-61 3.460406207448531e-61\n"
+    },
+    {
+      "id": "float-display-056",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-1.6997094640470506e-258\nprint(repr(x),str(x),x)\n",
+      "stdout": "-1.6997094640470506e-258 -1.6997094640470506e-258 -1.6997094640470506e-258\n"
+    },
+    {
+      "id": "float-display-057",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.1618590107000408e+290\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.1618590107000408e+290 1.1618590107000408e+290 1.1618590107000408e+290\n"
+    },
+    {
+      "id": "float-display-058",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.3496361865118396e+155\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.3496361865118396e+155 1.3496361865118396e+155 1.3496361865118396e+155\n"
+    },
+    {
+      "id": "float-display-059",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-2.4992978685600826e-91\nprint(repr(x),str(x),x)\n",
+      "stdout": "-2.4992978685600826e-91 -2.4992978685600826e-91 -2.4992978685600826e-91\n"
+    },
+    {
+      "id": "float-display-060",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-8.09574559428982e+214\nprint(repr(x),str(x),x)\n",
+      "stdout": "-8.09574559428982e+214 -8.09574559428982e+214 -8.09574559428982e+214\n"
+    },
+    {
+      "id": "float-display-061",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-45545555988002.086\nprint(repr(x),str(x),x)\n",
+      "stdout": "-45545555988002.086 -45545555988002.086 -45545555988002.086\n"
+    },
+    {
+      "id": "float-display-062",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-1.526064129384938e+18\nprint(repr(x),str(x),x)\n",
+      "stdout": "-1.526064129384938e+18 -1.526064129384938e+18 -1.526064129384938e+18\n"
+    },
+    {
+      "id": "float-display-063",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-1.2621154873294867e+163\nprint(repr(x),str(x),x)\n",
+      "stdout": "-1.2621154873294867e+163 -1.2621154873294867e+163 -1.2621154873294867e+163\n"
+    },
+    {
+      "id": "float-display-064",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=5.077233049085301e-112\nprint(repr(x),str(x),x)\n",
+      "stdout": "5.077233049085301e-112 5.077233049085301e-112 5.077233049085301e-112\n"
+    },
+    {
+      "id": "float-display-065",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=2.8260017316716927e-105\nprint(repr(x),str(x),x)\n",
+      "stdout": "2.8260017316716927e-105 2.8260017316716927e-105 2.8260017316716927e-105\n"
+    },
+    {
+      "id": "float-display-066",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=2.0697145336235955e+151\nprint(repr(x),str(x),x)\n",
+      "stdout": "2.0697145336235955e+151 2.0697145336235955e+151 2.0697145336235955e+151\n"
+    },
+    {
+      "id": "float-display-067",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-2.0632397248259063e-39\nprint(repr(x),str(x),x)\n",
+      "stdout": "-2.0632397248259063e-39 -2.0632397248259063e-39 -2.0632397248259063e-39\n"
+    },
+    {
+      "id": "float-display-068",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=3.0326133711913885e+262\nprint(repr(x),str(x),x)\n",
+      "stdout": "3.0326133711913885e+262 3.0326133711913885e+262 3.0326133711913885e+262\n"
+    },
+    {
+      "id": "float-display-069",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.5947824467120336e-241\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.5947824467120336e-241 1.5947824467120336e-241 1.5947824467120336e-241\n"
+    },
+    {
+      "id": "float-display-070",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=4.504784513596588e-22\nprint(repr(x),str(x),x)\n",
+      "stdout": "4.504784513596588e-22 4.504784513596588e-22 4.504784513596588e-22\n"
+    },
+    {
+      "id": "float-display-071",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-5.231035965241779e+156\nprint(repr(x),str(x),x)\n",
+      "stdout": "-5.231035965241779e+156 -5.231035965241779e+156 -5.231035965241779e+156\n"
+    },
+    {
+      "id": "float-display-072",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-4.474172946437136e-255\nprint(repr(x),str(x),x)\n",
+      "stdout": "-4.474172946437136e-255 -4.474172946437136e-255 -4.474172946437136e-255\n"
+    },
+    {
+      "id": "float-display-073",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=7.023991792862407e+31\nprint(repr(x),str(x),x)\n",
+      "stdout": "7.023991792862407e+31 7.023991792862407e+31 7.023991792862407e+31\n"
+    },
+    {
+      "id": "float-display-074",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-3.526814028936951e-268\nprint(repr(x),str(x),x)\n",
+      "stdout": "-3.526814028936951e-268 -3.526814028936951e-268 -3.526814028936951e-268\n"
+    },
+    {
+      "id": "float-display-075",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=8.261203953896695e+94\nprint(repr(x),str(x),x)\n",
+      "stdout": "8.261203953896695e+94 8.261203953896695e+94 8.261203953896695e+94\n"
+    },
+    {
+      "id": "float-display-076",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=3.812590259782277e+177\nprint(repr(x),str(x),x)\n",
+      "stdout": "3.812590259782277e+177 3.812590259782277e+177 3.812590259782277e+177\n"
+    },
+    {
+      "id": "float-display-077",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=2.047771237218258e-63\nprint(repr(x),str(x),x)\n",
+      "stdout": "2.047771237218258e-63 2.047771237218258e-63 2.047771237218258e-63\n"
+    },
+    {
+      "id": "float-display-078",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.8218431621467465e+158\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.8218431621467465e+158 1.8218431621467465e+158 1.8218431621467465e+158\n"
+    },
+    {
+      "id": "float-display-079",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=2.6076029222517285e+242\nprint(repr(x),str(x),x)\n",
+      "stdout": "2.6076029222517285e+242 2.6076029222517285e+242 2.6076029222517285e+242\n"
+    },
+    {
+      "id": "float-display-080",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-6.529861722402359e-119\nprint(repr(x),str(x),x)\n",
+      "stdout": "-6.529861722402359e-119 -6.529861722402359e-119 -6.529861722402359e-119\n"
+    },
+    {
+      "id": "float-display-081",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-9.39341207668456e-104\nprint(repr(x),str(x),x)\n",
+      "stdout": "-9.39341207668456e-104 -9.39341207668456e-104 -9.39341207668456e-104\n"
+    },
+    {
+      "id": "float-display-082",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=1.0336251517519939e-118\nprint(repr(x),str(x),x)\n",
+      "stdout": "1.0336251517519939e-118 1.0336251517519939e-118 1.0336251517519939e-118\n"
+    },
+    {
+      "id": "float-display-083",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=7.832498773894253e+184\nprint(repr(x),str(x),x)\n",
+      "stdout": "7.832498773894253e+184 7.832498773894253e+184 7.832498773894253e+184\n"
+    },
+    {
+      "id": "float-display-084",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-9.03807683279466e+305\nprint(repr(x),str(x),x)\n",
+      "stdout": "-9.03807683279466e+305 -9.03807683279466e+305 -9.03807683279466e+305\n"
+    },
+    {
+      "id": "float-display-085",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=5.813347922914655e+16\nprint(repr(x),str(x),x)\n",
+      "stdout": "5.813347922914655e+16 5.813347922914655e+16 5.813347922914655e+16\n"
+    },
+    {
+      "id": "float-display-086",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=7.538260813835593e-25\nprint(repr(x),str(x),x)\n",
+      "stdout": "7.538260813835593e-25 7.538260813835593e-25 7.538260813835593e-25\n"
+    },
+    {
+      "id": "float-display-087",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=8.89185405041106e+199\nprint(repr(x),str(x),x)\n",
+      "stdout": "8.89185405041106e+199 8.89185405041106e+199 8.89185405041106e+199\n"
+    },
+    {
+      "id": "float-display-088",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-4.139261747209371e+158\nprint(repr(x),str(x),x)\n",
+      "stdout": "-4.139261747209371e+158 -4.139261747209371e+158 -4.139261747209371e+158\n"
+    },
+    {
+      "id": "float-display-nan",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=float(\"nan\")\nprint(repr(x),str(x),x)\n",
+      "stdout": "nan nan nan\n"
+    },
+    {
+      "id": "float-display-negative-nan",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-float(\"nan\")\nprint(repr(x),str(x),x)\n",
+      "stdout": "nan nan nan\n"
+    },
+    {
+      "id": "float-display-inf",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=float(\"inf\")\nprint(repr(x),str(x),x)\n",
+      "stdout": "inf inf inf\n"
+    },
+    {
+      "id": "float-display-negative-inf",
+      "stage": "LA190",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "source": "x=-float(\"inf\")\nprint(repr(x),str(x),x)\n",
+      "stdout": "-inf -inf -inf\n"
+    },
+    {
+      "id": "float-native-subclass-display",
+      "stage": "LA190",
+      "source": "class F(float): pass\nx=F(1.5)\nprint(repr(x),str(x),float.__repr__(x),float.__str__(x))\n",
+      "stdout": "1.5 1.5 1.5 1.5\n"
+    },
+    {
+      "id": "container-basic",
+      "stage": "LA191",
+      "source": "print([],(),{},[None,True,-7,1.5,\"a\"],(1,),{\"x\":(2,3)})\n",
+      "stdout": "[] () {} [None, True, -7, 1.5, 'a'] (1,) {'x': (2, 3)}\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "container-shared",
+      "stage": "LA191",
+      "source": "a=[1,2]\nprint([a,a],(a,a),{\"x\":a,\"y\":a})\n",
+      "stdout": "[[1, 2], [1, 2]] ([1, 2], [1, 2]) {'x': [1, 2], 'y': [1, 2]}\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "container-list-cycle",
+      "stage": "LA191",
+      "source": "a=[]\na.append(a)\nprint(a,str(a),repr(a))\n",
+      "stdout": "[[...]] [[...]] [[...]]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "container-dict-cycle",
+      "stage": "LA191",
+      "source": "a={}\na[\"a\"]=a\nprint(a)\n",
+      "stdout": "{'a': {...}}\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "container-tuple-cycle",
+      "stage": "LA191",
+      "source": "a=[]\nt=(a,)\na.append(t)\nprint(t,a)\n",
+      "stdout": "([(...)],) [([...],)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "container-custom-repr",
+      "stage": "LA191",
+      "source": "class A:\n def __repr__(self): return \"A\"\n def __str__(self): return \"other\"\nprint([A()],(A(),),{A():A()})\n",
+      "stdout": "[A] (A,) {A: A}\n"
+    },
+    {
+      "id": "container-subclass",
+      "stage": "LA191",
+      "source": "class L(list): pass\nclass T(tuple): pass\nclass D(dict): pass\na=L([1,2])\nd=D()\nd[\"a\"]=a\nprint(a,T([1]),d,list.__repr__(a),dict.__repr__(d))\n",
+      "stdout": "[1, 2] (1,) {'a': [1, 2]} [1, 2] {'a': [1, 2]}\n"
+    },
+    {
+      "id": "container-override",
+      "stage": "LA191",
+      "source": "class L(list):\n def __repr__(self): return \"L\"\na=L([1])\nprint(a,repr(a),list.__repr__(a),[a])\n",
+      "stdout": "L L [1] [L]\n"
+    },
+    {
+      "id": "container-reentrant",
+      "stage": "LA191",
+      "source": "a=[]\nclass A:\n def __repr__(self): return repr(a)\na.append(A())\nprint(a)\n",
+      "stdout": "[[...]]\n"
+    },
+    {
+      "id": "container-mutate-list",
+      "stage": "LA191",
+      "source": "a=[]\nclass A:\n def __repr__(self):\n  a.clear()\n  a.append(9)\n  return \"A\"\na.extend([A(),2,3])\nprint(a)\nprint(a)\n",
+      "stdout": "[A]\n[9]\n"
+    },
+    {
+      "id": "container-append-list",
+      "stage": "LA191",
+      "source": "a=[]\nclass A:\n def __repr__(self):\n  a.append(9)\n  return \"A\"\na.append(A())\nprint(a)\n",
+      "stdout": "[A, 9]\n"
+    },
+    {
+      "id": "container-dict-captured-value",
+      "stage": "LA191",
+      "source": "d={}\nclass K:\n def __repr__(self):\n  d[self]=9\n  return \"K\"\nk=K()\nd[k]=[1]\nprint(d)\nprint(d[k])\n",
+      "stdout": "{K: [1]}\n9\n"
+    },
+    {
+      "id": "container-mutate-dict",
+      "stage": "LA191",
+      "source": "d={}\nclass K:\n def __repr__(self):\n  del d[self]\n  del d[\"tail\"]\n  d[\"new\"]=9\n  return \"K\"\nd[K()]=[1]\nd[\"tail\"]=2\nprint(d)\nprint(d)\n",
+      "stdout": "{K: [1], 'new': 9}\n{'new': 9}\n"
+    },
+    {
+      "id": "container-guard-after-error",
+      "stage": "LA191",
+      "source": "class A:\n def __repr__(self): raise ValueError(\"bad\")\na=[A()]\ntry: repr(a)\nexcept ValueError: pass\na.clear()\na.append(7)\nprint(a)\n",
+      "stdout": "[7]\n"
+    },
+    {
+      "id": "container-invalid-repr",
+      "stage": "LA191",
+      "source": "class A:\n def __repr__(self): return 7\nprint(\"prefix\",[A()])\n",
+      "stdout": "prefix ",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "container-nested-output",
+      "stage": "LA191",
+      "source": "class A:\n def __repr__(self):\n  print(\"inside\")\n  return \"A\"\nprint(\"prefix\",[A()],\"tail\")\n",
+      "stdout": "prefix inside\n[A] tail\n"
+    },
+    {
+      "id": "container-unicode",
+      "stage": "LA191",
+      "source": "print([\"\ud83d\ude00\",\"\\ud800\",b\"a\\x00\"],(bytearray(b\"a\"),))\n",
+      "stdout": "['\ud83d\ude00', '\\ud800', b'a\\x00'] (bytearray(b'a'),)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "display-composed-report",
+      "stage": "LA192",
+      "source": "\"\"\"Render ordinary report records with float and recursive container displays.\"\"\"\n\n\nclass Reading:\n    def __init__(self, name, value):\n        self.name = name\n        self.value = value\n\n    def __repr__(self):\n        return \"Reading\" + repr((self.name, self.value))\n\n\nreadings = [Reading(\"temperature\", 21.5), Reading(\"pressure\", 1e-5)]\nreport = {\"readings\": readings, \"limits\": (0.0, 1e16), \"ready\": True}\nprint(report)\nprint(\"shared\", [readings, readings])\nhistory = [report]\nhistory.append(history)\nprint(\"history\", history)\n",
+      "stdout": "{'readings': [Reading('temperature', 21.5), Reading('pressure', 1e-05)], 'limits': (0.0, 1e+16), 'ready': True}\nshared [[Reading('temperature', 21.5), Reading('pressure', 1e-05)], [Reading('temperature', 21.5), Reading('pressure', 1e-05)]]\nhistory [{'readings': [Reading('temperature', 21.5), Reading('pressure', 1e-05)], 'limits': (0.0, 1e+16), 'ready': True}, [...]]\n"
+    },
+    {
+      "id": "display-retained-fields",
+      "stage": "LA192",
+      "source": "class Record:\n def __init__(self,name): self.name=name\n def __repr__(self):\n  captured=[self.name,[1.5]]\n  def render(): return repr(captured)\n  return render()\nprint({Record(\"key\"):[Record(\"value\"),-0.0]})\n",
+      "stdout": "{['key', [1.5]]: [['value', [1.5]], -0.0]}\n"
+    },
+    {
+      "id": "display-generator-cleanup",
+      "stage": "LA192",
+      "source": "def pieces():\n try: yield [1.5]\n finally: print(\"cleanup\")\nclass Report:\n def __repr__(self):\n  g=pieces()\n  value=next(g)\n  g.close()\n  return repr(value)\nprint(\"prefix\",{\"value\":Report()})\n",
+      "stdout": "prefix cleanup\n{'value': [1.5]}\n"
+    },
+    {
+      "id": "display-dynamic-source",
+      "stage": "LA192",
+      "source": "namespace={}\nexec(\"value=[1.5,-0.0]\\nrendered=repr({'items':value})\",namespace)\nprint(namespace[\"rendered\"])\n",
+      "stdout": "{'items': [1.5, -0.0]}\n"
+    },
+    {
+      "id": "display-original-dynamic-frame",
+      "stage": "LA192",
+      "source": "code=compile(\"class Broken:\\n def __repr__(self): return 1//0\\n\",\"display-original.py\",\"exec\")\nexec(code)\nprint([Broken()])\n",
+      "stdout": "",
+      "error_type": "ZeroDivisionError"
+    },
+    {
+      "id": "display-native-detached-caller",
+      "stage": "LA192",
+      "source": "class L(list): pass\nvalues=L([1.5])\nrender=list.__repr__.__get__(values,L)\noriginal=values\ndel values\nprint(render(),original,repr((original,)))\n",
+      "stdout": "[1.5] [1.5] ([1.5],)\n"
+    },
+    {
+      "id": "display-core-report",
+      "stage": "LA192",
+      "source": "rows=[(\"a\",1.5),(\"b\",-0.0)]\nreport={}\nfor name,value in rows: report[name]=[value]\nprint(rows,report)\n",
+      "stdout": "[('a', 1.5), ('b', -0.0)] {'a': [1.5], 'b': [-0.0]}\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "display-modules",
+      "stage": "LA192",
+      "source": "import render\nclass R:\n def __repr__(self): return render.show([1.5])\nprint({\"report\":R()})\n",
+      "imports": [
+        "render"
+      ],
+      "modules": [
+        {
+          "name": "render",
+          "package": false,
+          "imports": [],
+          "source": "def show(value): return repr(value)\n"
+        }
+      ],
+      "stdout": "{'report': [1.5]}\n"
     }
   ]
 }
