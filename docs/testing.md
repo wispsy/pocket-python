@@ -32,6 +32,7 @@ uv run --no-sync python scripts/run_tests.py prepare-browser
 uv run --no-sync python scripts/run_tests.py browser-conformance --shard 1 --shards 8
 uv run --no-sync python scripts/run_tests.py browser-integration --shard 1 --shards 3
 uv run --no-sync python scripts/run_tests.py python
+uv run --no-sync python scripts/ordinary_browser_smoke.py
 ```
 
 `python` prepares the supplied runtime, checks generated locks, runs Python tests,

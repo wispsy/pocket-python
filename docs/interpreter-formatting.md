@@ -166,3 +166,12 @@ depth limits remain bounded. Primitive-only printing retains its original path.
 Callback-bearing property-name diagnostics now use the same container renderer;
 their original assertions and source frames are retained in the adopted cases.
 Set/view/range, complex and default address-bearing displays remain separate.
+
+LA-192 composes report records, retained callback fields, generator cleanup,
+registry modules and dynamic source. The runnable `examples/interpreter_display.py`
+is accepted through an installed offline console. The dedicated ordinary-display
+browser check covers fresh source, original dynamic frames, Stop/Restart during
+list and dictionary key callbacks, waiting updates and a core-profile offline
+reload. Node/Chromium differential checks retain drain, stepped and parked
+execution, including zero logical teardown. These observations do not adopt
+format specifications, f/t-strings, additional libraries or DOM capabilities.

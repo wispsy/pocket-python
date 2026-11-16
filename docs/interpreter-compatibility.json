@@ -674,7 +674,7 @@
     {
       "id": "repr-str",
       "status": "partial",
-      "scope": "print/str display None, bool, int, strings and adopted exception messages; str() and str(s) preserve the adopted identity rules. repr covers None/bool/int/str and explicit user __repr__; type-level __str__/__repr__ callbacks and print sequencing run on the owned machine. Bytes and bytearray repr/str are adopted in both source profiles. LA-190 adds shortest-round-trip binary64 repr/str/print, Python exponent thresholds, signed zero and non-finite spellings in both source profiles. LA-191 adds owned recursive list/tuple/dict representations, cycle markers, live traversal, captured dictionary pairs and repr callbacks.",
+      "scope": "print/str display None, bool, int, strings and adopted exception messages; str() and str(s) preserve the adopted identity rules. repr covers None/bool/int/str and explicit user __repr__; type-level __str__/__repr__ callbacks and print sequencing run on the owned machine. Bytes and bytearray repr/str are adopted in both source profiles. LA-190 adds shortest-round-trip binary64 repr/str/print, Python exponent thresholds, signed zero and non-finite spellings in both source profiles. LA-191 adds owned recursive list/tuple/dict representations, cycle markers, live traversal, captured dictionary pairs and repr callbacks. LA-192 accepts composed reports, retained callbacks, modules, generator cleanup, dynamic frames and installed offline Stop/Restart/profile updates.",
       "gaps": "Default-object displays, exception repr, format specifications and unadopted str/print keyword or encoding forms remain deferred.",
       "reference_version": "3.14.7",
       "targets": [
@@ -698,7 +698,9 @@
         "tests/fixtures/interpreter/formatting.json:hook-precedence",
         "tests/fixtures/interpreter/formatting.json:print-nested-output",
         "tests/fixtures/interpreter/formatting.json:float-display-007",
-        "tests/fixtures/interpreter/formatting.json:container-custom-repr"
+        "tests/fixtures/interpreter/formatting.json:container-custom-repr",
+        "tests/fixtures/interpreter/formatting.json:display-composed-report",
+        "tests/fixtures/interpreter/formatting.json:display-modules"
       ]
     },
     {

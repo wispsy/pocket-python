@@ -6,7 +6,8 @@
   "implemented_stages": [
     "R1",
     "LA190",
-    "LA191"
+    "LA191",
+    "LA192"
   ],
   "cases": [
     {
@@ -1517,6 +1518,70 @@
         "core-source/1",
         "classes-source/1"
       ]
+    },
+    {
+      "id": "display-composed-report",
+      "stage": "LA192",
+      "source": "\"\"\"Render ordinary report records with float and recursive container displays.\"\"\"\n\n\nclass Reading:\n    def __init__(self, name, value):\n        self.name = name\n        self.value = value\n\n    def __repr__(self):\n        return \"Reading\" + repr((self.name, self.value))\n\n\nreadings = [Reading(\"temperature\", 21.5), Reading(\"pressure\", 1e-5)]\nreport = {\"readings\": readings, \"limits\": (0.0, 1e16), \"ready\": True}\nprint(report)\nprint(\"shared\", [readings, readings])\nhistory = [report]\nhistory.append(history)\nprint(\"history\", history)\n",
+      "stdout": "{'readings': [Reading('temperature', 21.5), Reading('pressure', 1e-05)], 'limits': (0.0, 1e+16), 'ready': True}\nshared [[Reading('temperature', 21.5), Reading('pressure', 1e-05)], [Reading('temperature', 21.5), Reading('pressure', 1e-05)]]\nhistory [{'readings': [Reading('temperature', 21.5), Reading('pressure', 1e-05)], 'limits': (0.0, 1e+16), 'ready': True}, [...]]\n"
+    },
+    {
+      "id": "display-retained-fields",
+      "stage": "LA192",
+      "source": "class Record:\n def __init__(self,name): self.name=name\n def __repr__(self):\n  captured=[self.name,[1.5]]\n  def render(): return repr(captured)\n  return render()\nprint({Record(\"key\"):[Record(\"value\"),-0.0]})\n",
+      "stdout": "{['key', [1.5]]: [['value', [1.5]], -0.0]}\n"
+    },
+    {
+      "id": "display-generator-cleanup",
+      "stage": "LA192",
+      "source": "def pieces():\n try: yield [1.5]\n finally: print(\"cleanup\")\nclass Report:\n def __repr__(self):\n  g=pieces()\n  value=next(g)\n  g.close()\n  return repr(value)\nprint(\"prefix\",{\"value\":Report()})\n",
+      "stdout": "prefix cleanup\n{'value': [1.5]}\n"
+    },
+    {
+      "id": "display-dynamic-source",
+      "stage": "LA192",
+      "source": "namespace={}\nexec(\"value=[1.5,-0.0]\\nrendered=repr({'items':value})\",namespace)\nprint(namespace[\"rendered\"])\n",
+      "stdout": "{'items': [1.5, -0.0]}\n"
+    },
+    {
+      "id": "display-original-dynamic-frame",
+      "stage": "LA192",
+      "source": "code=compile(\"class Broken:\\n def __repr__(self): return 1//0\\n\",\"display-original.py\",\"exec\")\nexec(code)\nprint([Broken()])\n",
+      "stdout": "",
+      "error_type": "ZeroDivisionError"
+    },
+    {
+      "id": "display-native-detached-caller",
+      "stage": "LA192",
+      "source": "class L(list): pass\nvalues=L([1.5])\nrender=list.__repr__.__get__(values,L)\noriginal=values\ndel values\nprint(render(),original,repr((original,)))\n",
+      "stdout": "[1.5] [1.5] ([1.5],)\n"
+    },
+    {
+      "id": "display-core-report",
+      "stage": "LA192",
+      "source": "rows=[(\"a\",1.5),(\"b\",-0.0)]\nreport={}\nfor name,value in rows: report[name]=[value]\nprint(rows,report)\n",
+      "stdout": "[('a', 1.5), ('b', -0.0)] {'a': [1.5], 'b': [-0.0]}\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "display-modules",
+      "stage": "LA192",
+      "source": "import render\nclass R:\n def __repr__(self): return render.show([1.5])\nprint({\"report\":R()})\n",
+      "imports": [
+        "render"
+      ],
+      "modules": [
+        {
+          "name": "render",
+          "package": false,
+          "imports": [],
+          "source": "def show(value): return repr(value)\n"
+        }
+      ],
+      "stdout": "{'report': [1.5]}\n"
     }
   ]
 }
