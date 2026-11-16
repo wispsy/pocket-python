@@ -1062,6 +1062,11 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
       if (current.kind.startsWith("call-map-") && (value.name === "AttributeError" || value.name === "KeyError" && current.mode !== "display"))
         return value.name === "KeyError" ? duplicateKeyword(current.receiver, value.args[0] ?? current.key, site, current.after) :
           unaryTask("call-mapping-required", current.receiver, site, current.after);
+      if (current.kind === "reverse-item") {
+        exhaust(current.receiver);
+        if (value.name === "IndexError" || isException(value, "StopIteration"))
+          return unaryTask("iterator-stop", current.receiver, site, current.after);
+      }
       if (current.kind === "indexed-result" && (value.name === "IndexError" || isException(value, "StopIteration")) ||
           current.kind === "callable-result" && isException(value, "StopIteration")) {
         exhaust(current.receiver);
@@ -1851,6 +1856,20 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     if (completion?.kind === "iter-result") {
       if (!(values.isIterator(value) || userProtocol(value) && classes.hasSlot(classes.checkingType(value), "__next__")))
         python("TypeError", "__iter__ returned a non-iterator");
+      return valueTask(value, site, completion.after);
+    }
+    if (completion?.kind === "reverse-bound") {
+      if (value === null) python("TypeError", "'" + classes.checkingType(completion.receiver).name + "' object is not reversible");
+      return callTask(value, [], [], [], site, completion.after, completion.depth);
+    }
+    if (completion?.kind === "reverse-length") {
+      const iterator = allocate(ProtocolIteratorValue, "reverse", completion.receiver, null, values.int(value - 1n), "reversed");
+      return valueTask(iterator, site, completion.after);
+    }
+    if (completion?.kind === "reverse-item") {
+      const iterator = completion.receiver, before = iterator.index, index = values.int(completion.index - 1n);
+      state.temporaries.push(value, index);
+      mutate(iterator, () => { iterator.index = index; return () => { iterator.index = before; }; });
       return valueTask(value, site, completion.after);
     }
     if (completion?.kind === "indexed-result") {
@@ -2747,6 +2766,11 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             if (value instanceof ProtocolIteratorValue) {
               if (operation === "iter") { task = deliver(value, completion, site); continue; }
               if (value.exhausted) python("StopIteration", "");
+              if (value.kind === "reverse") {
+                if (value.index < 0n) { exhaust(value); python("StopIteration", ""); }
+                task = itemTask(value.source, value.index, site, continuation("reverse-item", {receiver: value, index: value.index, after: completion}), depth);
+                continue;
+              }
               const finish = continuation(value.kind === "indexed" ? "indexed-result" : "callable-result", {receiver: value, after: completion});
               task = value.kind === "indexed" ? itemTask(value.source, value.index, site, finish, depth) :
                 callTask(value.source, [], [], [], site, finish, depth);
@@ -3122,7 +3146,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             task = nativeOwner === "method" ? unaryTask("hash", args[0].callable, site,
               continuation("native-method-hash", {receiver: args[0], after: completion}), depth) : valueTask(values.pythonHash(args[0]), site, completion); continue;
           }
-          if (["__iter__", "__next__"].includes(nativeName) && (["map", "filter", "enumerate", "zip"].includes(nativeOwner) || nativeOwner === "generator" || nativeOwner.endsWith("iterator"))) {
+          if (["__iter__", "__next__"].includes(nativeName) && (["reversed", "map", "filter", "enumerate", "zip"].includes(nativeOwner) || nativeOwner === "generator" || nativeOwner.endsWith("iterator"))) {
             if (keywords.length || args.length !== 1) python("TypeError", nativeName + " takes no arguments");
             task = unaryTask(nativeName === "__iter__" ? "iter" : "next", args[0], site, completion, depth); continue;
           }
@@ -3435,7 +3459,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             state.temporaries.push(type);
             task = finishType(type, [...namespace], site, completion, keywords, keywordValues, cell, dictcell); continue;
           }
-          if (classes.isType(callable) && !["map", "filter", "enumerate", "zip", "FrameLocalsProxy", "cell", "code", "mappingproxy", "type", "super", "property", "staticmethod", "classmethod", "slice", "dict", "bool", "int", "float", "complex", "str", "list", "tuple", "range", "set", "frozenset", "bytes", "bytearray", "memoryview", ...Object.keys(EXCEPTIONS)].includes(callable.name)) {
+          if (classes.isType(callable) && !["reversed", "map", "filter", "enumerate", "zip", "FrameLocalsProxy", "cell", "code", "mappingproxy", "type", "super", "property", "staticmethod", "classmethod", "slice", "dict", "bool", "int", "float", "complex", "str", "list", "tuple", "range", "set", "frozenset", "bytes", "bytearray", "memoryview", ...Object.keys(EXCEPTIONS)].includes(callable.name)) {
             if (/^dict_(keys|values|items|(?:reverse)?(?:key|value|item)iterator)$/.test(callable.name)) python("TypeError", "cannot create dictionary view or iterator instances");
             if (["method_descriptor", "wrapper_descriptor", "getset_descriptor", "member_descriptor", "classmethod_descriptor"].includes(callable.name)) python("TypeError", "cannot create '" + callable.name + "' instances");
             if (["NoneType", "NotImplementedType"].includes(callable.name)) {
@@ -3965,8 +3989,20 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             if (name !== "get") hard("UNSUPPORTED", "UnsupportedOperationError", "Native dictionary view API " + callable.name + " is owned by #116/#117.");
           }
           if (callable.name === "reversed") {
-            if (args.length !== 1 || keywords.length) python("TypeError", "reversed requires one positional argument");
+            if (keywords.length) python("TypeError", "reversed() takes no keyword arguments");
+            if (args.length !== 1) python("TypeError", "reversed expected 1 argument, got " + args.length);
             const receiver = args[0];
+            if (userProtocol(receiver)) {
+              const plan = classes.special(receiver, "__reversed__");
+              if (plan) {
+                task = plan.kind === "value" ? valueTask(plan.value, site, continuation("reverse-bound", {receiver, after: completion, depth})) :
+                  callTask(plan.callable, plan.args, [], [], site, continuation("reverse-bound", {receiver, after: completion, depth}), depth);
+                continue;
+              }
+              if (!classes.lookup(classes.checkingType(receiver), "__getitem__").found)
+                python("TypeError", "'" + classes.checkingType(receiver).name + "' object is not reversible");
+              task = unaryTask("len", receiver, site, continuation("reverse-length", {receiver, after: completion, depth}), depth); continue;
+            }
             const dictionary = receiver instanceof ClassNamespaceValue ? values.classNamespaceDictionary(receiver) : receiver instanceof DictionaryViewValue ? receiver.dictionary : values.isDict(receiver) ? receiver : null;
             if (dictionary === null) hard("UNSUPPORTED", "UnsupportedOperationError", "General reversed protocols are owned by #116.");
             task = valueTask(values.dictionaryIterator(dictionary, receiver instanceof DictionaryViewValue ? receiver.kind : 0, true,

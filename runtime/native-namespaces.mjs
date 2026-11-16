@@ -1184,6 +1184,15 @@ export const NATIVE_NAMESPACES = Object.freeze({
     ["__setstate__","method_descriptor"],
     ["__doc__","value",{"type":"none"}],
   ],
+  "reversed": [
+    ["__new__","builtin_function_or_method"],
+    ["__iter__","wrapper_descriptor"],
+    ["__next__","wrapper_descriptor"],
+    ["__length_hint__","method_descriptor"],
+    ["__reduce__","method_descriptor"],
+    ["__setstate__","method_descriptor"],
+    ["__doc__","value",{"type":"text","value":"Return a reverse iterator over the values of the given sequence."}],
+  ],
   "set": [
     ["__new__","builtin_function_or_method"],
     ["__repr__","wrapper_descriptor"],
@@ -1457,7 +1466,7 @@ export const NATIVE_NAMESPACES = Object.freeze({
     ["__doc__","value",{"type":"text","value":"The zip object yields n-length tuples, where n is the number of\niterables passed as positional arguments to zip().  The i-th element\nin every tuple comes from the i-th iterable argument to zip().  This\ncontinues until the shortest argument is exhausted.\n\nIf strict is true and one of the arguments is exhausted before the\nothers, raise a ValueError.\n\n   >>> list(zip('abcdefg', range(3), range(4)))\n   [('a', 0, 0), ('b', 1, 1), ('c', 2, 2)]"}],
   ],
 });
-export const NATIVE_DOC_COPIES = Object.freeze(["ArithmeticError", "AssertionError", "AttributeError", "BaseException", "BufferError", "Exception", "GeneratorExit", "ImportError", "IndentationError", "IndexError", "KeyError", "LookupError", "ModuleNotFoundError", "NameError", "NoneType", "NotImplementedType", "OverflowError", "RecursionError", "RuntimeError", "StopIteration", "SyntaxError", "SystemError", "TabError", "TypeError", "UnboundLocalError", "UnicodeDecodeError", "UnicodeEncodeError", "UnicodeError", "UnicodeTranslateError", "ValueError", "ZeroDivisionError", "bool", "bytearray", "bytes", "cell", "classmethod", "code", "complex", "dict", "enumerate", "filter", "float", "frozenset", "function", "int", "list", "map", "mappingproxy", "memoryview", "method", "module", "object", "property", "range", "set", "slice", "staticmethod", "str", "super", "tuple", "type", "zip"]);
+export const NATIVE_DOC_COPIES = Object.freeze(["ArithmeticError", "AssertionError", "AttributeError", "BaseException", "BufferError", "Exception", "GeneratorExit", "ImportError", "IndentationError", "IndexError", "KeyError", "LookupError", "ModuleNotFoundError", "NameError", "NoneType", "NotImplementedType", "OverflowError", "RecursionError", "RuntimeError", "StopIteration", "SyntaxError", "SystemError", "TabError", "TypeError", "UnboundLocalError", "UnicodeDecodeError", "UnicodeEncodeError", "UnicodeError", "UnicodeTranslateError", "ValueError", "ZeroDivisionError", "bool", "bytearray", "bytes", "cell", "classmethod", "code", "complex", "dict", "enumerate", "filter", "float", "frozenset", "function", "int", "list", "map", "mappingproxy", "memoryview", "method", "module", "object", "property", "range", "reversed", "set", "slice", "staticmethod", "str", "super", "tuple", "type", "zip"]);
 export const NATIVE_CALLABLE_DOCS = Object.freeze({
   "ArithmeticError.__new__": "Create and return a new object.  See help(type) for accurate signature.",
   "AssertionError.__new__": "Create and return a new object.  See help(type) for accurate signature.",
@@ -2404,6 +2413,12 @@ export const NATIVE_CALLABLE_DOCS = Object.freeze({
   "range_iterator.__length_hint__": "Private method returning an estimate of len(list(it)).",
   "range_iterator.__reduce__": "Return state information for pickling.",
   "range_iterator.__setstate__": "Set state information for unpickling.",
+  "reversed.__new__": "Create and return a new object.  See help(type) for accurate signature.",
+  "reversed.__iter__": "Implement iter(self).",
+  "reversed.__next__": "Implement next(self).",
+  "reversed.__length_hint__": "Private method returning an estimate of len(list(it)).",
+  "reversed.__reduce__": "Return state information for pickling.",
+  "reversed.__setstate__": "Set state information for unpickling.",
   "set.__new__": "Create and return a new object.  See help(type) for accurate signature.",
   "set.__repr__": "Return repr(self).",
   "set.__lt__": "Return self<value.",
@@ -3462,6 +3477,12 @@ export const NATIVE_CALLABLE_SIGNATURES = Object.freeze({
   "range_iterator.__length_hint__": "($self, /)",
   "range_iterator.__reduce__": "($self, /)",
   "range_iterator.__setstate__": "($self, object, /)",
+  "reversed.__new__": "($type, *args, **kwargs)",
+  "reversed.__iter__": "($self, /)",
+  "reversed.__next__": "($self, /)",
+  "reversed.__length_hint__": "($self, /)",
+  "reversed.__reduce__": "($self, /)",
+  "reversed.__setstate__": "($self, object, /)",
   "set.__new__": "($type, *args, **kwargs)",
   "set.__repr__": "($self, /)",
   "set.__lt__": "($self, value, /)",
