@@ -546,6 +546,19 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     const task = unaryTask("next", iterator, site, continuation("consume-next", {name, receiver: iterator, result, after, depth}), depth);
     state.temporaries = operationRoots(task); return task;
   };
+  const nativeReverse = (receiver, site, after) => {
+    const source = classes.payload(receiver);
+    state.temporaries.push(receiver, source);
+    if (values.isRange(source)) {
+      const range = values.range([values.int(source.start + (source.length - 1n) * source.step),
+        values.int(source.start - source.step), values.int(-source.step)]);
+      state.temporaries.push(range);
+      return valueTask(values.iterator(range), site, after);
+    }
+    const length = values.unary("len", source);
+    return valueTask(allocate(ProtocolIteratorValue, "reverse", source, receiver,
+      values.int(length - 1n), values.isList(source) ? "list_reverseiterator" : "reversed"), site, after);
+  };
   const selectionNext = (record, site) => {
     const task = unaryTask("next", record.receiver, site, continuation("selection-next", record), record.depth);
     state.temporaries = operationRoots(task); return task;
@@ -1866,6 +1879,8 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
       const iterator = allocate(ProtocolIteratorValue, "reverse", completion.receiver, null, values.int(value - 1n), "reversed");
       return valueTask(iterator, site, completion.after);
     }
+    if (completion?.kind === "reverse-hint")
+      return valueTask(value < completion.index + 1n ? 0n : values.int(completion.index + 1n), site, completion.after);
     if (completion?.kind === "reverse-item") {
       const iterator = completion.receiver, before = iterator.index, index = values.int(completion.index - 1n);
       state.temporaries.push(value, index);
@@ -3146,6 +3161,17 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             task = nativeOwner === "method" ? unaryTask("hash", args[0].callable, site,
               continuation("native-method-hash", {receiver: args[0], after: completion}), depth) : valueTask(values.pythonHash(args[0]), site, completion); continue;
           }
+          if (nativeName === "__reversed__" && ["list", "range"].includes(nativeOwner)) {
+            if (keywords.length || args.length !== 1) python("TypeError", "__reversed__() takes no arguments");
+            task = nativeReverse(args[0], site, completion); continue;
+          }
+          if (nativeName === "__length_hint__" && ["reversed", "list_reverseiterator"].includes(nativeOwner)) {
+            if (keywords.length || args.length !== 1) python("TypeError", "__length_hint__() takes no arguments");
+            const receiver = args[0];
+            task = receiver.exhausted || receiver.index < 0n ? valueTask(0n, site, completion) :
+              unaryTask("len", receiver.source, site, continuation("reverse-hint", {receiver, index: receiver.index, after: completion}), depth);
+            continue;
+          }
           if (["__iter__", "__next__"].includes(nativeName) && (["reversed", "map", "filter", "enumerate", "zip"].includes(nativeOwner) || nativeOwner === "generator" || nativeOwner.endsWith("iterator"))) {
             if (keywords.length || args.length !== 1) python("TypeError", nativeName + " takes no arguments");
             task = unaryTask(nativeName === "__iter__" ? "iter" : "next", args[0], site, completion, depth); continue;
@@ -4004,7 +4030,11 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
               task = unaryTask("len", receiver, site, continuation("reverse-length", {receiver, after: completion, depth}), depth); continue;
             }
             const dictionary = receiver instanceof ClassNamespaceValue ? values.classNamespaceDictionary(receiver) : receiver instanceof DictionaryViewValue ? receiver.dictionary : values.isDict(receiver) ? receiver : null;
-            if (dictionary === null) hard("UNSUPPORTED", "UnsupportedOperationError", "General reversed protocols are owned by #116.");
+            if (dictionary === null) {
+              if (!["str", "list", "tuple", "bytes", "bytearray", "memoryview", "range"].includes(values.typeName(receiver)))
+                python("TypeError", "'" + classes.checkingType(receiver).name + "' object is not reversible");
+              task = nativeReverse(receiver, site, completion); continue;
+            }
             task = valueTask(values.dictionaryIterator(dictionary, receiver instanceof DictionaryViewValue ? receiver.kind : 0, true,
               receiver instanceof DictionaryViewValue ? receiver.owner ?? dictionary : dictionary), site, completion); continue;
           }

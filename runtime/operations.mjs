@@ -253,7 +253,7 @@ export function completion(kind, fields = {}) {
     case "delegate-iter": case "delegate-next": case "delegate-return": case "delegate-close":
     case "iter-result": case "indexed-result": case "callable-result": record = {kind, receiver: fields.receiver, after}; break;
     case "reverse-bound": case "reverse-length": record = {kind, receiver: fields.receiver, depth: fields.depth, after}; break;
-    case "reverse-item": record = {kind, receiver: fields.receiver, index: fields.index, after}; break;
+    case "reverse-item": case "reverse-hint": record = {kind, receiver: fields.receiver, index: fields.index, after}; break;
     case "next-default": record = {kind, receiver: fields.receiver, default: fields.default, after}; break;
     case "binary-result": case "binary-count": case "binary-member":
       record = {kind, receiver: fields.receiver, mutable: fields.mutable === true, after}; break;
@@ -486,7 +486,7 @@ function visit(record) {
     case "dict-pair": case "dict-value": case "dict-value-truth": return [record.left, record.right, record.value, ...completionRoots(record.after)];
     case "delegate-iter": case "delegate-next": case "delegate-return": case "delegate-close":
     case "reverse-bound": case "reverse-length": case "iter-result": case "indexed-result": case "callable-result": return [record.receiver, ...completionRoots(record.after)];
-    case "reverse-item": return [record.receiver, record.index, ...completionRoots(record.after)];
+    case "reverse-item": case "reverse-hint": return [record.receiver, record.index, ...completionRoots(record.after)];
     case "next-default": return [record.receiver, record.default, ...completionRoots(record.after)];
     case "binary-result": case "binary-count": case "binary-member": return [record.receiver, ...completionRoots(record.after)];
     case "byte-assignment": return [record.receiver, record.key, ...completionRoots(record.after)];

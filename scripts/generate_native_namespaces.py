@@ -42,7 +42,7 @@ def inventory():
                   iter(range(10**40, 10**40 + 3)), iter(set()), iter(b'a'),
                   iter(bytearray(b'a')), iter(memoryview(b'a')), iter(Indexed()),
                   iter(lambda: 0, 1), {}.keys(), {}.values(), {}.items(), iter({}.values()),
-                  iter({}.items()), reversed({}), reversed({}.values()), reversed({}.items())]:
+                  iter({}.items()), reversed([]), reversed(()), reversed({}), reversed({}.values()), reversed({}.items())]:
         registry[type(value).__name__] = type(value)
     return registry
 

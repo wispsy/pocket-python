@@ -7,7 +7,8 @@
     "LA196",
     "LA197",
     "LA199",
-    "LA200"
+    "LA200",
+    "LA203"
   ],
   "cases": [
     {
@@ -1357,6 +1358,30 @@
       "stage": "LA200",
       "source": "value=zip()\nprint(*object.__dir__(value))\nprint(*dir(value))\n",
       "stdout": "__new__ __iter__ __next__ __reduce__ __setstate__ __doc__ __repr__ __hash__ __str__ __getattribute__ __setattr__ __delattr__ __lt__ __le__ __eq__ __ne__ __gt__ __ge__ __init__ __reduce_ex__ __getstate__ __subclasshook__ __init_subclass__ __format__ __sizeof__ __dir__ __class__\n__class__ __delattr__ __dir__ __doc__ __eq__ __format__ __ge__ __getattribute__ __getstate__ __gt__ __hash__ __init__ __init_subclass__ __iter__ __le__ __lt__ __ne__ __new__ __next__ __reduce__ __reduce_ex__ __repr__ __setattr__ __setstate__ __sizeof__ __str__ __subclasshook__\n"
+    },
+    {
+      "id": "type-reversed",
+      "stage": "LA203",
+      "source": "value=reversed(())\nprint(type(value).__name__)\nprint(*type.__dir__(type(value)))\nprint(*dir(type(value)))\n",
+      "stdout": "reversed\n__new__ __iter__ __next__ __length_hint__ __reduce__ __setstate__ __doc__ __repr__ __hash__ __str__ __getattribute__ __setattr__ __delattr__ __lt__ __le__ __eq__ __ne__ __gt__ __ge__ __init__ __reduce_ex__ __getstate__ __subclasshook__ __init_subclass__ __format__ __sizeof__ __dir__ __class__\n__class__ __delattr__ __dir__ __doc__ __eq__ __format__ __ge__ __getattribute__ __getstate__ __gt__ __hash__ __init__ __init_subclass__ __iter__ __le__ __length_hint__ __lt__ __ne__ __new__ __next__ __reduce__ __reduce_ex__ __repr__ __setattr__ __setstate__ __sizeof__ __str__ __subclasshook__\n"
+    },
+    {
+      "id": "instance-reversed",
+      "stage": "LA203",
+      "source": "value=reversed(())\nprint(*object.__dir__(value))\nprint(*dir(value))\n",
+      "stdout": "__new__ __iter__ __next__ __length_hint__ __reduce__ __setstate__ __doc__ __repr__ __hash__ __str__ __getattribute__ __setattr__ __delattr__ __lt__ __le__ __eq__ __ne__ __gt__ __ge__ __init__ __reduce_ex__ __getstate__ __subclasshook__ __init_subclass__ __format__ __sizeof__ __dir__ __class__\n__class__ __delattr__ __dir__ __doc__ __eq__ __format__ __ge__ __getattribute__ __getstate__ __gt__ __hash__ __init__ __init_subclass__ __iter__ __le__ __length_hint__ __lt__ __ne__ __new__ __next__ __reduce__ __reduce_ex__ __repr__ __setattr__ __setstate__ __sizeof__ __str__ __subclasshook__\n"
+    },
+    {
+      "id": "type-list_reverseiterator",
+      "stage": "LA203",
+      "source": "value=reversed([])\nprint(type(value).__name__)\nprint(*type.__dir__(type(value)))\nprint(*dir(type(value)))\n",
+      "stdout": "list_reverseiterator\n__iter__ __next__ __length_hint__ __reduce__ __setstate__ __doc__ __new__ __repr__ __hash__ __str__ __getattribute__ __setattr__ __delattr__ __lt__ __le__ __eq__ __ne__ __gt__ __ge__ __init__ __reduce_ex__ __getstate__ __subclasshook__ __init_subclass__ __format__ __sizeof__ __dir__ __class__\n__class__ __delattr__ __dir__ __doc__ __eq__ __format__ __ge__ __getattribute__ __getstate__ __gt__ __hash__ __init__ __init_subclass__ __iter__ __le__ __length_hint__ __lt__ __ne__ __new__ __next__ __reduce__ __reduce_ex__ __repr__ __setattr__ __setstate__ __sizeof__ __str__ __subclasshook__\n"
+    },
+    {
+      "id": "instance-list_reverseiterator",
+      "stage": "LA203",
+      "source": "value=reversed([])\nprint(*object.__dir__(value))\nprint(*dir(value))\n",
+      "stdout": "__iter__ __next__ __length_hint__ __reduce__ __setstate__ __doc__ __new__ __repr__ __hash__ __str__ __getattribute__ __setattr__ __delattr__ __lt__ __le__ __eq__ __ne__ __gt__ __ge__ __init__ __reduce_ex__ __getstate__ __subclasshook__ __init_subclass__ __format__ __sizeof__ __dir__ __class__\n__class__ __delattr__ __dir__ __doc__ __eq__ __format__ __ge__ __getattribute__ __getstate__ __gt__ __hash__ __init__ __init_subclass__ __iter__ __le__ __length_hint__ __lt__ __ne__ __new__ __next__ __reduce__ __reduce_ex__ __repr__ __setattr__ __setstate__ __sizeof__ __str__ __subclasshook__\n"
     }
   ]
 }
