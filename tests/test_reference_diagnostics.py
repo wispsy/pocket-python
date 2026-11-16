@@ -12,6 +12,63 @@ with patch.object(sys, "path", [str(Path(__file__).resolve().parents[1] / "runti
 
 
 class ReferenceDiagnosticsTests(unittest.TestCase):
+    def test_case_partitions_are_complete_disjoint_ordered_and_reject_empty_slices(self):
+        cases = list(range(11))
+        parts = [check_classes.case_partition(cases, index, 4) for index in range(1, 5)]
+        self.assertEqual(parts, [[0, 4, 8], [1, 5, 9], [2, 6, 10], [3, 7]])
+        self.assertCountEqual([case for part in parts for case in part], cases)
+        self.assertEqual(check_classes.case_partition(cases), cases)
+        for index, count in [(0, 4), (5, 4), (1, 0), (1, 12), (True, 4), (1, 1.5)]:
+            with self.subTest(index=index, count=count), self.assertRaises(ValueError):
+                check_classes.case_partition(cases, index, count)
+
+    def test_partition_caches_coexist_reuse_and_validate_the_same_selected_cases(self):
+        corpus = {'profile': 'classes-source/1', 'cases': [
+            {'id': f'case-{index}', 'stage': 'C1', 'source': 'pass', 'stdout': ''} for index in range(5)]}
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            path, cache = root / 'corpus.json', root / 'cache'
+            path.write_text(json.dumps(corpus), encoding='utf-8')
+            with patch.object(check_classes, 'reference_case', return_value={'ok': True, 'stdout': ''}) as reference:
+                first = check_classes.cached_references(path, cache, 1, 2)
+                second = check_classes.cached_references(path, cache, 2, 2)
+                self.assertEqual([case['id'] for case in first['cases']], ['case-0', 'case-2', 'case-4'])
+                self.assertEqual([case['id'] for case in second['cases']], ['case-1', 'case-3'])
+                self.assertEqual(second['case_partition'], {'index': 2, 'count': 2, 'selected': 2, 'total': 5})
+                self.assertTrue(check_classes.cached_references(path, cache, 1, 2)['reference_cache']['hit'])
+                self.assertTrue(check_classes.cached_references(path, cache, 2, 2)['reference_cache']['hit'])
+                self.assertEqual(reference.call_count, 5)
+                self.assertFalse(check_classes.cached_references(path, cache, 1, 3)['reference_cache']['hit'])
+                self.assertFalse(check_classes.cached_references(path, cache)['reference_cache']['hit'])
+                self.assertEqual(len(list(cache.glob('*.json'))), 4)
+                corpus['cases'][0]['stage'] = 'changed'
+                path.write_text(json.dumps(corpus), encoding='utf-8')
+                self.assertFalse(check_classes.cached_references(path, cache, 1, 2)['reference_cache']['hit'])
+                self.assertFalse(check_classes.cached_references(path, cache, 2, 2)['reference_cache']['hit'])
+                self.assertEqual(len(list(cache.glob('*.json'))), 4)
+
+    def test_source_and_oracle_requests_use_the_identical_partition(self):
+        corpus = {'profile': 'classes-source/1', 'cases': [
+            {'id': f'case-{index}', 'stage': 'C1', 'source': 'pass', 'stdout': ''} for index in range(5)]}
+        def source_response(command, *, input, **options):
+            requests = json.loads(input)
+            self.assertEqual([row['id'] for row in requests], ['case-1', 'case-3'])
+            return json.dumps({'host': 'test-node', 'results': [
+                {'id': row['id'], 'ok': True, 'stdout': ''} for row in requests]})
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            path = root / 'corpus.json'
+            path.write_text(json.dumps(corpus), encoding='utf-8')
+            with patch.dict(check_classes.os.environ, {'POCKET_PYTHON_REFERENCE_CACHE': str(root / 'cache')}), \
+                    patch.object(check_classes, 'reference_case', return_value={'ok': True, 'stdout': ''}), \
+                    patch.object(check_classes.subprocess, 'check_output', side_effect=source_response):
+                report = check_classes.check('node', corpus_path=path, case_shard=2, case_shards=2)
+        self.assertEqual(report['summary'], {'pass': 2, 'fail': 0})
+        self.assertEqual(report['reference_summary'], {'pass': 2, 'fail': 0})
+        self.assertEqual(report['corpus_cases'], 5)
+        self.assertEqual(report['source_cases'], 2)
+        self.assertEqual(report['case_partition'], {'index': 2, 'count': 2, 'selected': 2, 'total': 5})
+
     def test_cache_reuses_success_and_invalidates_corpus_python_and_harness(self):
         corpus = {'profile': 'classes-source/1', 'cases': [
             {'id': 'one', 'stage': 'C1', 'source': 'print(7)', 'stdout': '7\n'}]}

@@ -419,7 +419,11 @@ class Parser {
   }
   qualified() {
     let name = this.name().value;
-    while (this.eat(".")) name += "." + this.name().value;
+    while (this.eat(".")) {
+      if (!this.kind("name")) this.fail("Expected an import module component.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic("invalid syntax"));
+      name += "." + this.name().value;
+    }
     return name;
   }
   imports() {
@@ -428,13 +432,27 @@ class Parser {
     if (start.value === "from") {
       while (this.at(".") || this.at("...")) level += this.take().value.length;
       specifier = this.kind("name") ? this.qualified() : "";
-      if (!specifier && !level) this.fail("Expected an import module.");
-      this.expect("import"); parenthesized = !!this.eat("(");
+      if (!specifier && !level) this.fail("Expected an import module.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic("invalid syntax"));
+      if (!this.at("import")) this.fail("Expected 'import'.", this.peek(), "SYNTAX", undefined,
+        this.tokenDiagnostic("invalid syntax"));
+      this.take(); parenthesized = !!this.eat("(");
     }
     for (;;) {
       if (this.at("*")) {
-        if (specifier === null) this.fail("Invalid import target.");
+        if (specifier === null) this.fail("Invalid import target.", this.peek(), "SYNTAX", undefined,
+          this.tokenDiagnostic("invalid syntax"));
         this.unsupported("Wildcard imports are not adopted.");
+      }
+      if (!this.kind("name")) {
+        const missing = !aliases.length && !parenthesized && this.kind("newline");
+        const syntax = this.tokenDiagnostic(missing ? "Expected one or more names after 'import'" : "invalid syntax");
+        if (missing) {
+          const token = this.peek(), source = this.lexed.source;
+          const implicit = this.options.mode === "single" && source[token.start] !== "\n";
+          syntax.end_offset = Array.from(source.split("\n")[token.span[0] - 1] ?? "").length + (implicit ? 0 : 1);
+        }
+        this.fail("Expected an imported name.", this.peek(), "SYNTAX", undefined, syntax);
       }
       const name = specifier === null ? this.qualified() : this.name().value;
       const asname = this.eat("as") ? this.importAlias() : null;
@@ -519,13 +537,29 @@ class Parser {
     const decorators = [];
     while (this.eat("@")) {
       if (decorators.length >= PARSER_LIMITS.decorators) this.fail("Decorator count budget exceeded.", this.previous, "COMPILE_BUDGET");
+      if (this.expressionBoundary() || ["=", "*", "**"].some(value => this.at(value))) {
+        const statement = ["pass", "break", "continue"].some(value => this.at(value));
+        const syntax = statement && this.peek(1).value === "if" ? undefined : this.tokenDiagnostic("invalid syntax");
+        if (syntax && statement && this.peek(1).span[0] !== this.peek().span[0]) syntax.text = syntax.text.replace(/\n$/, "");
+        this.fail("Expected a decorator expression.", this.peek(), "SYNTAX", undefined,
+          syntax);
+      }
       decorators.push(this.expression());
-      this.expectKind("newline", "Expected a newline after the decorator expression.");
+      if (!this.kind("newline")) {
+        const syntax = ["=", ":="].some(value => this.at(value)) ? undefined : this.tokenDiagnostic("invalid syntax");
+        const adjacent = ["name", "number", "string"].includes(this.peek().kind) ||
+          ["True", "False", "None", "...", "lambda", "{", "~"].some(value => this.at(value));
+        if (syntax?.text.endsWith("\\\n") && adjacent)
+          syntax.text = syntax.text.slice(0, -1);
+        this.fail("Expected a newline after the decorator expression.", this.peek(), "SYNTAX", undefined, syntax);
+      }
+      this.take();
     }
     if (this.at("def")) return this.definition(decorators);
     if (this.at("class")) return this.classDefinition(decorators);
     if (this.at("async")) this.unsupported("Async definitions require a later stage.");
-    this.fail("Decorators require a function or class definition.");
+    this.fail("Decorators require a function or class definition.", this.peek(), "SYNTAX", undefined,
+      ["eof", "dedent"].includes(this.peek().kind) ? undefined : this.tokenDiagnostic("invalid syntax"));
   }
   definition(decorators = []) {
     const start = this.expect("def"), name = this.definitionName().value;

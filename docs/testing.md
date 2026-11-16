@@ -9,6 +9,18 @@ Interpreter jobs have a finite 20-minute bound so completed checks can upload
 reports and finish cache cleanup. Command selection, assertions and reference
 pins remain the same.
 
+The generated syntax corpus uses four deterministic case partitions for each
+Node/Chromium drain, stepped and parked driver. Each command validates its same
+partition against CPython and the independent engine; together the four cover
+every case exactly once per driver. This keeps a cold syntax oracle from occupying
+an entire browser job. Reference caches retain separate partition identities,
+and reports record the selected and total counts. Standalone reference validation
+still covers the complete corpus by default. To inspect a single partition:
+
+```sh
+uv run --no-sync python runtime/check_classes.py --corpus tests/fixtures/interpreter/syntax-errors.json --parked --case-shard 1 --case-shards 4
+```
+
 ```sh
 # Preview and run only a feature's Node units and differential drivers.
 uv run --no-sync python scripts/run_tests.py focused --feature native-descriptors --list
@@ -17,7 +29,7 @@ uv run --no-sync python scripts/run_tests.py focused --feature native-descriptor
 # The same suites and shard assignments used in CI.
 uv run --no-sync python scripts/run_tests.py interpreter --shard 1 --shards 4
 uv run --no-sync python scripts/run_tests.py prepare-browser
-uv run --no-sync python scripts/run_tests.py browser-conformance --shard 1 --shards 6
+uv run --no-sync python scripts/run_tests.py browser-conformance --shard 1 --shards 8
 uv run --no-sync python scripts/run_tests.py browser-integration --shard 1 --shards 3
 uv run --no-sync python scripts/run_tests.py python
 ```
@@ -104,8 +116,10 @@ repeat the full local suite when passing CI already covers the same code.
 PR coverage retains every Node test, both interpreter drivers, core/class
 profiles, parked execution where adopted, browser conformance, offline console
 and Stop/Restart acceptance, and packaging on Linux/macOS/Windows. Browser
-conformance uses six cost-balanced shards to fit the expanded native layout
-inventory within the existing job timeout. Standalone CPython reference runs
+conformance uses eight cost-balanced shards to leave setup, report upload and
+cleanup headroom inside the existing 20-minute job timeout. Successful Linux
+command timings supply scheduling weights; unmeasured syntax partitions retain
+a conservative cold-reference estimate. Standalone CPython reference runs
 duplicate references already exercised by differential
 checks, so they and repeated measurements run only in exhaustive validation.
 Nightly validation runs at 10:23 UTC; manual dispatch, release tags and the
