@@ -667,6 +667,13 @@ export const NATIVE_NAMESPACES = Object.freeze({
     ["mapping","getset_descriptor"],
     ["__doc__","value",{"type":"none"}],
   ],
+  "filter": [
+    ["__new__","builtin_function_or_method"],
+    ["__iter__","wrapper_descriptor"],
+    ["__next__","wrapper_descriptor"],
+    ["__reduce__","method_descriptor"],
+    ["__doc__","value",{"type":"text","value":"Return an iterator yielding those items of iterable for which\nfunction(item) is true.  If function is None, return the items that\nare true."}],
+  ],
   "float": [
     ["__new__","builtin_function_or_method"],
     ["__repr__","wrapper_descriptor"],
@@ -1434,7 +1441,7 @@ export const NATIVE_NAMESPACES = Object.freeze({
     ["__text_signature__","getset_descriptor"],
   ],
 });
-export const NATIVE_DOC_COPIES = Object.freeze(["ArithmeticError", "AssertionError", "AttributeError", "BaseException", "BufferError", "Exception", "GeneratorExit", "ImportError", "IndentationError", "IndexError", "KeyError", "LookupError", "ModuleNotFoundError", "NameError", "NoneType", "NotImplementedType", "OverflowError", "RecursionError", "RuntimeError", "StopIteration", "SyntaxError", "SystemError", "TabError", "TypeError", "UnboundLocalError", "UnicodeDecodeError", "UnicodeEncodeError", "UnicodeError", "UnicodeTranslateError", "ValueError", "ZeroDivisionError", "bool", "bytearray", "bytes", "cell", "classmethod", "code", "complex", "dict", "float", "frozenset", "function", "int", "list", "map", "mappingproxy", "memoryview", "method", "module", "object", "property", "range", "set", "slice", "staticmethod", "str", "super", "tuple", "type"]);
+export const NATIVE_DOC_COPIES = Object.freeze(["ArithmeticError", "AssertionError", "AttributeError", "BaseException", "BufferError", "Exception", "GeneratorExit", "ImportError", "IndentationError", "IndexError", "KeyError", "LookupError", "ModuleNotFoundError", "NameError", "NoneType", "NotImplementedType", "OverflowError", "RecursionError", "RuntimeError", "StopIteration", "SyntaxError", "SystemError", "TabError", "TypeError", "UnboundLocalError", "UnicodeDecodeError", "UnicodeEncodeError", "UnicodeError", "UnicodeTranslateError", "ValueError", "ZeroDivisionError", "bool", "bytearray", "bytes", "cell", "classmethod", "code", "complex", "dict", "filter", "float", "frozenset", "function", "int", "list", "map", "mappingproxy", "memoryview", "method", "module", "object", "property", "range", "set", "slice", "staticmethod", "str", "super", "tuple", "type"]);
 export const NATIVE_CALLABLE_DOCS = Object.freeze({
   "ArithmeticError.__new__": "Create and return a new object.  See help(type) for accurate signature.",
   "AssertionError.__new__": "Create and return a new object.  See help(type) for accurate signature.",
@@ -1936,6 +1943,10 @@ export const NATIVE_CALLABLE_DOCS = Object.freeze({
   "dict_values.__len__": "Return len(self).",
   "dict_values.__reversed__": "Return a reverse iterator over the dict values.",
   "dict_values.mapping": "dictionary that this view refers to",
+  "filter.__new__": "Create and return a new object.  See help(type) for accurate signature.",
+  "filter.__iter__": "Implement iter(self).",
+  "filter.__next__": "Implement next(self).",
+  "filter.__reduce__": "Return state information for pickling.",
   "float.__new__": "Create and return a new object.  See help(type) for accurate signature.",
   "float.__repr__": "Return repr(self).",
   "float.__hash__": "Return hash(self).",
@@ -3065,6 +3076,10 @@ export const NATIVE_CALLABLE_SIGNATURES = Object.freeze({
   "dict_values.__iter__": "($self, /)",
   "dict_values.__len__": "($self, /)",
   "dict_values.__reversed__": "($self, /)",
+  "filter.__new__": "($type, *args, **kwargs)",
+  "filter.__iter__": "($self, /)",
+  "filter.__next__": "($self, /)",
+  "filter.__reduce__": "($self, /)",
   "float.__new__": "($type, *args, **kwargs)",
   "float.__repr__": "($self, /)",
   "float.__hash__": "($self, /)",

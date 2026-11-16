@@ -3122,7 +3122,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             task = nativeOwner === "method" ? unaryTask("hash", args[0].callable, site,
               continuation("native-method-hash", {receiver: args[0], after: completion}), depth) : valueTask(values.pythonHash(args[0]), site, completion); continue;
           }
-          if (["__iter__", "__next__"].includes(nativeName) && (nativeOwner === "map" || nativeOwner === "generator" || nativeOwner.endsWith("iterator"))) {
+          if (["__iter__", "__next__"].includes(nativeName) && (["map", "filter"].includes(nativeOwner) || nativeOwner === "generator" || nativeOwner.endsWith("iterator"))) {
             if (keywords.length || args.length !== 1) python("TypeError", nativeName + " takes no arguments");
             task = unaryTask(nativeName === "__iter__" ? "iter" : "next", args[0], site, completion, depth); continue;
           }
@@ -3435,7 +3435,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             state.temporaries.push(type);
             task = finishType(type, [...namespace], site, completion, keywords, keywordValues, cell, dictcell); continue;
           }
-          if (classes.isType(callable) && !["map", "FrameLocalsProxy", "cell", "code", "mappingproxy", "type", "super", "property", "staticmethod", "classmethod", "slice", "dict", "bool", "int", "float", "complex", "str", "list", "tuple", "range", "set", "frozenset", "bytes", "bytearray", "memoryview", ...Object.keys(EXCEPTIONS)].includes(callable.name)) {
+          if (classes.isType(callable) && !["map", "filter", "FrameLocalsProxy", "cell", "code", "mappingproxy", "type", "super", "property", "staticmethod", "classmethod", "slice", "dict", "bool", "int", "float", "complex", "str", "list", "tuple", "range", "set", "frozenset", "bytes", "bytearray", "memoryview", ...Object.keys(EXCEPTIONS)].includes(callable.name)) {
             if (/^dict_(keys|values|items|(?:reverse)?(?:key|value|item)iterator)$/.test(callable.name)) python("TypeError", "cannot create dictionary view or iterator instances");
             if (["method_descriptor", "wrapper_descriptor", "getset_descriptor", "member_descriptor", "classmethod_descriptor"].includes(callable.name)) python("TypeError", "cannot create '" + callable.name + "' instances");
             if (["NoneType", "NotImplementedType"].includes(callable.name)) {
@@ -3854,7 +3854,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             if (args.length !== 1 || keywords.length) python("TypeError", callable.name + "() requires one positional iterable");
             task = consumeTask(callable.name, args[0], site, completion, depth); continue;
           }
-          if (callable.name === "map") {
+          if (["map", "filter"].includes(callable.name)) {
             count("builtin:" + callable.name);
             task = lazy.start(callable.name, args, keywords, keywordValues, site, completion, depth); continue;
           }

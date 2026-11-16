@@ -452,6 +452,11 @@
       "type": "map",
       "type_case": "type-map",
       "instance_case": "instance-map"
+    },
+    {
+      "type": "filter",
+      "type_case": "type-filter",
+      "instance_case": "instance-filter"
     }
   ],
   "source_layouts": {

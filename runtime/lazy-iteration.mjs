@@ -1,4 +1,4 @@
-import {LazyIteratorValue} from "./function-objects.mjs";
+import {BuiltinValue, LazyIteratorValue} from "./function-objects.mjs";
 import {completion, unaryTask, callTask, valueTask} from "./operations.mjs";
 
 // Lazy traversals run one acquisition, pull or callback at a time on the shared
@@ -15,6 +15,11 @@ export function lazyIteration({state, values, allocate, charge, python}) {
     return acquire({...record, callable: record.args[0], args: record.args.slice(1), iterators: [], position: 0}, site);
   };
   const start = (name, args, keywords, keywordValues, site, after, depth) => {
+    if (name === "filter") {
+      if (keywords.length) python("TypeError", "filter() takes no keyword arguments");
+      if (args.length !== 2) python("TypeError", "filter expected 2 arguments, got " + args.length);
+      return acquire({name, args: [args[1]], callable: args[0], iterators: [], position: 0, strict: false, after, depth}, site);
+    }
     if (keywords.length > 1) python("TypeError", name + "() takes at most 1 keyword argument (" + keywords.length + " given)");
     if (keywords.length && keywords[0] !== "strict") python("TypeError", name + "() got an unexpected keyword argument '" + keywords[0] + "'");
     const record = {name, args, after, depth, strict: false};
@@ -41,7 +46,17 @@ export function lazyIteration({state, values, allocate, charge, python}) {
   const resume = (record, value, site) => {
     if (record.kind === "lazy-strict") return construct({...record, strict: value}, site);
     if (record.kind === "lazy-acquire") return acquire({...record, iterators: [...record.iterators, value], position: record.position + 1}, site);
-    if (record.kind === "lazy-item") return pull({...record, items: [...record.items, value], position: record.position + 1}, site);
+    if (record.kind === "lazy-item") {
+      if (record.receiver.kind === "filter") {
+        const candidate = {...record, item: value}, predicate = record.receiver.callable;
+        return predicate === null || predicate instanceof BuiltinValue && predicate.name === "bool" ?
+          unaryTask("truth", value, site, completion("lazy-truth", candidate), record.depth) :
+          callTask(predicate, [value], [], [], site, completion("lazy-predicate", candidate), record.depth);
+      }
+      return pull({...record, items: [...record.items, value], position: record.position + 1}, site);
+    }
+    if (record.kind === "lazy-predicate") return unaryTask("truth", value, site, completion("lazy-truth", record), record.depth);
+    if (record.kind === "lazy-truth") return value ? valueTask(record.item, site, record.after) : next(record.receiver, site, record.after, record.depth);
     if (record.kind === "lazy-probe") return mismatch(record.receiver, record.position, "longer");
     if (record.kind === "lazy-return") return valueTask(value, site, record.after);
     throw new TypeError("Invalid lazy traversal phase.");

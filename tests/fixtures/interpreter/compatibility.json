@@ -964,17 +964,15 @@
     },
     {
       "id": "builtin-filter",
-      "source": "print(callable(filter))\n",
-      "classification": "deferred",
+      "source": "print(list(filter(None,[0,1,2])))\n",
+      "classification": "supported",
       "reference": {
-        "stdout": "True\n",
+        "stdout": "[1, 2]\n",
         "error_type": null
       },
       "engine": {
-        "stdout": "",
-        "error_type": "NameError",
-        "code": "PYTHON",
-        "phase": "execute"
+        "stdout": "[1, 2]\n",
+        "error_type": null
       }
     },
     {

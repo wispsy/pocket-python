@@ -4,7 +4,8 @@
   "profile": "classes-source/1",
   "reference_version": "3.14.7",
   "implemented_stages": [
-    "LA196"
+    "LA196",
+    "LA197"
   ],
   "cases": [
     {
@@ -434,6 +435,275 @@
       "source": "class A:\n def __iter__(self):\n  print(\"iter\")\n  raise ValueError(\"acquire\")\nmap(abs,A())\n",
       "stdout": "iter\n",
       "error_type": "ValueError"
+    },
+    {
+      "id": "filter-none",
+      "stage": "LA197",
+      "source": "print(list(filter(None,[0,1,False,True,\"\",[],[2],{}])))\n",
+      "stdout": "[1, True, [2]]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-bool",
+      "stage": "LA197",
+      "source": "print(tuple(filter(bool,[0,1,False,True,\"\",[],[2],{}])))\n",
+      "stdout": "(1, True, [2])\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-function",
+      "stage": "LA197",
+      "source": "print(list(filter(lambda x:x%2,range(6))))\n",
+      "stdout": "[1, 3, 5]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-text",
+      "stage": "LA197",
+      "source": "print(list(filter(None,\"a\ud83d\ude00\")))\n",
+      "stdout": "['a', '\ud83d\ude00']\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-binary",
+      "stage": "LA197",
+      "source": "print(list(filter(None,b\"a\\x00b\")))\n",
+      "stdout": "[97, 98]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-dict-view",
+      "stage": "LA197",
+      "source": "print(list(filter(None,{0:1,2:3}.keys())))\n",
+      "stdout": "[2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-empty-invalid",
+      "stage": "LA197",
+      "source": "print(list(filter(7,[])))\n",
+      "stdout": "[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-invalid-callable",
+      "stage": "LA197",
+      "source": "list(filter(7,[1]))\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-lazy",
+      "stage": "LA197",
+      "source": "def f(x):\n print(\"predicate\",x)\n return x%2\ni=filter(f,[0,1,2,3])\nprint(\"created\")\nprint(next(i),list(i))\n",
+      "stdout": "created\npredicate 0\npredicate 1\npredicate 2\npredicate 3\n1 [3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-identity",
+      "stage": "LA197",
+      "source": "a=[1]\ni=filter(None,[a])\nprint(next(i) is a,iter(i) is i)\n",
+      "stdout": "True True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-no-args",
+      "stage": "LA197",
+      "source": "try: filter()\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "filter expected 2 arguments, got 0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-one-arg",
+      "stage": "LA197",
+      "source": "try: filter(None)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "filter expected 2 arguments, got 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-three-args",
+      "stage": "LA197",
+      "source": "try: filter(None,[],[])\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "filter expected 2 arguments, got 3\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-keyword",
+      "stage": "LA197",
+      "source": "try: filter(None,[],function=bool)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "filter() takes no keyword arguments\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-default",
+      "stage": "LA197",
+      "source": "i=filter(None,[])\nprint(next(i,7),next(i,8))\n",
+      "stdout": "7 8\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-error-retry",
+      "stage": "LA197",
+      "source": "def f(x):\n if x==1: raise ValueError(\"predicate\")\n return True\ni=filter(f,[1,2])\ntry: next(i)\nexcept ValueError as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "predicate\n2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-stop-retry",
+      "stage": "LA197",
+      "source": "def f(x):\n if x==1: raise StopIteration(\"predicate\")\n return True\ni=filter(f,[1,2])\ntry: next(i)\nexcept StopIteration as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "predicate\n2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-mutation",
+      "stage": "LA197",
+      "source": "a=[0]\ndef f(x):\n if x==0: a.append(1)\n return x\nprint(list(filter(f,a)))\n",
+      "stdout": "[1]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-reentry",
+      "stage": "LA197",
+      "source": "def f(x):\n if x==1: print(\"nested\",next(i))\n return True\ni=filter(f,[1,2,3])\nprint(list(i))\n",
+      "stdout": "nested 2\n[1, 3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-map-pipeline",
+      "stage": "LA197",
+      "source": "print(sum(map(abs,filter(lambda x:x<0,[-2,3,-4]))))\n",
+      "stdout": "6\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-comprehension",
+      "stage": "LA197",
+      "source": "print([x+1 for x in filter(None,[0,1,2])])\n",
+      "stdout": "[2, 3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-extend",
+      "stage": "LA197",
+      "source": "a=[]\na.extend(filter(None,[0,1,2]))\nprint(a)\n",
+      "stdout": "[1, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-owned-truth",
+      "stage": "LA197",
+      "source": "class V:\n def __init__(self,n): self.n=n\n def __bool__(self):\n  print(\"truth\",self.n)\n  return self.n>0\na=V(1)\nprint(next(filter(None,[V(0),a])) is a)\n",
+      "stdout": "truth 0\ntruth 1\nTrue\n"
+    },
+    {
+      "id": "filter-owned-predicate-truth",
+      "stage": "LA197",
+      "source": "class V:\n def __init__(self,n): self.n=n\n def __bool__(self):\n  print(\"truth\",self.n)\n  return self.n>0\ndef f(x):\n print(\"call\",x)\n return V(x)\nprint(list(filter(f,[0,1,2])))\n",
+      "stdout": "call 0\ntruth 0\ncall 1\ntruth 1\ncall 2\ntruth 2\n[1, 2]\n"
+    },
+    {
+      "id": "filter-temporary-owner",
+      "stage": "LA197",
+      "source": "class P:\n def __init__(self,n): self.n=n\n def test(self,x): return x>self.n\ni=filter(P(2).test,[1,3,4])\nprint(list(i))\n",
+      "stdout": "[3, 4]\n"
+    },
+    {
+      "id": "filter-native-slots",
+      "stage": "LA197",
+      "source": "i=filter(None,[1,2])\nprint(type(i) is filter,isinstance(i,filter),filter.__iter__(i) is i,filter.__next__(i),i.__next__())\n",
+      "stdout": "True True True 1 2\n"
+    },
+    {
+      "id": "filter-truth-error-retry",
+      "stage": "LA197",
+      "source": "class V:\n def __init__(self,n): self.n=n\n def __bool__(self):\n  if self.n==1: raise ValueError(\"truth\")\n  return True\na=V(2)\ni=filter(None,[V(1),a])\ntry: next(i)\nexcept ValueError as e: print(str(e))\nprint(next(i) is a)\n",
+      "stdout": "truth\nTrue\n"
+    },
+    {
+      "id": "filter-bool-stop-retry",
+      "stage": "LA197",
+      "source": "class V:\n def __init__(self,n): self.n=n\n def __bool__(self):\n  if self.n==1: raise StopIteration(\"truth\")\n  return True\na=V(2)\ni=filter(bool,[V(1),a])\ntry: next(i)\nexcept StopIteration as e: print(str(e))\nprint(next(i) is a)\n",
+      "stdout": "truth\nTrue\n"
+    },
+    {
+      "id": "filter-owned-acquisition",
+      "stage": "LA197",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([0,1])\ni=filter(None,S())\nprint(\"created\")\nprint(list(i))\n",
+      "stdout": "iter\ncreated\n[1]\n"
+    },
+    {
+      "id": "filter-indexed-source",
+      "stage": "LA197",
+      "source": "class S:\n def __getitem__(self,i):\n  if i==3: raise IndexError\n  return i\nprint(list(filter(None,S())))\n",
+      "stdout": "[1, 2]\n"
     }
   ]
 }
