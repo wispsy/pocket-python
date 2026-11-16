@@ -4280,6 +4280,10 @@
       "evidence": [
         "tests/fixtures/interpreter/traversals.json:enumerate-huge-positive",
         "tests/fixtures/interpreter/traversals.json:enumerate-owned-reentry"
+      ],
+      "boundary_evidence": [
+        "tests/fixtures/interpreter/traversals.json:enumerate-boundary-subclass",
+        "tests/fixtures/interpreter/traversals.json:enumerate-boundary-serialization"
       ]
     },
     {
@@ -4351,6 +4355,10 @@
       "evidence": [
         "tests/fixtures/interpreter/traversals.json:filter-none",
         "tests/fixtures/interpreter/traversals.json:filter-owned-predicate-truth"
+      ],
+      "boundary_evidence": [
+        "tests/fixtures/interpreter/traversals.json:filter-boundary-subclass",
+        "tests/fixtures/interpreter/traversals.json:filter-boundary-serialization"
       ]
     },
     {
@@ -4799,6 +4807,10 @@
       "evidence": [
         "tests/fixtures/interpreter/traversals.json:map-abs",
         "tests/fixtures/interpreter/traversals.json:map-construction-order"
+      ],
+      "boundary_evidence": [
+        "tests/fixtures/interpreter/traversals.json:map-boundary-subclass",
+        "tests/fixtures/interpreter/traversals.json:map-boundary-serialization"
       ]
     },
     {
@@ -5677,6 +5689,10 @@
       "evidence": [
         "tests/fixtures/interpreter/traversals.json:zip-three",
         "tests/fixtures/interpreter/traversals.json:zip-acquisition-order"
+      ],
+      "boundary_evidence": [
+        "tests/fixtures/interpreter/traversals.json:zip-boundary-subclass",
+        "tests/fixtures/interpreter/traversals.json:zip-boundary-serialization"
       ]
     },
     {

@@ -406,7 +406,8 @@ uses the selected `operator/1` library profile; compilation and namespace change
 do not add loader or host capabilities.
 
 [Lazy traversal](docs/interpreter-traversals.md) adds `map` with Python 3.14 strict
-length checks and `filter` with owned predicates and truth callbacks. Iterators
+length checks, `filter` with owned predicates and truth callbacks, `enumerate`
+with exact integer counters, and `zip` with ordered strict-length checks. Iterators
 retain their callable/source owners through pause and collection. The
 [reading report](examples/interpreter_traversals.py) composes generators, lazy
 pipelines and aggregation. Primitive/function pipelines also run in core-source/1.

@@ -8,7 +8,8 @@
     "LA197",
     "LA198",
     "LA199",
-    "LA200"
+    "LA200",
+    "LA201"
   ],
   "cases": [
     {
@@ -1645,6 +1646,174 @@
         "core-source/1",
         "classes-source/1"
       ]
+    },
+    {
+      "id": "paired-indexed-report",
+      "source": "values=map(abs,filter(None,[-2,0,3]))\nprint(list(enumerate(zip([\"a\",\"b\"],values,strict=True),1)))\n",
+      "stage": "LA201",
+      "stdout": "[(1, ('a', 2)), (2, ('b', 3))]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "paired-generator-cleanup",
+      "source": "def source():\n try:\n  yield [1]\n  yield [2]\n finally: print(\"cleanup\")\ng=source()\nz=zip(enumerate(g,7),filter(None,[0,3,4]))\nprint(next(z))\ng.close()\nprint(list(z))\n",
+      "stage": "LA201",
+      "stdout": "((7, [1]), 3)\ncleanup\n[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "paired-original-dynamic-frame",
+      "source": "exec(compile(\"def apply(x):\\n raise ValueError(\\\"paired callback\\\")\\n\", \"traversal-original.py\", \"exec\"))\nprint(next(zip([7],map(apply,[1]),strict=True)))\n",
+      "stage": "LA201",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "paired-retained-cyclic-records",
+      "source": "class Record:\n def __init__(self,n): self.data=[self,n]\n def value(self): return self.data[1]\nrecords=[Record(7),Record(8)]\nrows=list(enumerate(zip(records,map(lambda r:r.value(),records),strict=True),1))\ndel records\nprint(rows[0][0],rows[0][1][0].data[0] is rows[0][1][0],rows[1][1][1])\n",
+      "stage": "LA201",
+      "stdout": "1 True 8\n"
+    },
+    {
+      "id": "paired-imported-callback",
+      "source": "import helper\nprint(list(enumerate(zip(helper.source(),map(helper.apply,[1,2]),strict=True),7)))\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "package": false,
+          "imports": [],
+          "source": "def source():\n yield \"a\"\n yield \"b\"\ndef apply(x): return x*3\n"
+        }
+      ],
+      "stage": "LA201",
+      "stdout": "[(7, ('a', 3)), (8, ('b', 6))]\n"
+    },
+    {
+      "id": "paired-mutation-and-aliases",
+      "source": "a=[[1],[2]]\nz=zip(a,map(lambda x:x,a),strict=True)\nrows=list(enumerate(z))\na[0].append(7)\nprint(rows,rows[0][1][0] is rows[0][1][1])\n",
+      "stage": "LA201",
+      "stdout": "[(0, ([1, 7], [1, 7])), (1, ([2], [2]))] True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "paired-native-callers",
+      "source": "z=zip([[1],[2]],[3,4])\nadvance=z.__next__\ndel z\na=advance()\nb=advance()\nprint(a,b)\n",
+      "stage": "LA201",
+      "stdout": "([1], 3) ([2], 4)\n"
+    },
+    {
+      "id": "paired-captured-builtins",
+      "source": "def f(): return 7\nprint(f.__builtins__[\"map\"] is map,f.__builtins__[\"filter\"] is filter,f.__builtins__[\"enumerate\"] is enumerate,f.__builtins__[\"zip\"] is zip)\n",
+      "stage": "LA201",
+      "stdout": "True True True True\n"
+    },
+    {
+      "id": "lazy-membership-and-consumers",
+      "source": "print(2 in map(abs,[-1,-2]),(1,3) in zip([1,2],[3,4]),all(map(bool,[1,2])),any(filter(None,[0,1])))\n",
+      "stage": "LA201",
+      "stdout": "True True True True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "strict-map-callback-stop-arguments",
+      "source": "def f(a,b): raise StopIteration(\"callback\",a,b)\ni=map(f,[1,2],[3,4],strict=True)\ntry: next(i)\nexcept StopIteration as e: print(e.args)\ntry: next(i)\nexcept StopIteration as e: print(e.args)\n",
+      "stage": "LA201",
+      "stdout": "('callback', 1, 3)\n('callback', 2, 4)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "strict-map-source-stop-arguments",
+      "source": "class I:\n def __iter__(self): return self\n def __next__(self): raise StopIteration(\"source\")\nfor strict in [False,True]:\n try: next(map(abs,I(),strict=strict))\n except StopIteration as e: print(e.args)\n",
+      "stage": "LA201",
+      "stdout": "('source',)\n()\n"
+    },
+    {
+      "id": "strict-zip-source-stop-arguments",
+      "source": "class I:\n def __iter__(self): return self\n def __next__(self): raise StopIteration(\"source\")\nfor strict in [False,True]:\n try: next(zip(I(),strict=strict))\n except StopIteration as e: print(e.args)\n",
+      "stage": "LA201",
+      "stdout": "('source',)\n()\n"
+    },
+    {
+      "id": "map-boundary-subclass",
+      "stage": "Future",
+      "source": "class Derived(map):\n pass\nprint(Derived.__name__)\n",
+      "owner": "#116",
+      "boundary": "Lazy traversal subtype layouts are not adopted.",
+      "stdout": "Derived\n"
+    },
+    {
+      "id": "map-boundary-serialization",
+      "stage": "Future",
+      "source": "i=map(abs,[])\nprint(i.__reduce__()[0] is type(i))\n",
+      "owner": "#126",
+      "boundary": "Lazy iterator serialization remains a separate library contract.",
+      "stdout": "True\n"
+    },
+    {
+      "id": "filter-boundary-subclass",
+      "stage": "Future",
+      "source": "class Derived(filter):\n pass\nprint(Derived.__name__)\n",
+      "owner": "#116",
+      "boundary": "Lazy traversal subtype layouts are not adopted.",
+      "stdout": "Derived\n"
+    },
+    {
+      "id": "filter-boundary-serialization",
+      "stage": "Future",
+      "source": "i=filter(None,[])\nprint(i.__reduce__()[0] is type(i))\n",
+      "owner": "#126",
+      "boundary": "Lazy iterator serialization remains a separate library contract.",
+      "stdout": "True\n"
+    },
+    {
+      "id": "enumerate-boundary-subclass",
+      "stage": "Future",
+      "source": "class Derived(enumerate):\n pass\nprint(Derived.__name__)\n",
+      "owner": "#116",
+      "boundary": "Lazy traversal subtype layouts are not adopted.",
+      "stdout": "Derived\n"
+    },
+    {
+      "id": "enumerate-boundary-serialization",
+      "stage": "Future",
+      "source": "i=enumerate([])\nprint(i.__reduce__()[0] is type(i))\n",
+      "owner": "#126",
+      "boundary": "Lazy iterator serialization remains a separate library contract.",
+      "stdout": "True\n"
+    },
+    {
+      "id": "zip-boundary-subclass",
+      "stage": "Future",
+      "source": "class Derived(zip):\n pass\nprint(Derived.__name__)\n",
+      "owner": "#116",
+      "boundary": "Lazy traversal subtype layouts are not adopted.",
+      "stdout": "Derived\n"
+    },
+    {
+      "id": "zip-boundary-serialization",
+      "stage": "Future",
+      "source": "i=zip()\nprint(i.__reduce__()[0] is type(i))\n",
+      "owner": "#126",
+      "boundary": "Lazy iterator serialization remains a separate library contract.",
+      "stdout": "True\n"
     }
   ]
 }

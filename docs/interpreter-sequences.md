@@ -38,11 +38,13 @@ Existing composed execution resource observations remain unchanged.
 
 ## Continuing INT-SEQ-01 work
 
-Dictionary construction; enumerate/zip/reversed; sum/min/max/sorted/map/filter;
-broader string/list/tuple/dict methods; user length hints; general iterable list
-extension and slice assignment; structural dictionary mutation during equality;
-and tuple hashes containing user instances retain separate implementation gates.
-Neither this finite batch nor availability of a builtin closes #116.
+Later finite deliveries add [min/max/sum](interpreter-aggregations.md) and
+[map/filter/enumerate/zip](interpreter-traversals.md), including owned callbacks
+and Python 3.14 strict-length checks. The [practical-container contract](interpreter-practical-containers.md)
+also adopts owned iterable list extension and selected methods. Dictionary
+construction/update, general reversed protocols, sorted, broader text/container
+methods, user length hints and structural dictionary mutation during equality
+retain separate gates. These slices do not close #116.
 
 References: [range and sequence types](https://docs.python.org/3.14/builtins/stdtypes.html#ranges),
 [all/any signatures](https://docs.python.org/3.14/builtins/functions.html#all),

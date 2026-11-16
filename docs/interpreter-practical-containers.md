@@ -19,8 +19,10 @@ explicit #116 source boundary; these methods bypass admitted item overrides.
 
 LA-193–LA-195 separately adopt [min/max and sum](interpreter-aggregations.md),
 including owned key/comparison/addition callbacks and composed offline reports.
-Populated dictionary construction/update, text methods, sorting/map/filter APIs,
-enumerate/zip and general reversed protocols retain their issue owners and
+LA-196–LA-201 add [lazy map/filter/enumerate/zip](interpreter-traversals.md)
+with owned callbacks, strict traversal and composed reports.
+Populated dictionary construction/update, text methods, sorting and general
+reversed protocols retain their issue owners and
 explicit refusals.
 
 `practical-containers.json` records exact source observations. The shared test
