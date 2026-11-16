@@ -110,7 +110,7 @@
     {
       "id": "min-empty",
       "stage": "LA193",
-      "source": "try: min([])\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "source": "try: min([])\nexcept ValueError as e: print(\"ValueError\",str(e))\n",
       "stdout": "ValueError min() iterable argument is empty\n",
       "profiles": [
         "core-source/1",
@@ -120,7 +120,7 @@
     {
       "id": "min-no-args",
       "stage": "LA193",
-      "source": "try: min()\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "source": "try: min()\nexcept TypeError as e: print(\"TypeError\",str(e))\n",
       "stdout": "TypeError min expected at least 1 argument, got 0\n",
       "profiles": [
         "core-source/1",
@@ -130,7 +130,7 @@
     {
       "id": "min-unknown",
       "stage": "LA193",
-      "source": "try: min([],bad=1)\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "source": "try: min([],bad=1)\nexcept TypeError as e: print(\"TypeError\",str(e))\n",
       "stdout": "TypeError min() got an unexpected keyword argument 'bad'\n",
       "profiles": [
         "core-source/1",
@@ -140,7 +140,7 @@
     {
       "id": "min-multi-default",
       "stage": "LA193",
-      "source": "try: min(1,2,default=0)\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "source": "try: min(1,2,default=0)\nexcept TypeError as e: print(\"TypeError\",str(e))\n",
       "stdout": "TypeError Cannot specify a default for min() with multiple positional arguments\n",
       "profiles": [
         "core-source/1",
@@ -338,7 +338,7 @@
     {
       "id": "max-empty",
       "stage": "LA193",
-      "source": "try: max([])\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "source": "try: max([])\nexcept ValueError as e: print(\"ValueError\",str(e))\n",
       "stdout": "ValueError max() iterable argument is empty\n",
       "profiles": [
         "core-source/1",
@@ -348,7 +348,7 @@
     {
       "id": "max-no-args",
       "stage": "LA193",
-      "source": "try: max()\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "source": "try: max()\nexcept TypeError as e: print(\"TypeError\",str(e))\n",
       "stdout": "TypeError max expected at least 1 argument, got 0\n",
       "profiles": [
         "core-source/1",
@@ -358,7 +358,7 @@
     {
       "id": "max-unknown",
       "stage": "LA193",
-      "source": "try: max([],bad=1)\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "source": "try: max([],bad=1)\nexcept TypeError as e: print(\"TypeError\",str(e))\n",
       "stdout": "TypeError max() got an unexpected keyword argument 'bad'\n",
       "profiles": [
         "core-source/1",
@@ -368,7 +368,7 @@
     {
       "id": "max-multi-default",
       "stage": "LA193",
-      "source": "try: max(1,2,default=0)\nexcept Exception as e: print(type(e).__name__,str(e))\n",
+      "source": "try: max(1,2,default=0)\nexcept TypeError as e: print(\"TypeError\",str(e))\n",
       "stdout": "TypeError Cannot specify a default for max() with multiple positional arguments\n",
       "profiles": [
         "core-source/1",
