@@ -646,10 +646,10 @@
         "tests/fixtures/interpreter/function-dictionaries.json:explicit-name-identity-native",
         "tests/fixtures/interpreter/function-dictionaries.json:equal-name-retains-first-key",
         "tests/fixtures/interpreter/function-dictionaries.json:collision-retains-supplied-lookup-key",
-        "tests/fixtures/interpreter/function-dictionaries.json:method-retains-supplied-lookup-key"
+        "tests/fixtures/interpreter/function-dictionaries.json:method-retains-supplied-lookup-key",
+        "tests/fixtures/interpreter/property-names.json:diagnostic-nested"
       ],
       "boundary_evidence": [
-        "tests/fixtures/interpreter/property-names.json:diagnostic-nested",
         "tests/fixtures/interpreter/function-dictionaries.json:dictionary-structural-collision-deferred"
       ]
     },
@@ -674,8 +674,8 @@
     {
       "id": "repr-str",
       "status": "partial",
-      "scope": "print/str display None, bool, int, strings and adopted exception messages; str() and str(s) preserve the adopted identity rules. repr covers None/bool/int/str and explicit user __repr__; type-level __str__/__repr__ callbacks and print sequencing run on the owned machine. Bytes and bytearray repr/str are adopted in both source profiles. LA-190 adds shortest-round-trip binary64 repr/str/print, Python exponent thresholds, signed zero and non-finite spellings in both source profiles.",
-      "gaps": "Container/default-object displays, exception repr, format specifications and unadopted str/print keyword or encoding forms remain deferred.",
+      "scope": "print/str display None, bool, int, strings and adopted exception messages; str() and str(s) preserve the adopted identity rules. repr covers None/bool/int/str and explicit user __repr__; type-level __str__/__repr__ callbacks and print sequencing run on the owned machine. Bytes and bytearray repr/str are adopted in both source profiles. LA-190 adds shortest-round-trip binary64 repr/str/print, Python exponent thresholds, signed zero and non-finite spellings in both source profiles. LA-191 adds owned recursive list/tuple/dict representations, cycle markers, live traversal, captured dictionary pairs and repr callbacks.",
+      "gaps": "Default-object displays, exception repr, format specifications and unadopted str/print keyword or encoding forms remain deferred.",
       "reference_version": "3.14.7",
       "targets": [
         "node",
@@ -697,7 +697,8 @@
         "tests/fixtures/interpreter/source.json:str-preserves-identity",
         "tests/fixtures/interpreter/formatting.json:hook-precedence",
         "tests/fixtures/interpreter/formatting.json:print-nested-output",
-        "tests/fixtures/interpreter/formatting.json:float-display-007"
+        "tests/fixtures/interpreter/formatting.json:float-display-007",
+        "tests/fixtures/interpreter/formatting.json:container-custom-repr"
       ]
     },
     {
@@ -4960,7 +4961,7 @@
     {
       "id": "print",
       "status": "partial",
-      "scope": "print(*values) with default space/newline; admitted scalar/exception displays and user __str__/__repr__ callbacks. LA-190 adds shortest-round-trip binary64 repr/str/print, Python exponent thresholds, signed zero and non-finite spellings in both source profiles.",
+      "scope": "print(*values) with default space/newline; admitted scalar/exception displays and user __str__/__repr__ callbacks. LA-190 adds shortest-round-trip binary64 repr/str/print, Python exponent thresholds, signed zero and non-finite spellings in both source profiles. LA-191 adds owned recursive list/tuple/dict representations, cycle markers, live traversal, captured dictionary pairs and repr callbacks.",
       "gaps": "Keyword forms and unadopted value displays.",
       "reference_version": "3.14.7",
       "targets": [
@@ -4974,7 +4975,8 @@
         "builtin-print"
       ],
       "evidence": [
-        "tests/fixtures/interpreter/formatting.json:float-display-007"
+        "tests/fixtures/interpreter/formatting.json:float-display-007",
+        "tests/fixtures/interpreter/formatting.json:container-custom-repr"
       ]
     },
     {
@@ -5090,11 +5092,10 @@
         "tests/fixtures/interpreter/documentation.json:bound-custom-callable-document",
         "tests/fixtures/interpreter/documentation.json:native-rebound-property-copy",
         "tests/fixtures/interpreter/documentation.json:native-documentation",
-        "tests/fixtures/interpreter/property-diagnostics.json:getter-name-unset"
-      ],
-      "boundary_evidence": [
+        "tests/fixtures/interpreter/property-diagnostics.json:getter-name-unset",
         "tests/fixtures/interpreter/property-names.json:diagnostic-nested"
-      ]
+      ],
+      "boundary_evidence": []
     },
     {
       "id": "range",
@@ -5121,7 +5122,7 @@
     {
       "id": "repr",
       "status": "partial",
-      "scope": "repr(x), exactly one positional argument: None/bool/int/str or adopted user __repr__. Bytes/bytearray use finite binary representations. LA-190 adds shortest-round-trip binary64 repr/str/print, Python exponent thresholds, signed zero and non-finite spellings in both source profiles.",
+      "scope": "repr(x), exactly one positional argument: None/bool/int/str or adopted user __repr__. Bytes/bytearray use finite binary representations. LA-190 adds shortest-round-trip binary64 repr/str/print, Python exponent thresholds, signed zero and non-finite spellings in both source profiles. LA-191 adds owned recursive list/tuple/dict representations, cycle markers, live traversal, captured dictionary pairs and repr callbacks.",
       "gaps": "Float/container/default-object and exception representations.",
       "reference_version": "3.14.7",
       "targets": [
@@ -5135,7 +5136,8 @@
         "builtin-repr"
       ],
       "evidence": [
-        "tests/fixtures/interpreter/formatting.json:float-display-007"
+        "tests/fixtures/interpreter/formatting.json:float-display-007",
+        "tests/fixtures/interpreter/formatting.json:container-custom-repr"
       ]
     },
     {
@@ -5339,8 +5341,8 @@
     {
       "id": "str",
       "status": "partial",
-      "scope": "str() and str(x) for None/bool/int/str/adopted exceptions and user slots; existing/returned strings retain identity. Bytes/bytearray use finite binary representations. LA-190 adds shortest-round-trip binary64 repr/str/print, Python exponent thresholds, signed zero and non-finite spellings in both source profiles.",
-      "gaps": "Container/default-object displays, object= keyword and encoding forms.",
+      "scope": "str() and str(x) for None/bool/int/str/adopted exceptions and user slots; existing/returned strings retain identity. Bytes/bytearray use finite binary representations. LA-190 adds shortest-round-trip binary64 repr/str/print, Python exponent thresholds, signed zero and non-finite spellings in both source profiles. LA-191 adds owned recursive list/tuple/dict representations, cycle markers, live traversal, captured dictionary pairs and repr callbacks.",
+      "gaps": "Default-object displays, object= keyword and encoding forms.",
       "reference_version": "3.14.7",
       "targets": [
         "node",
@@ -5354,7 +5356,8 @@
         "builtin-str"
       ],
       "evidence": [
-        "tests/fixtures/interpreter/formatting.json:float-display-007"
+        "tests/fixtures/interpreter/formatting.json:float-display-007",
+        "tests/fixtures/interpreter/formatting.json:container-custom-repr"
       ]
     },
     {

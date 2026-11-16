@@ -374,6 +374,9 @@ export class ValueRuntime {
     this.fail("UnsupportedOperationError", "This slice attribute requires a later sequence stage.", "UNSUPPORTED");
   }
   isList(value) { this.charge(1); return value instanceof ListValue; }
+  representationKind(value) {
+    return value instanceof ListValue ? "list" : value instanceof TupleValue ? "tuple" : value instanceof DictValue ? "dict" : null;
+  }
   isSequenceType(value, name) {
     return name === "list" ? value instanceof ListValue : name === "tuple" ? value instanceof TupleValue :
       name === "range" && value instanceof RangeValue;

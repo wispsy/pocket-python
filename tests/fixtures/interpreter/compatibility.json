@@ -150,16 +150,14 @@
     {
       "id": "container-formatting",
       "source": "print([1,2])\n",
-      "classification": "deferred",
+      "classification": "supported",
       "reference": {
         "stdout": "[1, 2]\n",
         "error_type": null
       },
       "engine": {
-        "stdout": "",
-        "error_type": null,
-        "code": "UNSUPPORTED",
-        "phase": "execute"
+        "stdout": "[1, 2]\n",
+        "error_type": null
       }
     },
     {
@@ -2680,14 +2678,14 @@
     {
       "id": "property-names-diagnostic-nested",
       "source": "class Name:\n def __repr__(self):\n  print(\"entered\")\n  return \"name\"\np=property()\np.__name__=[Name()]\np.__get__(object())\n",
-      "classification": "deferred",
+      "classification": "supported",
       "reference": {
         "stdout": "entered\n",
         "error_type": "AttributeError"
       },
       "engine": {
-        "stdout": "",
-        "error_type": "UnsupportedOperationError"
+        "stdout": "entered\n",
+        "error_type": "AttributeError"
       }
     },
     {

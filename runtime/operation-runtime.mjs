@@ -83,6 +83,54 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     if (text !== null) return text;
     hard("UNSUPPORTED", "UnsupportedOperationError", "Formatting this value is outside the function stage.");
   };
+  const representationActive = (receiver, after) => {
+    const contains = record => {
+      for (; record; record = record.after) {
+        charge(1);
+        if (record.kind === "container-repr" && record.receiver === receiver) return true;
+      }
+      return false;
+    };
+    return contains(after) || state.frames.some(frame => contains(frame.completion));
+  };
+  const representationNext = (record, site) => {
+    const {receiver, parts, depth, after} = record, kind = values.representationKind(receiver);
+    charge(1); state.temporaries.push(receiver, parts);
+    let item, index;
+    if (kind === "dict") {
+      index = values.dictionaryPosition(receiver, record.index);
+      if (index >= 0) {
+        const entry = receiver.entries[index];
+        return unaryTask("repr", entry.key, site, continuation("container-repr", {...record,
+          index: entry.position + 1, phase: "key", item: entry.value, keyText: null}), depth);
+      }
+    } else if (record.index < receiver.items.length) {
+      item = receiver.items[record.index];
+      return unaryTask("repr", item, site, continuation("container-repr", {...record,
+        index: record.index + 1, phase: "item", item: null, keyText: null}), depth);
+    }
+    const singleton = kind === "tuple" && parts.items.length === 1;
+    if (record.size + Number(singleton) > VALUE_LIMITS.text) hard("BUDGET", "ExecutionLimitError", "Container representation length budget exceeded.");
+    const points = [kind === "list" ? 91 : kind === "tuple" ? 40 : 123];
+    for (let i = 0; i < parts.items.length; i++) {
+      if (i) points.push(44, 32);
+      for (const point of parts.items[i].points) points.push(point);
+    }
+    if (singleton) points.push(44);
+    points.push(kind === "list" ? 93 : kind === "tuple" ? 41 : 125);
+    charge(points.length); return valueTask(values.string(points), site, after);
+  };
+  const representContainer = (receiver, site, after, depth) => {
+    const kind = values.representationKind(receiver), empty = kind === "dict" ? !receiver.entries.length : !receiver.items.length;
+    if (empty || representationActive(receiver, after)) {
+      const text = empty ? {list: "[]", tuple: "()", dict: "{}"}[kind] : {list: "[...]", tuple: "(...)", dict: "{...}"}[kind];
+      return valueTask(values.string(Array.from(text, char => char.codePointAt(0))), site, after);
+    }
+    if (++depth > maxDepth) python("RecursionError", "maximum container representation depth exceeded");
+    state.temporaries.push(receiver);
+    const parts = values.list([]); state.temporaries.push(parts);
+    return representationNext({receiver, parts, index: 0, phase: "item", size: 2, depth, after}, site);
+  };
   const makeException = (name, args, type = null, newOnly = false) => {
     const scalar = args.length === 1 && (args[0] === null || ["bigint", "boolean"].includes(typeof args[0]) || args[0] instanceof StringValue);
     const value = allocate(ExceptionValue, name, args, scalar ? display(args[0]) : "", type);
@@ -1778,6 +1826,22 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     if (completion?.kind === "compile-argument") return compiler.converted(completion, value, site);
     if (completion?.kind === "print-argument") return printNext(completion.args, completion.index + 1,
       site, completion.after, completion.depth, values.text(value));
+    if (completion?.kind === "container-repr") {
+      const rendered = classes.payload(value);
+      state.temporaries.push(rendered, completion.parts, completion.item, completion.keyText);
+      if (completion.phase === "key") return unaryTask("repr", completion.item, site,
+        continuation("container-repr", {...completion, phase: "value", keyText: rendered}), completion.depth);
+      let part = rendered;
+      if (completion.phase === "value") {
+        if (completion.keyText.points.length + rendered.points.length + 2 > VALUE_LIMITS.text)
+          hard("BUDGET", "ExecutionLimitError", "Container representation length budget exceeded.");
+        part = values.string([...completion.keyText.points, 58, 32, ...rendered.points]); state.temporaries.push(part);
+      }
+      const size = completion.size + part.points.length + (completion.parts.items.length ? 2 : 0);
+      if (size > VALUE_LIMITS.text) hard("BUDGET", "ExecutionLimitError", "Container representation length budget exceeded.");
+      values.append(completion.parts, part);
+      return representationNext({...completion, item: null, keyText: null, size}, site);
+    }
     if (completion?.kind === "optional-truth") return unaryTask(completion.operation, value, site,
       completion.after, completion.depth);
     if (completion?.kind === "invoke") return callTask(value, completion.args, completion.keywords,
@@ -1874,7 +1938,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
     let text = prefix;
     for (; index < args.length; index++) {
       if (index) text += " ";
-      if (userProtocol(args[index]) || exceptionDisplay(args[index])) {
+      if (userProtocol(args[index]) || exceptionDisplay(args[index]) || values.representationKind(args[index]) !== null) {
         if (text) write(text);
         return unaryTask("str", args[index], site, continuation("print-argument", {args, index, depth, after}), depth);
       }
@@ -2643,6 +2707,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
               task = exceptionString(value, site, completion, depth, matchesException(value.name, "ImportError")); continue;
             }
             if (!userProtocol(value)) {
+              if (values.representationKind(value) !== null) { task = representContainer(value, site, completion, depth); continue; }
               const result = operation === "repr" ? values.repr(value) :
                 values.text(value) !== null ? value : values.string(Array.from(display(value), char => char.codePointAt(0)));
               task = deliver(result, completion, site); continue;
@@ -3891,10 +3956,10 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
             if (args.length !== 1 || keywords.length) python("TypeError", "repr() requires one positional argument");
             task = unaryTask("repr", args[0], site, completion, depth); continue;
           }
-          if (callable.name === "str" && args.length === 1 && !keywords.length && (userProtocol(args[0]) || exceptionDisplay(args[0]))) {
+          if (callable.name === "str" && args.length === 1 && !keywords.length && (userProtocol(args[0]) || exceptionDisplay(args[0]) || values.representationKind(args[0]) !== null)) {
             count("builtin:str"); task = unaryTask("str", args[0], site, completion, depth); continue;
           }
-          if (callable.name === "print" && !keywords.length && args.some(value => userProtocol(value) || exceptionDisplay(value))) {
+          if (callable.name === "print" && !keywords.length && args.some(value => userProtocol(value) || exceptionDisplay(value) || values.representationKind(value) !== null)) {
             count("builtin:print"); task = printNext(args, 0, site, completion, depth); continue;
           }
           if (["len", "bool"].includes(callable.name) && args.length === 1 && !keywords.length) {

@@ -304,6 +304,15 @@ export function completion(kind, fields = {}) {
       record = {kind, receiver: fields.receiver, note: fields.note, result: fields.result ?? null, depth: fields.depth, after};
       depthCheck(record.depth); break;
     case "format-result": record = {kind, receiver: fields.receiver, slot: fields.slot, after}; break;
+    case "container-repr":
+      record = {kind, receiver: fields.receiver, parts: fields.parts, index: fields.index,
+        phase: fields.phase, item: fields.item ?? null, keyText: fields.keyText ?? null,
+        size: fields.size, depth: fields.depth, after};
+      depthCheck(record.depth);
+      if (!Number.isSafeInteger(record.index) || record.index < 0 ||
+          !Number.isSafeInteger(record.size) || record.size < 2 || !["item", "key", "value"].includes(record.phase))
+        throw new TypeError("Invalid container representation phase.");
+      break;
     case "print-argument":
       record = {kind, args: operands(fields.args), index: fields.index, depth: fields.depth, after};
       depthCheck(record.depth);
@@ -388,6 +397,7 @@ function visit(record) {
     case "native-reinit": case "native-property-copy": return [record.receiver, ...completionRoots(record.after)];
     case "syntax-details": return [record.receiver, record.result, ...completionRoots(record.after)];
     case "syntax-message": return [record.receiver, record.suffix, ...completionRoots(record.after)];
+    case "container-repr": return [record.receiver, record.parts, record.item, record.keyText, ...completionRoots(record.after)];
     case "unicode-translate-message": return [record.receiver, ...completionRoots(record.after)];
     case "unicode-codec-reason": return [record.receiver, ...completionRoots(record.after)];
     case "unicode-codec-message": return [record.receiver, record.reason, ...completionRoots(record.after)];

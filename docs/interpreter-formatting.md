@@ -29,7 +29,7 @@ right, before print begins converting them. A caller can retain a builtin in a
 variable or pass it through an adopted callback; formatting must use the same
 operation path in each case.
 
-Recursive containers, default address-bearing object/class/function/module
+Default address-bearing object/class/function/module
 displays, exception repr, __format__/format, format specifications, f-strings,
 t-strings, ascii and byte decoding remain explicit future work in INT-TEXT-01.
 An instance with no adopted representation must fail UNSUPPORTED rather than
@@ -147,3 +147,22 @@ The pinned corpus includes exponent boundaries and adjacent floats, subnormal an
 maximum finite values, deterministic binary64 samples and explicit native calls.
 Format specifications, complex displays and the remaining text families keep
 their separate #127/#184 boundaries.
+
+## Recursive container representations
+
+LA-191 adds native list, tuple and dict `repr`, `str` and positional `print`,
+including compatible native subclasses. Nested values call their Python `repr`
+slots on the owned execution machine. Shared aliases display independently;
+active recursive lists, tuples and dictionaries use `[...]`, `(...)` and `{...}`.
+Traversal reads live list lengths and dictionary positions; each dictionary
+key/value pair is retained before its key callback. Existing mutation APIs keep
+their own admission boundaries.
+
+Representation state lives in immutable continuations with exhaustive roots for
+the receiver, captured item, key text and an arena-owned list of rendered pieces.
+The recursion guard follows active continuations and frames, so exceptions,
+collection, interruption and close naturally release it. Text, item, work and
+depth limits remain bounded. Primitive-only printing retains its original path.
+Callback-bearing property-name diagnostics now use the same container renderer;
+their original assertions and source frames are retained in the adopted cases.
+Set/view/range, complex and default address-bearing displays remain separate.

@@ -5,7 +5,8 @@
   "reference_version": "3.14.7",
   "implemented_stages": [
     "R1",
-    "LA190"
+    "LA190",
+    "LA191"
   ],
   "cases": [
     {
@@ -388,9 +389,13 @@
     },
     {
       "id": "future-container-repr",
-      "stage": "R2",
+      "stage": "LA191",
       "source": "print(repr([1,2]))\n",
-      "stdout": "[1, 2]\n"
+      "stdout": "[1, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
     },
     {
       "id": "future-float-str",
@@ -404,9 +409,13 @@
     },
     {
       "id": "future-container-str",
-      "stage": "R2",
+      "stage": "LA191",
       "source": "print(str([1,2]))\n",
-      "stdout": "[1, 2]\n"
+      "stdout": "[1, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
     },
     {
       "id": "future-default-object",
@@ -1381,6 +1390,133 @@
       "stage": "LA190",
       "source": "class F(float): pass\nx=F(1.5)\nprint(repr(x),str(x),float.__repr__(x),float.__str__(x))\n",
       "stdout": "1.5 1.5 1.5 1.5\n"
+    },
+    {
+      "id": "container-basic",
+      "stage": "LA191",
+      "source": "print([],(),{},[None,True,-7,1.5,\"a\"],(1,),{\"x\":(2,3)})\n",
+      "stdout": "[] () {} [None, True, -7, 1.5, 'a'] (1,) {'x': (2, 3)}\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "container-shared",
+      "stage": "LA191",
+      "source": "a=[1,2]\nprint([a,a],(a,a),{\"x\":a,\"y\":a})\n",
+      "stdout": "[[1, 2], [1, 2]] ([1, 2], [1, 2]) {'x': [1, 2], 'y': [1, 2]}\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "container-list-cycle",
+      "stage": "LA191",
+      "source": "a=[]\na.append(a)\nprint(a,str(a),repr(a))\n",
+      "stdout": "[[...]] [[...]] [[...]]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "container-dict-cycle",
+      "stage": "LA191",
+      "source": "a={}\na[\"a\"]=a\nprint(a)\n",
+      "stdout": "{'a': {...}}\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "container-tuple-cycle",
+      "stage": "LA191",
+      "source": "a=[]\nt=(a,)\na.append(t)\nprint(t,a)\n",
+      "stdout": "([(...)],) [([...],)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "container-custom-repr",
+      "stage": "LA191",
+      "source": "class A:\n def __repr__(self): return \"A\"\n def __str__(self): return \"other\"\nprint([A()],(A(),),{A():A()})\n",
+      "stdout": "[A] (A,) {A: A}\n"
+    },
+    {
+      "id": "container-subclass",
+      "stage": "LA191",
+      "source": "class L(list): pass\nclass T(tuple): pass\nclass D(dict): pass\na=L([1,2])\nd=D()\nd[\"a\"]=a\nprint(a,T([1]),d,list.__repr__(a),dict.__repr__(d))\n",
+      "stdout": "[1, 2] (1,) {'a': [1, 2]} [1, 2] {'a': [1, 2]}\n"
+    },
+    {
+      "id": "container-override",
+      "stage": "LA191",
+      "source": "class L(list):\n def __repr__(self): return \"L\"\na=L([1])\nprint(a,repr(a),list.__repr__(a),[a])\n",
+      "stdout": "L L [1] [L]\n"
+    },
+    {
+      "id": "container-reentrant",
+      "stage": "LA191",
+      "source": "a=[]\nclass A:\n def __repr__(self): return repr(a)\na.append(A())\nprint(a)\n",
+      "stdout": "[[...]]\n"
+    },
+    {
+      "id": "container-mutate-list",
+      "stage": "LA191",
+      "source": "a=[]\nclass A:\n def __repr__(self):\n  a.clear()\n  a.append(9)\n  return \"A\"\na.extend([A(),2,3])\nprint(a)\nprint(a)\n",
+      "stdout": "[A]\n[9]\n"
+    },
+    {
+      "id": "container-append-list",
+      "stage": "LA191",
+      "source": "a=[]\nclass A:\n def __repr__(self):\n  a.append(9)\n  return \"A\"\na.append(A())\nprint(a)\n",
+      "stdout": "[A, 9]\n"
+    },
+    {
+      "id": "container-dict-captured-value",
+      "stage": "LA191",
+      "source": "d={}\nclass K:\n def __repr__(self):\n  d[self]=9\n  return \"K\"\nk=K()\nd[k]=[1]\nprint(d)\nprint(d[k])\n",
+      "stdout": "{K: [1]}\n9\n"
+    },
+    {
+      "id": "container-mutate-dict",
+      "stage": "LA191",
+      "source": "d={}\nclass K:\n def __repr__(self):\n  del d[self]\n  del d[\"tail\"]\n  d[\"new\"]=9\n  return \"K\"\nd[K()]=[1]\nd[\"tail\"]=2\nprint(d)\nprint(d)\n",
+      "stdout": "{K: [1], 'new': 9}\n{'new': 9}\n"
+    },
+    {
+      "id": "container-guard-after-error",
+      "stage": "LA191",
+      "source": "class A:\n def __repr__(self): raise ValueError(\"bad\")\na=[A()]\ntry: repr(a)\nexcept ValueError: pass\na.clear()\na.append(7)\nprint(a)\n",
+      "stdout": "[7]\n"
+    },
+    {
+      "id": "container-invalid-repr",
+      "stage": "LA191",
+      "source": "class A:\n def __repr__(self): return 7\nprint(\"prefix\",[A()])\n",
+      "stdout": "prefix ",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "container-nested-output",
+      "stage": "LA191",
+      "source": "class A:\n def __repr__(self):\n  print(\"inside\")\n  return \"A\"\nprint(\"prefix\",[A()],\"tail\")\n",
+      "stdout": "prefix inside\n[A] tail\n"
+    },
+    {
+      "id": "container-unicode",
+      "stage": "LA191",
+      "source": "print([\"\ud83d\ude00\",\"\\ud800\",b\"a\\x00\"],(bytearray(b\"a\"),))\n",
+      "stdout": "['\ud83d\ude00', '\\ud800', b'a\\x00'] (bytearray(b'a'),)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
     }
   ]
 }

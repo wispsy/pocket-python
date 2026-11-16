@@ -10,6 +10,9 @@ test('closed completions preserve ordered duplicate ancestor roots and init fram
   const formatted = completion('format-result', {receiver, slot: '__str__', after: relay});
   const printed = completion('print-argument', {args: [arg, keyword], index: 1, depth: 2, after: formatted});
   assert.deepEqual(completionRoots(printed), [arg, keyword, receiver, receiver]);
+  const container = completion('container-repr', {receiver, parts: arg, item: keyword, keyText: instance,
+    index: 1, phase: 'value', size: 2, depth: 2, after: formatted});
+  assert.deepEqual(completionRoots(container), [receiver, arg, keyword, instance, receiver, receiver]);
   assert.throws(() => completion('print-argument', {args: [arg], index: 1, depth: 0}), TypeError);
   assert.throws(() => completion('print-argument', {args: [arg], index: 0, depth: 257}), TypeError);
   const init = completion('init', {instance, after: relay});

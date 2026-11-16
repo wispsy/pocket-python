@@ -25,6 +25,51 @@ test('float display preserves shortest digits, Python thresholds and signed spec
   assert.throws(() => reprReal(1.7976931348623157e308, () => { if (++polls > 2) throw Error('cancelled'); }), /cancelled/);
 });
 
+test('recursive containers use owned repr callbacks and preserve aliases', async () => {
+  const result = await run('class A:\n def __repr__(self): return "item"\nx=[A(),1.5]\nx.append(x)\nprint(x,(x,),{"x":x})\n');
+  assert.equal(result.error, undefined, JSON.stringify(result.error));
+  assert.equal(result.stdout, "[item, 1.5, [...]] ([item, 1.5, [...]],) {'x': [item, 1.5, [...]]}\n"); closed(result);
+  const reentrant = await run('x=[]\nclass A:\n def __repr__(self): return repr(x)\nx.append(A())\nprint(x)\n');
+  assert.equal(reentrant.stdout, '[[...]]\n'); closed(reentrant);
+});
+
+test('container repr releases recursion guards after callback errors', async () => {
+  const result = await run('class A:\n def __repr__(self): raise ValueError("failed")\nx=[A()]\ntry: repr(x)\nexcept ValueError: pass\nx.clear()\nx.append(7)\nprint(x)\n');
+  assert.equal(result.error, undefined, JSON.stringify(result.error)); assert.equal(result.stdout, '[7]\n'); closed(result);
+});
+
+test('container representation limits charge output and release failed allocation', async () => {
+  const source = 'x=["a"*40000,"b"*40000]\nprint("prefix",x)\n';
+  const limited = await run(source, {maxWork: 20000000});
+  assert.equal(limited.error.code, 'BUDGET'); assert.equal(limited.stdout, 'prefix '); closed(limited);
+  const oom = await run('x=["a"*3000]*8\nprint(x)\n', {maxWork: 20000000}, {maxBytes: 48000});
+  assert.equal(oom.error.code, 'OOM'); closed(oom);
+});
+
+test('parked container repr owns captured dictionary values and closes suspended callbacks', async () => {
+  const source = 'class A:\n def __repr__(self):\n  print("entered")\n  held=[1,2]\n  return "key"\nx={A():[1.5]}\nprint("prefix",x)\n';
+  const {registry} = await compileSourceModules([unit(source)], profile);
+  try {
+    for (const mode of ['finish','close','cancel']) {
+      const session = new ModuleSession(registry); let cancelled = false, output = '', pauses = 0;
+      session.context.begin({maxWork: 20000000, shouldCancel: () => cancelled}, text => { output += text; });
+      const execution = Execution.modules(session.context);
+      try {
+        while (execution.state !== 'completed') {
+          const snapshot = execution.advance();
+          if (execution.state === 'paused') { session.memory.collect([], {cleanup: true}); pauses++; }
+          if (snapshot.frames.some(f => f.completion === 'format-result') && output === 'prefix entered\n' && mode !== 'finish') {
+            if (mode === 'cancel') { cancelled = true; assert.throws(() => execution.advance(), {code: 'CANCELLED'}); }
+            break;
+          }
+        }
+        assert.ok(pauses > 10); assert.equal(output, mode === 'finish' ? 'prefix entered\n{key: [1.5]}\n' : 'prefix entered\n');
+      } finally { execution.close(); session.context.finish(); session.close(); }
+      closed({closed: session.stats()});
+    }
+  } finally { registry.close(); }
+});
+
 test('primitive repr stays in the core profile and expanded strings obey the value limit', async () => {
   const result = await runSourceRequest({modules: [unit('s="A😀"\nprint(repr(s),str(s) is s,len(str()),repr(-9007199254740993))\n')]});
   assert.equal(result.error, undefined, JSON.stringify(result.error));
