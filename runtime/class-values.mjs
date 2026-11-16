@@ -344,6 +344,8 @@ export class ClassRuntime {
       this.charge(1);
       if (base instanceof BuiltinValue && base.name === "type") { this.touch(base); continue; }
       if (base instanceof BuiltinValue && NATIVE_SUBCLASS_BASES.includes(base.name)) { this.touch(base); continue; }
+      if (base instanceof BuiltinValue && ["map", "filter", "enumerate", "zip"].includes(base.name))
+        this.fail("UnsupportedOperationError", "Lazy iterator subclasses require the #116 layout contract", "UNSUPPORTED");
       if (base instanceof BuiltinValue && NATIVE_TYPES.has(base.name)) {
         if (Object.hasOwn(EXCEPTIONS, base.name) || ["list", "dict", "set", "bytearray", "property", "staticmethod", "classmethod", "module", "super"].includes(base.name))
           this.fail("UnsupportedOperationError", "This native subclass layout retains its owning stage", "UNSUPPORTED");
@@ -1220,7 +1222,6 @@ export class ClassRuntime {
   }
   nativeInvocationOwner(callable) {
     const name = callable.name, owner = name.slice(0, name.indexOf(".")), key = name.slice(name.indexOf(".") + 1);
-    if (["map", "filter", "enumerate", "zip"].includes(owner)) return "#116";
     if (key === "__class_getitem__") return "#125";
     if (["__buffer__", "__release_buffer__"].includes(key)) return "#117";
     if (["__enter__", "__exit__"].includes(key)) return "#121";
@@ -1235,6 +1236,7 @@ export class ClassRuntime {
     if (["__repr__", "__str__", "__format__"].includes(key)) return "#127";
     if (["__reduce__", "__reduce_ex__", "__getstate__", "__sizeof__"].includes(key)) return "#126";
     if (Object.hasOwn(EXCEPTIONS, owner)) return "#124";
+    if (["map", "filter", "enumerate", "zip"].includes(owner)) return "#116";
     if (owner === "generator" || owner.endsWith("iterator")) return key.startsWith("__") ? "O90" : "#120";
     if (["int", "bool", "float", "complex"].includes(owner)) return key === "__new__" ? "O85" : key.startsWith("__") ? "O90" : "#184";
     if (["str", "list", "tuple", "dict", "range", "slice"].includes(owner)) return key === "__new__" || key === "__init__" ? ["list", "dict"].includes(owner) ? "O86" : "O85" : key.startsWith("__") ? "O90" : "#116";

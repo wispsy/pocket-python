@@ -1,20 +1,20 @@
 """Known source-console assets, canonical LF bytes; refresh with scripts/lock_interpreter.py."""
 
-ENGINE_FINGERPRINT = '5e600977c17fef81aeae4bfc52cdaf75452a8c90eba7f7806c27684fcccf7a7f'
+ENGINE_FINGERPRINT = '7be5f0f7045ecc0799936cb8c6f39ecdfac87d325511591ba7c00d8b48bd01b6'
 ENGINE_FILES = (
     ('browser-protocol.mjs', 10966, '85f50d640eaa5324cf62e75f5dc6050186bf167201208d26e84a49efd74bf499'),
     ('bytecode.mjs', 6836, 'e76fabeea879bc1da8016283f7e74df5974479666b100199c2d3c31a53b8ecf4'),
     ('class-policy.mjs', 5539, 'eb4fb02aba4f6c4fb237c4fd0bf5633d2b7e3d0de176d6cf8581690d8b1eceb4'),
-    ('class-values.mjs', 163429, 'c1303392bc227f4564fbcc1447e38103c26492ac693ce425e38578c918e2e7fe'),
+    ('class-values.mjs', 163654, '05a0a236ee13fa2cd0866a2df4a2e8f52cbcd085ee1ace788d1b37102c0af724'),
     ('dynamic-evaluation.mjs', 6820, '44ad82dae7fa185c524e163440a96db953e800e96baa372249dd5e9d613b9eca'),
     ('dynamic-imports.mjs', 9307, '9996c3f3f7e82cd440cf16244176d37e9456c8dd9bbac2e5ac675cf22497c951'),
     ('dynamic-source.mjs', 7550, 'aed9367c9b981e547ce78dd461de1cc30ffeb39648eb24f51a5b19ab2a4b457d'),
     ('function-bytecode.mjs', 25120, '75e7646ba7d001eedc0f365032eb0344705f3291ada9c0a44a0b471fb4d3d496'),
     ('function-objects.mjs', 14070, '2de112c201661533f1bca885a2db2ee8ad0d44065055b95380ee020697fb73e7'),
-    ('functions.mjs', 104094, '149eb92e4172e984d2f4bedf2e2eeff656afd2047a6952c1911379fbfd24cda7'),
+    ('functions.mjs', 104158, '163294549f85817f8838aa0dc4b5bb9f935110aab0bc1a2a017ba277a6824111'),
     ('interpreter-host.mjs', 7318, '4afadfd987000afa6221ee73dcd64e9c00a2d13c4324718248d396302a39296d'),
     ('interpreter-worker.mjs', 8855, '324cc23100eb40ef04f2909b805d7abc0c8651b4608b3a61a95470ec7e74e19e'),
-    ('lazy-iteration.mjs', 6825, '94446353f92a86739f81f8eb39c5d6bf3881a4e8d25e94806b4231348e35437d'),
+    ('lazy-iteration.mjs', 6946, 'd418ea65c1f0ac8a171b560f18b5d341fc2a4c16c410cdd91ada6699d3e5d748'),
     ('library-catalog.mjs', 907, '0adcaae0f6f07b4e1acb22e46493ec99f7247a5828b426c703530d8b2736032c'),
     ('library-selection.mjs', 3661, 'b1e2c756afef5a45a1a71fb09fa284290c8f999a1dfb854f2f536fe183119a8a'),
     ('licenses/CPYTHON.txt', 13804, 'b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231'),

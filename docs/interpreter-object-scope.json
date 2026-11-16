@@ -1100,6 +1100,12 @@
       "site": "if (!(error instanceof SourceError) || ![\"SYNTAX\", \"UNSUPPORTED\"].includes(error.code)) throw error;",
       "owner": "#124",
       "boundary": "Adjacent-default payloads require independently parseable expressions and a compilable source-only repair; syntax or unsupported speculative expressions retain the native-field boundary, while budgets and cancellation propagate."
+    },
+    {
+      "path": "runtime/class-values.mjs",
+      "site": "this.fail(\"UnsupportedOperationError\", \"Lazy iterator subclasses require the #116 layout contract\", \"UNSUPPORTED\");",
+      "owner": "#116",
+      "boundary": "Lazy iterator subclass layouts require their own native storage and constructor contract."
     }
   ],
   "native_tables": {

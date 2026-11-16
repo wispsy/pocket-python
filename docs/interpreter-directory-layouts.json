@@ -451,22 +451,26 @@
     {
       "type": "map",
       "type_case": "type-map",
-      "instance_case": "instance-map"
+      "instance_case": "instance-map",
+      "stage": "LA196"
     },
     {
       "type": "filter",
       "type_case": "type-filter",
-      "instance_case": "instance-filter"
+      "instance_case": "instance-filter",
+      "stage": "LA197"
     },
     {
       "type": "enumerate",
       "type_case": "type-enumerate",
-      "instance_case": "instance-enumerate"
+      "instance_case": "instance-enumerate",
+      "stage": "LA199"
     },
     {
       "type": "zip",
       "type_case": "type-zip",
-      "instance_case": "instance-zip"
+      "instance_case": "instance-zip",
+      "stage": "LA200"
     }
   ],
   "source_layouts": {

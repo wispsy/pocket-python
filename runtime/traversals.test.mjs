@@ -19,7 +19,7 @@ for (const item of corpus.cases.filter(item => corpus.implemented_stages.include
     assert.equal(result.stdout, item.stdout ?? '');
     assert.equal(result.error?.type, item.error_type, JSON.stringify(result.error));
     if (item.error_frames) assert.deepEqual(result.error.traceback.map(frame => ({function: frame.function, line: frame.location.span[0]})), item.error_frames);
-    if (item.id === 'pipeline-original-dynamic-frame') assert.deepEqual(result.error.traceback.map(frame =>
+    if (item.id.endsWith('original-dynamic-frame')) assert.deepEqual(result.error.traceback.map(frame =>
       [frame.function, frame.location.filename, frame.location.span[0]]), [['<module>', 'sources/app.py', 2], ['apply', 'traversal-original.py', 2]]);
     closed(result);
   });
@@ -81,4 +81,22 @@ test('parked enumerate roots the start converter and source without losing large
 test('zip roots earlier tuple elements while a later source or strict probe is parked', async () => {
   await parked('class I:\n def __iter__(self): return self\n def __next__(self):\n  print("pull")\n  return [2]\nprint(next(zip([[1]],I())))\n', 'pull\n([1], [2])\n', 'pull\n');
   await parked('class I:\n def __iter__(self): return self\n def __next__(self):\n  print("probe")\n  return 1\ntry: next(zip([],I(),strict=True))\nexcept ValueError as e: print(str(e))\n', 'probe\nzip() argument 2 is longer than argument 1\n', 'probe\n');
+});
+
+test('native rejection scans release candidates and nested lazy chains honor depth limits', async () => {
+  const scan = await run('print(list(filter(None,map(list,[()]*1000))))\n',
+    {maxSteps: 100000, maxWork: 20000000}, {maxBytes: 80000});
+  assert.equal(scan.error, undefined, JSON.stringify(scan.error)); assert.equal(scan.stdout, '[]\n'); closed(scan);
+  const nested = await run('i=iter([1])\nfor n in range(80): i=map(abs,i)\nnext(i)\n', {maxDepth: 64, maxWork: 20000000});
+  assert.equal(nested.error.type, 'RecursionError'); closed(nested);
+});
+
+test('core lazy membership uses owned advancement and unadopted native subclasses refuse explicitly', async () => {
+  const source = 'print(2 in map(abs,[-1,-2]),(1,3) in zip([1,2],[3,4]))\n';
+  const result = await runSourceRequest({modules: [unit(source)], compileOptions: {languageProfile: 'core-source/1'}});
+  assert.equal(result.error, undefined, JSON.stringify(result.error)); assert.equal(result.stdout, 'True True\n'); closed(result);
+  for (const name of ['map', 'filter', 'enumerate', 'zip']) {
+    const refused = await run('class Derived(' + name + '): pass\n');
+    assert.equal(refused.error.code, 'UNSUPPORTED'); closed(refused);
+  }
 });

@@ -1,6 +1,6 @@
 import {ARITHMETIC_SLOTS, NATIVE_PROTOCOL_KEYS, ORDERING_SLOTS} from "./class-policy.mjs";
 import {verifyFunctions} from "./function-bytecode.mjs";
-import {GeneratorValue, FrameValue, FrameLocalsValue, Cell, Environment, environmentCell, CodePool, CodeValue, ModuleValue, FunctionValue, CallArguments, BuiltinValue, AppendValue, ValueMethod, ExceptionValue, EXCEPTIONS, matchesException, isException, ClassValue, ClassNamespaceValue, DictionaryViewValue, InstanceValue, BoundMethodValue, SuperValue, PropertyValue, MethodWrapperValue, ProtocolIteratorValue, NotImplementedValue} from "./function-objects.mjs";
+import {GeneratorValue, FrameValue, FrameLocalsValue, Cell, Environment, environmentCell, CodePool, CodeValue, ModuleValue, FunctionValue, CallArguments, BuiltinValue, AppendValue, ValueMethod, ExceptionValue, EXCEPTIONS, matchesException, isException, ClassValue, ClassNamespaceValue, DictionaryViewValue, InstanceValue, BoundMethodValue, SuperValue, PropertyValue, MethodWrapperValue, ProtocolIteratorValue, LazyIteratorValue, NotImplementedValue} from "./function-objects.mjs";
 import {ClassRuntime, CONTAINER_METHODS, CONTAINER_METHOD_NAMES} from "./class-values.mjs";
 import {ValueRuntime, valueLayout, IteratorValue} from "./values.mjs";
 import {MemoryArena} from "./memory.mjs";
@@ -1157,7 +1157,7 @@ function activation(program, {maxSteps = 10_000, maxWork = 1_000_000, maxDepth =
       }
       else if (["truth", "not", "len", "negative", "positive", "invert", "iter", "next"].includes(op))
         dispatch(unaryTask(op, stack.pop(), summary(frame, cursor)));
-      else if (op === "contains" && (frame.pool.code.version === 5 || stack.at(-1) instanceof GeneratorValue || stack.at(-1) instanceof DictionaryViewValue) &&
+      else if (op === "contains" && (frame.pool.code.version === 5 || stack.at(-1) instanceof GeneratorValue || stack.at(-1) instanceof DictionaryViewValue || stack.at(-1) instanceof LazyIteratorValue) &&
           (stack.at(-1) instanceof FrameLocalsValue || stack.at(-1) instanceof DictionaryViewValue || stack.at(-1) instanceof ClassNamespaceValue || stack.at(-1) instanceof GeneratorValue || userProtocol(stack.at(-1)) || stack.at(-1) instanceof IteratorValue || stack.at(-1) instanceof ProtocolIteratorValue ||
            values.hasUserEquality(stack.at(-1)) || values.hasUserEquality(stack.at(-2)) ||
            values.dictionaryNeedsProtocol(stack.at(-1), stack.at(-2)))) {
