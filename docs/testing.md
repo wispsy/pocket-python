@@ -29,7 +29,7 @@ uv run --no-sync python scripts/run_tests.py focused --feature native-descriptor
 # The same suites and shard assignments used in CI.
 uv run --no-sync python scripts/run_tests.py interpreter --shard 1 --shards 4
 uv run --no-sync python scripts/run_tests.py prepare-browser
-uv run --no-sync python scripts/run_tests.py browser-conformance --shard 1 --shards 6
+uv run --no-sync python scripts/run_tests.py browser-conformance --shard 1 --shards 8
 uv run --no-sync python scripts/run_tests.py browser-integration --shard 1 --shards 3
 uv run --no-sync python scripts/run_tests.py python
 ```
@@ -116,8 +116,10 @@ repeat the full local suite when passing CI already covers the same code.
 PR coverage retains every Node test, both interpreter drivers, core/class
 profiles, parked execution where adopted, browser conformance, offline console
 and Stop/Restart acceptance, and packaging on Linux/macOS/Windows. Browser
-conformance uses six cost-balanced shards to fit the expanded native layout
-inventory within the existing job timeout. Standalone CPython reference runs
+conformance uses eight cost-balanced shards to leave setup, report upload and
+cleanup headroom inside the existing 20-minute job timeout. Successful Linux
+command timings supply scheduling weights; unmeasured syntax partitions retain
+a conservative cold-reference estimate. Standalone CPython reference runs
 duplicate references already exercised by differential
 checks, so they and repeated measurements run only in exhaustive validation.
 Nightly validation runs at 10:23 UTC; manual dispatch, release tags and the
