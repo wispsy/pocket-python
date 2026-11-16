@@ -822,7 +822,11 @@ class Parser {
     return value;
   }
   branch(keyword = "if") {
-    const start = this.expect(keyword), test = this.headerOperand(), body = this.suite(start);
+    const start = this.expect(keyword), completed = this.completedCompound;
+    this.completedCompound ||= keyword === "elif" && this.expressionBoundary();
+    let test;
+    try { test = this.headerOperand(); } finally { this.completedCompound = completed; }
+    const body = this.suite(start);
     let otherwise = [];
     if (this.at("elif")) otherwise = [this.guard(() => this.branch("elif"))];
     else if (this.eat("else")) otherwise = this.suite(this.previous);
