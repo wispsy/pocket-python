@@ -20,18 +20,28 @@ from interpreter_browser_smoke import EXAMPLE, Handler, Server
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def smoke(require_installed=False, aggregations=False):
+def smoke(require_installed=False, aggregations=False, traversals=False):
     package = Path(pocket_python.__file__).resolve()
     if require_installed:
         assert not package.is_relative_to(ROOT), 'Requires an isolated installed distribution.'
     assert platform.python_version() == '3.14.7'
-    feature = 'aggregations' if aggregations else 'display'
-    corpus_path = ROOT / ('tests/fixtures/interpreter/aggregations.json' if aggregations else
-                          'tests/fixtures/interpreter/formatting.json')
+    feature = 'traversals' if traversals else 'aggregations' if aggregations else 'display'
+    corpus_path = ROOT / f'tests/fixtures/interpreter/{"formatting" if feature == "display" else feature}.json'
     corpus = json.loads(corpus_path.read_bytes())
     example = (ROOT / f'examples/interpreter_{feature}.py').read_text(encoding='utf-8')
     expected = subprocess.check_output([sys.executable, '-I', '-S', '-c', example], text=True, timeout=10)
-    if aggregations:
+    if traversals:
+        stages = {'LA198', 'LA201'}
+        frame = 'apply at traversal-original.py:2'
+        restart_source = 'print(list(map(abs,filter(None,[-2,0,3]))))\n'
+        restart_stdout = '[2, 3]\n'
+        callbacks = [
+            ('map', 'def apply(x):\n print("entered")\n while True: pass\nnext(map(apply,[1]))\n'),
+            ('filter', 'def accept(x):\n print("entered")\n while True: pass\nnext(filter(accept,[1]))\n'),
+            ('filter-truth', 'class Slow:\n def __bool__(self):\n  print("entered")\n  while True: pass\nnext(filter(None,[Slow()]))\n'),
+            ('acquisition', 'class Slow:\n def __iter__(self):\n  print("entered")\n  while True: pass\nmap(abs,Slow())\n'),
+        ]
+    elif aggregations:
         stage = 'LA195'
         frame = 'key at aggregation-original.py:2'
         restart_source = 'print(min([2,1]),max([2,1]),sum([1e16,1.,-1e16]))\n'
@@ -48,6 +58,8 @@ def smoke(require_installed=False, aggregations=False):
         restart_stdout = "[1.5] -0.0 {'ready': True}\n"
         callbacks = [(name, 'class Slow:\n def __repr__(self):\n  print("entered")\n  while True: pass\nprint(' + expression + ')\n')
                      for name, expression in [('list-repr', '[Slow()]'), ('dict-key-repr', '{Slow(): [1.5]}')]]
+    if not traversals:
+        stages = {stage}
     checks = []
     with tempfile.TemporaryDirectory() as temporary:
         root = Path(temporary)
@@ -90,7 +102,7 @@ def smoke(require_installed=False, aggregations=False):
                     run(example, expected)
                     checks.append('report-example-after-offline-reload')
                     for case in corpus['cases']:
-                        if case['stage'] != stage or case.get('modules'):
+                        if case['stage'] not in stages or case.get('modules'):
                             continue
                         run(case['source'], case['stdout'], case.get('error_type'))
                         if case['id'].endswith('original-dynamic-frame'):
@@ -144,9 +156,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--require-installed', action='store_true')
     parser.add_argument('--aggregations', action='store_true', help='Accept selection and accumulation programs.')
+    parser.add_argument('--traversals', action='store_true', help='Accept lazy transformations and traversal reports.')
     parser.add_argument('--report', type=Path)
     args = parser.parse_args()
-    report = smoke(args.require_installed, args.aggregations)
+    if args.aggregations and args.traversals:
+        parser.error('Select one ordinary source feature.')
+    report = smoke(args.require_installed, args.aggregations, args.traversals)
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
