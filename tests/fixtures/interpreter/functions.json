@@ -434,7 +434,10 @@
     {
       "id": "unsupported-format",
       "source": "print([1])",
-      "code": "UNSUPPORTED"
+      "code": "UNSUPPORTED",
+      "source_expectation": {
+        "code": null
+      }
     },
     {
       "id": "unsupported-exception-args",
