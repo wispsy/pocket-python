@@ -3,11 +3,11 @@ import {completion, unaryTask, callTask, valueTask} from "./operations.mjs";
 
 // Lazy traversals run one acquisition, pull or callback at a time on the shared
 // operation machine. Each pending tuple owns its already acquired values.
-export function lazyIteration({state, values, allocate, charge, python}) {
+export function lazyIteration({state, values, allocate, mutate, charge, python}) {
   const acquire = (record, site) => {
     charge(record.iterators.length + 1);
     if (record.position === record.args.length)
-      return valueTask(allocate(LazyIteratorValue, record.name, record.iterators, record.callable, record.strict), site, record.after);
+      return valueTask(allocate(LazyIteratorValue, record.name, record.iterators, record.callable, record.strict, record.index ?? 0n), site, record.after);
     return unaryTask("iter", record.args[record.position], site, completion("lazy-acquire", record), record.depth);
   };
   const construct = (record, site) => {
@@ -15,6 +15,29 @@ export function lazyIteration({state, values, allocate, charge, python}) {
     return acquire({...record, callable: record.args[0], args: record.args.slice(1), iterators: [], position: 0}, site);
   };
   const start = (name, args, keywords, keywordValues, site, after, depth) => {
+    if (name === "enumerate") {
+      const count = args.length + keywords.length, all = [...args, ...keywordValues];
+      const keyword = (position, expected) => {
+        if (keywords[position] !== expected) python("TypeError", "'" + keywords[position] + "' is an invalid keyword argument for enumerate()");
+      };
+      let iterable, index = 0n;
+      if (count === 2) {
+        if (keywords.length === 1) keyword(0, "start");
+        if (keywords.length === 2 && keywords[0] === "start") {
+          keyword(1, "iterable"); iterable = all[1]; index = all[0];
+        } else {
+          if (keywords.length === 2) { keyword(0, "iterable"); keyword(1, "start"); }
+          [iterable, index] = all;
+        }
+      } else if (count === 1) {
+        if (keywords.length) keyword(0, "iterable");
+        iterable = all[0];
+      } else {
+        if (!args.length) python("TypeError", "enumerate() missing required argument 'iterable'");
+        python("TypeError", "enumerate() takes at most 2 arguments (" + count + " given)");
+      }
+      return unaryTask("index", index, site, completion("lazy-index", {name, args: [iterable], iterators: [], position: 0, after, depth}), depth);
+    }
     if (name === "filter") {
       if (keywords.length) python("TypeError", "filter() takes no keyword arguments");
       if (args.length !== 2) python("TypeError", "filter expected 2 arguments, got " + args.length);
@@ -44,9 +67,17 @@ export function lazyIteration({state, values, allocate, charge, python}) {
     return probe({...record, items: [], position: 1}, site);
   };
   const resume = (record, value, site) => {
+    if (record.kind === "lazy-index") return acquire({...record, index: value}, site);
     if (record.kind === "lazy-strict") return construct({...record, strict: value}, site);
     if (record.kind === "lazy-acquire") return acquire({...record, iterators: [...record.iterators, value], position: record.position + 1}, site);
     if (record.kind === "lazy-item") {
+      if (record.receiver.kind === "enumerate") {
+        const receiver = record.receiver, index = receiver.index;
+        state.temporaries.push(value, index);
+        const nextIndex = values.int(index + 1n); state.temporaries.push(nextIndex);
+        mutate(receiver, () => { receiver.index = nextIndex; return () => { receiver.index = index; }; });
+        return valueTask(values.tuple([index, value]), site, record.after);
+      }
       if (record.receiver.kind === "filter") {
         const candidate = {...record, item: value}, predicate = record.receiver.callable;
         return predicate === null || predicate instanceof BuiltinValue && predicate.name === "bool" ?

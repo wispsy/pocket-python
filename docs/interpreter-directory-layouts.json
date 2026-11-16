@@ -457,6 +457,11 @@
       "type": "filter",
       "type_case": "type-filter",
       "instance_case": "instance-filter"
+    },
+    {
+      "type": "enumerate",
+      "type_case": "type-enumerate",
+      "instance_case": "instance-enumerate"
     }
   ],
   "source_layouts": {

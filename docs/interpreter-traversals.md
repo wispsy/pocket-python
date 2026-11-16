@@ -52,3 +52,15 @@ stops suspended map/filter/truth/acquisition callbacks and restarts fresh. A
 waiting service-worker update keeps the original profile until reload, then
 checks the core-source pipeline offline and removes the old cache. Add
 `--require-installed` to verify an isolated wheel installation.
+
+LA-199 adopts `enumerate(iterable, start=0)`, including keyword order and the
+pinned reference's signature diagnostics. Integer-index conversion runs before
+iterator acquisition. Counts use exact integers across signed-64-bit boundaries;
+integer subtype starts use their payload, while owned index callbacks suspend on
+the shared machine. Each successful source pull reads and advances the current
+counter, preserving reentrant calls and the original item. Source errors leave
+the counter unchanged. Returned tuples are independent and preserve their values
+through subsequent advancement. The counter and source graph are explicit memory
+edges; the same limits and teardown rules apply.
+
+Reference: [pinned enumerate phases](https://github.com/python/cpython/blob/v3.14.7/Objects/enumobject.c).
