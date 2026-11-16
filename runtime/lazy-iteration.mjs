@@ -1,14 +1,15 @@
 import {BuiltinValue, LazyIteratorValue} from "./function-objects.mjs";
-import {completion, unaryTask, callTask, valueTask} from "./operations.mjs";
+import {completion, unaryTask, callTask, valueTask, operationRoots} from "./operations.mjs";
 
 // Lazy traversals run one acquisition, pull or callback at a time on the shared
 // operation machine. Each pending tuple owns its already acquired values.
 export function lazyIteration({state, values, allocate, mutate, charge, python}) {
+  const owned = task => { state.temporaries = operationRoots(task); return task; };
   const acquire = (record, site) => {
     charge(record.iterators.length + 1);
     if (record.position === record.args.length)
       return valueTask(allocate(LazyIteratorValue, record.name, record.iterators, record.callable, record.strict, record.index ?? 0n), site, record.after);
-    return unaryTask("iter", record.args[record.position], site, completion("lazy-acquire", record), record.depth);
+    return owned(unaryTask("iter", record.args[record.position], site, completion("lazy-acquire", record), record.depth));
   };
   const construct = (record, site) => {
     if (record.name === "zip") return acquire({...record, callable: null, iterators: [], position: 0}, site);
@@ -54,7 +55,7 @@ export function lazyIteration({state, values, allocate, mutate, charge, python})
     if (record.position === record.receiver.iterators.length) return record.receiver.kind === "zip" ?
       valueTask(values.tuple(record.items), site, record.after) :
       callTask(record.receiver.callable, record.items, [], [], site, completion("lazy-return", record), record.depth);
-    return unaryTask("next", record.receiver.iterators[record.position], site, completion("lazy-item", record), record.depth);
+    return owned(unaryTask("next", record.receiver.iterators[record.position], site, completion("lazy-item", record), record.depth));
   };
   const next = (receiver, site, after, depth) => receiver.kind === "zip" && !receiver.iterators.length ?
     unaryTask("iterator-stop", receiver, site, after) : pull({receiver, items: [], position: 0, after, depth}, site);
@@ -62,7 +63,7 @@ export function lazyIteration({state, values, allocate, mutate, charge, python})
     " is " + relation + " than argument" + (position === 1 ? " 1" : "s 1-" + position));
   const probe = (record, site) => record.position === record.receiver.iterators.length ?
     unaryTask("iterator-stop", record.receiver, site, record.after) :
-    unaryTask("next", record.receiver.iterators[record.position], site, completion("lazy-probe", record), record.depth);
+    owned(unaryTask("next", record.receiver.iterators[record.position], site, completion("lazy-probe", record), record.depth));
   const stopped = (record, site) => {
     if (record.kind === "lazy-probe") return probe({...record, position: record.position + 1}, site);
     if (record.kind !== "lazy-item" || !record.receiver.strict) return null;
