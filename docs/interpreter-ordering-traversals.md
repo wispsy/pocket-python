@@ -57,6 +57,19 @@ allocation failure release partial graphs. Truth consumers continue to skip
 hints. Binary constructors and unrelated native hint APIs retain their separate
 scope rather than gaining support from this consumer slice.
 
+LA-208 adopts `sorted(iterable, /, *, key=None, reverse=False)` in both profiles.
+It first materializes a fresh list, including the original iterable's hint,
+then validates sort keywords and converts reverse to Python truth. A supplied
+key is called exactly once per item in original input order; empty inputs do
+not validate a noncallable key. All keys are retained before any comparison.
+Stable binary insertion compares only less-than and converts each result to
+truth. Reversing before and after ascending ordering preserves equal-key order
+for descending reports. Comparison count/order is an implementation detail;
+the finite contract qualifies stable results for consistent ordering relations,
+not CPython's internal sorting algorithm or pathological comparator schedules.
+Source mutation by callbacks cannot replace the private materialized list.
+The shared item/work budgets bound insertion moves and retained key storage.
+
 References: [reverse implementation](https://github.com/python/cpython/blob/v3.14.7/Objects/enumobject.c),
 [length hints](https://github.com/python/cpython/blob/v3.14.7/Objects/abstract.c),
 [list operations](https://github.com/python/cpython/blob/v3.14.7/Objects/listobject.c).

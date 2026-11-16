@@ -317,6 +317,14 @@ export function completion(kind, fields = {}) {
           !Number.isSafeInteger(record.size) || record.size < 2 || !["item", "key", "value"].includes(record.phase))
         throw new TypeError("Invalid container representation phase.");
       break;
+    case "sort-input": case "sort-reverse": case "sort-key": case "sort-compare": case "sort-truth":
+      record = {kind, receiver: fields.receiver ?? null, keys: fields.keys ?? null, key: fields.key ?? null,
+        keywords: operands(fields.keywords ?? []), keywordValues: operands(fields.keywordValues ?? []), reverse: fields.reverse === true,
+        index: fields.index ?? 0, lower: fields.lower ?? 0, upper: fields.upper ?? 0, depth: fields.depth, after};
+      depthCheck(record.depth);
+      if (![record.index, record.lower, record.upper].every(value => Number.isSafeInteger(value) && value >= 0 && value <= 131072))
+        throw new TypeError("Invalid stable sort position.");
+      break;
     case "lazy-strict": case "lazy-index": case "lazy-acquire": case "lazy-item": case "lazy-probe": case "lazy-return": case "lazy-predicate": case "lazy-truth":
       record = {kind, name: fields.name ?? null, args: operands(fields.args ?? []),
         iterators: operands(fields.iterators ?? []), callable: fields.callable ?? null,
@@ -428,6 +436,8 @@ function visit(record) {
     case "syntax-details": return [record.receiver, record.result, ...completionRoots(record.after)];
     case "syntax-message": return [record.receiver, record.suffix, ...completionRoots(record.after)];
     case "container-repr": return [record.receiver, record.parts, record.item, record.keyText, ...completionRoots(record.after)];
+    case "sort-input": case "sort-reverse": case "sort-key": case "sort-compare": case "sort-truth":
+      return [record.receiver, record.keys, record.key, ...record.keywordValues, ...completionRoots(record.after)];
     case "lazy-strict": case "lazy-index": case "lazy-acquire": case "lazy-item": case "lazy-probe": case "lazy-return": case "lazy-predicate": case "lazy-truth":
       return [record.receiver, record.callable, record.item, record.index, ...record.args, ...record.iterators, ...record.items, ...completionRoots(record.after)];
     case "selection-iter": case "selection-next": case "selection-key": case "selection-compared": case "selection-truth":

@@ -9,7 +9,8 @@
     "LA204",
     "LA205",
     "LA206",
-    "LA207"
+    "LA207",
+    "LA208"
   ],
   "cases": [
     {
@@ -1041,6 +1042,305 @@
       "stage": "LA207",
       "source": "class S:\n def __iter__(self): return iter([1,0])\n def __length_hint__(self): print(\"wrong\");return 2\nprint(all(S()),any(S()))\n",
       "stdout": "False True\n"
+    },
+    {
+      "id": "sorted-integers",
+      "stage": "LA208",
+      "source": "print(sorted([3,-1,2,0,2]))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[-1, 0, 2, 2, 3]\n"
+    },
+    {
+      "id": "sorted-huge",
+      "stage": "LA208",
+      "source": "print(sorted([2**100,-2**100,0]))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[-1267650600228229401496703205376, 0, 1267650600228229401496703205376]\n"
+    },
+    {
+      "id": "sorted-mixed-real",
+      "stage": "LA208",
+      "source": "print(sorted([3,1.5,False,True,-2.0]))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[-2.0, False, True, 1.5, 3]\n"
+    },
+    {
+      "id": "sorted-unicode",
+      "stage": "LA208",
+      "source": "print(sorted(\"z\u00e9\ud83d\ude00a\"))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "['a', 'z', '\u00e9', '\ud83d\ude00']\n"
+    },
+    {
+      "id": "sorted-tuples",
+      "stage": "LA208",
+      "source": "print(sorted([(2,1),(1,3),(1,2)]))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[(1, 2), (1, 3), (2, 1)]\n"
+    },
+    {
+      "id": "sorted-bytes",
+      "stage": "LA208",
+      "source": "print(sorted(b\"cab\"))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[97, 98, 99]\n"
+    },
+    {
+      "id": "sorted-range",
+      "stage": "LA208",
+      "source": "print(sorted(reversed(range(4))))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[0, 1, 2, 3]\n"
+    },
+    {
+      "id": "sorted-dict",
+      "stage": "LA208",
+      "source": "print(sorted({3:7,1:8,2:9}))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[1, 2, 3]\n"
+    },
+    {
+      "id": "sorted-generator",
+      "stage": "LA208",
+      "source": "print(sorted(x*x for x in [-2,0,1]))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[0, 1, 4]\n"
+    },
+    {
+      "id": "sorted-lazy",
+      "stage": "LA208",
+      "source": "print(sorted(filter(None,map(abs,[-2,0,3,-1]))))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[1, 2, 3]\n"
+    },
+    {
+      "id": "sorted-empty-key",
+      "stage": "LA208",
+      "source": "print(sorted([],key=3))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[]\n"
+    },
+    {
+      "id": "sorted-singleton-key",
+      "stage": "LA208",
+      "source": "print(sorted([1],key=3))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "sorted-none-key",
+      "stage": "LA208",
+      "source": "print(sorted([2,1],key=None))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[1, 2]\n"
+    },
+    {
+      "id": "sorted-reverse-float",
+      "stage": "LA208",
+      "source": "print(sorted([1,3,2],reverse=1.5))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[3, 2, 1]\n"
+    },
+    {
+      "id": "sorted-reverse-large",
+      "stage": "LA208",
+      "source": "print(sorted([1,3,2],reverse=2**100))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[3, 2, 1]\n"
+    },
+    {
+      "id": "sorted-reverse-none",
+      "stage": "LA208",
+      "source": "print(sorted([1,3,2],reverse=None))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[1, 2, 3]\n"
+    },
+    {
+      "id": "sorted-stable-key",
+      "stage": "LA208",
+      "source": "print(sorted([(1,\"a\"),(2,\"b\"),(1,\"c\")],key=lambda x:x[0]))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[(1, 'a'), (1, 'c'), (2, 'b')]\n"
+    },
+    {
+      "id": "sorted-stable-reverse",
+      "stage": "LA208",
+      "source": "print(sorted([(1,\"a\"),(2,\"b\"),(1,\"c\")],key=lambda x:x[0],reverse=True))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[(2, 'b'), (1, 'a'), (1, 'c')]\n"
+    },
+    {
+      "id": "sorted-fresh-copy",
+      "stage": "LA208",
+      "source": "a=[1,2]\nb=sorted(a)\nprint(a is b,a,b)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "False [1, 2] [1, 2]\n"
+    },
+    {
+      "id": "sorted-key-order",
+      "stage": "LA208",
+      "source": "def key(x): print(\"key\",x);return -x\nprint(sorted([1,3,2],key=key,reverse=True))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "key 1\nkey 3\nkey 2\n[1, 2, 3]\n"
+    },
+    {
+      "id": "sorted-none-values",
+      "stage": "LA208",
+      "source": "print(sorted([None,None]))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "sorted-mixed-values",
+      "stage": "LA208",
+      "source": "print(sorted([1,\"a\"]))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "sorted-not-iterable",
+      "stage": "LA208",
+      "source": "sorted(7)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "sorted-no-args",
+      "stage": "LA208",
+      "source": "sorted()\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "sorted-two-args",
+      "stage": "LA208",
+      "source": "sorted([],[])\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "sorted-keyword-iterable",
+      "stage": "LA208",
+      "source": "sorted(iterable=[])\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "sorted-consume-before-invalid-keyword",
+      "stage": "LA208",
+      "source": "class S:\n def __iter__(self): print(\"iter\");return iter([3,1])\n def __length_hint__(self): print(\"hint\");return 2\nsorted(S(),bad=1)\n",
+      "stdout": "iter\nhint\n",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "sorted-reverse-truth-before-keys",
+      "stage": "LA208",
+      "source": "class R:\n def __bool__(self): print(\"reverse\");return True\n def __index__(self): print(\"wrong\");return 0\ndef key(x): print(\"key\",x);return x\nprint(sorted([1,3,2],key=key,reverse=R()))\n",
+      "stdout": "reverse\nkey 1\nkey 3\nkey 2\n[3, 2, 1]\n"
+    },
+    {
+      "id": "sorted-reverse-truth-failure",
+      "stage": "LA208",
+      "source": "class R:\n def __bool__(self): raise ValueError(\"reverse truth\")\ndef key(x): print(\"wrong\");return x\nsorted([1],key=key,reverse=R())\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "sorted-key-mutation",
+      "stage": "LA208",
+      "source": "a=[3,1,2]\ndef key(x):\n a.clear()\n return x\nprint(sorted(a,key=key),a)\n",
+      "stdout": "[1, 2, 3] []\n"
+    },
+    {
+      "id": "sorted-owned-source-hint",
+      "stage": "LA208",
+      "source": "class S:\n def __iter__(self): print(\"iter\");return iter([3,1,2])\n def __length_hint__(self): print(\"hint\");return 3\nprint(sorted(S()))\n",
+      "stdout": "iter\nhint\n[1, 2, 3]\n"
     }
   ]
 }

@@ -1,4 +1,5 @@
 import {dynamicImporter} from "./dynamic-imports.mjs";
+import {stableSorting} from "./sorting.mjs";
 import {lazyIteration} from "./lazy-iteration.mjs";
 import {addCompensated, totalCompensated} from "./numeric.mjs";
 import {dynamicEvaluator} from "./dynamic-evaluation.mjs";
@@ -27,6 +28,7 @@ const NATIVE_ARITIES = Object.freeze({
 export function operationRuntime({state, memory, values, classes, moduleContext, maxDepth,
   allocate, mutate, python, nameError, addTrace, registryException, hard, charge, enter, bind, block, store, onOutput, setCell, load, loadName, builtinLookup, reflectFrame, generatorFrame, visibleFrame, classNamespace, classFallback, classModule, beginClass, enterClass, classQualification, classFirstline, classEnd, handlerType, raiseException, settle, resumeGenerator, yieldGenerator, delegateResult, injectGenerator}) {
   const compiler = dynamicCompiler({state, memory, values, classes, allocate, charge, python, hard});
+  const sorting = stableSorting({state, values, mutate, charge, python});
   const lazy = lazyIteration({state, values, allocate, mutate, charge, python});
   const evaluator = dynamicEvaluator({state, values, classes, allocate, enter, bind, loadName, classModule, compiler, python});
   const importer = dynamicImporter({state, moduleContext, values, classes, builtinLookup, python, hard});
@@ -1991,6 +1993,7 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
       values.append(completion.parts, part);
       return representationNext({...completion, item: null, keyText: null, size}, site);
     }
+    if (completion?.kind.startsWith("sort-")) return sorting.resume(completion, value, site);
     if (completion?.kind.startsWith("lazy-")) return lazy.resume(completion, value, site);
     if (completion?.kind === "selection-iter") return selectionNext({...completion, receiver: value}, site);
     if (completion?.kind === "selection-next") {
@@ -3955,6 +3958,10 @@ export function operationRuntime({state, memory, values, classes, moduleContext,
           if (["map", "filter", "enumerate", "zip"].includes(callable.name)) {
             count("builtin:" + callable.name);
             task = lazy.start(callable.name, args, keywords, keywordValues, site, completion, depth); continue;
+          }
+          if (callable.name === "sorted") {
+            count("builtin:sorted");
+            task = sorting.start(args, keywords, keywordValues, site, completion, depth); continue;
           }
           if (callable.name === "sum") {
             count("builtin:sum");
