@@ -11,6 +11,7 @@ export function lazyIteration({state, values, allocate, mutate, charge, python})
     return unaryTask("iter", record.args[record.position], site, completion("lazy-acquire", record), record.depth);
   };
   const construct = (record, site) => {
+    if (record.name === "zip") return acquire({...record, callable: null, iterators: [], position: 0}, site);
     if (record.args.length < 2) python("TypeError", "map() must have at least two arguments.");
     return acquire({...record, callable: record.args[0], args: record.args.slice(1), iterators: [], position: 0}, site);
   };
@@ -50,11 +51,13 @@ export function lazyIteration({state, values, allocate, mutate, charge, python})
   };
   const pull = (record, site) => {
     charge(record.items.length + 1);
-    if (record.position === record.receiver.iterators.length)
-      return callTask(record.receiver.callable, record.items, [], [], site, completion("lazy-return", record), record.depth);
+    if (record.position === record.receiver.iterators.length) return record.receiver.kind === "zip" ?
+      valueTask(values.tuple(record.items), site, record.after) :
+      callTask(record.receiver.callable, record.items, [], [], site, completion("lazy-return", record), record.depth);
     return unaryTask("next", record.receiver.iterators[record.position], site, completion("lazy-item", record), record.depth);
   };
-  const next = (receiver, site, after, depth) => pull({receiver, items: [], position: 0, after, depth}, site);
+  const next = (receiver, site, after, depth) => receiver.kind === "zip" && !receiver.iterators.length ?
+    unaryTask("iterator-stop", receiver, site, after) : pull({receiver, items: [], position: 0, after, depth}, site);
   const mismatch = (receiver, position, relation) => python("ValueError", receiver.kind + "() argument " + (position + 1) +
     " is " + relation + " than argument" + (position === 1 ? " 1" : "s 1-" + position));
   const probe = (record, site) => record.position === record.receiver.iterators.length ?

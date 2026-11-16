@@ -77,3 +77,8 @@ test('parked enumerate roots the start converter and source without losing large
   await parked('class Start:\n def __index__(self):\n  print("index")\n  return 2**100\nprint(list(enumerate([7],Start())))\n', 'index\n[(1267650600228229401496703205376, 7)]\n', 'index\n');
   await parked('class I:\n def __iter__(self): return self\n def __next__(self):\n  print("pull")\n  return [7]\nprint(next(enumerate(I(),2**100)))\n', 'pull\n(1267650600228229401496703205376, [7])\n', 'pull\n');
 });
+
+test('zip roots earlier tuple elements while a later source or strict probe is parked', async () => {
+  await parked('class I:\n def __iter__(self): return self\n def __next__(self):\n  print("pull")\n  return [2]\nprint(next(zip([[1]],I())))\n', 'pull\n([1], [2])\n', 'pull\n');
+  await parked('class I:\n def __iter__(self): return self\n def __next__(self):\n  print("probe")\n  return 1\ntry: next(zip([],I(),strict=True))\nexcept ValueError as e: print(str(e))\n', 'probe\nzip() argument 2 is longer than argument 1\n', 'probe\n');
+});

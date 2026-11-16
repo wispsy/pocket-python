@@ -5660,9 +5660,9 @@
     },
     {
       "id": "zip",
-      "status": "deferred",
-      "scope": "Not installed; resolving this builtin name raises Python NameError.",
-      "gaps": "No implementation/API support credit from the negative availability probe.",
+      "status": "partial",
+      "scope": "zip(*iterables, strict=False) with ordered acquisition/pulls, strict mismatch probes, retries and retained tuples.",
+      "gaps": "Serialization, lazy-type subclass layouts and async traversal remain separate.",
       "reference_version": "3.14.7",
       "targets": [
         "node",
@@ -5674,7 +5674,10 @@
       "probes": [
         "builtin-zip"
       ],
-      "evidence": []
+      "evidence": [
+        "tests/fixtures/interpreter/traversals.json:zip-three",
+        "tests/fixtures/interpreter/traversals.json:zip-acquisition-order"
+      ]
     },
     {
       "id": "__import__",

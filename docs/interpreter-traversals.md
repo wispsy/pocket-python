@@ -64,3 +64,11 @@ through subsequent advancement. The counter and source graph are explicit memory
 edges; the same limits and teardown rules apply.
 
 Reference: [pinned enumerate phases](https://github.com/python/cpython/blob/v3.14.7/Objects/enumobject.c).
+
+LA-200 adopts `zip(*iterables, strict=False)`. Empty zip yields no tuples. Each
+nonempty advancement pulls sources from left to right and returns a fresh retained
+tuple, preserving item identity. Repeated source arguments share one iterator's
+state. Ordinary exhaustion stops immediately; strict exhaustion uses the same
+ordered mismatch probes as map. A later advancement retries from the first source
+after partial pulls, errors or mismatch reports. Iterators, strict conversion and
+partially gathered tuple elements remain owned through suspension and collection.

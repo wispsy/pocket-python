@@ -462,6 +462,11 @@
       "type": "enumerate",
       "type_case": "type-enumerate",
       "instance_case": "instance-enumerate"
+    },
+    {
+      "type": "zip",
+      "type_case": "type-zip",
+      "instance_case": "instance-zip"
     }
   ],
   "source_layouts": {
