@@ -72,3 +72,19 @@ state. Ordinary exhaustion stops immediately; strict exhaustion uses the same
 ordered mismatch probes as map. A later advancement retries from the first source
 after partial pulls, errors or mismatch reports. Iterators, strict conversion and
 partially gathered tuple elements remain owned through suspension and collection.
+
+LA-201 composes indexed/paired reports with lazy pipelines, temporary owners,
+module callbacks, original dynamic frames, generator cleanup and cyclic records.
+The installed offline checks additionally interrupt enumerate index conversion,
+zip source pulls and strict truth conversion, then run a fresh report after
+Restart. The core-profile update verifies all four APIs after offline reload.
+Namespace ownership keeps generic aliases under #125 and serialization under
+#126; listing those entries does not adopt their invocation or lazy subclasses.
+
+The finite corpus contains 196 cases: 188 supported semantic/error observations
+and eight explicit subtype/serialization refusals. Of those, 141 are explicitly
+shared with core-source/1. Both profiles run on Node and Chromium with drain,
+stepped and parked drivers, totaling 2,022 observations. These counts describe
+this API slice, not overall Python completion. Lifecycle checks also cover native
+rejection scans under bounded memory, nested lazy depth limits, actual callback
+allocation failure, cancellation and zero logical teardown.

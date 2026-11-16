@@ -33,13 +33,16 @@ def smoke(require_installed=False, aggregations=False, traversals=False):
     if traversals:
         stages = {'LA198', 'LA201'}
         frame = 'apply at traversal-original.py:2'
-        restart_source = 'print(list(map(abs,filter(None,[-2,0,3]))))\n'
-        restart_stdout = '[2, 3]\n'
+        restart_source = 'print(list(enumerate(map(abs,filter(None,[-2,0,3])),1)),list(zip([1,2],[3,4],strict=True)))\n'
+        restart_stdout = '[(1, 2), (2, 3)] [(1, 3), (2, 4)]\n'
         callbacks = [
             ('map', 'def apply(x):\n print("entered")\n while True: pass\nnext(map(apply,[1]))\n'),
             ('filter', 'def accept(x):\n print("entered")\n while True: pass\nnext(filter(accept,[1]))\n'),
             ('filter-truth', 'class Slow:\n def __bool__(self):\n  print("entered")\n  while True: pass\nnext(filter(None,[Slow()]))\n'),
             ('acquisition', 'class Slow:\n def __iter__(self):\n  print("entered")\n  while True: pass\nmap(abs,Slow())\n'),
+            ('enumerate-index', 'class Slow:\n def __index__(self):\n  print("entered")\n  while True: pass\nenumerate([],Slow())\n'),
+            ('zip-pull', 'class Slow:\n def __iter__(self): return self\n def __next__(self):\n  print("entered")\n  while True: pass\nnext(zip([1],Slow()))\n'),
+            ('zip-strict', 'class Slow:\n def __bool__(self):\n  print("entered")\n  while True: pass\nzip(strict=Slow())\n'),
         ]
     elif aggregations:
         stage = 'LA195'
