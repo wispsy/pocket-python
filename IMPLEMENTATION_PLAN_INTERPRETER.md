@@ -857,3 +857,19 @@ parked collection/cancellation/close, shared limits and isolated installed-wheel
 offline Stop/Restart/profile updates. The [versioned record](docs/measurements/2026-10-31-object-closure.json)
 links positive stage evidence and CI; #123 records final-main verification. The
 remaining C3/library/async milestones keep their own scope and acceptance.
+
+
+### Reverse, hint and ordering checkpoint
+
+LA-202–LA-210 extend #116 under Track A #600 through three finite slices:
+owned/native reversal, constructor/expansion hints and stable sorted reports.
+The [contract](docs/interpreter-ordering-traversals.md) records exact source
+signatures, hint owner/order, comparison limits, lifecycle/resource behavior and
+remaining boundaries. The original LA-196–LA-201 traversal contents are retained
+by the focused LA-201B integration correction after the earlier parent-first
+merge left those accepted changes outside main.
+
+Local reference, Node/Chromium and installed offline acceptance qualify the
+cumulative source. The sole cumulative remote run remains the merge gate; review
+and main smoke follow its result. Full Python compatibility, broader #116,
+#124/#125/#759, library/package, Track B and candidate/publication gates stay open.

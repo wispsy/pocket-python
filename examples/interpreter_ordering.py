@@ -24,3 +24,6 @@ class Records:
 
 records = [*Records()]
 print("records", records)
+ranked = sorted(records, key=lambda record: record[1], reverse=True)
+print("ranked", list(enumerate(ranked, 1)))
+print("paired", list(zip(reversed(ranked), map(lambda record: record[0], ranked), strict=True)))

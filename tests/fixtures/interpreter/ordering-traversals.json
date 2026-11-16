@@ -11,7 +11,8 @@
     "LA206",
     "LA207",
     "LA208",
-    "LA209"
+    "LA209",
+    "LA210"
   ],
   "cases": [
     {
@@ -1477,6 +1478,114 @@
       "stage": "LA209",
       "source": "class V:\n def __init__(self,n):self.n=n;self.link=self\n def __lt__(self,other):return self.link.n<other.link.n\nprint([x.n for x in sorted([V(3),V(1),V(2)])])\n",
       "stdout": "[1, 2, 3]\n"
+    },
+    {
+      "id": "ordering-practical-report",
+      "stage": "LA210",
+      "source": "class Records:\n def __iter__(self): return iter([(\"apple\",3),(\"pear\",1),(\"plum\",3)])\n def __length_hint__(self): print(\"hint\");return 3\na=[*Records()]\nr=sorted(a,key=lambda x:x[1],reverse=True)\nprint(list(enumerate(r,1)))\nprint(list(zip(reversed(r),map(lambda x:x[0],r),strict=True)))\n",
+      "stdout": "hint\n[(1, ('apple', 3)), (2, ('plum', 3)), (3, ('pear', 1))]\n[(('pear', 1), 'apple'), (('plum', 3), 'plum'), (('apple', 3), 'pear')]\n"
+    },
+    {
+      "id": "ordering-nested-pipeline",
+      "stage": "LA210",
+      "source": "a=map(lambda n:(n,n*n),filter(lambda n:n%2,range(8)))\nprint(sorted(a,key=lambda x:x[1],reverse=True))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[(7, 49), (5, 25), (3, 9), (1, 1)]\n"
+    },
+    {
+      "id": "ordering-core-reload",
+      "stage": "LA210",
+      "source": "print(sorted(map(abs,reversed([-3,1,-2])))),print(list(zip([1,2],[3,4],strict=True)))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[1, 2, 3]\n[(1, 3), (2, 4)]\n"
+    },
+    {
+      "id": "ordering-original-dynamic-frame",
+      "stage": "LA210",
+      "source": "exec(compile('def key(x):\\n raise ValueError(\"original key\")\\n',\"ordering-original.py\",\"exec\"))\nsorted([1],key=key)\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "ordering-module-key",
+      "stage": "LA210",
+      "source": "from helper import key\nprint(sorted(reversed([1,-3,2]),key=key))\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "source": "def key(x): return abs(x)\n",
+          "imports": [],
+          "package": false
+        }
+      ],
+      "stdout": "[1, 2, -3]\n"
+    },
+    {
+      "id": "ordering-key-generator-cleanup",
+      "stage": "LA210",
+      "source": "def g():\n try:\n  yield 3\n  yield 1\n finally: print(\"closed\")\nprint(sorted(g(),key=lambda x:-x))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "closed\n[3, 1]\n"
+    },
+    {
+      "id": "ordering-cyclic-records",
+      "stage": "LA210",
+      "source": "class V:\n def __init__(self,n):self.n=n;self.link=self\na=[V(2),V(1)]\nr=sorted(reversed(a),key=lambda x:x.link.n)\nprint([x.n for x in r],r[0].link is r[0],r[1] is a[0])\n",
+      "stdout": "[1, 2] True True\n"
+    },
+    {
+      "id": "ordering-captured-builtins",
+      "stage": "LA210",
+      "source": "s=sorted\nr=reversed\nprint(s(r([3,1,2]),reverse=True))\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "[3, 2, 1]\n"
+    },
+    {
+      "id": "reverse-subtype-boundary",
+      "stage": "Future",
+      "source": "class R(reversed): pass\nprint(list(R([1,2])))\n",
+      "owner": "#116",
+      "boundary": "Reverse iterator subclass layouts require separate construction and native ownership qualification.",
+      "stdout": "[2, 1]\n"
+    },
+    {
+      "id": "reverse-reduce-boundary",
+      "stage": "Future",
+      "source": "i=reversed((1,2))\nprint(i.__reduce__()[0] is reversed)\n",
+      "owner": "#126",
+      "boundary": "Reverse iterator serialization remains outside the consumer contract.",
+      "stdout": "True\n"
+    },
+    {
+      "id": "reverse-setstate-boundary",
+      "stage": "Future",
+      "source": "i=reversed((1,2))\ni.__setstate__(0)\nprint(list(i))\n",
+      "owner": "#126",
+      "boundary": "Reverse iterator serialization state mutation requires its own protocol.",
+      "stdout": "[1]\n"
+    },
+    {
+      "id": "list-sort-boundary",
+      "stage": "Future",
+      "source": "a=[2,1]\na.sort()\nprint(a)\n",
+      "owner": "#116",
+      "boundary": "In-place list sorting and mutation during sorting remain separately owned.",
+      "stdout": "[1, 2]\n"
     }
   ]
 }

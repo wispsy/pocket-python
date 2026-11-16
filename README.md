@@ -411,3 +411,11 @@ with exact integer counters, and `zip` with ordered strict-length checks. Iterat
 retain their callable/source owners through pause and collection. The
 [reading report](examples/interpreter_traversals.py) composes generators, lazy
 pipelines and aggregation. Primitive/function pipelines also run in core-source/1.
+
+[Reverse traversal and stable ordering](docs/interpreter-ordering-traversals.md)
+add native/owned `reversed`, list/expansion length hints, and `sorted` with
+owned key, reverse and rich comparison callbacks. The
+[ordering report](examples/interpreter_ordering.py) combines stable ties, lazy
+pipelines and indexed/paired records. Its installed offline checks cover fresh
+source, original callback frames, interruption/restart and a core-profile update.
+In-place list sorting, serialization and remaining native layouts keep separate gates.

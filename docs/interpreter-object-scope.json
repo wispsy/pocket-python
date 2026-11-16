@@ -212,18 +212,6 @@
       "boundary": "User-key set algebra and ordering."
     },
     {
-      "corpus": "tests/fixtures/interpreter/ordinary-syntax.json",
-      "case": "star-unpack-user-hints-deferred",
-      "owner": "#116",
-      "boundary": "General iterable length-hint consumers remain a separate sequence API."
-    },
-    {
-      "corpus": "tests/fixtures/interpreter/ordinary-syntax.json",
-      "case": "star-display-user-hints-deferred",
-      "owner": "#116",
-      "boundary": "General iterable length-hint consumers remain a separate sequence API."
-    },
-    {
       "corpus": "tests/fixtures/interpreter/property-directories.json",
       "case": "listed-method-not-adopted",
       "owner": "#126",
@@ -522,8 +510,8 @@
     {
       "path": "runtime/operation-runtime.mjs",
       "site": "hard(\"UNSUPPORTED\", \"UnsupportedOperationError\", \"User length hints require a separate construction stage.\");",
-      "owner": "#116",
-      "boundary": "Expanded sequence APIs, length-hint consumers and dictionary restart semantics."
+      "owner": "#117",
+      "boundary": "Owned byte construction hints remain outside the adopted list and expansion hint protocol."
     },
     {
       "path": "runtime/operation-runtime.mjs",
@@ -650,12 +638,6 @@
       "site": "if (name !== \"get\") hard(\"UNSUPPORTED\", \"UnsupportedOperationError\", \"Native dictionary view API \" + callable.name + \" is owned by #116/#117.\");",
       "owner": "table:native-apis",
       "boundary": "Adopted finite names execute through owned paths; unadopted names use the native field/API/slot owners."
-    },
-    {
-      "path": "runtime/operation-runtime.mjs",
-      "site": "if (dictionary === null) hard(\"UNSUPPORTED\", \"UnsupportedOperationError\", \"General reversed protocols are owned by #116.\");",
-      "owner": "#116",
-      "boundary": "General reversed sequence consumers."
     },
     {
       "path": "runtime/operation-runtime.mjs",

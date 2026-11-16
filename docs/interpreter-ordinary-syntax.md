@@ -41,8 +41,8 @@ existing values, accept non-string keys and propagate mapping KeyError normally.
 Custom mappings materialize keys before reads; native dictionaries reuse hashes.
 Primitive core dictionaries retain their ordinary lookup/mutation representation.
 Targets are bounded to 128 parts per level and containers to 1024 items, subject
-also to source/name/work/memory budgets. User construction hints
-retain their separate #116/#117 gates. These limits do not imply full Python
+also to source/name/work/memory budgets. LA-206 adopts owned hints for sequence
+displays and starred assignment; binary construction hints retain #117. These limits do not imply full Python
 value or formatting coverage.
 
 Integrated acceptance runs the 98 class and 75 core observations in Node and
@@ -53,7 +53,7 @@ default/compiled installations pass; the independent engine remains supplied
 explicitly from checkout. The [payload record](measurements/2026-10-26-ordinary-syntax.json)
 retains the preceding application fixture and separates complete/compressed bytes
 from performance. General assertion messages remain under #124/#127, construction
-hints under #116 and comprehensions under #120. Set displays are now adopted through the [value-family contract](interpreter-value-families.md).
+binary hints under #117 and comprehensions under #120. Set displays are now adopted through the [value-family contract](interpreter-value-families.md).
 
 Modern bytecode adds a verified assertion-exception instruction. It uses the
 canonical builtin directly, while ordinary calls still honor name shadowing.
