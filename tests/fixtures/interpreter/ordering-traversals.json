@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "suite": "interpreter-ordering-traversals/1",
+  "profile": "classes-source/1",
+  "reference_version": "3.14.7",
+  "implemented_stages": [
+    "LA202"
+  ],
+  "cases": [
+    {
+      "id": "reverse-owned-sequence",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self):\n  print(\"len\")\n  return 3\n def __getitem__(self,i):\n  print(\"get\",i)\n  return i+10\nprint([x for x in reversed(S())])\n",
+      "stdout": "len\nget 2\nget 1\nget 0\n[12, 11, 10]\n"
+    },
+    {
+      "id": "reverse-initial-length",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self):\n  print(\"len\")\n  return 3\n def __getitem__(self,i):\n  print(\"get\",i)\n  return i+10\ni=reversed(S())\nS.__len__=lambda self:0\nprint(next(i),next(i),next(i),next(i,99))\n",
+      "stdout": "len\nget 2\nget 1\nget 0\n12 11 10 99\n"
+    },
+    {
+      "id": "reverse-return-anything",
+      "stage": "LA202",
+      "source": "class S:\n def __reversed__(self): return 42\nprint(reversed(S()))\n",
+      "stdout": "42\n"
+    },
+    {
+      "id": "reverse-return-none",
+      "stage": "LA202",
+      "source": "class S:\n def __reversed__(self): return None\nprint(reversed(S()))\n",
+      "stdout": "None\n"
+    },
+    {
+      "id": "reverse-disabled",
+      "stage": "LA202",
+      "source": "class S:\n __reversed__=None\n def __len__(self): print(\"len\"); return 1\n def __getitem__(self,i): return i\nreversed(S())\n",
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "reverse-missing-item",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self): print(\"len\"); return 1\nreversed(S())\n",
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "reverse-missing-length",
+      "stage": "LA202",
+      "source": "class S:\n def __getitem__(self,i): return i\nreversed(S())\n",
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "reverse-instance-hook-ignored",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self):\n  print(\"len\")\n  return 3\n def __getitem__(self,i):\n  print(\"get\",i)\n  return i+10\ns=S()\ns.__reversed__=lambda:99\nprint(next(reversed(s)))\n",
+      "stdout": "len\nget 2\n12\n"
+    },
+    {
+      "id": "reverse-hook-precedence",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self):\n  print(\"len\")\n  return 3\n def __getitem__(self,i):\n  print(\"get\",i)\n  return i+10\nS.__reversed__=lambda self:iter([7,8])\nprint(list(reversed(S())))\n",
+      "stdout": "[7, 8]\n"
+    },
+    {
+      "id": "reverse-staticmethod",
+      "stage": "LA202",
+      "source": "class S:\n @staticmethod\n def __reversed__(): return iter([5])\nprint(list(reversed(S())))\n",
+      "stdout": "[5]\n"
+    },
+    {
+      "id": "reverse-classmethod",
+      "stage": "LA202",
+      "source": "class S:\n @classmethod\n def __reversed__(cls): return cls.__name__\nprint(reversed(S()))\n",
+      "stdout": "S\n"
+    },
+    {
+      "id": "reverse-binding",
+      "stage": "LA202",
+      "source": "class D:\n def __get__(self,obj,owner):\n  print(\"bind\",owner.__name__)\n  return lambda:iter([6])\nclass S: __reversed__=D()\nprint(list(reversed(S())))\n",
+      "stdout": "bind S\n[6]\n"
+    },
+    {
+      "id": "reverse-binding-error",
+      "stage": "LA202",
+      "source": "class D:\n def __get__(self,obj,owner): raise AttributeError(\"binding\")\nclass S:\n __reversed__=D()\n def __len__(self): print(\"wrong\");return 0\n def __getitem__(self,i): return i\nreversed(S())\n",
+      "stdout": "",
+      "error_type": "AttributeError"
+    },
+    {
+      "id": "reverse-noncallable",
+      "stage": "LA202",
+      "source": "class S: __reversed__=3\nreversed(S())\n",
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "reverse-index-sticky",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self): return 2\n def __getitem__(self,i): print(\"get\",i);raise IndexError(\"bad\")\ni=reversed(S())\ntry: print(next(i,99))\nexcept IndexError as e: print(str(e))\nS.__getitem__=lambda self,i:i\nprint(next(i,99))\n",
+      "stdout": "get 1\n99\n99\n"
+    },
+    {
+      "id": "reverse-stop-sticky",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self): return 2\n def __getitem__(self,i): print(\"get\",i);raise StopIteration(\"bad\")\ni=reversed(S())\ntry: print(next(i,99))\nexcept StopIteration as e: print(str(e))\nS.__getitem__=lambda self,i:i\nprint(next(i,99))\n",
+      "stdout": "get 1\n99\n99\n"
+    },
+    {
+      "id": "reverse-other-sticky",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self): return 2\n def __getitem__(self,i): print(\"get\",i);raise ValueError(\"bad\")\ni=reversed(S())\ntry: print(next(i,99))\nexcept ValueError as e: print(str(e))\nS.__getitem__=lambda self,i:i\nprint(next(i,99))\n",
+      "stdout": "get 1\nbad\n99\n"
+    },
+    {
+      "id": "reverse-length-negative",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self): return -1\n def __getitem__(self,i): print(\"wrong\");return i\nreversed(S())\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "reverse-length-overflow",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self): return 2**100\n def __getitem__(self,i): print(\"wrong\");return i\nreversed(S())\n",
+      "stdout": "",
+      "error_type": "OverflowError"
+    },
+    {
+      "id": "reverse-length-noninteger",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self): return \"bad\"\n def __getitem__(self,i): print(\"wrong\");return i\nreversed(S())\n",
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "reverse-live-slot",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self):\n  print(\"len\")\n  return 3\n def __getitem__(self,i):\n  print(\"get\",i)\n  return i+10\ni=reversed(S())\nS.__getitem__=lambda self,i:i*2\nprint([x for x in i])\n",
+      "stdout": "len\n[4, 2, 0]\n"
+    },
+    {
+      "id": "reverse-recursive-pull",
+      "stage": "LA202",
+      "source": "class S:\n def __len__(self): return 3\n def __getitem__(self,n):\n  if n==2 and not self.entered:\n   self.entered=True\n   print(\"inner\",next(self.it))\n  return n\ns=S()\ns.entered=False\ns.it=reversed(s)\nprint(next(s.it),next(s.it))\n",
+      "stdout": "inner 2\n2 1\n"
+    },
+    {
+      "id": "reverse-no-args",
+      "stage": "LA202",
+      "source": "reversed()\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "reverse-too-many",
+      "stage": "LA202",
+      "source": "reversed([],[])\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "reverse-keyword",
+      "stage": "LA202",
+      "source": "reversed(sequence=[])\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ],
+      "stdout": "",
+      "error_type": "TypeError"
+    }
+  ]
+}

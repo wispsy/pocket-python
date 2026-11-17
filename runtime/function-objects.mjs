@@ -153,9 +153,9 @@ export class ValueMethod extends BuiltinValue {
   constructor(receiver, name) { super(name); this.receiver = receiver; Object.freeze(this); }
 }
 export class ProtocolIteratorValue {
-  constructor(kind, source, sentinel = null) {
+  constructor(kind, source, sentinel = null, index = 0n, nativeName = null) {
     this.kind = kind; this.source = source; this.sentinel = sentinel;
-    this.index = 0n; this.exhausted = false;
+    this.index = index; this.nativeName = nativeName; this.exhausted = false;
   }
 }
 export class LazyIteratorValue extends ProtocolIteratorValue {

@@ -26,7 +26,7 @@ export const CLASS_SPECIAL_POLICY = Object.freeze(Object.fromEntries([
   ["__doc__", Object.freeze({define: true, attribute: true, mutate: true})],
   ["__text_signature__", ordinarySlot],
   ...["__cause__", "__context__", "__suppress_context__", "__notes__"].map(name => [name, ordinarySlot]),
-  ["__reversed__", ordinarySlot],
+  ["__reversed__", Object.freeze({...ordinarySlot, implicit: true})],
   ["__bases__", ordinarySlot], ["__base__", Object.freeze({attribute: true, mutate: true})],
   ["__objclass__", Object.freeze({attribute: true, mutate: true})]
 ]));
