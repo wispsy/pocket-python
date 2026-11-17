@@ -923,17 +923,15 @@
     },
     {
       "id": "builtin-enumerate",
-      "source": "print(callable(enumerate))\n",
-      "classification": "deferred",
+      "source": "print(list(enumerate([2,3],7)))\n",
+      "classification": "supported",
       "reference": {
-        "stdout": "True\n",
+        "stdout": "[(7, 2), (8, 3)]\n",
         "error_type": null
       },
       "engine": {
-        "stdout": "",
-        "error_type": "NameError",
-        "code": "PYTHON",
-        "phase": "execute"
+        "stdout": "[(7, 2), (8, 3)]\n",
+        "error_type": null
       }
     },
     {
@@ -964,17 +962,15 @@
     },
     {
       "id": "builtin-filter",
-      "source": "print(callable(filter))\n",
-      "classification": "deferred",
+      "source": "print(list(filter(None,[0,1,2])))\n",
+      "classification": "supported",
       "reference": {
-        "stdout": "True\n",
+        "stdout": "[1, 2]\n",
         "error_type": null
       },
       "engine": {
-        "stdout": "",
-        "error_type": "NameError",
-        "code": "PYTHON",
-        "phase": "execute"
+        "stdout": "[1, 2]\n",
+        "error_type": null
       }
     },
     {
@@ -1218,17 +1214,15 @@
     },
     {
       "id": "builtin-map",
-      "source": "print(callable(map))\n",
-      "classification": "deferred",
+      "source": "print(list(map(abs,[-2,3])))\n",
+      "classification": "supported",
       "reference": {
-        "stdout": "True\n",
+        "stdout": "[2, 3]\n",
         "error_type": null
       },
       "engine": {
-        "stdout": "",
-        "error_type": "NameError",
-        "code": "PYTHON",
-        "phase": "execute"
+        "stdout": "[2, 3]\n",
+        "error_type": null
       }
     },
     {
@@ -1573,17 +1567,15 @@
     },
     {
       "id": "builtin-zip",
-      "source": "print(callable(zip))\n",
-      "classification": "deferred",
+      "source": "print(list(zip([1,2],[3,4],strict=True)))\n",
+      "classification": "supported",
       "reference": {
-        "stdout": "True\n",
+        "stdout": "[(1, 3), (2, 4)]\n",
         "error_type": null
       },
       "engine": {
-        "stdout": "",
-        "error_type": "NameError",
-        "code": "PYTHON",
-        "phase": "execute"
+        "stdout": "[(1, 3), (2, 4)]\n",
+        "error_type": null
       }
     },
     {

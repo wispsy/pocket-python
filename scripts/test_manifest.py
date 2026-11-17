@@ -37,6 +37,7 @@ SUITES = {
 }
 
 CORPORA = (
+    'traversals',
     'aggregations',
     'syntax-errors',
     'exceptions',
@@ -79,11 +80,12 @@ CORPORA = (
     'subclass-initialization', 'metaclass-attributes', 'nested-descriptors',
     'native-descriptors', 'descriptor-binding', 'native-rebinding', 'property-names', 'abstract-flags', 'documentation', 'function-metadata', 'type-reflection', 'execution', 'object-hashing', 'ordering', 'object-protocols',
 )
-CORE_CORPORA = {'aggregations', 'formatting', 'exceptions', 'practical-containers', 'sequences', 'function-binding', 'ordinary-syntax', 'value-families',
+CORE_CORPORA = {'traversals', 'aggregations', 'formatting', 'exceptions', 'practical-containers', 'sequences', 'function-binding', 'ordinary-syntax', 'value-families',
                 'generators', 'repetition', 'ordering'}
-PARKED_CORPORA = {'aggregations', 'syntax-errors', 'exceptions', 'practical-containers', 'object-integration','dynamic-imports', 'dynamic-exec', 'dynamic-eval', 'dynamic-compile','property-diagnostics','native-attributes', 'native-protocols','arithmetic-dispatch','reassignment','native-object-subclasses','mutable-subclasses','immutable-subclasses','slots','metaclass-protocols','custom-mro','metaclass-factories','prepared-class-namespaces','expanded-class-bases','native-directory-closure','wrapper-super-directories','advertised-directories','integer-identity','generator-frames','code-cells','function-state','wrapper-metadata','class-mapping-proxies', 'native-namespaces', 'class-body-namespaces', 'module-namespaces', 'iterator-type-directories', 'callable-type-directories', 'container-type-directories', 'numeric-type-directories', 'instance-directories', 'class-directories', 'namespace-view-directories', 'property-directories', 'native-callable-directories', 'generator-directories', 'iterator-directories', 'numeric-directories', 'sequence-directories', 'container-directories', 'buffer-directories', 'instance-directories', 'class-directories', 'method-directories', 'function-directories', 'class-namespaces', 'instance-dictionaries', 'function-dictionaries', 'metaclass-attributes', 'nested-descriptors', 'native-descriptors', 'descriptor-binding', 'native-rebinding', 'property-names', 'abstract-flags', 'documentation', 'function-metadata', 'type-reflection',
+PARKED_CORPORA = {'traversals', 'aggregations', 'syntax-errors', 'exceptions', 'practical-containers', 'object-integration','dynamic-imports', 'dynamic-exec', 'dynamic-eval', 'dynamic-compile','property-diagnostics','native-attributes', 'native-protocols','arithmetic-dispatch','reassignment','native-object-subclasses','mutable-subclasses','immutable-subclasses','slots','metaclass-protocols','custom-mro','metaclass-factories','prepared-class-namespaces','expanded-class-bases','native-directory-closure','wrapper-super-directories','advertised-directories','integer-identity','generator-frames','code-cells','function-state','wrapper-metadata','class-mapping-proxies', 'native-namespaces', 'class-body-namespaces', 'module-namespaces', 'iterator-type-directories', 'callable-type-directories', 'container-type-directories', 'numeric-type-directories', 'instance-directories', 'class-directories', 'namespace-view-directories', 'property-directories', 'native-callable-directories', 'generator-directories', 'iterator-directories', 'numeric-directories', 'sequence-directories', 'container-directories', 'buffer-directories', 'instance-directories', 'class-directories', 'method-directories', 'function-directories', 'class-namespaces', 'instance-dictionaries', 'function-dictionaries', 'metaclass-attributes', 'nested-descriptors', 'native-descriptors', 'descriptor-binding', 'native-rebinding', 'property-names', 'abstract-flags', 'documentation', 'function-metadata', 'type-reflection',
                   'execution', 'object-hashing'}
 REFERENCE_CORPORA = {
+    'traversals',
     'aggregations',
     'syntax-errors',
     'exceptions',
@@ -237,6 +239,8 @@ def checks(costs_path=None):
         '--report', 'build/ordinary-display-browser-report.json', seconds=30)
     add('ordinary-aggregations-browser', 'browser-integration', 'python', 'scripts/ordinary_browser_smoke.py',
         '--aggregations', '--report', 'build/ordinary-aggregations-browser-report.json', seconds=30)
+    add('ordinary-traversals-browser', 'browser-integration', 'python', 'scripts/ordinary_browser_smoke.py',
+        '--traversals', '--report', 'build/ordinary-traversals-browser-report.json', seconds=30)
     add('interpreter-node-measurements', 'measurements', 'python', 'scripts/interpreter_measurements.py',
         '--no-browser', '--repeats', '3', '--output', 'build/interpreter-node-measurements', seconds=10)
     add('interpreter-browser-measurements', 'measurements', 'python', 'scripts/interpreter_measurements.py',

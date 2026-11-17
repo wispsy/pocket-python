@@ -1,0 +1,1819 @@
+{
+  "schema_version": 1,
+  "suite": "interpreter-traversals/1",
+  "profile": "classes-source/1",
+  "reference_version": "3.14.7",
+  "implemented_stages": [
+    "LA196",
+    "LA197",
+    "LA198",
+    "LA199",
+    "LA200",
+    "LA201"
+  ],
+  "cases": [
+    {
+      "id": "map-abs",
+      "stage": "LA196",
+      "source": "print(list(map(abs,[-3,0,2])))\n",
+      "stdout": "[3, 0, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-text",
+      "stage": "LA196",
+      "source": "print(tuple(map(ord,\"a\u00e9\ud83d\ude00\")))\n",
+      "stdout": "(97, 233, 128512)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-range",
+      "stage": "LA196",
+      "source": "print(list(map(str,range(-2,2))))\n",
+      "stdout": "['-2', '-1', '0', '1']\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-bytes",
+      "stage": "LA196",
+      "source": "print(list(map(abs,b\"ab\")))\n",
+      "stdout": "[97, 98]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-view",
+      "stage": "LA196",
+      "source": "print(list(map(abs,{3:8,1:9}.keys())))\n",
+      "stdout": "[3, 1]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-lambda",
+      "stage": "LA196",
+      "source": "print(list(map(lambda x:x+2,[1,2])))\n",
+      "stdout": "[3, 4]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-two",
+      "stage": "LA196",
+      "source": "print(list(map(pow,[2,3],[3,2])))\n",
+      "stdout": "[8, 9]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-first-short",
+      "stage": "LA196",
+      "source": "a=iter([1,2,3])\nprint(list(map(pow,[],a)),next(a))\n",
+      "stdout": "[] 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-last-short",
+      "stage": "LA196",
+      "source": "a=iter([2,3,4])\nprint(list(map(pow,a,[2])),next(a))\n",
+      "stdout": "[4] 4\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-shared-source",
+      "stage": "LA196",
+      "source": "a=iter([2,3,4,2,7])\nprint(list(map(pow,a,a)))\n",
+      "stdout": "[8, 16]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-lazy-call",
+      "stage": "LA196",
+      "source": "def f(x):\n print(\"call\",x)\n return x+1\ni=map(f,[1,2])\nprint(\"created\")\nprint(next(i))\nprint(list(i))\n",
+      "stdout": "created\ncall 1\n2\ncall 2\n[3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-return-identity",
+      "stage": "LA196",
+      "source": "a=[]\ni=map(lambda x:x,[a])\nprint(next(i) is a)\n",
+      "stdout": "True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-empty-bad-callable",
+      "stage": "LA196",
+      "source": "print(list(map(None,[])),list(map(7,[])))\n",
+      "stdout": "[] []\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-bad-callable",
+      "stage": "LA196",
+      "source": "list(map(None,[1]))\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-none-function",
+      "stage": "LA196",
+      "source": "list(map(None,[1],[2]))\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-no-args",
+      "stage": "LA196",
+      "source": "try: map()\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "map() must have at least two arguments.\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-one-arg",
+      "stage": "LA196",
+      "source": "try: map(abs)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "map() must have at least two arguments.\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-bad-keyword",
+      "stage": "LA196",
+      "source": "try: map(abs,[],foo=1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "map() got an unexpected keyword argument 'foo'\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-many-keywords",
+      "stage": "LA196",
+      "source": "try: map(abs,[],strict=1,foo=2)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "map() takes at most 1 keyword argument (2 given)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-empty",
+      "stage": "LA196",
+      "source": "print(list(map(pow,[],[],strict=True)))\n",
+      "stdout": "[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-equal",
+      "stage": "LA196",
+      "source": "print(list(map(pow,[2,3],[3,2],strict=True)))\n",
+      "stdout": "[8, 9]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-shorter",
+      "stage": "LA196",
+      "source": "try: list(map(pow,[2,3],[3],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "map() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-longer",
+      "stage": "LA196",
+      "source": "try: list(map(pow,[2],[3,2],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "map() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-plural-shorter",
+      "stage": "LA196",
+      "source": "try: list(map(lambda a,b,c:a+b+c,[1],[2],[],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "map() argument 3 is shorter than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-plural-longer",
+      "stage": "LA196",
+      "source": "try: list(map(lambda a,b,c:a+b+c,[],[],[3],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "map() argument 3 is longer than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-false",
+      "stage": "LA196",
+      "source": "print(list(map(pow,[2,3],[3],strict=[])))\n",
+      "stdout": "[8]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-strict-one",
+      "stage": "LA196",
+      "source": "print(list(map(abs,[-2,1],strict=True)))\n",
+      "stdout": "[2, 1]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-default-next",
+      "stage": "LA196",
+      "source": "i=map(abs,[])\nprint(next(i,7),next(i,8))\n",
+      "stdout": "7 8\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-iter-self",
+      "stage": "LA196",
+      "source": "i=map(abs,[])\nprint(iter(i) is i)\n",
+      "stdout": "True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-stop-callback-retry",
+      "stage": "LA196",
+      "source": "def f(x):\n if x==1: raise StopIteration(\"callback\")\n return x\ni=map(f,[1,2],strict=True)\ntry: next(i)\nexcept StopIteration as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "callback\n2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-error-callback-retry",
+      "stage": "LA196",
+      "source": "def f(x):\n if x==1: raise ValueError(\"callback\")\n return x\ni=map(f,[1,2])\ntry: next(i)\nexcept ValueError as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "callback\n2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-live-list",
+      "stage": "LA196",
+      "source": "a=[1]\ndef f(x):\n if x==1: a.append(2)\n return x\nprint(list(map(f,a)))\n",
+      "stdout": "[1, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-callback-reentry",
+      "stage": "LA196",
+      "source": "def f(x):\n if x==1: print(\"nested\",next(i))\n return x\ni=map(f,[1,2,3])\nprint(list(i))\n",
+      "stdout": "nested 2\n[1, 3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-generator-cleanup",
+      "stage": "LA196",
+      "source": "def g():\n try:\n  yield -2\n  yield -3\n finally: print(\"closed\")\ngen=g()\ni=map(abs,gen)\nprint(next(i))\ngen.close()\nprint(list(i))\n",
+      "stdout": "2\nclosed\n[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-list-extend",
+      "stage": "LA196",
+      "source": "a=[]\na.extend(map(abs,[-2,3]))\nprint(a)\n",
+      "stdout": "[2, 3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-comprehension",
+      "stage": "LA196",
+      "source": "print([x+1 for x in map(abs,[-2,3])])\n",
+      "stdout": "[3, 4]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-aggregation",
+      "stage": "LA196",
+      "source": "print(sum(map(abs,[-2,3])),min(map(abs,[-2,3])))\n",
+      "stdout": "5 2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "map-construction-order",
+      "stage": "LA196",
+      "source": "class S:\n def __init__(self,n): self.n=n\n def __iter__(self):\n  print(\"iter\",self.n)\n  return iter([self.n])\nclass Strict:\n def __bool__(self):\n  print(\"strict\")\n  return True\ni=map(pow,S(2),S(3),strict=Strict())\nprint(\"created\")\nprint(list(i))\n",
+      "stdout": "strict\niter 2\niter 3\ncreated\n[8]\n"
+    },
+    {
+      "id": "map-strict-before-arity",
+      "stage": "LA196",
+      "source": "class Strict:\n def __bool__(self):\n  print(\"strict\")\n  return True\ntry: map(strict=Strict())\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "strict\nmap() must have at least two arguments.\n"
+    },
+    {
+      "id": "map-temporary-bound-callback",
+      "stage": "LA196",
+      "source": "class A:\n def __init__(self,n): self.n=n\n def apply(self,x): return self.n+x\ni=map(A(7).apply,[1,2])\nprint(list(i))\n",
+      "stdout": "[8, 9]\n"
+    },
+    {
+      "id": "map-indexed-source",
+      "stage": "LA196",
+      "source": "class A:\n def __getitem__(self,i):\n  if i==2: raise IndexError\n  return -i\nprint(list(map(abs,A())))\n",
+      "stdout": "[0, 1]\n"
+    },
+    {
+      "id": "map-transient-stop",
+      "stage": "LA196",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise StopIteration(\"source\")\n  return self.n\ni=map(abs,I())\ntry: next(i)\nexcept StopIteration as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "source\n2\n"
+    },
+    {
+      "id": "map-native-methods",
+      "stage": "LA196",
+      "source": "i=map(abs,[-2,-3])\nprint(type(i) is map,isinstance(i,map),i.__iter__() is i,map.__next__(i),i.__next__())\n",
+      "stdout": "True True True 2 3\n"
+    },
+    {
+      "id": "map-source-error-retry",
+      "stage": "LA196",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise ValueError(\"source\")\n  return -self.n\ni=map(abs,I(),strict=True)\ntry: next(i)\nexcept ValueError as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "source\n2\n"
+    },
+    {
+      "id": "map-probe-error",
+      "stage": "LA196",
+      "source": "class I:\n def __iter__(self): return self\n def __next__(self): raise LookupError(\"probe\")\nlist(map(pow,[],I(),strict=True))\n",
+      "stdout": "",
+      "error_type": "LookupError"
+    },
+    {
+      "id": "map-iterator-acquisition-error",
+      "stage": "LA196",
+      "source": "class A:\n def __iter__(self):\n  print(\"iter\")\n  raise ValueError(\"acquire\")\nmap(abs,A())\n",
+      "stdout": "iter\n",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "filter-none",
+      "stage": "LA197",
+      "source": "print(list(filter(None,[0,1,False,True,\"\",[],[2],{}])))\n",
+      "stdout": "[1, True, [2]]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-bool",
+      "stage": "LA197",
+      "source": "print(tuple(filter(bool,[0,1,False,True,\"\",[],[2],{}])))\n",
+      "stdout": "(1, True, [2])\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-function",
+      "stage": "LA197",
+      "source": "print(list(filter(lambda x:x%2,range(6))))\n",
+      "stdout": "[1, 3, 5]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-text",
+      "stage": "LA197",
+      "source": "print(list(filter(None,\"a\ud83d\ude00\")))\n",
+      "stdout": "['a', '\ud83d\ude00']\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-binary",
+      "stage": "LA197",
+      "source": "print(list(filter(None,b\"a\\x00b\")))\n",
+      "stdout": "[97, 98]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-dict-view",
+      "stage": "LA197",
+      "source": "print(list(filter(None,{0:1,2:3}.keys())))\n",
+      "stdout": "[2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-empty-invalid",
+      "stage": "LA197",
+      "source": "print(list(filter(7,[])))\n",
+      "stdout": "[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-invalid-callable",
+      "stage": "LA197",
+      "source": "list(filter(7,[1]))\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-lazy",
+      "stage": "LA197",
+      "source": "def f(x):\n print(\"predicate\",x)\n return x%2\ni=filter(f,[0,1,2,3])\nprint(\"created\")\nprint(next(i),list(i))\n",
+      "stdout": "created\npredicate 0\npredicate 1\npredicate 2\npredicate 3\n1 [3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-identity",
+      "stage": "LA197",
+      "source": "a=[1]\ni=filter(None,[a])\nprint(next(i) is a,iter(i) is i)\n",
+      "stdout": "True True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-no-args",
+      "stage": "LA197",
+      "source": "try: filter()\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "filter expected 2 arguments, got 0\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-one-arg",
+      "stage": "LA197",
+      "source": "try: filter(None)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "filter expected 2 arguments, got 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-three-args",
+      "stage": "LA197",
+      "source": "try: filter(None,[],[])\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "filter expected 2 arguments, got 3\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-keyword",
+      "stage": "LA197",
+      "source": "try: filter(None,[],function=bool)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "filter() takes no keyword arguments\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-default",
+      "stage": "LA197",
+      "source": "i=filter(None,[])\nprint(next(i,7),next(i,8))\n",
+      "stdout": "7 8\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-error-retry",
+      "stage": "LA197",
+      "source": "def f(x):\n if x==1: raise ValueError(\"predicate\")\n return True\ni=filter(f,[1,2])\ntry: next(i)\nexcept ValueError as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "predicate\n2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-stop-retry",
+      "stage": "LA197",
+      "source": "def f(x):\n if x==1: raise StopIteration(\"predicate\")\n return True\ni=filter(f,[1,2])\ntry: next(i)\nexcept StopIteration as e: print(str(e))\nprint(next(i))\n",
+      "stdout": "predicate\n2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-mutation",
+      "stage": "LA197",
+      "source": "a=[0]\ndef f(x):\n if x==0: a.append(1)\n return x\nprint(list(filter(f,a)))\n",
+      "stdout": "[1]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-reentry",
+      "stage": "LA197",
+      "source": "def f(x):\n if x==1: print(\"nested\",next(i))\n return True\ni=filter(f,[1,2,3])\nprint(list(i))\n",
+      "stdout": "nested 2\n[1, 3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-map-pipeline",
+      "stage": "LA197",
+      "source": "print(sum(map(abs,filter(lambda x:x<0,[-2,3,-4]))))\n",
+      "stdout": "6\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-comprehension",
+      "stage": "LA197",
+      "source": "print([x+1 for x in filter(None,[0,1,2])])\n",
+      "stdout": "[2, 3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-extend",
+      "stage": "LA197",
+      "source": "a=[]\na.extend(filter(None,[0,1,2]))\nprint(a)\n",
+      "stdout": "[1, 2]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "filter-owned-truth",
+      "stage": "LA197",
+      "source": "class V:\n def __init__(self,n): self.n=n\n def __bool__(self):\n  print(\"truth\",self.n)\n  return self.n>0\na=V(1)\nprint(next(filter(None,[V(0),a])) is a)\n",
+      "stdout": "truth 0\ntruth 1\nTrue\n"
+    },
+    {
+      "id": "filter-owned-predicate-truth",
+      "stage": "LA197",
+      "source": "class V:\n def __init__(self,n): self.n=n\n def __bool__(self):\n  print(\"truth\",self.n)\n  return self.n>0\ndef f(x):\n print(\"call\",x)\n return V(x)\nprint(list(filter(f,[0,1,2])))\n",
+      "stdout": "call 0\ntruth 0\ncall 1\ntruth 1\ncall 2\ntruth 2\n[1, 2]\n"
+    },
+    {
+      "id": "filter-temporary-owner",
+      "stage": "LA197",
+      "source": "class P:\n def __init__(self,n): self.n=n\n def test(self,x): return x>self.n\ni=filter(P(2).test,[1,3,4])\nprint(list(i))\n",
+      "stdout": "[3, 4]\n"
+    },
+    {
+      "id": "filter-native-slots",
+      "stage": "LA197",
+      "source": "i=filter(None,[1,2])\nprint(type(i) is filter,isinstance(i,filter),filter.__iter__(i) is i,filter.__next__(i),i.__next__())\n",
+      "stdout": "True True True 1 2\n"
+    },
+    {
+      "id": "filter-truth-error-retry",
+      "stage": "LA197",
+      "source": "class V:\n def __init__(self,n): self.n=n\n def __bool__(self):\n  if self.n==1: raise ValueError(\"truth\")\n  return True\na=V(2)\ni=filter(None,[V(1),a])\ntry: next(i)\nexcept ValueError as e: print(str(e))\nprint(next(i) is a)\n",
+      "stdout": "truth\nTrue\n"
+    },
+    {
+      "id": "filter-bool-stop-retry",
+      "stage": "LA197",
+      "source": "class V:\n def __init__(self,n): self.n=n\n def __bool__(self):\n  if self.n==1: raise StopIteration(\"truth\")\n  return True\na=V(2)\ni=filter(bool,[V(1),a])\ntry: next(i)\nexcept StopIteration as e: print(str(e))\nprint(next(i) is a)\n",
+      "stdout": "truth\nTrue\n"
+    },
+    {
+      "id": "filter-owned-acquisition",
+      "stage": "LA197",
+      "source": "class S:\n def __iter__(self):\n  print(\"iter\")\n  return iter([0,1])\ni=filter(None,S())\nprint(\"created\")\nprint(list(i))\n",
+      "stdout": "iter\ncreated\n[1]\n"
+    },
+    {
+      "id": "filter-indexed-source",
+      "stage": "LA197",
+      "source": "class S:\n def __getitem__(self,i):\n  if i==3: raise IndexError\n  return i\nprint(list(filter(None,S())))\n",
+      "stdout": "[1, 2]\n"
+    },
+    {
+      "id": "pipeline-retained-closures",
+      "source": "def outer(n):\n def accept(x): return x>n\n def apply(x): return [n,x]\n return map(apply,filter(accept,[1,3,4]))\ni=outer(2)\nprint(list(i))\n",
+      "stage": "LA198",
+      "stdout": "[[2, 3], [2, 4]]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "pipeline-generator-cleanup",
+      "source": "def source():\n try:\n  yield 0\n  yield -2\n  yield -3\n finally: print(\"cleanup\")\ng=source()\ni=map(abs,filter(None,g))\nprint(next(i))\ng.close()\nprint(list(i))\n",
+      "stage": "LA198",
+      "stdout": "2\ncleanup\n[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "pipeline-mutation-and-aliases",
+      "source": "a=[[1],[2]]\ndef apply(x):\n if x is a[0]: a.append([3])\n return x\nitems=list(map(apply,filter(None,a)))\nprint(items,items[0] is a[0],items[-1] is a[-1])\n",
+      "stage": "LA198",
+      "stdout": "[[1], [2], [3]] True True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "pipeline-original-dynamic-frame",
+      "source": "exec(compile(\"def apply(x):\\n raise ValueError(\\\"callback\\\")\\n\", \"traversal-original.py\", \"exec\"))\nprint(next(map(apply,[1])))\n",
+      "stage": "LA198",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "pipeline-original-truth-error",
+      "source": "class Truth:\n def __bool__(self): raise LookupError(\"truth\")\ndef accept(x): return Truth()\nprint(next(filter(accept,[1])))\n",
+      "stage": "LA198",
+      "stdout": "",
+      "error_type": "LookupError",
+      "error_frames": [
+        {
+          "function": "<module>",
+          "line": 4
+        },
+        {
+          "function": "__bool__",
+          "line": 2
+        }
+      ]
+    },
+    {
+      "id": "pipeline-generic-aggregation",
+      "source": "class Total:\n def __init__(self,n): self.n=n\n def __add__(self,x): return Total(self.n+x)\nprint(sum(map(abs,filter(None,[-2,0,3])),Total(7)).n)\n",
+      "stage": "LA198",
+      "stdout": "12\n"
+    },
+    {
+      "id": "pipeline-imported-callback",
+      "source": "import helper\nprint(list(map(helper.apply,filter(helper.accept,[0,1,2]))))\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "package": false,
+          "imports": [],
+          "source": "factor=3\ndef accept(x): return x>0\ndef apply(x): return factor*x\n"
+        }
+      ],
+      "stage": "LA198",
+      "stdout": "[3, 6]\n"
+    },
+    {
+      "id": "pipeline-bound-owner-cycle",
+      "source": "class P:\n def __init__(self): self.data=[self,7]\n def accept(self,x): return self.data[1]>x\n def apply(self,x): return self.data[1]+x\np=P()\ni=map(p.apply,filter(p.accept,[1,2]))\ndel p\nprint(list(i))\n",
+      "stage": "LA198",
+      "stdout": "[8, 9]\n"
+    },
+    {
+      "id": "enumerate-list",
+      "stage": "LA199",
+      "source": "print(list(enumerate([\"a\",\"b\"])))\n",
+      "stdout": "[(0, 'a'), (1, 'b')]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-empty",
+      "stage": "LA199",
+      "source": "print(list(enumerate([])))\n",
+      "stdout": "[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-negative",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2],-3)))\n",
+      "stdout": "[(-3, 1), (-2, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-bool-start",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2],True)))\n",
+      "stdout": "[(1, 1), (2, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-unicode",
+      "stage": "LA199",
+      "source": "print(list(enumerate(\"\u00e9\ud83d\ude00\")))\n",
+      "stdout": "[(0, '\u00e9'), (1, '\ud83d\ude00')]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-binary",
+      "stage": "LA199",
+      "source": "print(list(enumerate(b\"ab\")))\n",
+      "stdout": "[(0, 97), (1, 98)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-dictionary",
+      "stage": "LA199",
+      "source": "print(list(enumerate({2:3,1:4})))\n",
+      "stdout": "[(0, 2), (1, 1)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-range",
+      "stage": "LA199",
+      "source": "print(list(enumerate(range(3),7)))\n",
+      "stdout": "[(7, 0), (8, 1), (9, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-huge-positive",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2],2**200)))\n",
+      "stdout": "[(1606938044258990275541962092341162602522202993782792835301376, 1), (1606938044258990275541962092341162602522202993782792835301377, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-huge-negative",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2],-2**200)))\n",
+      "stdout": "[(-1606938044258990275541962092341162602522202993782792835301376, 1), (-1606938044258990275541962092341162602522202993782792835301375, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-i64-boundary",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2,3],2**63-2)))\n",
+      "stdout": "[(9223372036854775806, 1), (9223372036854775807, 2), (9223372036854775808, 3)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-keyword-start",
+      "stage": "LA199",
+      "source": "print(list(enumerate([1,2],start=7)))\n",
+      "stdout": "[(7, 1), (8, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-keyword-iterable",
+      "stage": "LA199",
+      "source": "print(list(enumerate(iterable=[1,2])))\n",
+      "stdout": "[(0, 1), (1, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-two-keywords",
+      "stage": "LA199",
+      "source": "print(list(enumerate(iterable=[1,2],start=7)))\n",
+      "stdout": "[(7, 1), (8, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-reverse-keywords",
+      "stage": "LA199",
+      "source": "print(list(enumerate(start=7,iterable=[1,2])))\n",
+      "stdout": "[(7, 1), (8, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-identity",
+      "stage": "LA199",
+      "source": "a=[]\ni=enumerate([a])\nv=next(i)\nprint(v[0],v[1] is a,iter(i) is i)\n",
+      "stdout": "0 True True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-retained-tuples",
+      "stage": "LA199",
+      "source": "i=enumerate([1,2,3])\na=next(i)\nb=next(i)\nprint(a,b,list(i),a,b)\n",
+      "stdout": "(0, 1) (1, 2) [(2, 3)] (0, 1) (1, 2)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-default-next",
+      "stage": "LA199",
+      "source": "i=enumerate([])\nprint(next(i,7),next(i,8))\n",
+      "stdout": "7 8\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-lazy-pipeline",
+      "stage": "LA199",
+      "source": "print(list(enumerate(map(abs,filter(None,[-2,0,3])),10)))\n",
+      "stdout": "[(10, 2), (11, 3)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-live-mutation",
+      "stage": "LA199",
+      "source": "a=[1]\ni=enumerate(a)\nprint(next(i))\na.append(2)\nprint(list(i))\n",
+      "stdout": "(0, 1)\n[(1, 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-bad-start",
+      "stage": "LA199",
+      "source": "enumerate([],1.5)\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-bad-source",
+      "stage": "LA199",
+      "source": "enumerate(1)\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-no-args",
+      "stage": "LA199",
+      "source": "try: enumerate()\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "enumerate() missing required argument 'iterable'\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-too-many",
+      "stage": "LA199",
+      "source": "try: enumerate([],0,1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "enumerate() takes at most 2 arguments (3 given)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-invalid-keyword",
+      "stage": "LA199",
+      "source": "try: enumerate([],foo=1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "'foo' is an invalid keyword argument for enumerate()\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-missing-iterable",
+      "stage": "LA199",
+      "source": "try: enumerate(start=1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "'start' is an invalid keyword argument for enumerate()\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-positional-duplicate",
+      "stage": "LA199",
+      "source": "try: enumerate([],iterable=[])\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "'iterable' is an invalid keyword argument for enumerate()\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-many-keywords",
+      "stage": "LA199",
+      "source": "try: enumerate(iterable=[],start=1,foo=2)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "enumerate() missing required argument 'iterable'\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "enumerate-index-before-iter",
+      "stage": "LA199",
+      "source": "class Start:\n def __index__(self):\n  print(\"index\")\n  return 7\nclass Source:\n def __iter__(self):\n  print(\"iter\")\n  return iter([1,2])\ni=enumerate(Source(),Start())\nprint(\"created\")\nprint(list(i))\n",
+      "stdout": "index\niter\ncreated\n[(7, 1), (8, 2)]\n"
+    },
+    {
+      "id": "enumerate-int-subtype",
+      "stage": "LA199",
+      "source": "class I(int):\n def __index__(self): raise ValueError(\"ignored\")\nprint(list(enumerate([1,2],I(7))))\n",
+      "stdout": "[(7, 1), (8, 2)]\n"
+    },
+    {
+      "id": "enumerate-start-index-subtype-result",
+      "stage": "LA199",
+      "source": "class I(int): pass\nclass Start:\n def __index__(self): return I(7)\nprint(list(enumerate([1,2],Start())))\n",
+      "stdout": "[(7, 1), (8, 2)]\n"
+    },
+    {
+      "id": "enumerate-owned-reentry",
+      "stage": "LA199",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  n=self.n\n  if n==1: print(\"nested\",next(e))\n  if n>3: raise StopIteration\n  return n\ne=enumerate(I(),7)\nprint(list(e))\n",
+      "stdout": "nested (7, 2)\n[(8, 1), (9, 3)]\n"
+    },
+    {
+      "id": "enumerate-transient-stop",
+      "stage": "LA199",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise StopIteration(\"source\")\n  return self.n\ne=enumerate(I(),7)\ntry: next(e)\nexcept StopIteration as error: print(str(error))\nprint(next(e))\n",
+      "stdout": "source\n(7, 2)\n"
+    },
+    {
+      "id": "enumerate-error-retry",
+      "stage": "LA199",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise ValueError(\"source\")\n  return self.n\ne=enumerate(I(),7)\ntry: next(e)\nexcept ValueError as error: print(str(error))\nprint(next(e))\n",
+      "stdout": "source\n(7, 2)\n"
+    },
+    {
+      "id": "enumerate-index-error-order",
+      "stage": "LA199",
+      "source": "class Start:\n def __index__(self):\n  print(\"index\")\n  raise ValueError(\"start\")\nclass Source:\n def __iter__(self):\n  print(\"iter\")\n  return iter([])\nenumerate(Source(),Start())\n",
+      "stdout": "index\n",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "enumerate-bad-index-result",
+      "stage": "LA199",
+      "source": "class Start:\n def __index__(self): return 1.5\nenumerate([],Start())\n",
+      "stdout": "",
+      "error_type": "TypeError"
+    },
+    {
+      "id": "enumerate-native-slots",
+      "stage": "LA199",
+      "source": "i=enumerate([1,2],7)\nprint(type(i) is enumerate,isinstance(i,enumerate),enumerate.__iter__(i) is i,enumerate.__next__(i),i.__next__())\n",
+      "stdout": "True True True (7, 1) (8, 2)\n"
+    },
+    {
+      "id": "zip-empty",
+      "stage": "LA200",
+      "source": "print(list(zip()),list(zip(strict=True)))\n",
+      "stdout": "[] []\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-one",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2])))\n",
+      "stdout": "[(1,), (2,)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-two",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2],[3,4])))\n",
+      "stdout": "[(1, 3), (2, 4)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-three",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2],\"ab\",range(7,9))))\n",
+      "stdout": "[(1, 'a', 7), (2, 'b', 8)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-shortest",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2,3],[4])))\n",
+      "stdout": "[(1, 4)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-first-empty",
+      "stage": "LA200",
+      "source": "a=iter([1,2])\nprint(list(zip([],a)),next(a))\n",
+      "stdout": "[] 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-last-empty",
+      "stage": "LA200",
+      "source": "a=iter([1,2])\nprint(list(zip(a,[])),next(a))\n",
+      "stdout": "[] 2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-shared-source",
+      "stage": "LA200",
+      "source": "a=iter([1,2,3,4,5])\nprint(list(zip(a,a)))\n",
+      "stdout": "[(1, 2), (3, 4)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-unicode-binary",
+      "stage": "LA200",
+      "source": "print(list(zip(\"\u00e9\ud83d\ude00\",b\"ab\")))\n",
+      "stdout": "[('\u00e9', 97), ('\ud83d\ude00', 98)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-dictionary-views",
+      "stage": "LA200",
+      "source": "a={\"a\":1,\"b\":2}\nprint(list(zip(a.keys(),a.values())))\n",
+      "stdout": "[('a', 1), ('b', 2)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-equal",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2],[3,4],strict=True)))\n",
+      "stdout": "[(1, 3), (2, 4)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-one",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2],strict=True)))\n",
+      "stdout": "[(1,), (2,)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-false",
+      "stage": "LA200",
+      "source": "print(list(zip([1,2],[3],strict=[])))\n",
+      "stdout": "[(1, 3)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-shorter",
+      "stage": "LA200",
+      "source": "try: list(zip([1,2],[3],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-longer",
+      "stage": "LA200",
+      "source": "try: list(zip([1],[2,3],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-plural-shorter",
+      "stage": "LA200",
+      "source": "try: list(zip([1],[2],[],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is shorter than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-plural-longer",
+      "stage": "LA200",
+      "source": "try: list(zip([],[],[1],strict=True))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is longer than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-shared-source",
+      "stage": "LA200",
+      "source": "a=iter([1,2,3])\nz=zip(a,a,strict=True)\nprint(next(z))\ntry: next(z)\nexcept ValueError as e: print(str(e))\nprint(next(z,9))\n",
+      "stdout": "(1, 2)\nzip() argument 2 is shorter than argument 1\n9\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-retry-mismatch",
+      "stage": "LA200",
+      "source": "a=iter([1,2,3])\nb=iter([4])\nz=zip(a,b,strict=True)\nprint(next(z))\ntry: next(z)\nexcept ValueError as e: print(str(e))\nprint(list(a))\n",
+      "stdout": "(1, 4)\nzip() argument 2 is shorter than argument 1\n[3]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-identity",
+      "stage": "LA200",
+      "source": "a=[]\nb={}\nz=zip([a],[b])\np=next(z)\nprint(p[0] is a,p[1] is b,iter(z) is z)\n",
+      "stdout": "True True True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-retained-tuples",
+      "stage": "LA200",
+      "source": "z=zip([1,2,3],[4,5,6])\na=next(z)\nb=next(z)\nprint(a,b,list(z),a,b)\n",
+      "stdout": "(1, 4) (2, 5) [(3, 6)] (1, 4) (2, 5)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-default-next",
+      "stage": "LA200",
+      "source": "z=zip()\nprint(next(z,7),next(z,8))\n",
+      "stdout": "7 8\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-keyword",
+      "stage": "LA200",
+      "source": "try: zip(foo=1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "zip() got an unexpected keyword argument 'foo'\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-many-keywords",
+      "stage": "LA200",
+      "source": "try: zip([],strict=True,foo=1)\nexcept TypeError as e: print(str(e))\n",
+      "stdout": "zip() takes at most 1 keyword argument (2 given)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-noniterable",
+      "stage": "LA200",
+      "source": "zip([],1)\n",
+      "stdout": "",
+      "error_type": "TypeError",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-lazy-map",
+      "stage": "LA200",
+      "source": "print(list(zip(map(abs,[-2,3]),filter(None,[0,4,5]),strict=True)))\n",
+      "stdout": "[(2, 4), (3, 5)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-live-list",
+      "stage": "LA200",
+      "source": "a=[1]\nz=zip(a,[3,4])\nprint(next(z))\na.append(2)\nprint(list(z))\n",
+      "stdout": "(1, 3)\n[(2, 4)]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-unpacking",
+      "stage": "LA200",
+      "source": "for a,b in zip([1,2],[3,4]): print(a+b)\n",
+      "stdout": "4\n6\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-acquisition-order",
+      "stage": "LA200",
+      "source": "class Source:\n def __init__(self,n): self.n=n\n def __iter__(self):\n  print(\"iter\",self.n)\n  return iter([self.n])\nclass Strict:\n def __bool__(self):\n  print(\"strict\")\n  return True\nz=zip(Source(1),Source(2),strict=Strict())\nprint(\"created\")\nprint(list(z))\n",
+      "stdout": "strict\niter 1\niter 2\ncreated\n[(1, 2)]\n"
+    },
+    {
+      "id": "zip-pull-order",
+      "stage": "LA200",
+      "source": "class I:\n def __init__(self,n): self.n=n\n def __iter__(self):\n  print(\"iter\",self.n)\n  return self\n def __next__(self):\n  print(\"next\",self.n)\n  return self.n\nz=zip(I(1),I(2))\nprint(\"created\")\nprint(next(z))\n",
+      "stdout": "iter 1\niter 2\ncreated\nnext 1\nnext 2\n(1, 2)\n"
+    },
+    {
+      "id": "zip-probe-error",
+      "stage": "LA200",
+      "source": "class I:\n def __iter__(self): return self\n def __next__(self): raise LookupError(\"probe\")\nlist(zip([],I(),strict=True))\n",
+      "stdout": "",
+      "error_type": "LookupError"
+    },
+    {
+      "id": "zip-transient-stop",
+      "stage": "LA200",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise StopIteration(\"source\")\n  return self.n\nz=zip(I(),[7,8])\ntry: next(z)\nexcept StopIteration as e: print(str(e))\nprint(next(z))\n",
+      "stdout": "source\n(2, 7)\n"
+    },
+    {
+      "id": "zip-error-retry",
+      "stage": "LA200",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  if self.n==1: raise ValueError(\"source\")\n  return self.n\nz=zip([7,8],I(),strict=True)\ntry: next(z)\nexcept ValueError as e: print(str(e))\nprint(next(z))\n",
+      "stdout": "source\n(8, 2)\n"
+    },
+    {
+      "id": "zip-owned-reentry",
+      "stage": "LA200",
+      "source": "class I:\n def __init__(self): self.n=0\n def __iter__(self): return self\n def __next__(self):\n  self.n+=1\n  n=self.n\n  if n==1: print(\"nested\",next(z))\n  return n\nz=zip(I(),[7,8,9])\nprint(next(z))\n",
+      "stdout": "nested (2, 7)\n(1, 8)\n"
+    },
+    {
+      "id": "zip-native-slots",
+      "stage": "LA200",
+      "source": "z=zip([1,2],[3,4])\nprint(type(z) is zip,isinstance(z,zip),zip.__iter__(z) is z,zip.__next__(z),z.__next__())\n",
+      "stdout": "True True True (1, 3) (2, 4)\n"
+    },
+    {
+      "id": "zip-no-args-strict-truth",
+      "stage": "LA200",
+      "source": "class Strict:\n def __bool__(self):\n  print(\"strict\")\n  return True\nprint(list(zip(strict=Strict())))\n",
+      "stdout": "strict\n[]\n"
+    },
+    {
+      "id": "zip-strict-truth-error",
+      "stage": "LA200",
+      "source": "class Strict:\n def __bool__(self): raise ValueError(\"strict\")\nzip(strict=Strict())\n",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "zip-strict-matrix-2-0-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-2-0-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-2-1-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-2-1-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-0-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],[2],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-0-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-1-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],[2],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-1-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-2-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[1],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is shorter than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-3-2-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[],[2],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is longer than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-0-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],[2],[3],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-0-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],[],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-1-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[],[2],[3],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is shorter than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-1-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[1],[],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 2 is longer than argument 1\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-2-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[1],[],[3],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is shorter than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-2-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[],[2],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 3 is longer than arguments 1-2\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-3-False",
+      "stage": "LA200",
+      "source": "try: print(list(zip([0],[1],[2],[],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 4 is shorter than arguments 1-3\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "zip-strict-matrix-4-3-True",
+      "stage": "LA200",
+      "source": "try: print(list(zip([],[],[],[3],strict=True)))\nexcept ValueError as e: print(str(e))\n",
+      "stdout": "zip() argument 4 is longer than arguments 1-3\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "paired-indexed-report",
+      "source": "values=map(abs,filter(None,[-2,0,3]))\nprint(list(enumerate(zip([\"a\",\"b\"],values,strict=True),1)))\n",
+      "stage": "LA201",
+      "stdout": "[(1, ('a', 2)), (2, ('b', 3))]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "paired-generator-cleanup",
+      "source": "def source():\n try:\n  yield [1]\n  yield [2]\n finally: print(\"cleanup\")\ng=source()\nz=zip(enumerate(g,7),filter(None,[0,3,4]))\nprint(next(z))\ng.close()\nprint(list(z))\n",
+      "stage": "LA201",
+      "stdout": "((7, [1]), 3)\ncleanup\n[]\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "paired-original-dynamic-frame",
+      "source": "exec(compile(\"def apply(x):\\n raise ValueError(\\\"paired callback\\\")\\n\", \"traversal-original.py\", \"exec\"))\nprint(next(zip([7],map(apply,[1]),strict=True)))\n",
+      "stage": "LA201",
+      "stdout": "",
+      "error_type": "ValueError"
+    },
+    {
+      "id": "paired-retained-cyclic-records",
+      "source": "class Record:\n def __init__(self,n): self.data=[self,n]\n def value(self): return self.data[1]\nrecords=[Record(7),Record(8)]\nrows=list(enumerate(zip(records,map(lambda r:r.value(),records),strict=True),1))\ndel records\nprint(rows[0][0],rows[0][1][0].data[0] is rows[0][1][0],rows[1][1][1])\n",
+      "stage": "LA201",
+      "stdout": "1 True 8\n"
+    },
+    {
+      "id": "paired-imported-callback",
+      "source": "import helper\nprint(list(enumerate(zip(helper.source(),map(helper.apply,[1,2]),strict=True),7)))\n",
+      "imports": [
+        "helper"
+      ],
+      "modules": [
+        {
+          "name": "helper",
+          "package": false,
+          "imports": [],
+          "source": "def source():\n yield \"a\"\n yield \"b\"\ndef apply(x): return x*3\n"
+        }
+      ],
+      "stage": "LA201",
+      "stdout": "[(7, ('a', 3)), (8, ('b', 6))]\n"
+    },
+    {
+      "id": "paired-mutation-and-aliases",
+      "source": "a=[[1],[2]]\nz=zip(a,map(lambda x:x,a),strict=True)\nrows=list(enumerate(z))\na[0].append(7)\nprint(rows,rows[0][1][0] is rows[0][1][1])\n",
+      "stage": "LA201",
+      "stdout": "[(0, ([1, 7], [1, 7])), (1, ([2], [2]))] True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "paired-native-callers",
+      "source": "z=zip([[1],[2]],[3,4])\nadvance=z.__next__\ndel z\na=advance()\nb=advance()\nprint(a,b)\n",
+      "stage": "LA201",
+      "stdout": "([1], 3) ([2], 4)\n"
+    },
+    {
+      "id": "paired-captured-builtins",
+      "source": "def f(): return 7\nprint(f.__builtins__[\"map\"] is map,f.__builtins__[\"filter\"] is filter,f.__builtins__[\"enumerate\"] is enumerate,f.__builtins__[\"zip\"] is zip)\n",
+      "stage": "LA201",
+      "stdout": "True True True True\n"
+    },
+    {
+      "id": "lazy-membership-and-consumers",
+      "source": "print(2 in map(abs,[-1,-2]),(1,3) in zip([1,2],[3,4]),all(map(bool,[1,2])),any(filter(None,[0,1])))\n",
+      "stage": "LA201",
+      "stdout": "True True True True\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "strict-map-callback-stop-arguments",
+      "source": "def f(a,b): raise StopIteration(\"callback\",a,b)\ni=map(f,[1,2],[3,4],strict=True)\ntry: next(i)\nexcept StopIteration as e: print(e.args)\ntry: next(i)\nexcept StopIteration as e: print(e.args)\n",
+      "stage": "LA201",
+      "stdout": "('callback', 1, 3)\n('callback', 2, 4)\n",
+      "profiles": [
+        "core-source/1",
+        "classes-source/1"
+      ]
+    },
+    {
+      "id": "strict-map-source-stop-arguments",
+      "source": "class I:\n def __iter__(self): return self\n def __next__(self): raise StopIteration(\"source\")\nfor strict in [False,True]:\n try: next(map(abs,I(),strict=strict))\n except StopIteration as e: print(e.args)\n",
+      "stage": "LA201",
+      "stdout": "('source',)\n()\n"
+    },
+    {
+      "id": "strict-zip-source-stop-arguments",
+      "source": "class I:\n def __iter__(self): return self\n def __next__(self): raise StopIteration(\"source\")\nfor strict in [False,True]:\n try: next(zip(I(),strict=strict))\n except StopIteration as e: print(e.args)\n",
+      "stage": "LA201",
+      "stdout": "('source',)\n()\n"
+    },
+    {
+      "id": "map-boundary-subclass",
+      "stage": "Future",
+      "source": "class Derived(map):\n pass\nprint(Derived.__name__)\n",
+      "owner": "#116",
+      "boundary": "Lazy traversal subtype layouts are not adopted.",
+      "stdout": "Derived\n"
+    },
+    {
+      "id": "map-boundary-serialization",
+      "stage": "Future",
+      "source": "i=map(abs,[])\nprint(i.__reduce__()[0] is type(i))\n",
+      "owner": "#126",
+      "boundary": "Lazy iterator serialization remains a separate library contract.",
+      "stdout": "True\n"
+    },
+    {
+      "id": "filter-boundary-subclass",
+      "stage": "Future",
+      "source": "class Derived(filter):\n pass\nprint(Derived.__name__)\n",
+      "owner": "#116",
+      "boundary": "Lazy traversal subtype layouts are not adopted.",
+      "stdout": "Derived\n"
+    },
+    {
+      "id": "filter-boundary-serialization",
+      "stage": "Future",
+      "source": "i=filter(None,[])\nprint(i.__reduce__()[0] is type(i))\n",
+      "owner": "#126",
+      "boundary": "Lazy iterator serialization remains a separate library contract.",
+      "stdout": "True\n"
+    },
+    {
+      "id": "enumerate-boundary-subclass",
+      "stage": "Future",
+      "source": "class Derived(enumerate):\n pass\nprint(Derived.__name__)\n",
+      "owner": "#116",
+      "boundary": "Lazy traversal subtype layouts are not adopted.",
+      "stdout": "Derived\n"
+    },
+    {
+      "id": "enumerate-boundary-serialization",
+      "stage": "Future",
+      "source": "i=enumerate([])\nprint(i.__reduce__()[0] is type(i))\n",
+      "owner": "#126",
+      "boundary": "Lazy iterator serialization remains a separate library contract.",
+      "stdout": "True\n"
+    },
+    {
+      "id": "zip-boundary-subclass",
+      "stage": "Future",
+      "source": "class Derived(zip):\n pass\nprint(Derived.__name__)\n",
+      "owner": "#116",
+      "boundary": "Lazy traversal subtype layouts are not adopted.",
+      "stdout": "Derived\n"
+    },
+    {
+      "id": "zip-boundary-serialization",
+      "stage": "Future",
+      "source": "i=zip()\nprint(i.__reduce__()[0] is type(i))\n",
+      "owner": "#126",
+      "boundary": "Lazy iterator serialization remains a separate library contract.",
+      "stdout": "True\n"
+    }
+  ]
+}

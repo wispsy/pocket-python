@@ -313,6 +313,15 @@ export function completion(kind, fields = {}) {
           !Number.isSafeInteger(record.size) || record.size < 2 || !["item", "key", "value"].includes(record.phase))
         throw new TypeError("Invalid container representation phase.");
       break;
+    case "lazy-strict": case "lazy-index": case "lazy-acquire": case "lazy-item": case "lazy-probe": case "lazy-return": case "lazy-predicate": case "lazy-truth":
+      record = {kind, name: fields.name ?? null, args: operands(fields.args ?? []),
+        iterators: operands(fields.iterators ?? []), callable: fields.callable ?? null,
+        receiver: fields.receiver ?? null, items: operands(fields.items ?? []), item: fields.item ?? null,
+        position: fields.position ?? 0, index: fields.index ?? 0n, strict: fields.strict === true, depth: fields.depth, after};
+      depthCheck(record.depth);
+      if (!Number.isSafeInteger(record.position) || record.position < 0 || record.position > 131072)
+        throw new TypeError("Invalid lazy traversal position.");
+      break;
     case "selection-iter": case "selection-next": case "selection-key": case "selection-compared": case "selection-truth":
       record = {kind, name: fields.name, receiver: fields.receiver ?? null, key: fields.key ?? null,
         fallback: fields.fallback ?? null, hasDefault: fields.hasDefault === true, found: fields.found === true,
@@ -415,6 +424,8 @@ function visit(record) {
     case "syntax-details": return [record.receiver, record.result, ...completionRoots(record.after)];
     case "syntax-message": return [record.receiver, record.suffix, ...completionRoots(record.after)];
     case "container-repr": return [record.receiver, record.parts, record.item, record.keyText, ...completionRoots(record.after)];
+    case "lazy-strict": case "lazy-index": case "lazy-acquire": case "lazy-item": case "lazy-probe": case "lazy-return": case "lazy-predicate": case "lazy-truth":
+      return [record.receiver, record.callable, record.item, record.index, ...record.args, ...record.iterators, ...record.items, ...completionRoots(record.after)];
     case "selection-iter": case "selection-next": case "selection-key": case "selection-compared": case "selection-truth":
       return [record.receiver, record.key, record.fallback, record.best, record.bestKey, record.candidate, record.candidateKey, ...completionRoots(record.after)];
     case "sum-iter": case "sum-next": case "sum-added": return [record.receiver, record.result, ...completionRoots(record.after)];

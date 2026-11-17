@@ -69,11 +69,17 @@ def audit(root=ROOT):
     native = json.loads(subprocess.check_output(['node', 'scripts/object_scope_native.mjs'], cwd=root, text=True))
     layouts = json.loads((root / manifest['native_tables']['layouts']).read_bytes())
     assert set(native['types']) == {row['type'] for row in layouts['native_types']}, 'Missing native layout'
-    native_cases = {case['id'] for case in corpora['tests/fixtures/interpreter/native-directory-closure.json']['cases']}
+    native_corpus = corpora['tests/fixtures/interpreter/native-directory-closure.json']
+    native_cases = {case['id']: case for case in native_corpus['cases']}
     for row in layouts['native_types']:
         assert row['type_case'] in native_cases, row['type']
+        stage = row.get('stage', 'O78')
+        assert stage in native_corpus['implemented_stages'], row['type']
+        assert native_cases[row['type_case']]['stage'] == stage, row['type']
         boundary = row.get('instance_boundary')
         assert row.get('instance_case') in native_cases or boundary and boundary['case'] in native_cases and boundary['owner'] in allowed, row['type']
+        if row.get('instance_case'):
+            assert native_cases[row['instance_case']]['stage'] == stage, row['type']
     assert all(entry['owner'] for entry in native['entries'])
     return {'schema_version': 1, 'suite': manifest['suite'], 'reference_version': '3.14.7',
             'manifest_sha256': hashlib.sha256((root / MANIFEST.relative_to(ROOT)).read_bytes()).hexdigest(),

@@ -1,5 +1,5 @@
 // Independent Python values. Native Number is used only inside explicit floats.
-import {GeneratorValue, FrameValue, FrameLocalsValue, generatorRoots, Cell, Environment, CodePool, CodeValue, ModuleValue, FunctionValue, CallArguments, BuiltinValue, AppendValue, ValueMethod, ExceptionValue, ClassValue, HierarchyTransaction, ClassNamespaceValue, DictionaryViewValue, NamespaceLookupCache, InstanceValue, BoundMethodValue, SuperValue, PropertyValue, MethodWrapperValue, PropertyAccessorValue, ProtocolIteratorValue, NotImplementedValue, IntegerIdentityRecord} from "./function-objects.mjs";
+import {GeneratorValue, FrameValue, FrameLocalsValue, generatorRoots, Cell, Environment, CodePool, CodeValue, ModuleValue, FunctionValue, CallArguments, BuiltinValue, AppendValue, ValueMethod, ExceptionValue, ClassValue, HierarchyTransaction, ClassNamespaceValue, DictionaryViewValue, NamespaceLookupCache, InstanceValue, BoundMethodValue, SuperValue, PropertyValue, MethodWrapperValue, PropertyAccessorValue, ProtocolIteratorValue, LazyIteratorValue, NotImplementedValue, IntegerIdentityRecord} from "./function-objects.mjs";
 import {isPrintable} from "./string-printability.mjs";
 import {divideIntegers, powerIntegers, powerReals, modularPower, roundInteger, roundReal, reprReal, parseInteger, parseReal, parseComplex, complexArithmetic, complexPower} from "./numeric.mjs";
 export const VALUE_LIMITS = Object.freeze({digits: 4096, text: 65536, items: 1024, depth: 32});
@@ -1585,6 +1585,7 @@ export function valueLayout(value) {
   if (value instanceof FrameValue) return {bytes: 128 + 8 * (value.locals.size + value.closure.size + (value.keys === null ? 0 : 1) + (value.extras === null ? 0 : 1)) + (value.nameKeys === null ? 0 : 8 + [...value.nameKeys.keys()].reduce((sum, name) => sum + 32 + 2 * name.length, 0)),
     children: [value.pool, value.callable, value.back, ...value.locals.values(), ...value.closure.values(), value.keys, value.extras, ...(value.nameKeys?.values() ?? []), ...(value.raw.namespaceEnvironment ? [value.raw.namespaceEnvironment] : [])]};
   if (value instanceof FrameLocalsValue) return {bytes: 48, children: [value.frame]};
+  if (value instanceof LazyIteratorValue) return {bytes: 104 + 8 * value.iterators.length, children: [...value.iterators, value.callable, value.index]};
   if (value instanceof ProtocolIteratorValue) return {bytes: 88, children: [value.source, value.sentinel, value.index]};
   if (value instanceof NotImplementedValue) return {bytes: 48, children: []};
   if (value instanceof SliceValue) return {bytes: 88, children: [value.start, value.stop, value.step]};

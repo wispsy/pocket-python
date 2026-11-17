@@ -75,7 +75,10 @@ acceptance. Remaining numeric methods and complex recovery families are tracked
 in [INT-NUM-02](https://github.com/wispsy/pocket-python/issues/184).
 The first finite [sequence slice](docs/interpreter-sequences.md) adds bounded range,
 list/tuple construction and owned all/any consumers, with both source profiles and
-offline acceptance. Other sequence APIs and user length hints remain open under #116.
+offline acceptance. Finite [aggregation](docs/interpreter-aggregations.md) and
+[lazy traversal](docs/interpreter-traversals.md) slices add min/max/sum and
+map/filter/enumerate/zip with owned callbacks and strict traversal. Other sequence
+APIs and user length hints remain open under #116.
 Continue the sequence and object protocol work while the
 persistent-session/host program advances through its own contracts. INT-09 and
 INT-10 stay open; the execution foundation is delivered, while their remaining
